@@ -83,7 +83,25 @@ function getLastYearData (dataParsedForGraph = []) {
 	return lastTwelveMonths
 }
 
+
+/**
+ * Returns the last five years from the year received as argument
+ * @param {number} year
+ * @returns {Array.number}
+ */
+const getLastFiveYearsFrom = (year) => {
+	const maxYearsNumber = 5
+	const result = []
+
+	for (let iteration = 0; iteration < maxYearsNumber; iteration++) {
+		result.push(year - iteration)
+	}
+
+	return result
+}
+
 export {
 	parseDataForGraph, 
 	getLastYearData,
+	getLastFiveYearsFrom,
 }

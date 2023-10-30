@@ -8,12 +8,14 @@ import { SubmitButtonHelper } from '../../SubmitButtonHelper'
 
 import { useInputValue } from '../../../hooks/useInputValue'
 import { validateRegisterMonthlyBalanceForm } from '../../../utils/validations'
+import { getLastFiveYearsFrom } from '../utils'
 
 import { REGISTER_MONTHLY_BALANCE } from '../../../gql/mutations/monthlyBalances'
 
 export const RegisterMonthlyBalanceForm = () => {
-	const d = new Date()
-	const availableYears = [d.getFullYear() - 4, d.getFullYear() - 3, d.getFullYear() - 2, d.getFullYear() - 1, d.getFullYear()]
+	const currentYear = new Date().getFullYear()
+	const currentMonth = new Date().getMonth()
+	const availableYears = getLastFiveYearsFrom(currentYear)
 	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 	const navigate = useNavigate()
@@ -23,8 +25,8 @@ export const RegisterMonthlyBalanceForm = () => {
 	const [ registerMonthlyBalance ] = useMutation(REGISTER_MONTHLY_BALANCE)
 
 	const balance = useInputValue('')
-	const year = useInputValue(d.getFullYear())
-	const month = useInputValue(monthNames[d.getMonth()])
+	const year = useInputValue(currentYear)
+	const month = useInputValue(monthNames[currentMonth])
 
 
 	const handleSubmit = (event) => {
