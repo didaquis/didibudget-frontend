@@ -2,6 +2,7 @@ import { BsFillCaretDownFill } from 'react-icons/bs'
 import PropTypes from 'prop-types'
 
 import { ErrorAlert } from '../../ErrorAlert'
+import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 import { ListOfExpenseSubcategories } from '../ListOfExpenseSubcategories'
 
 export const ListOfExpenseCategories = ( { getExpenseCategory } ) => {
@@ -27,9 +28,13 @@ export const ListOfExpenseCategories = ( { getExpenseCategory } ) => {
 														className={'mr-2'}
 													/>
 													{category.name}
+													<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
 												</button>
 											:
-												<a className="d-flex flex-grow-1 btn btn-link text-left text-light" href={`/register-expense/${category._id}`} role="button">{category.name}</a>
+												<a className="d-flex flex-grow-1 btn btn-link text-left text-light" href={`/register-expense/${category._id}`} role="button">
+													{category.name}
+													<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
+												</a>
 									}
 								</div>
 

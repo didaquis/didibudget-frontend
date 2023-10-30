@@ -9,7 +9,9 @@ export const LIST_EXPENSE_CATEGORIES = gql`
 			_id
 			name
 			uuid
+			emojis
 		}
+		emojis
 		uuid
 	}
 }
