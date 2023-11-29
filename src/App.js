@@ -24,6 +24,7 @@ const InsertExpense = lazy(() => import('./pages/Expenses/InsertExpense'))
 const ViewExpenses = lazy(() => import('./pages/Expenses/ViewExpenses'))
 const ExpenseAdministration = lazy(() => import('./pages/Expenses/ExpenseAdministration'))
 const ExpenseAnalysis = lazy(() => import('./pages/Expenses/ExpenseAnalysis'))
+const YearlyExpenseOverview = lazy(() => import('./pages/Expenses/YearlyExpenseOverview'))
 
 
 export const App = () => {
@@ -93,6 +94,11 @@ export const App = () => {
 									<Route path='/expenses-analysis' element={
 										<RequireAuth>
 											<ExpenseAnalysis />
+										</RequireAuth>
+									} />
+									<Route path='/yearly-expense-overview' element={
+										<RequireAuth>
+											<YearlyExpenseOverview />
 										</RequireAuth>
 									} />
 									<Route path='/logout' element={

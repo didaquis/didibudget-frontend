@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import { BsCreditCard2Back, BsBarChart, BsListUl, BsCalendarCheck } from 'react-icons/bs'
+import { BsCreditCard2Back, BsBarChart, BsListUl, BsCalendarCheck, BsCalendar3 } from 'react-icons/bs'
 
 import { useWindowSize } from '../../hooks/useWindowSize'
 
@@ -29,6 +29,9 @@ export const ExpensesDropdown = (props) => {
 				</Link>
 				<Link className="dropdown-item py-3" to='/expenses-analysis'>
 					<BsCalendarCheck size={props.sizeOfSecondaryIcons} title='Expenses analysis' /><span className="ml-3">Expenses Analysis</span>
+				</Link>
+				<Link className="dropdown-item py-3" to='/yearly-expense-overview'>
+					<BsCalendar3 size={props.sizeOfSecondaryIcons} title='Yearly expense overview' /><span className="ml-3">Yearly Expense Overview</span>
 				</Link>
 			</div>
 		</div>
