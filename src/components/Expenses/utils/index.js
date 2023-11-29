@@ -188,7 +188,7 @@ const getNameOfCategoryOrSubcategory = (target, categories) => {
  * @param {string} rawData.uuid - An UUID value
  * @returns {Array.<Object>}
  */
-const getDetailedExpendesPerMonth = (rawData = []) => {
+const getDetailedExpensesPerMonth = (rawData = []) => {
 	if (!rawData.length) {
 		return []
 	}
@@ -202,8 +202,8 @@ const getDetailedExpendesPerMonth = (rawData = []) => {
 
 	const monthDTO = (label, sum) => {
 		return {
-			month: label,
-			totalInMonth: trimDecimalPoints(sum),
+			groupTitle: label,
+			groupTotal: trimDecimalPoints(sum),
 			perCategory: []
 		}
 	}
@@ -254,7 +254,7 @@ const getDetailedExpendesPerMonth = (rawData = []) => {
 	const parsedMonthsWithCategoriesAndSubcategories = parsedMonths.map(month => {
 
 		const allExpensesInThisMonth = data.filter(expense => {
-			return getLocaleDateString(expense.date) === month.month
+			return getLocaleDateString(expense.date) === month.groupTitle
 		})
 
 		const parsedSubcategoriesInThisMonth = getParsedSubcategoriesInThisMonth(allExpensesInThisMonth)
@@ -311,7 +311,7 @@ const getLastTwelveValuesFromArrayIfTheyExist = (anArray) => {
 export {
 	getNameOfCategoryOrSubcategory,
 	getSumPerMonth,
-	getDetailedExpendesPerMonth,
+	getDetailedExpensesPerMonth,
 	getAveragePerMonth,
 	averageOfLast,
 	getLastTwelveValuesFromArrayIfTheyExist,

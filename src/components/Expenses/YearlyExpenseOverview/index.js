@@ -1,24 +1,24 @@
 import PropTypes from 'prop-types'
 
-import { getDetailedExpensesPerMonth } from '../utils'
+//import { getDetailedExpensesPerMonth } from '../utils'
 
 import { ErrorAlert } from '../../ErrorAlert'
 import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
-export const AnalysisOfExpenses = ( { expenses, categories } ) => {
+export const YearlyExpenseOverview = ( { expenses, categories } ) => {
 	if (expenses.length) {
-		const expensesData = getDetailedExpensesPerMonth(expenses)
-		const reversedData = expensesData.slice(0).reverse()
+		// const expensesData = getDetailedExpensesPerMonth(expenses) // TODO: Debo preparar los datos para enviarlos al componente
+		// const reversedData = expensesData.slice(0).reverse()
+
+		const yearlyExpensesData = {
+			groupTitle: 'foo',
+			groupTotal: 0,
+			perCategory: []
+		} 
 
 		return (
 			<section className="pt-4">
-				{
-					reversedData.map(monthData => {
-						return (
-							<DetailedExpensesGroup expensesGroupData={monthData} categories={categories} key={monthData.groupTitle} />
-						)
-					})
-				}
+				<DetailedExpensesGroup expensesGroupData={yearlyExpensesData} categories={categories} key={yearlyExpensesData.groupTitle} />
 			</section>
 		)
 	} else {
@@ -28,7 +28,7 @@ export const AnalysisOfExpenses = ( { expenses, categories } ) => {
 }
 
 
-AnalysisOfExpenses.propTypes = {
+YearlyExpenseOverview.propTypes = {
 	expenses: PropTypes.arrayOf(
 		PropTypes.shape({
 			date: PropTypes.string.isRequired,

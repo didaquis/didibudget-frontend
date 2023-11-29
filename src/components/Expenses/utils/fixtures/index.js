@@ -159,8 +159,8 @@ export const expensesRawDataForGetDetailedExpendesPerMonth = [
 ]
 
 export const expectedDataForGetDetailedExpendesPerMonth = [{
-	month: 'January 2021',
-	totalInMonth: 240,
+	groupTitle: 'January 2021',
+	groupTotal: 240,
 	perCategory: [
 		{
 			idCategory: '5e64ec217048af874c4f14d7',
@@ -193,13 +193,13 @@ export const expectedDataForGetDetailedExpendesPerMonth = [{
 	]
 },
 {
-	month: 'February 2021',
-	totalInMonth: 0,
+	groupTitle: 'February 2021',
+	groupTotal: 0,
 	perCategory: []
 },
 {
-	month: 'March 2021',
-	totalInMonth: 5,
+	groupTitle: 'March 2021',
+	groupTotal: 5,
 	perCategory: [
 		{
 			idCategory: '5e64ec217048af874c4f14d2',
