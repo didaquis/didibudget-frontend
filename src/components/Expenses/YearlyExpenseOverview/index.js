@@ -5,13 +5,13 @@ import PropTypes from 'prop-types'
 import { ErrorAlert } from '../../ErrorAlert'
 import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
-export const YearlyExpenseOverview = ( { expenses, categories } ) => {
+export const YearlyExpenseOverview = ( { startDate, endDate, expenses, categories } ) => {
 	if (expenses.length) {
 		// const expensesData = getDetailedExpensesPerMonth(expenses) // TODO: Debo preparar los datos para enviarlos al componente
 		// const reversedData = expensesData.slice(0).reverse()
 
-		const yearlyExpensesData = {
-			groupTitle: 'foo',
+		const yearlyExpensesData = { // TODO: Este DTO vendrá de "utils" (ya tengo cosillas preparadas ahí)
+			groupTitle: `From ${startDate} to ${endDate}`,
 			groupTotal: 0,
 			perCategory: []
 		} 
@@ -29,6 +29,8 @@ export const YearlyExpenseOverview = ( { expenses, categories } ) => {
 
 
 YearlyExpenseOverview.propTypes = {
+	startDate: PropTypes.object.isRequired,
+	endDate: PropTypes.object.isRequired,
 	expenses: PropTypes.arrayOf(
 		PropTypes.shape({
 			date: PropTypes.string.isRequired,

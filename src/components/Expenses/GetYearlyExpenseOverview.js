@@ -14,7 +14,7 @@ export const GetYearlyExpenseOverview = ({ startDate, endDate }) => {
 	if (loading) return <Spinner />
 	if (error) return <ErrorAlert errorMessage={error.message} />
 
-	return <YearlyExpenseOverview expenses={data.getExpensesBetweenDates} categories={data.getExpenseCategory} />
+	return <YearlyExpenseOverview startDate={startDate} endDate={endDate} expenses={data.getExpensesBetweenDates} categories={data.getExpenseCategory} />
 }
 
 GetYearlyExpenseOverview.propTypes = {
