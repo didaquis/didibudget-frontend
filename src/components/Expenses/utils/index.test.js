@@ -1,6 +1,6 @@
-import { getNameOfCategoryOrSubcategory, getSumPerMonth, getDetailedExpensesPerMonth, getAveragePerMonth, averageOfLast } from './index'
+import { getNameOfCategoryOrSubcategory, getSumPerMonth, getDetailedExpensesPerMonth, getDetailedExpensesGroupedFromRange, getAveragePerMonth, averageOfLast } from './index'
 
-import { expensesRawData, expectedData, expensesRawDataForGetDetailedExpendesPerMonth, expectedDataForGetDetailedExpendesPerMonth, expectedAverageData } from './fixtures'
+import { expensesRawData, expectedData, expensesRawDataForGetDetailedExpendesPerMonth, expectedDataForGetDetailedExpendesPerMonth, expensesRawDataForGetDetailedExpensesGroupedFromRange, expectedDataForGetDetailedExpensesGroupedFromRange, expectedAverageData } from './fixtures'
 
 
 describe('getNameOfCategoryOrSubcategory', () => {
@@ -157,7 +157,7 @@ describe('getDetailedExpensesPerMonth', () => {
 		expect(result).toEqual([])
 	})
 
-	test('should return an empty array receive an empty array', () => {
+	test('should return an empty array if receive an empty array', () => {
 		const result = getDetailedExpensesPerMonth([])
 
 		expect(Array.isArray(result)).toBe(true)
@@ -166,6 +166,27 @@ describe('getDetailedExpensesPerMonth', () => {
 
 	test('should return a formated results', () => {
 		const result = getDetailedExpensesPerMonth(expensesRawDataForGetDetailedExpendesPerMonth)
+
+		expect(Array.isArray(result)).toBe(true)
+		expect(result).toEqual(expectedDataForGetDetailedExpendesPerMonth)
+	})
+})
+
+describe('getDetailedExpensesGroupedFromRange', () => {
+	test('should return null if no receive params', () => {
+		const result = getDetailedExpensesGroupedFromRange()
+
+		expect(result).toBeNull()
+	})
+
+	test('should return an empty array if receive an empty array', () => {
+		const result = getDetailedExpensesGroupedFromRange([], new Date(2021, 0, 1), new Date(2021, 6, 31))
+
+		expect(result).toBeNull()
+	})
+
+	xtest('should return a formated results', () => { // TODO: This test should pass
+		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpendesPerMonth)
 
 		expect(Array.isArray(result)).toBe(true)
 		expect(result).toEqual(expectedDataForGetDetailedExpendesPerMonth)

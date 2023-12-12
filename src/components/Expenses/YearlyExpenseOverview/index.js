@@ -1,30 +1,24 @@
 import PropTypes from 'prop-types'
 
-//import { getDetailedExpensesPerMonth } from '../utils'
+import { getDetailedExpensesGroupedFromRange } from '../utils'
 
 import { ErrorAlert } from '../../ErrorAlert'
 import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
 export const YearlyExpenseOverview = ( { startDate, endDate, expenses, categories } ) => {
-	if (expenses.length) {
-		// const expensesData = getDetailedExpensesPerMonth(expenses) // TODO: Debo preparar los datos para enviarlos al componente
-		// const reversedData = expensesData.slice(0).reverse()
+	const expensesGroupedData = getDetailedExpensesGroupedFromRange(expenses, startDate, endDate)
+	console.log(expensesGroupedData) // TODO: remove this
 
-		const yearlyExpensesData = { // TODO: Este DTO vendrá de "utils" (ya tengo cosillas preparadas ahí)
-			groupTitle: `From ${startDate} to ${endDate}`,
-			groupTotal: 0,
-			perCategory: []
-		} 
-
-		return (
-			<section className="pt-4">
-				<DetailedExpensesGroup expensesGroupData={yearlyExpensesData} categories={categories} key={yearlyExpensesData.groupTitle} />
-			</section>
-		)
-	} else {
+	if (!expensesGroupedData) {
 		const errorMessage = 'Not enough data'
 		return <ErrorAlert errorMessage={errorMessage} />
 	}
+
+	return (
+		<section className="pt-4">
+			<DetailedExpensesGroup expensesGroupData={expensesGroupedData} categories={categories} />
+		</section>
+	)
 }
 
 

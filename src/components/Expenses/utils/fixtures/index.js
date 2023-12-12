@@ -209,4 +209,110 @@ export const expectedDataForGetDetailedExpendesPerMonth = [{
 	]
 }]
 
+export const expensesRawDataForGetDetailedExpensesGroupedFromRange = [
+	{
+		'category': '5e64ec217048af874c4f14d7',
+		'subcategory': '5ea7113296474318495ba3e5',
+		'quantity': 140,
+		'date': '1610506408699',
+		'currencyISO': 'EUR',
+		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be10',
+		'__typename': 'Expense'
+	},
+	{
+		'category': '5e64ec217048af874c4f14d7',
+		'subcategory': '5e64ec217048af874c4f14b4',
+		'quantity': 66,
+		'date': '1611506408699',
+		'currencyISO': 'EUR',
+		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be11',
+		'__typename': 'Expense'
+	},
+	{
+		'category': '5e64ec217048af874c4f14d7',
+		'subcategory': '5e64ec217048af874c4f14b4',
+		'quantity': 1,
+		'date': '1611516408699',
+		'currencyISO': 'EUR',
+		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be20',
+		'__typename': 'Expense'
+	},
+	{
+		'category': '5e64ec217048af874c4f14d8',
+		'subcategory': '5e64ec217048af874c4f14c1',
+		'quantity': 27,
+		'date': '1611526408699',
+		'currencyISO': 'EUR',
+		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be12',
+		'__typename': 'Expense'
+	},
+	{
+		'category': '5e64ec217048af874c4f14d8',
+		'subcategory': '5e64ec217048af874c4f14c2',
+		'quantity': 6,
+		'date': '1611547408699',
+		'currencyISO': 'EUR',
+		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be13',
+		'__typename': 'Expense'
+	},
+	{
+		'category': '5e64ec217048af874c4f14d2',
+		'subcategory': null,
+		'quantity': 2,
+		'date': '1615547408699',
+		'currencyISO': 'EUR',
+		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be14',
+		'__typename': 'Expense'
+	},
+	{
+		'category': '5e64ec217048af874c4f14d2',
+		'subcategory': null,
+		'quantity': 3,
+		'date': '1615547408699',
+		'currencyISO': 'EUR',
+		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be15',
+		'__typename': 'Expense'
+	},
+]
+
+export const expectedDataForGetDetailedExpensesGroupedFromRange = {
+	groupTitle: 'From January 2021 to March 2021',
+	groupTotal: 245,
+	perCategory: [
+		{
+			idCategory: '5e64ec217048af874c4f14d7',
+			totalInCategory: 207,
+			perSubcategory: [
+				{
+					idSubcategory: '5ea7113296474318495ba3e5',
+					totalInSubcategory: 140
+				},
+				{
+					idSubcategory: '5e64ec217048af874c4f14b4',
+					totalInSubcategory: 67
+				}
+			]
+		},
+		{
+			idCategory: '5e64ec217048af874c4f14d8',
+			totalInCategory: 33,
+			perSubcategory: [
+				{
+					idSubcategory: '5e64ec217048af874c4f14c1',
+					totalInSubcategory: 27
+				},
+				{
+					idSubcategory: '5e64ec217048af874c4f14c2',
+					totalInSubcategory: 6
+				}
+			]
+		},
+		{
+			idCategory: '5e64ec217048af874c4f14d2',
+			totalInCategory: 5,
+			perSubcategory: []
+		}
+	]
+}
+
 export const expectedAverageData = [ 99, 0, 166.16, 40, 0, 0 ]

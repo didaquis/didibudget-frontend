@@ -296,6 +296,39 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 }
 
 /**
+ * This function performs a summation grouping the expenses by category and subcategory for a range of months.
+ * @requires trimDecimalPoints
+ * @requires getLocaleDateString
+ * @param {Array.<Object>} rawData - An array of objects (the object must contain a date property)
+ * @param {string} rawData.category - An UUID value to identify a category
+ * @param {string|null} rawData.subcategory - An UUID value to identify a subcategory or null
+ * @param {number} rawData.quantity - An integer o float number
+ * @param {string} rawData.date - A valid date with this format: '1514447205699'
+ * @param {string} rawData.currencyISO - A currency. Example: 'EUR'
+ * @param {string} rawData.uuid - An UUID value
+ * @param {Date} startDate - The initial date of the range
+ * @param {Date} endDate - The end date of the range
+ * @returns {Object | null}
+ */
+const getDetailedExpensesGroupedFromRange = (rawData = [], startDate = null, endDate = null) => {
+	// TODO: Terminar esta función
+	if (!rawData.length || !startDate || !endDate) {
+
+		return null
+	}
+
+	const expenseGroupDTO = (label, sum) => {
+		return {
+			groupTitle: label,
+			groupTotal: trimDecimalPoints(sum),
+			perCategory: []
+		}
+	}
+
+	return expenseGroupDTO(`From ${getLocaleDateString(startDate)} to ${getLocaleDateString(endDate)}`, 0)
+}
+
+/**
  * Returns a new array with the last 12 elements of original array. If the original array does not have a length of 12 or more, this function returns an empty array.
  * @param {Array} anArray - An array of any values
  * @returns {Array}
@@ -312,6 +345,7 @@ export {
 	getNameOfCategoryOrSubcategory,
 	getSumPerMonth,
 	getDetailedExpensesPerMonth,
+	getDetailedExpensesGroupedFromRange,
 	getAveragePerMonth,
 	averageOfLast,
 	getLastTwelveValuesFromArrayIfTheyExist,
