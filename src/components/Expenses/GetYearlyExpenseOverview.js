@@ -18,6 +18,6 @@ export const GetYearlyExpenseOverview = ({ startDate, endDate }) => {
 }
 
 GetYearlyExpenseOverview.propTypes = {
-	startDate: PropTypes.string.isRequired,
-	endDate: PropTypes.string.isRequired,
+	startDate: PropTypes.object.isRequired,
+	endDate: PropTypes.object.isRequired,
 }

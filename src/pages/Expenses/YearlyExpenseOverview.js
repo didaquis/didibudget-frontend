@@ -3,9 +3,30 @@ import { Fragment } from 'react'
 import { PageTitle } from '../../components/PageTitle'
 import { GetYearlyExpenseOverview } from '../../components/Expenses/GetYearlyExpenseOverview'
 
+
+const getFirstMillisecondOfTwelveMonthsBeforePreviousMonth = () => {
+	const now = new Date()
+	const firstDayOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+	const result = new Date(firstDayOfCurrentMonth.getTime() - 1)
+	result.setHours(0, 0, 0, 0)
+	result.setDate(1)
+	result.setFullYear(result.getFullYear() - 1)
+
+	return result
+}
+
+const getLastMillisecondOfPreviousMonth = () => {
+	const now = new Date()
+	const firstDayOfCurrentMonth = new Date(now.getFullYear(), now.getMonth(), 1)
+	const result = new Date(firstDayOfCurrentMonth.getTime() - 1)
+
+	return result
+}
+
+
 const YearlyExpenseOverview = () => {
-	const startDate = '2023-09-11T22:00:00.000Z' // TODO: Pending to pass valid parameters
-	const endDate = '2023-11-30T21:59:59.999Z'
+	const startDate = getFirstMillisecondOfTwelveMonthsBeforePreviousMonth()
+	const endDate = getLastMillisecondOfPreviousMonth()
 
 	return (
 		<Fragment>
