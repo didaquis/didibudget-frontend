@@ -6,9 +6,9 @@ import { getNameOfCategoryOrSubcategory } from '../utils'
 import { DetailedCategoryInExpensesGroup } from '../DetailedCategoryInExpensesGroup'
 import { ToggleButton } from '../../ToggleButton'
 
-export const DetailedExpensesGroup = ( { expensesGroupData, categories } ) => {
+export const DetailedExpensesGroup = ( { expensesGroupData, categories, isDetailedInformationDisplayedByDefault = false } ) => {
 
-	const [toggleShowDetailedInformation, setToggleShowDetailedInformation] = useState(false)
+	const [toggleShowDetailedInformation, setToggleShowDetailedInformation] = useState(isDetailedInformationDisplayedByDefault)
 
 	const onToggleDetailedInformation = (value) => {
 		setToggleShowDetailedInformation(value)
@@ -81,5 +81,6 @@ DetailedExpensesGroup.propTypes = {
 			),
 			uuid: PropTypes.string.isRequired
 		})
-	)
+	),
+	isDetailedInformationDisplayedByDefault: PropTypes.bool
 }

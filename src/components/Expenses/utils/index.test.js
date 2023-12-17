@@ -185,7 +185,7 @@ describe('getDetailedExpensesGroupedFromRange', () => {
 		expect(result).toBeNull()
 	})
 
-	xtest('should return a formated results', () => { // TODO: This test should pass
+	test('should return a formated results', () => {
 		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, new Date(2021, 0, 1), new Date(2022, 0, 1))
 
 		expect(result).toEqual(expectedDataForGetDetailedExpensesGroupedFromRange)

@@ -317,15 +317,87 @@ const getDetailedExpensesGroupedFromRange = (rawData = [], startDate = null, end
 		return null
 	}
 
-	const expenseGroupDTO = (label, sum) => {
+	const expenseGroupDTO = (label, sum, dataPerCategory) => {
 		return {
 			groupTitle: label,
 			groupTotal: trimDecimalPoints(sum),
-			perCategory: []
+			perCategory: [...dataPerCategory]
 		}
 	}
 
-	return expenseGroupDTO(`From ${getLocaleDateString(startDate)} to ${getLocaleDateString(endDate)}`, 0)
+	const categoryDTO = (uuid, quantity, subcategoriesParsed = []) => {
+		return {
+			idCategory: uuid,
+			totalInCategory: trimDecimalPoints(quantity),
+			perSubcategory: subcategoriesParsed
+		}
+	}
+
+	const getParsedSubcategoriesInThisMonth = (expensesInThisMonth) => {
+		const listOfSubcategoriesInThisMonth = []
+		expensesInThisMonth.forEach(expense => {
+			if (!listOfSubcategoriesInThisMonth.includes(expense.subcategory)) {
+				listOfSubcategoriesInThisMonth.push(expense.subcategory)
+			}
+		})
+
+		const totalExpensePerSubcategory = []
+		listOfSubcategoriesInThisMonth.forEach(subcategory => {
+			if (subcategory) {
+				let quantity = 0
+				let uuidParentCategory
+				expensesInThisMonth.forEach(expense => {
+					if (expense.subcategory === subcategory) {
+						quantity += expense.quantity
+						uuidParentCategory = expense.category
+					}
+				})
+				totalExpensePerSubcategory.push({
+					uuidParentCategory: uuidParentCategory,
+					idSubcategory: subcategory,
+					totalInSubcategory: trimDecimalPoints(quantity)
+				})
+			}
+		})
+
+		return totalExpensePerSubcategory
+	}
+
+	const parsedSubcategoriesInThisMonth = getParsedSubcategoriesInThisMonth(rawData)
+
+	const listOfCategoriesInThisMonth = []
+	rawData.forEach(expense => {
+		if (!listOfCategoriesInThisMonth.includes(expense.category)) {
+			listOfCategoriesInThisMonth.push(expense.category)
+		}
+	})
+
+	const totalExpensePerCategory = listOfCategoriesInThisMonth.map(category => {
+		let quantity = 0
+		rawData.forEach(expense => {
+			if (expense.category === category) {
+				quantity += expense.quantity
+			}
+		})
+
+		const subcategories = parsedSubcategoriesInThisMonth.filter(subcategory => subcategory.uuidParentCategory === category)
+		const subcategoriesParsed = subcategories.map(subcategory => {
+			const result = {
+				...subcategory
+			}
+			delete result.uuidParentCategory
+			return result
+		})
+
+		return categoryDTO(category, quantity, subcategoriesParsed)
+	})
+
+	const groupTotal = rawData.reduce(function(accum, expense){
+		return accum + expense.quantity
+	}, 0)
+
+	const arrayOf_categoryDTO = [...totalExpensePerCategory]
+	return expenseGroupDTO(`From ${getLocaleDateString(startDate)} to ${getLocaleDateString(endDate)}`, groupTotal, arrayOf_categoryDTO)
 }
 
 /**

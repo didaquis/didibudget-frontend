@@ -7,7 +7,6 @@ import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
 export const YearlyExpenseOverview = ( { startDate, endDate, expenses, categories } ) => {
 	const expensesGroupedData = getDetailedExpensesGroupedFromRange(expenses, startDate, endDate)
-	console.log(expensesGroupedData) // TODO: remove this
 
 	if (!expensesGroupedData) {
 		const errorMessage = 'Not enough data'
@@ -16,7 +15,7 @@ export const YearlyExpenseOverview = ( { startDate, endDate, expenses, categorie
 
 	return (
 		<section className="pt-4">
-			<DetailedExpensesGroup expensesGroupData={expensesGroupedData} categories={categories} />
+			<DetailedExpensesGroup expensesGroupData={expensesGroupedData} categories={categories} isDetailedInformationDisplayedByDefault={true} />
 		</section>
 	)
 }
