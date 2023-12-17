@@ -288,16 +288,16 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 			return getLocaleDateString(expense.date) === month.groupTitle
 		})
 
-		const parsedSubcategoriesInThisMonth = getParsedSubcategoriesInAGroup(expensesInThisGroup)
+		const parsedSubcategoriesInThisGroup = getParsedSubcategoriesInAGroup(expensesInThisGroup)
 
-		const listOfCategoriesInThisGroup = []
+		const listOfCategoryUUIDInThisGroup = []
 		expensesInThisGroup.forEach(expense => {
-			if (!listOfCategoriesInThisGroup.includes(expense.category)) {
-				listOfCategoriesInThisGroup.push(expense.category)
+			if (!listOfCategoryUUIDInThisGroup.includes(expense.category)) {
+				listOfCategoryUUIDInThisGroup.push(expense.category)
 			}
 		})
 
-		const totalExpensePerCategory = listOfCategoriesInThisGroup.map(category => {
+		const totalExpensePerCategory = listOfCategoryUUIDInThisGroup.map(category => {
 			let quantity = 0
 			expensesInThisGroup.forEach(expense => {
 				if (expense.category === category) {
@@ -305,7 +305,7 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 				}
 			})
 
-			const subcategories = parsedSubcategoriesInThisMonth.filter(subcategory => subcategory.uuidParentCategory === category)
+			const subcategories = parsedSubcategoriesInThisGroup.filter(subcategory => subcategory.uuidParentCategory === category)
 			const subcategoriesParsed = subcategories.map(subcategory => {
 				const result = {
 					...subcategory
@@ -344,22 +344,21 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
  * @returns {Object | null}
  */
 const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate = null, endDate = null) => {
-	// TODO: Terminar esta función
 	if (!expensesInThisGroup.length || !startDate || !endDate) {
 
 		return null
 	}
 
-	const parsedSubcategoriesInThisMonth = getParsedSubcategoriesInAGroup(expensesInThisGroup)
+	const parsedSubcategoriesInThisGroup = getParsedSubcategoriesInAGroup(expensesInThisGroup)
 
-	const listOfCategoriesInThisGroup = []
+	const listOfCategoryUUIDInThisGroup = []
 	expensesInThisGroup.forEach(expense => {
-		if (!listOfCategoriesInThisGroup.includes(expense.category)) {
-			listOfCategoriesInThisGroup.push(expense.category)
+		if (!listOfCategoryUUIDInThisGroup.includes(expense.category)) {
+			listOfCategoryUUIDInThisGroup.push(expense.category)
 		}
 	})
 
-	const totalExpensePerCategory = listOfCategoriesInThisGroup.map(category => {
+	const totalExpensePerCategory = listOfCategoryUUIDInThisGroup.map(category => {
 		let quantity = 0
 		expensesInThisGroup.forEach(expense => {
 			if (expense.category === category) {
@@ -367,7 +366,7 @@ const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate
 			}
 		})
 
-		const subcategories = parsedSubcategoriesInThisMonth.filter(subcategory => subcategory.uuidParentCategory === category)
+		const subcategories = parsedSubcategoriesInThisGroup.filter(subcategory => subcategory.uuidParentCategory === category)
 		const subcategoriesParsed = subcategories.map(subcategory => {
 			const result = {
 				...subcategory
