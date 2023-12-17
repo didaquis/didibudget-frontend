@@ -176,9 +176,85 @@ const getNameOfCategoryOrSubcategory = (target, categories) => {
 }
 
 /**
+ * This function groups all expenses by their subcategory
+ * @requires trimDecimalPoints
+ * @param {Array.<Object>} expensesInThisGroup - An array of objects
+ * @param {string} expensesInThisGroup.category - An UUID value to identify a category
+ * @param {string|null} expensesInThisGroup.subcategory - An UUID value to identify a subcategory or null
+ * @param {number} expensesInThisGroup.quantity - An integer o float number
+ * @param {string} expensesInThisGroup.date - A valid date with this format: '1514447205699'
+ * @param {string} expensesInThisGroup.currencyISO - A currency. Example: 'EUR'
+ * @param {string} expensesInThisGroup.uuid - An UUID value
+ * @returns {Array.<Object>}
+ */
+const getParsedSubcategoriesInAGroup = (expensesInThisGroup) => {
+	const listOfSubcategoriesInThisGroup = []
+	expensesInThisGroup.forEach(expense => {
+		if (!listOfSubcategoriesInThisGroup.includes(expense.subcategory)) {
+			listOfSubcategoriesInThisGroup.push(expense.subcategory)
+		}
+	})
+
+	const totalExpensePerSubcategory = []
+	listOfSubcategoriesInThisGroup.forEach(subcategory => {
+		if (subcategory) {
+			let quantity = 0
+			let uuidParentCategory
+			expensesInThisGroup.forEach(expense => {
+				if (expense.subcategory === subcategory) {
+					quantity += expense.quantity
+					uuidParentCategory = expense.category
+				}
+			})
+			totalExpensePerSubcategory.push({
+				uuidParentCategory: uuidParentCategory,
+				idSubcategory: subcategory,
+				totalInSubcategory: trimDecimalPoints(quantity)
+			})
+		}
+	})
+
+	return totalExpensePerSubcategory
+}
+
+/**
+ * This function creates a DTO to be used to display the expenses data
+ * @requires trimDecimalPoints
+ * @param {string} label - Label to identify what is the content of expenses group
+ * @param {float|integer} sum - The total quantity of a group
+ * @param {Array.<Object>} [dataPerCategory=[]] - An optional array containing grouped expenses by category
+ * @returns {Object}
+ */
+const expenseGroupDTO = (label, sum, dataPerCategory = []) => {
+	return {
+		groupTitle: label,
+		groupTotal: trimDecimalPoints(sum),
+		perCategory: [...dataPerCategory]
+	}
+}
+
+/**
+ * This function creates a DTO to be used to group all expenses on a category
+ * @requires trimDecimalPoints
+ * @param {string} uuid - The UUID of a category
+ * @param {float|integer} quantity - The total quantity of a category
+ * @param {Array.<Object>} [subcategoriesParsed=[]] - An optional array with expenses grouped by their subcategory
+ *  @returns {Object}
+ */
+const categoryDTO = (uuid, quantity, subcategoriesParsed = []) => {
+	return {
+		idCategory: uuid,
+		totalInCategory: trimDecimalPoints(quantity),
+		perSubcategory: subcategoriesParsed
+	}
+}
+
+/**
  * This function performs a summation grouping the expenses by months. For each month, the categories of expenses are grouped. For each category their subcategories are also grouped
  * @requires trimDecimalPoints
  * @requires getSumPerMonth
+ * @requires expenseGroupDTO
+ * @requires categoryDTO
  * @param {Array.<Object>} rawData - An array of objects (the object must contain a date property)
  * @param {string} rawData.category - An UUID value to identify a category
  * @param {string|null} rawData.subcategory - An UUID value to identify a subcategory or null
@@ -200,75 +276,30 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 		}
 	})
 
-	const monthDTO = (label, sum) => {
-		return {
-			groupTitle: label,
-			groupTotal: trimDecimalPoints(sum),
-			perCategory: []
-		}
-	}
-	const categoryDTO = (uuid, quantity, subcategoriesParsed = []) => {
-		return {
-			idCategory: uuid,
-			totalInCategory: trimDecimalPoints(quantity),
-			perSubcategory: subcategoriesParsed
-		}
-	}
-	
-	const getParsedSubcategoriesInThisMonth = (expensesInThisMonth) => {
-		const listOfSubcategoriesInThisMonth = []
-		expensesInThisMonth.forEach(expense => {
-			if (!listOfSubcategoriesInThisMonth.includes(expense.subcategory)) {
-				listOfSubcategoriesInThisMonth.push(expense.subcategory)
-			}
-		})
-
-		const totalExpensePerSubcategory = []
-		listOfSubcategoriesInThisMonth.forEach(subcategory => {
-			if (subcategory) {
-				let quantity = 0
-				let uuidParentCategory
-				expensesInThisMonth.forEach(expense => {
-					if (expense.subcategory === subcategory) {
-						quantity += expense.quantity
-						uuidParentCategory = expense.category
-					}
-				})
-				totalExpensePerSubcategory.push({
-					uuidParentCategory: uuidParentCategory,
-					idSubcategory: subcategory,
-					totalInSubcategory: trimDecimalPoints(quantity)
-				})
-			}
-		})
-
-		return totalExpensePerSubcategory
-	}
-
 	const sumPerMonth = getSumPerMonth(data)
 
 	const parsedMonths = sumPerMonth.map(month => {
-		return monthDTO(month.label, month.sum)
+		return expenseGroupDTO(month.label, month.sum)
 	})
 
 	const parsedMonthsWithCategoriesAndSubcategories = parsedMonths.map(month => {
 
-		const allExpensesInThisMonth = data.filter(expense => {
+		const expensesInThisGroup = data.filter(expense => {
 			return getLocaleDateString(expense.date) === month.groupTitle
 		})
 
-		const parsedSubcategoriesInThisMonth = getParsedSubcategoriesInThisMonth(allExpensesInThisMonth)
+		const parsedSubcategoriesInThisMonth = getParsedSubcategoriesInAGroup(expensesInThisGroup)
 
-		const listOfCategoriesInThisMonth = []
-		allExpensesInThisMonth.forEach(expense => {
-			if (!listOfCategoriesInThisMonth.includes(expense.category)) {
-				listOfCategoriesInThisMonth.push(expense.category)
+		const listOfCategoriesInThisGroup = []
+		expensesInThisGroup.forEach(expense => {
+			if (!listOfCategoriesInThisGroup.includes(expense.category)) {
+				listOfCategoriesInThisGroup.push(expense.category)
 			}
 		})
 
-		const totalExpensePerCategory = listOfCategoriesInThisMonth.map(category => {
+		const totalExpensePerCategory = listOfCategoriesInThisGroup.map(category => {
 			let quantity = 0
-			allExpensesInThisMonth.forEach(expense => {
+			expensesInThisGroup.forEach(expense => {
 				if (expense.category === category) {
 					quantity += expense.quantity
 				}
@@ -299,82 +330,38 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
  * This function performs a summation grouping the expenses by category and subcategory for a range of months.
  * @requires trimDecimalPoints
  * @requires getLocaleDateString
- * @param {Array.<Object>} rawData - An array of objects (the object must contain a date property)
- * @param {string} rawData.category - An UUID value to identify a category
- * @param {string|null} rawData.subcategory - An UUID value to identify a subcategory or null
- * @param {number} rawData.quantity - An integer o float number
- * @param {string} rawData.date - A valid date with this format: '1514447205699'
- * @param {string} rawData.currencyISO - A currency. Example: 'EUR'
- * @param {string} rawData.uuid - An UUID value
+ * @requires expenseGroupDTO
+ * @requires categoryDTO
+ * @param {Array.<Object>} expensesInThisGroup - An array of objects (the object must contain a date property)
+ * @param {string} expensesInThisGroup.category - An UUID value to identify a category
+ * @param {string|null} expensesInThisGroup.subcategory - An UUID value to identify a subcategory or null
+ * @param {number} expensesInThisGroup.quantity - An integer o float number
+ * @param {string} expensesInThisGroup.date - A valid date with this format: '1514447205699'
+ * @param {string} expensesInThisGroup.currencyISO - A currency. Example: 'EUR'
+ * @param {string} expensesInThisGroup.uuid - An UUID value
  * @param {Date} startDate - The initial date of the range
  * @param {Date} endDate - The end date of the range
  * @returns {Object | null}
  */
-const getDetailedExpensesGroupedFromRange = (rawData = [], startDate = null, endDate = null) => {
+const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate = null, endDate = null) => {
 	// TODO: Terminar esta función
-	if (!rawData.length || !startDate || !endDate) {
+	if (!expensesInThisGroup.length || !startDate || !endDate) {
 
 		return null
 	}
 
-	const expenseGroupDTO = (label, sum, dataPerCategory) => {
-		return {
-			groupTitle: label,
-			groupTotal: trimDecimalPoints(sum),
-			perCategory: [...dataPerCategory]
-		}
-	}
+	const parsedSubcategoriesInThisMonth = getParsedSubcategoriesInAGroup(expensesInThisGroup)
 
-	const categoryDTO = (uuid, quantity, subcategoriesParsed = []) => {
-		return {
-			idCategory: uuid,
-			totalInCategory: trimDecimalPoints(quantity),
-			perSubcategory: subcategoriesParsed
-		}
-	}
-
-	const getParsedSubcategoriesInThisMonth = (expensesInThisMonth) => {
-		const listOfSubcategoriesInThisMonth = []
-		expensesInThisMonth.forEach(expense => {
-			if (!listOfSubcategoriesInThisMonth.includes(expense.subcategory)) {
-				listOfSubcategoriesInThisMonth.push(expense.subcategory)
-			}
-		})
-
-		const totalExpensePerSubcategory = []
-		listOfSubcategoriesInThisMonth.forEach(subcategory => {
-			if (subcategory) {
-				let quantity = 0
-				let uuidParentCategory
-				expensesInThisMonth.forEach(expense => {
-					if (expense.subcategory === subcategory) {
-						quantity += expense.quantity
-						uuidParentCategory = expense.category
-					}
-				})
-				totalExpensePerSubcategory.push({
-					uuidParentCategory: uuidParentCategory,
-					idSubcategory: subcategory,
-					totalInSubcategory: trimDecimalPoints(quantity)
-				})
-			}
-		})
-
-		return totalExpensePerSubcategory
-	}
-
-	const parsedSubcategoriesInThisMonth = getParsedSubcategoriesInThisMonth(rawData)
-
-	const listOfCategoriesInThisMonth = []
-	rawData.forEach(expense => {
-		if (!listOfCategoriesInThisMonth.includes(expense.category)) {
-			listOfCategoriesInThisMonth.push(expense.category)
+	const listOfCategoriesInThisGroup = []
+	expensesInThisGroup.forEach(expense => {
+		if (!listOfCategoriesInThisGroup.includes(expense.category)) {
+			listOfCategoriesInThisGroup.push(expense.category)
 		}
 	})
 
-	const totalExpensePerCategory = listOfCategoriesInThisMonth.map(category => {
+	const totalExpensePerCategory = listOfCategoriesInThisGroup.map(category => {
 		let quantity = 0
-		rawData.forEach(expense => {
+		expensesInThisGroup.forEach(expense => {
 			if (expense.category === category) {
 				quantity += expense.quantity
 			}
@@ -392,12 +379,11 @@ const getDetailedExpensesGroupedFromRange = (rawData = [], startDate = null, end
 		return categoryDTO(category, quantity, subcategoriesParsed)
 	})
 
-	const groupTotal = rawData.reduce(function(accum, expense){
+	const groupTotal = expensesInThisGroup.reduce(function(accum, expense){
 		return accum + expense.quantity
 	}, 0)
 
-	const arrayOf_categoryDTO = [...totalExpensePerCategory]
-	return expenseGroupDTO(`From ${getLocaleDateString(startDate)} to ${getLocaleDateString(endDate)}`, groupTotal, arrayOf_categoryDTO)
+	return expenseGroupDTO(`From ${getLocaleDateString(startDate)} to ${getLocaleDateString(endDate)}`, groupTotal, totalExpensePerCategory)
 }
 
 /**
