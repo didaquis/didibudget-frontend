@@ -1,34 +1,29 @@
 import PropTypes from 'prop-types'
 
-import { getDetailedExpensesPerMonth } from '../utils'
+import { getDetailedExpensesGroupedFromRange } from '../utils'
 
 import { ErrorAlert } from '../../ErrorAlert'
 import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
-export const AnalysisOfExpenses = ( { expenses, categories } ) => {
-	if (expenses.length) {
-		const expensesData = getDetailedExpensesPerMonth(expenses)
-		const reversedData = expensesData.slice(0).reverse()
+export const YearlyExpenseOverview = ( { startDate, endDate, expenses, categories } ) => {
+	const expensesGroupedData = getDetailedExpensesGroupedFromRange(expenses, startDate, endDate)
 
-		return (
-			<section className="pt-4">
-				{
-					reversedData.map(monthData => {
-						return (
-							<DetailedExpensesGroup expensesGroupData={monthData} categories={categories} key={monthData.groupTitle} />
-						)
-					})
-				}
-			</section>
-		)
-	} else {
+	if (!expensesGroupedData) {
 		const errorMessage = 'Not enough data'
 		return <ErrorAlert errorMessage={errorMessage} />
 	}
+
+	return (
+		<section className="pt-4">
+			<DetailedExpensesGroup expensesGroupData={expensesGroupedData} categories={categories} isDetailedInformationDisplayedByDefault={true} />
+		</section>
+	)
 }
 
 
-AnalysisOfExpenses.propTypes = {
+YearlyExpenseOverview.propTypes = {
+	startDate: PropTypes.object.isRequired,
+	endDate: PropTypes.object.isRequired,
 	expenses: PropTypes.arrayOf(
 		PropTypes.shape({
 			date: PropTypes.string.isRequired,

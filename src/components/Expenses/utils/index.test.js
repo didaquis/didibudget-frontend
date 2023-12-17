@@ -1,6 +1,6 @@
-import { getNameOfCategoryOrSubcategory, getSumPerMonth, getDetailedExpendesPerMonth, getAveragePerMonth, averageOfLast } from './index'
+import { getNameOfCategoryOrSubcategory, getSumPerMonth, getDetailedExpensesPerMonth, getDetailedExpensesGroupedFromRange, getAveragePerMonth, averageOfLast } from './index'
 
-import { expensesRawData, expectedData, expensesRawDataForGetDetailedExpendesPerMonth, expectedDataForGetDetailedExpendesPerMonth, expectedAverageData } from './fixtures'
+import { expensesRawData, expectedData, expensesRawDataForGetDetailedExpendesPerMonth, expectedDataForGetDetailedExpendesPerMonth, expensesRawDataForGetDetailedExpensesGroupedFromRange, expectedDataForGetDetailedExpensesGroupedFromRange, expectedAverageData } from './fixtures'
 
 
 describe('getNameOfCategoryOrSubcategory', () => {
@@ -149,26 +149,46 @@ describe('getSumPerMonth', () => {
 	})
 })
 
-describe('getDetailedExpendesPerMonth', () => {
+describe('getDetailedExpensesPerMonth', () => {
 	test('should return an empty array if no receive params', () => {
-		const result = getDetailedExpendesPerMonth()
+		const result = getDetailedExpensesPerMonth()
 
 		expect(Array.isArray(result)).toBe(true)
 		expect(result).toEqual([])
 	})
 
-	test('should return an empty array receive an empty array', () => {
-		const result = getDetailedExpendesPerMonth([])
+	test('should return an empty array if receive an empty array', () => {
+		const result = getDetailedExpensesPerMonth([])
 
 		expect(Array.isArray(result)).toBe(true)
 		expect(result).toEqual([])
 	})
 
 	test('should return a formated results', () => {
-		const result = getDetailedExpendesPerMonth(expensesRawDataForGetDetailedExpendesPerMonth)
+		const result = getDetailedExpensesPerMonth(expensesRawDataForGetDetailedExpendesPerMonth)
 
 		expect(Array.isArray(result)).toBe(true)
 		expect(result).toEqual(expectedDataForGetDetailedExpendesPerMonth)
+	})
+})
+
+describe('getDetailedExpensesGroupedFromRange', () => {
+	test('should return null if no receive params', () => {
+		const result = getDetailedExpensesGroupedFromRange()
+
+		expect(result).toBeNull()
+	})
+
+	test('should return an empty array if receive an empty array', () => {
+		const result = getDetailedExpensesGroupedFromRange([], new Date(2021, 0, 1), new Date(2021, 6, 31))
+
+		expect(result).toBeNull()
+	})
+
+	test('should return a formated results', () => {
+		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, new Date(2021, 0, 1), new Date(2022, 0, 1))
+
+		expect(result).toEqual(expectedDataForGetDetailedExpensesGroupedFromRange)
 	})
 })
 

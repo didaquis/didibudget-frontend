@@ -3,31 +3,31 @@ import PropTypes from 'prop-types'
 
 import { getNameOfCategoryOrSubcategory } from '../utils'
 
-import { DetailedCategoryInMonth } from '../DetailedCategoryInMonth'
+import { DetailedCategoryInExpensesGroup } from '../DetailedCategoryInExpensesGroup'
 import { ToggleButton } from '../../ToggleButton'
 
-export const DetailedMonth = ( { monthData, categories } ) => {
+export const DetailedExpensesGroup = ( { expensesGroupData, categories, isDetailedInformationDisplayedByDefault = false } ) => {
 
-	const [toggleShowDetailedInformation, setToggleShowDetailedInformation] = useState(false)
+	const [toggleShowDetailedInformation, setToggleShowDetailedInformation] = useState(isDetailedInformationDisplayedByDefault)
 
 	const onToggleDetailedInformation = (value) => {
 		setToggleShowDetailedInformation(value)
 	}
 
-	const hasSubcategories = monthData.perCategory.some(category => !!category.perSubcategory.length)
+	const hasSubcategories = expensesGroupData.perCategory.some(category => !!category.perSubcategory.length)
 
 	return (
 		<section className="table-responsive mb-5">
 			<table className="table table-dark">
 				<thead>
 					<tr className="table-info text-dark">
-						<th scope="col" className="text-nowrap">{monthData.month}</th>
-						<th scope="col" className="text-nowrap text-right">{monthData.totalInMonth} EUR</th>
+						<th scope="col" className="text-nowrap">{expensesGroupData.groupTitle}</th>
+						<th scope="col" className="text-nowrap text-right">{expensesGroupData.groupTotal} EUR</th>
 					</tr>
 				</thead>
 				<tbody>
 					{
-						monthData.perCategory.map(category => {
+						expensesGroupData.perCategory.map(category => {
 							const nameOfCategory = getNameOfCategoryOrSubcategory(category.idCategory, categories)
 							
 							return (
@@ -36,9 +36,9 @@ export const DetailedMonth = ( { monthData, categories } ) => {
 										<td>{nameOfCategory}</td>
 										<td className="text-nowrap text-right">{category.totalInCategory} EUR</td>
 									</tr>
-									<DetailedCategoryInMonth
+									<DetailedCategoryInExpensesGroup
 										displaySubcategories={toggleShowDetailedInformation}
-										categoryInMonth={category}
+										categoryInGroup={category}
 										categories={categories}
 									/>
 								</Fragment>
@@ -62,10 +62,10 @@ export const DetailedMonth = ( { monthData, categories } ) => {
 }
 
 
-DetailedMonth.propTypes = {
-	monthData: PropTypes.shape({
-		month: PropTypes.string.isRequired,
-		totalInMonth: PropTypes.number.isRequired,
+DetailedExpensesGroup.propTypes = {
+	expensesGroupData: PropTypes.shape({
+		groupTitle: PropTypes.string.isRequired,
+		groupTotal: PropTypes.number.isRequired,
 		perCategory: PropTypes.array.isRequired,
 	}),
 	categories: PropTypes.arrayOf(
@@ -81,5 +81,6 @@ DetailedMonth.propTypes = {
 			),
 			uuid: PropTypes.string.isRequired
 		})
-	)
+	),
+	isDetailedInformationDisplayedByDefault: PropTypes.bool
 }
