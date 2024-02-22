@@ -328,34 +328,28 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 		return []
 	}
 
-	try {
-		const data = rawData.map(expense => {
-			return {
-				...expense,
-				date: parseUnixTimestamp(expense.date).substring(0, 10)
-			}
+	const data = rawData.map(expense => {
+		return {
+			...expense,
+			date: parseUnixTimestamp(expense.date).substring(0, 10)
+		}
+	})
+
+	const sumPerMonth = getSumPerMonth(data)
+
+	const parsedMonthsWithCategoriesAndSubcategories = sumPerMonth.map(month => {
+		const expensesInThisGroup = data.filter(expense => {
+			return getLocaleDateString(expense.date) === month.label
 		})
 
-		const sumPerMonth = getSumPerMonth(data)
+		const dataPerCategory = getDataPerCategory(expensesInThisGroup)
 
-		const parsedMonthsWithCategoriesAndSubcategories = sumPerMonth.map(month => {
-			const expensesInThisGroup = data.filter(expense => {
-				return getLocaleDateString(expense.date) === month.label
-			})
+		const groupTotal = getExpenseGroupTotal(expensesInThisGroup)
 
-			const dataPerCategory = getDataPerCategory(expensesInThisGroup)
+		return expenseGroupDTO(month.label, groupTotal, dataPerCategory)
+	})
 
-			const groupTotal = getExpenseGroupTotal(expensesInThisGroup)
-
-			return expenseGroupDTO(month.label, groupTotal, dataPerCategory)
-		})
-
-		return parsedMonthsWithCategoriesAndSubcategories
-	} catch (error) {
-		console.error('getDetailedExpensesPerMonth')
-		console.error(error)
-		return []
-	}
+	return parsedMonthsWithCategoriesAndSubcategories
 }
 
 /**
