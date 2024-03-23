@@ -1,6 +1,15 @@
 import { getNameOfCategoryOrSubcategory, getSumPerMonth, getDetailedExpensesPerMonth, getDetailedExpensesGroupedFromRange, getAveragePerMonth, averageOfLast } from './index'
 
-import { expensesRawData, expectedData, expensesRawDataForGetDetailedExpendesPerMonth, expectedDataForGetDetailedExpendesPerMonth, expensesRawDataForGetDetailedExpensesGroupedFromRange, expectedDataForGetDetailedExpensesGroupedFromRange, expectedAverageData } from './fixtures'
+import {
+	expensesRawData,
+	expectedData,
+	expensesRawDataForGetDetailedExpendesPerMonth,
+	expectedDataForGetDetailedExpendesPerMonth,
+	expensesRawDataForGetDetailedExpensesGroupedFromRange,
+	expectedDataForGetDetailedExpensesGroupedFromRange,
+	expectedAverageData,
+	expectedDataForGetDetailedExpensesGroupedFromRangeOnCurrentMonth
+} from './fixtures'
 
 
 describe('getNameOfCategoryOrSubcategory', () => {
@@ -185,10 +194,16 @@ describe('getDetailedExpensesGroupedFromRange', () => {
 		expect(result).toBeNull()
 	})
 
-	test('should return a formated results', () => {
+	test('should return a formatted results', () => {
 		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, new Date(2021, 0, 1), new Date(2022, 0, 1))
 
 		expect(result).toEqual(expectedDataForGetDetailedExpensesGroupedFromRange)
+	})
+
+	test('should return a formatted results with a simplified group title if initial date and end date is the same', () => {
+		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, new Date(2021, 0, 1), new Date(2021, 0, 1))
+
+		expect(result).toEqual(expectedDataForGetDetailedExpensesGroupedFromRangeOnCurrentMonth)
 	})
 })
 
