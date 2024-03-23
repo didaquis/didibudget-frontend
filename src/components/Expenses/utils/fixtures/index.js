@@ -315,4 +315,44 @@ export const expectedDataForGetDetailedExpensesGroupedFromRange = {
 	]
 }
 
+export const expectedDataForGetDetailedExpensesGroupedFromRangeOnCurrentMonth = {
+	groupTitle: 'January 2021',
+	groupTotal: 245,
+	perCategory: [
+		{
+			idCategory: '5e64ec217048af874c4f14d7',
+			totalInCategory: 207,
+			perSubcategory: [
+				{
+					idSubcategory: '5ea7113296474318495ba3e5',
+					totalInSubcategory: 140
+				},
+				{
+					idSubcategory: '5e64ec217048af874c4f14b4',
+					totalInSubcategory: 67
+				}
+			]
+		},
+		{
+			idCategory: '5e64ec217048af874c4f14d8',
+			totalInCategory: 33,
+			perSubcategory: [
+				{
+					idSubcategory: '5e64ec217048af874c4f14c1',
+					totalInSubcategory: 27
+				},
+				{
+					idSubcategory: '5e64ec217048af874c4f14c2',
+					totalInSubcategory: 6
+				}
+			]
+		},
+		{
+			idCategory: '5e64ec217048af874c4f14d2',
+			totalInCategory: 5,
+			perSubcategory: []
+		}
+	]
+}
+
 export const expectedAverageData = [ 99, 0, 166.16, 40, 0, 0 ]

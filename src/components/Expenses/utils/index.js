@@ -384,7 +384,15 @@ const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate
 
 	const groupTotal = getExpenseGroupTotal(expensesInThisGroup)
 
-	return expenseGroupDTO(`From ${getLocaleDateString(startDate)} to ${getLocaleDateString(endDate)}`, groupTotal, dataPerCategory)
+	const startMonth = getLocaleDateString(startDate)
+	const endMonth = getLocaleDateString(endDate)
+
+	let title = `From ${startMonth} to ${endMonth}`
+	if (startMonth === endMonth) {
+		title = startMonth
+	}
+
+	return expenseGroupDTO(title, groupTotal, dataPerCategory)
 }
 
 /**
