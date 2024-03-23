@@ -370,8 +370,8 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
  * @param {string} expensesInThisGroup.date - A valid date with this format: '1514447205699'
  * @param {string} expensesInThisGroup.currencyISO - A currency. Example: 'EUR'
  * @param {string} expensesInThisGroup.uuid - An UUID value
- * @param {Date} startDate - The initial date of the range
- * @param {Date} endDate - The end date of the range
+ * @param {string} startDate - The initial date of the range
+ * @param {string} endDate - The end date of the range
  * @returns {Object | null}
  */
 const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate = null, endDate = null) => {
