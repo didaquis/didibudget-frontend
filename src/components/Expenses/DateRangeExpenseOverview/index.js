@@ -5,7 +5,7 @@ import { getDetailedExpensesGroupedFromRange } from '../utils'
 import { ErrorAlert } from '../../ErrorAlert'
 import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
-export const DateRangeExpenseOverview = ({ startDate, endDate, expenses, categories } ) => {
+export const DateRangeExpenseOverview = ({ startDate, endDate, expenses, categories }) => {
 	const expensesGroupedData = getDetailedExpensesGroupedFromRange(expenses, startDate, endDate)
 
 	if (!expensesGroupedData) {
