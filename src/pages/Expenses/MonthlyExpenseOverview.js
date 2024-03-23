@@ -10,7 +10,7 @@ const getFirstDayOfCurrentMonth = () => {
 }
 
 
-const YearlyExpenseOverview = () => {
+const MonthlyExpenseOverview = () => {
     const startDate = getFirstDayOfCurrentMonth()
     const endDate = new Date()
 
@@ -22,6 +22,6 @@ const YearlyExpenseOverview = () => {
     )
 }
 
-YearlyExpenseOverview.displayName = 'YearlyExpenseOverview'
+MonthlyExpenseOverview.displayName = 'MonthlyExpenseOverview'
 
-export default YearlyExpenseOverview
+export default MonthlyExpenseOverview
