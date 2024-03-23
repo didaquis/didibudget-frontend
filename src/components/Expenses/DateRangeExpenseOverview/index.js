@@ -5,7 +5,7 @@ import { getDetailedExpensesGroupedFromRange } from '../utils'
 import { ErrorAlert } from '../../ErrorAlert'
 import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
-export const YearlyExpenseOverview = ( { startDate, endDate, expenses, categories } ) => {
+export const DateRangeExpenseOverview = ({ startDate, endDate, expenses, categories } ) => {
 	const expensesGroupedData = getDetailedExpensesGroupedFromRange(expenses, startDate, endDate)
 
 	if (!expensesGroupedData) {
@@ -21,7 +21,7 @@ export const YearlyExpenseOverview = ( { startDate, endDate, expenses, categorie
 }
 
 
-YearlyExpenseOverview.propTypes = {
+DateRangeExpenseOverview.propTypes = {
 	startDate: PropTypes.object.isRequired,
 	endDate: PropTypes.object.isRequired,
 	expenses: PropTypes.arrayOf(

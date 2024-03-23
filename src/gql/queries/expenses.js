@@ -65,7 +65,7 @@ query ($page: Int!, $pageSize: Int!) {
 }
 `
 
-export const LIST_YEARLY_EXPENSES_AND_CATEGORIES = gql`
+export const LIST_EXPENSES_DATES_RANGE_AND_CATEGORIES = gql`
 query ($startDate: String!, $endDate: String!) {
 	getExpensesBetweenDates (startDate: $startDate, endDate: $endDate) {
 		category
