@@ -1,26 +1,26 @@
 {
   "name": "didibudget-frontend",
-  "version": "0.13.1",
+  "version": "0.13.2",
   "description": "didibudget-frontend",
   "private": true,
   "dependencies": {
-    "@apollo/client": "3.9.5",
-    "graphql": "16.8.1",
+    "@apollo/client": "3.9.11",
+    "graphql": "16.9.0",
     "graphql-tag": "2.12.6",
     "jsonwebtoken": "9.0.2",
     "moment": "2.30.1",
     "prop-types": "15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "4.8.0",
-    "react-router": "6.22.1",
-    "react-router-dom": "6.22.1",
+    "react-icons": "4.12.0",
+    "react-router": "6.26.0",
+    "react-router-dom": "6.26.0",
     "react-scripts": "5.0.1",
     "react-toggle": "4.1.3",
     "react-widgets": "4.6.1",
     "react-widgets-moment": "4.0.30",
     "reactstrap": "8.10.1",
-    "recharts": "2.5.0"
+    "recharts": "2.12.7"
   },
   "scripts": {
     "lint": "eslint --ext .js ./src",
@@ -28,7 +28,7 @@
     "build": "craco build",
     "test": "craco test --colors",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "keywords": [
     "budget",
@@ -76,7 +76,7 @@
     "buffer": "6.0.3",
     "crypto-browserify": "3.12.0",
     "eslint-plugin-no-lenght": "1.0.2-0",
-    "husky": "9.0.11",
+    "husky": "9.1.4",
     "process": "0.11.10",
     "stream-browserify": "3.0.0",
     "util": "0.12.5"
