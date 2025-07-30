@@ -1,4 +1,4 @@
-import { parseDataForGraph, getLastYearData } from './index'
+import { parseDataForGraph, getLastMonthsData } from './index'
 import { rawData, allDataParsed, allDataParsedFewMonths, allDataParsedEnoughtMonths, allDataParsedLotOfMonths, lastYearDataParsed } from './fixtures'
 
 describe('parseDataForGraph', () => {
@@ -14,29 +14,40 @@ describe('parseDataForGraph', () => {
 	})
 })
 
-describe('getLastYearData', () => {
+describe('getLastMonthsData', () => {
 	test('should return an empty array if receive an empty array or nothing', () => {
-		const result = getLastYearData([])
-		const anotherResult = getLastYearData()
+		const result = getLastMonthsData([])
+		const anotherResult = getLastMonthsData()
 	 	expect(result).toEqual([])
 	 	expect(anotherResult).toEqual([])
 	})
 
 	test('should return an empty array if receive an array with length minor than 12', () => {
-		const result = getLastYearData(allDataParsedFewMonths)
+		const result = getLastMonthsData(allDataParsedFewMonths)
 	 	expect(result).toEqual([])
 	})
 
 	test('should return the same array if receive a valid array with length equal of 12', () => {
-		const result = getLastYearData(allDataParsedEnoughtMonths)
+		const result = getLastMonthsData(allDataParsedEnoughtMonths)
 		expect(result).toEqual(lastYearDataParsed)
 		expect(result.length).toEqual(12)
 	})
 
-
 	test('should returns an array with length of 12 if receive an array of valid data with a length of more than 12 months', () => {
-		const result = getLastYearData(allDataParsedLotOfMonths)
+		const result = getLastMonthsData(allDataParsedLotOfMonths)
 	 	expect(result).toEqual(lastYearDataParsed)
 	 	expect(result.length).toEqual(12)
+	})
+
+	test('should return an empty array if the are not enough data', () => {
+		const months = 24
+		const result = getLastMonthsData(allDataParsedEnoughtMonths, months)
+		expect(result).toEqual([])
+	})
+
+	test('should an array with length of 12 if there are enough data', () => {
+		const months = 6
+		const result = getLastMonthsData(allDataParsedEnoughtMonths, months)
+		expect(result.length).toEqual(6)
 	})
 })
