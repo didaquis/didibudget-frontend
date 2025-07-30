@@ -20,7 +20,8 @@
     "react-widgets": "4.6.1",
     "react-widgets-moment": "4.0.30",
     "reactstrap": "8.10.1",
-    "recharts": "2.12.7"
+    "recharts": "2.12.7",
+    "vm-browserify": "1.1.2"
   },
   "scripts": {
     "lint": "eslint --ext .js ./src",
