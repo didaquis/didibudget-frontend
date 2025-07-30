@@ -33,7 +33,7 @@ const allDataParsedLotOfMonths = [
 	{ date: '2015-07-01', balance: 0 },
 	{ date: '2015-08-01', balance: 853.23 },
 	{ date: '2015-08-01', balance: 1266.72 },
-	{ date: '2015-08-01', balance: 2476.87 }
+	{ date: '2015-08-01', balance: 2476.87 },
 ]
 
 const lastYearDataParsed = [

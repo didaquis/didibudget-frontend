@@ -7,7 +7,7 @@ import { parseUnixTimestamp } from '../../../utils/utils'
 import { ErrorAlert } from '../../ErrorAlert'
 import { PageSubTitle } from '../../PageSubTitle'
 
-import { parseDataForGraph, getLastYearData } from '../utils'
+import { parseDataForGraph, getLastMonthsData } from '../utils'
 
 
 class CustomizedAxisTick extends PureComponent {
@@ -32,7 +32,8 @@ export const GraphMonthlyBalance = ({data}) => {
 	})
 
 	const allDataParsed = parseDataForGraph(dataForGraph)
-	const lastYearDataParsed = getLastYearData(allDataParsed)
+	const lastYearDataParsed = getLastMonthsData(allDataParsed, 12)
+	const lastTwoYearsDataParsed = getLastMonthsData(allDataParsed, 24)
 
 	if (allDataParsed.length) {
 		return (
@@ -60,6 +61,26 @@ export const GraphMonthlyBalance = ({data}) => {
 							<ResponsiveContainer>
 								<LineChart
 									data={lastYearDataParsed}
+									margin={{top: 5, right: 20, left: 20, bottom: 100}}
+								>
+									<CartesianGrid strokeDasharray="3 3"/>
+									<XAxis dataKey="date" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
+									<YAxis />
+									<Tooltip />
+									<Line dataKey="balance" fill="#8884d8" />
+								</LineChart>
+							</ResponsiveContainer>
+						</div>
+					</Fragment>
+				}
+				{
+					lastTwoYearsDataParsed.length > 0 &&
+					<Fragment>
+						<PageSubTitle text="Data from the last 24 entries is shown:"/>
+						<div style={{ width: '100%', height: 460 }}>
+							<ResponsiveContainer>
+								<LineChart
+									data={lastTwoYearsDataParsed}
 									margin={{top: 5, right: 20, left: 20, bottom: 100}}
 								>
 									<CartesianGrid strokeDasharray="3 3"/>
