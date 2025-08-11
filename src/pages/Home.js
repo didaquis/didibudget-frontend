@@ -7,8 +7,8 @@ import { UserCard } from '../components/UserCard'
 const Home = () => {
 	const { userData } = useContext(AuthContext)
 	const titleText = 'Welcome to didibudget!'
-	const subtitleText = 'This is a website to manage your money.'
-	const subtitleExtraLineText = 'You can register your saved and your spending and view some graphics related about your personal economy.'
+	const subtitleText = 'This website helps you manage your money.'
+	const subtitleExtraLineText = 'Track your savings and spending, and explore charts that show where your money goes.'
 
 	return (
 		<Fragment>
