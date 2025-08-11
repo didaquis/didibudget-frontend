@@ -340,17 +340,22 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 		}
 	})
 
+	const expensesByMonth = {}
+
+	data.forEach(expense => {
+		const label = getLocaleDateString(expense.date)
+		if (!expensesByMonth[label]) {
+			expensesByMonth[label] = []
+		}
+		expensesByMonth[label].push(expense)
+	})
+
 	const sumPerMonth = getSumPerMonth(data)
 
 	const parsedMonthsWithCategoriesAndSubcategories = sumPerMonth.map(month => {
-		const expensesInThisGroup = data.filter(expense => {
-			return getLocaleDateString(expense.date) === month.label
-		})
-
+		const expensesInThisGroup = expensesByMonth[month.label] || []
 		const dataPerCategory = getDataPerCategory(expensesInThisGroup)
-
 		const groupTotal = getExpenseGroupTotal(expensesInThisGroup)
-
 		return expenseGroupDTO(month.label, groupTotal, dataPerCategory)
 	})
 
