@@ -78,6 +78,11 @@ describe('trimDecimalPoints', () => {
 		expect(result).toEqual(4.2)
 	})
 
+	test('should return a float number with one decimal if receive a float with one decimal', () => {
+		const result = trimDecimalPoints(5.01)
+		expect(result).toEqual(5.01)
+	})
+
 	test('should return a negative float number with two decimals if receive a negative float with more than two decimals', () => {
 		const result = trimDecimalPoints(-34.200000006)
 		expect(result).toEqual(-34.2)
