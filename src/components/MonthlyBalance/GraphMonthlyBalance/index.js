@@ -56,7 +56,7 @@ export const GraphMonthlyBalance = ({data}) => {
 				{
 					lastYearDataParsed.length > 0 &&
 					<Fragment>
-						<PageSubTitle text="Data from the last 24 entries is shown:"/>
+						<PageSubTitle text="Data from the last 12 entries is shown:"/>
 						<div style={{ width: '100%', height: 460 }}>
 							<ResponsiveContainer>
 								<LineChart
