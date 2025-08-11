@@ -256,6 +256,6 @@ describe('averageOfLast', () => {
 	test('should return the average of last 3 numbers', () => {
 		expect(averageOfLast([20, 4, 2, 4], 3)).toBe(3.33)
 		expect(averageOfLast([77, 0, 0, 0,], 3)).toBe(0)
-		expect(averageOfLast([20.01, 13.67, 0,], 3)).toBe(11.22)
+		expect(averageOfLast([20.01, 13.67, 0,], 3)).toBe(11.23)
 	})
 })

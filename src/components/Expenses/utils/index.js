@@ -427,10 +427,10 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 
 		const perCategory = Object.entries(categoryMap).map(([idCategory, catData]) => ({
 			idCategory,
-			totalInCategory: catData.totalInCategory,
+			totalInCategory: trimDecimalPoints(catData.totalInCategory),
 			perSubcategory: Object.entries(catData.subcategories).map(([idSubcategory, totalInSubcategory]) => ({
 				idSubcategory,
-				totalInSubcategory
+				totalInSubcategory: trimDecimalPoints(totalInSubcategory)
 			}))
 		}))
 
