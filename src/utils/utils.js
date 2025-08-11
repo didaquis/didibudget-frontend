@@ -69,8 +69,12 @@ const firstDayOfTheMonth = (date) => {
  * @returns {number}
  */
 const trimDecimalPoints = (number) => {
+	if (number === undefined || number === null) {
+		return 0
+	}
+
 	const fixed = 2
-	return ~~(Math.pow(10, fixed) * number) / Math.pow(10, fixed)
+	return Number(Number(number).toFixed(fixed))
 }
 
 /**

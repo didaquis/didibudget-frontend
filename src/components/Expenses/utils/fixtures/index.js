@@ -114,7 +114,7 @@ export const expensesRawDataForGetDetailedExpendesPerMonth = [
 	{
 		'category': '5e64ec217048af874c4f14d7',
 		'subcategory': '5e64ec217048af874c4f14b4',
-		'quantity': 1,
+		'quantity': 1.001,
 		'date': '1611516408699',
 		'currencyISO': 'EUR',
 		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be20',
@@ -141,7 +141,7 @@ export const expensesRawDataForGetDetailedExpendesPerMonth = [
 	{
 		'category': '5e64ec217048af874c4f14d2',
 		'subcategory': null,
-		'quantity': 2,
+		'quantity': 2.19,
 		'date': '1615547408699',
 		'currencyISO': 'EUR',
 		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be14',
@@ -150,7 +150,7 @@ export const expensesRawDataForGetDetailedExpendesPerMonth = [
 	{
 		'category': '5e64ec217048af874c4f14d2',
 		'subcategory': null,
-		'quantity': 3,
+		'quantity': 3.01,
 		'date': '1615547408699',
 		'currencyISO': 'EUR',
 		'uuid': '040b7060-6322-4cf7-9f52-2cacd5c0be15',
@@ -199,11 +199,11 @@ export const expectedDataForGetDetailedExpendesPerMonth = [{
 },
 {
 	groupTitle: 'March 2021',
-	groupTotal: 5,
+	groupTotal: 5.2,
 	perCategory: [
 		{
 			idCategory: '5e64ec217048af874c4f14d2',
-			totalInCategory: 5,
+			totalInCategory: 5.2,
 			perSubcategory: []
 		}
 	]

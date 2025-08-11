@@ -188,33 +188,33 @@ const getNameOfCategoryOrSubcategory = (target, categories) => {
  * @returns {Array.<Object>}
  */
 const getParsedSubcategoriesInAGroup = (expensesInThisGroup) => {
-	const listOfSubcategoriesInThisGroup = []
+	if (!expensesInThisGroup.length) {
+		return []
+	}
+
+	const subcategoryMap = {}
+
 	expensesInThisGroup.forEach(expense => {
-		if (!listOfSubcategoriesInThisGroup.includes(expense.subcategory)) {
-			listOfSubcategoriesInThisGroup.push(expense.subcategory)
+		const { subcategory, category, quantity } = expense
+		if (!subcategory) {
+			return
 		}
-	})
 
-	const totalExpensePerSubcategory = []
-	listOfSubcategoriesInThisGroup.forEach(subcategory => {
-		if (subcategory) {
-			let quantity = 0
-			let uuidParentCategory
-			expensesInThisGroup.forEach(expense => {
-				if (expense.subcategory === subcategory) {
-					quantity += expense.quantity
-					uuidParentCategory = expense.category
-				}
-			})
-			totalExpensePerSubcategory.push({
-				uuidParentCategory: uuidParentCategory,
+		if (!subcategoryMap[subcategory]) {
+			subcategoryMap[subcategory] = {
+				uuidParentCategory: category,
 				idSubcategory: subcategory,
-				totalInSubcategory: trimDecimalPoints(quantity)
-			})
+				totalInSubcategory: 0
+			}
 		}
+		subcategoryMap[subcategory].totalInSubcategory += quantity
 	})
 
-	return totalExpensePerSubcategory
+	return Object.values(subcategoryMap).map(subcat => ({
+		uuidParentCategory: subcat.uuidParentCategory,
+		idSubcategory: subcat.idSubcategory,
+		totalInSubcategory: trimDecimalPoints(subcat.totalInSubcategory)
+	}))
 }
 
 /**
@@ -314,10 +314,75 @@ const getExpenseGroupTotal = (expensesInThisGroup) => {
 }
 
 /**
+ * Returns the minimum and maximum dates found in an array of expenses.
+ * Each expense must have a 'date' property, which can be a timestamp string or a date string.
+ *
+ * @param {Array.<Object>} expenses - An array of objects (the object must contain a date property)
+ * @param {string} expenses.category - An UUID value to identify a category
+ * @param {string|null} expenses.subcategory - An UUID value to identify a subcategory or null
+ * @param {number} expenses.quantity - An integer o float number
+ * @param {string} expenses.date - A valid date with this format: '1514447205699'
+ * @param {string} expenses.currencyISO - A currency. Example: 'EUR'
+ * @param {string} expenses.uuid - An UUID value
+ * @returns {{ minDate: Date, maxDate: Date }} An object with the earliest and latest dates.
+ */
+const getMinAndMaxDateFromExpenses = (expenses = []) => {
+	if (!expenses.length) {
+		return { minDate: null, maxDate: null }
+	}
+	const dates = expenses.map(e =>
+		new Date(Number.isNaN(+e.date) ? e.date : parseInt(e.date, 10))
+	)
+	const minDate = new Date(Math.min(...dates))
+	const maxDate = new Date(Math.max(...dates))
+	return { minDate, maxDate }
+}
+
+
+
+/**
+ * Returns an array of Date objects representing the first day of each month
+ * between two dates (inclusive).
+ *
+ * @param {Date} startDate - The start date.
+ * @param {Date} endDate - The end date.
+ * @returns {Array.<Date>} Array of Date objects, one for each month in the range.
+ */
+const getMonthsBetweenDates = (startDate, endDate) => {
+	const months = []
+	let current = new Date(startDate.getFullYear(), startDate.getMonth(), 1)
+	const end = new Date(endDate.getFullYear(), endDate.getMonth(), 1)
+	while (current <= end) {
+		months.push(new Date(current))
+		current.setMonth(current.getMonth() + 1)
+	}
+	return months
+}
+
+/**
+ * Groups an array of expenses by month (YYYY-MM).
+ * Each expense must have a 'date' property, which can be a timestamp string or a date string.
+ *
+ * @param {Array.<Object>} expenses - Array of expense objects with a 'date' property.
+ * @returns {Object} An object where keys are 'YYYY-MM' and values are arrays of expenses for that month.
+ */
+const groupExpensesByMonth = (expenses = []) => {
+	const expensesByMonth = {}
+	expenses.forEach(expense => {
+		const dateObj = new Date(Number.isNaN(+expense.date) ? expense.date : parseInt(expense.date, 10))
+		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
+		if (!expensesByMonth[key]) expensesByMonth[key] = []
+		expensesByMonth[key].push(expense)
+	})
+	return expensesByMonth
+}
+
+/**
  * This function performs a summation grouping the expenses by months. For each month, the categories of expenses are grouped. For each category their subcategories are also grouped
- * @requires getSumPerMonth
- * @requires getDataPerCategory
- * @requires getExpenseGroupTotal
+ * @requires getMinAndMaxDateFromExpenses
+ * @requires getMonthsBetweenDates
+ * @requires groupExpensesByMonth
+ * @requires getLocaleDateString
  * @requires expenseGroupDTO
  * @param {Array.<Object>} rawData - An array of objects (the object must contain a date property)
  * @param {string} rawData.category - An UUID value to identify a category
@@ -333,28 +398,45 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 		return []
 	}
 
-	const data = rawData.map(expense => {
-		return {
-			...expense,
-			date: parseUnixTimestamp(expense.date).substring(0, 10)
-		}
-	})
+	const { minDate, maxDate } = getMinAndMaxDateFromExpenses(rawData)
 
-	const sumPerMonth = getSumPerMonth(data)
+	const months = getMonthsBetweenDates(minDate, maxDate)
 
-	const parsedMonthsWithCategoriesAndSubcategories = sumPerMonth.map(month => {
-		const expensesInThisGroup = data.filter(expense => {
-			return getLocaleDateString(expense.date) === month.label
+	const expensesByMonth = groupExpensesByMonth(rawData)
+
+	return months.map(dateObj => {
+		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
+		const expenses = expensesByMonth[key] || []
+
+		const categoryMap = {}
+		let groupTotal = 0
+		expenses.forEach(expense => {
+			const { category, subcategory, quantity } = expense
+			groupTotal += quantity
+			if (!categoryMap[category]) {
+				categoryMap[category] = { totalInCategory: 0, subcategories: {} }
+			}
+			categoryMap[category].totalInCategory += quantity
+			if (subcategory) {
+				if (!categoryMap[category].subcategories[subcategory]) {
+					categoryMap[category].subcategories[subcategory] = 0
+				}
+				categoryMap[category].subcategories[subcategory] += quantity
+			}
 		})
 
-		const dataPerCategory = getDataPerCategory(expensesInThisGroup)
+		const perCategory = Object.entries(categoryMap).map(([idCategory, catData]) => ({
+			idCategory,
+			totalInCategory: trimDecimalPoints(catData.totalInCategory),
+			perSubcategory: Object.entries(catData.subcategories).map(([idSubcategory, totalInSubcategory]) => ({
+				idSubcategory,
+				totalInSubcategory: trimDecimalPoints(totalInSubcategory)
+			}))
+		}))
 
-		const groupTotal = getExpenseGroupTotal(expensesInThisGroup)
-
-		return expenseGroupDTO(month.label, groupTotal, dataPerCategory)
+		const groupTitle = getLocaleDateString(dateObj)
+		return expenseGroupDTO(groupTitle, groupTotal, perCategory)
 	})
-
-	return parsedMonthsWithCategoriesAndSubcategories
 }
 
 /**
