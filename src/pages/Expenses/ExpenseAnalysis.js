@@ -7,7 +7,7 @@ import { GetExpensesForAnalysis } from '../../components/Expenses/GetExpensesFor
 const ExpenseAnalysis = () => {
 	return (
 		<Fragment>
-			<PageTitle text='Expenses analysis panel' />
+			<PageTitle text='Monthly spending breakdown' />
 			<GetExpensesForAnalysis />
 		</Fragment>
 	)

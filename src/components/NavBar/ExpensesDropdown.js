@@ -27,14 +27,14 @@ export const ExpensesDropdown = (props) => {
 				<Link className="dropdown-item py-3" to='/expenses-administration'>
 					<BsListUl size={props.sizeOfSecondaryIcons} title='Expenses administration' /><span className="ml-3">Expenses List</span>
 				</Link>
-				<Link className="dropdown-item py-3" to='/expenses-analysis'>
-					<BsCalendarCheck size={props.sizeOfSecondaryIcons} title='Expenses analysis' /><span className="ml-3">Expenses Analysis</span>
-				</Link>
 				<Link className="dropdown-item py-3" to='/monthly-expense-overview'>
 					<BsCalendar3 size={props.sizeOfSecondaryIcons} title='Monthly expense overview' /><span className="ml-3">Monthly Expense Overview</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/yearly-expense-overview'>
 					<BsCalendar3 size={props.sizeOfSecondaryIcons} title='Yearly expense overview' /><span className="ml-3">Yearly Expense Overview</span>
+				</Link>
+				<Link className="dropdown-item py-3" to='/expenses-analysis'>
+					<BsCalendarCheck size={props.sizeOfSecondaryIcons} title='Monthly Spending Breakdown' /><span className="ml-3">Monthly Spending Breakdown</span>
 				</Link>
 			</div>
 		</div>
