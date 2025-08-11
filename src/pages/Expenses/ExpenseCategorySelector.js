@@ -7,7 +7,7 @@ import { GetListOfExpenseCategories } from '../../components/Expenses/GetListOfE
 const ExpenseCategorySelector = () => {
 	return (
 		<Fragment>
-			<PageTitle text='Register expense' />
+			<PageTitle text='Add spending' />
 			<GetListOfExpenseCategories />
 		</Fragment>
 	)

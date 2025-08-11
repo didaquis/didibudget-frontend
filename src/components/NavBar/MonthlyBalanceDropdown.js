@@ -19,10 +19,10 @@ export const MonthlyBalanceDropdown = (props) => {
 				<span className="dropdown-item-text text-muted">Monthly Balance</span>
 				<div className="dropdown-divider"></div>
 				<Link className="dropdown-item py-3" to='/register-monthly-balance'>
-					<BsPiggyBank size={props.sizeOfSecondaryIcons} title='Register monthly balance' /><span className="ml-3">Register Monthly Balance</span>
+					<BsPiggyBank size={props.sizeOfSecondaryIcons} title='Add monthly balance' /><span className="ml-3">Add Monthly Balance</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/view-monthly-balance'>
-					<BsGraphUp size={props.sizeOfSecondaryIcons} title='View monthly balances'/><span className="ml-3">View Monthly Balances</span>
+					<BsGraphUp size={props.sizeOfSecondaryIcons} title='Monthly balance overview'/><span className="ml-3">Monthly Balance Overview</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/monthly-balance-administration'>
 					<BsListUl size={props.sizeOfSecondaryIcons} title='Monthly balances administration'/><span className="ml-3">Monthly Balances List</span>

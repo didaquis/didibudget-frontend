@@ -15,7 +15,7 @@ export const AveragePerMonth = ({ data }) => {
 	if (!!lastThreeMonths || !!lastSixMonths || !!lastTwelveMonths || !!lastTwentyFourMonths) {
 		return (
 			<Fragment>
-				<PageSubTitle text="Average expenses: (excluding the current month)"/>
+				<PageSubTitle text="Average spending: (excluding the current month)"/>
 			{
 				!!lastThreeMonths && <p className="font-weight-light text-light">
 					Over the past <strong>3 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastThreeMonths} €.</span>

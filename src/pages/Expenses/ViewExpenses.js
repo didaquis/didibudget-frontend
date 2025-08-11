@@ -6,7 +6,7 @@ import { GetDataExpenses } from '../../components/Expenses/GetDataExpenses'
 const ViewExpenses = () => {
 	return (
 		<Fragment>
-			<PageTitle text='View expenses' />
+			<PageTitle text='Spending Overview' />
 			<GetDataExpenses />
 		</Fragment>
 	)

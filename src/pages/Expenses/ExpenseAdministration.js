@@ -7,7 +7,7 @@ import { GetListOfExpensesWithPagination } from '../../components/Expenses/GetLi
 const ExpenseAdministration = () => {
 	return (
 		<Fragment>
-			<PageTitle text='Expenses list' />
+			<PageTitle text='Spending list' />
 			<GetListOfExpensesWithPagination />
 		</Fragment>
 	)
