@@ -314,7 +314,74 @@ const getExpenseGroupTotal = (expensesInThisGroup) => {
 }
 
 /**
+ * Returns the minimum and maximum dates found in an array of expenses.
+ * Each expense must have a 'date' property, which can be a timestamp string or a date string.
+ *
+ * @param {Array.<Object>} expenses - An array of objects (the object must contain a date property)
+ * @param {string} expenses.category - An UUID value to identify a category
+ * @param {string|null} expenses.subcategory - An UUID value to identify a subcategory or null
+ * @param {number} expenses.quantity - An integer o float number
+ * @param {string} expenses.date - A valid date with this format: '1514447205699'
+ * @param {string} expenses.currencyISO - A currency. Example: 'EUR'
+ * @param {string} expenses.uuid - An UUID value
+ * @returns {{ minDate: Date, maxDate: Date }} An object with the earliest and latest dates.
+ */
+const getMinAndMaxDateFromExpenses = (expenses = []) => {
+	if (!expenses.length) {
+		return { minDate: null, maxDate: null }
+	}
+	const dates = expenses.map(e =>
+		new Date(Number.isNaN(+e.date) ? e.date : parseInt(e.date, 10))
+	)
+	const minDate = new Date(Math.min(...dates))
+	const maxDate = new Date(Math.max(...dates))
+	return { minDate, maxDate }
+}
+
+
+
+/**
+ * Returns an array of Date objects representing the first day of each month
+ * between two dates (inclusive).
+ *
+ * @param {Date} startDate - The start date.
+ * @param {Date} endDate - The end date.
+ * @returns {Array.<Date>} Array of Date objects, one for each month in the range.
+ */
+const getMonthsBetweenDates = (startDate, endDate) => {
+	const months = []
+	let current = new Date(startDate.getFullYear(), startDate.getMonth(), 1)
+	const end = new Date(endDate.getFullYear(), endDate.getMonth(), 1)
+	while (current <= end) {
+		months.push(new Date(current))
+		current.setMonth(current.getMonth() + 1)
+	}
+	return months
+}
+
+/**
+ * Groups an array of expenses by month (YYYY-MM).
+ * Each expense must have a 'date' property, which can be a timestamp string or a date string.
+ *
+ * @param {Array.<Object>} expenses - Array of expense objects with a 'date' property.
+ * @returns {Object} An object where keys are 'YYYY-MM' and values are arrays of expenses for that month.
+ */
+const groupExpensesByMonth = (expenses = []) => {
+	const expensesByMonth = {}
+	expenses.forEach(expense => {
+		const dateObj = new Date(Number.isNaN(+expense.date) ? expense.date : parseInt(expense.date, 10))
+		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
+		if (!expensesByMonth[key]) expensesByMonth[key] = []
+		expensesByMonth[key].push(expense)
+	})
+	return expensesByMonth
+}
+
+/**
  * This function performs a summation grouping the expenses by months. For each month, the categories of expenses are grouped. For each category their subcategories are also grouped
+ * @requires getMinAndMaxDateFromExpenses
+ * @requires getMonthsBetweenDates
+ * @requires groupExpensesByMonth
  * @requires getLocaleDateString
  * @requires expenseGroupDTO
  * @param {Array.<Object>} rawData - An array of objects (the object must contain a date property)
@@ -331,35 +398,16 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 		return []
 	}
 
-	// 1. Obtener fechas mínimas y máximas en formato Date
-	const dates = rawData.map(e => new Date(Number.isNaN(+e.date) ? e.date : parseInt(e.date, 10)))
-	const minDate = new Date(Math.min(...dates))
-	const maxDate = new Date(Math.max(...dates))
+	const { minDate, maxDate } = getMinAndMaxDateFromExpenses(rawData)
 
-	// 2. Generar todos los meses entre minDate y maxDate
-	const months = []
-	let current = new Date(minDate.getFullYear(), minDate.getMonth(), 1)
-	const end = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1)
-	while (current <= end) {
-		months.push(new Date(current))
-		current.setMonth(current.getMonth() + 1)
-	}
+	const months = getMonthsBetweenDates(minDate, maxDate)
 
-	// 3. Agrupar gastos por mes (YYYY-MM)
-	const expensesByMonth = {}
-	rawData.forEach(expense => {
-		const dateObj = new Date(Number.isNaN(+expense.date) ? expense.date : parseInt(expense.date, 10))
-		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
-		if (!expensesByMonth[key]) expensesByMonth[key] = []
-		expensesByMonth[key].push(expense)
-	})
+	const expensesByMonth = groupExpensesByMonth(rawData)
 
-	// 4. Construir el resultado para cada mes
 	return months.map(dateObj => {
 		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
 		const expenses = expensesByMonth[key] || []
 
-		// Agrupar por categoría y subcategoría
 		const categoryMap = {}
 		let groupTotal = 0
 		expenses.forEach(expense => {
