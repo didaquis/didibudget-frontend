@@ -19,22 +19,22 @@ export const ExpensesDropdown = (props) => {
 				<span className="dropdown-item-text text-muted">Expenses</span>
 				<div className="dropdown-divider"></div>
 				<Link className="dropdown-item py-3" to='/list-expense-categories'>
-					<BsCreditCard2Back size={props.sizeOfSecondaryIcons} title='Add spending'/><span className="ml-3">Add Spending</span>
+					<BsCreditCard2Back size={props.sizeOfSecondaryIcons} title='Add spending'/><span className="ml-3">Add spending</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/view-expenses'>
-					<BsBarChart size={props.sizeOfSecondaryIcons} title='Spending overview'/><span className="ml-3">Spending Overview</span>
+					<BsBarChart size={props.sizeOfSecondaryIcons} title='Spending overview'/><span className="ml-3">Spending overview</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/expenses-administration'>
-					<BsListUl size={props.sizeOfSecondaryIcons} title='Spending list' /><span className="ml-3">Spending List</span>
+					<BsListUl size={props.sizeOfSecondaryIcons} title='Spending list' /><span className="ml-3">Spending list</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/monthly-expense-overview'>
-					<BsCalendar3 size={props.sizeOfSecondaryIcons} title='Monthly spending overview' /><span className="ml-3">Monthly Spending Overview</span>
+					<BsCalendar3 size={props.sizeOfSecondaryIcons} title='Monthly spending overview' /><span className="ml-3">Monthly spending overview</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/yearly-expense-overview'>
-					<BsCalendar3 size={props.sizeOfSecondaryIcons} title='Yearly spending overview' /><span className="ml-3">Yearly Spending Overview</span>
+					<BsCalendar3 size={props.sizeOfSecondaryIcons} title='Yearly spending overview' /><span className="ml-3">Yearly spending overview</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/expenses-analysis'>
-					<BsCalendarCheck size={props.sizeOfSecondaryIcons} title='Monthly Spending Breakdown' /><span className="ml-3">Monthly Spending Breakdown</span>
+					<BsCalendarCheck size={props.sizeOfSecondaryIcons} title='Monthly spending breakdown' /><span className="ml-3">Monthly spending breakdown</span>
 				</Link>
 			</div>
 		</div>

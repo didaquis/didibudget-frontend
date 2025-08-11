@@ -31,7 +31,7 @@ export const NavBar = () => {
 
 			{ 
 				isAuth && userData.isAdmin && <Link className="navbar-item text-light font-weight-bold" to='/user-administration'>
-					<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User Administration'/>
+					<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User administration'/>
 				</Link>
 			}
 			<Link className="navbar-item text-light font-weight-bold" to='/logout'>
