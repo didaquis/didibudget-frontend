@@ -188,33 +188,33 @@ const getNameOfCategoryOrSubcategory = (target, categories) => {
  * @returns {Array.<Object>}
  */
 const getParsedSubcategoriesInAGroup = (expensesInThisGroup) => {
-	const listOfSubcategoriesInThisGroup = []
+	if (!expensesInThisGroup.length) {
+		return []
+	}
+
+	const subcategoryMap = {}
+
 	expensesInThisGroup.forEach(expense => {
-		if (!listOfSubcategoriesInThisGroup.includes(expense.subcategory)) {
-			listOfSubcategoriesInThisGroup.push(expense.subcategory)
+		const { subcategory, category, quantity } = expense
+		if (!subcategory) {
+			return
 		}
-	})
 
-	const totalExpensePerSubcategory = []
-	listOfSubcategoriesInThisGroup.forEach(subcategory => {
-		if (subcategory) {
-			let quantity = 0
-			let uuidParentCategory
-			expensesInThisGroup.forEach(expense => {
-				if (expense.subcategory === subcategory) {
-					quantity += expense.quantity
-					uuidParentCategory = expense.category
-				}
-			})
-			totalExpensePerSubcategory.push({
-				uuidParentCategory: uuidParentCategory,
+		if (!subcategoryMap[subcategory]) {
+			subcategoryMap[subcategory] = {
+				uuidParentCategory: category,
 				idSubcategory: subcategory,
-				totalInSubcategory: trimDecimalPoints(quantity)
-			})
+				totalInSubcategory: 0
+			}
 		}
+		subcategoryMap[subcategory].totalInSubcategory += quantity
 	})
 
-	return totalExpensePerSubcategory
+	return Object.values(subcategoryMap).map(subcat => ({
+		uuidParentCategory: subcat.uuidParentCategory,
+		idSubcategory: subcat.idSubcategory,
+		totalInSubcategory: trimDecimalPoints(subcat.totalInSubcategory)
+	}))
 }
 
 /**
