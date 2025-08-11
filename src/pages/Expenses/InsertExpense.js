@@ -11,7 +11,7 @@ const InsertExpense = () => {
 
 	return (
 		<Fragment>
-			<PageTitle text='Register expense' />
+			<PageTitle text='Add spending' />
 			<GetExpenseCategory categoryID={categoryID} subcategoryID={subcategoryID}/>
 		</Fragment>
 	)

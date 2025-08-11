@@ -6,7 +6,7 @@ import { GetGraphMonthlyBalances } from '../../components/MonthlyBalance/GetGrap
 const ViewMonthlyBalance = () => {
 	return (
 		<Fragment>
-			<PageTitle text='View monthly balance' />
+			<PageTitle text='Monthly balance overview' />
 			<GetGraphMonthlyBalances />
 		</Fragment>
 	)

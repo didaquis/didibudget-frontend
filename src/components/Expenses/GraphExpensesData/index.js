@@ -25,7 +25,7 @@ export const GraphExpensesData = ({ data }) => {
 	if (dataGroupedPerMonth.length) {
 		return (
 			<Fragment>
-				<PageSubTitle text="Total expenses per month:"/>
+				<PageSubTitle text="Total spending per month:"/>
 				<div style={{ width: '100%', height: 460 }}>
 					<ResponsiveContainer>
 						<BarChart
@@ -44,7 +44,7 @@ export const GraphExpensesData = ({ data }) => {
 				{
 					dataGroupedPerMonthLastYear.length  > 0 &&
 					<Fragment>
-						<PageSubTitle text="Total expenses for the last 12 months:"/>
+						<PageSubTitle text="Total spending for the last 12 months:"/>
 						<div style={{ width: '100%', height: 460 }}>
 							<ResponsiveContainer>
 								<BarChart

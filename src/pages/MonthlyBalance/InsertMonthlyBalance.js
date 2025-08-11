@@ -7,7 +7,7 @@ import { RegisterMonthlyBalanceForm } from '../../components/MonthlyBalance/Regi
 const InsertMonthlyBalance = () => {
 	return (
 		<Fragment>
-			<PageTitle text='Register monthly balance' />
+			<PageTitle text='Add monthly balance' />
 			<RegisterMonthlyBalanceForm />
 		</Fragment>
 	)
