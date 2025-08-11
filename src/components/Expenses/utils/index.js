@@ -315,9 +315,7 @@ const getExpenseGroupTotal = (expensesInThisGroup) => {
 
 /**
  * This function performs a summation grouping the expenses by months. For each month, the categories of expenses are grouped. For each category their subcategories are also grouped
- * @requires getSumPerMonth
- * @requires getDataPerCategory
- * @requires getExpenseGroupTotal
+ * @requires getLocaleDateString
  * @requires expenseGroupDTO
  * @param {Array.<Object>} rawData - An array of objects (the object must contain a date property)
  * @param {string} rawData.category - An UUID value to identify a category
@@ -333,33 +331,64 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 		return []
 	}
 
-	const data = rawData.map(expense => {
-		return {
-			...expense,
-			date: parseUnixTimestamp(expense.date).substring(0, 10)
-		}
-	})
+	// 1. Obtener fechas mínimas y máximas en formato Date
+	const dates = rawData.map(e => new Date(Number.isNaN(+e.date) ? e.date : parseInt(e.date, 10)))
+	const minDate = new Date(Math.min(...dates))
+	const maxDate = new Date(Math.max(...dates))
 
+	// 2. Generar todos los meses entre minDate y maxDate
+	const months = []
+	let current = new Date(minDate.getFullYear(), minDate.getMonth(), 1)
+	const end = new Date(maxDate.getFullYear(), maxDate.getMonth(), 1)
+	while (current <= end) {
+		months.push(new Date(current))
+		current.setMonth(current.getMonth() + 1)
+	}
+
+	// 3. Agrupar gastos por mes (YYYY-MM)
 	const expensesByMonth = {}
-
-	data.forEach(expense => {
-		const label = getLocaleDateString(expense.date)
-		if (!expensesByMonth[label]) {
-			expensesByMonth[label] = []
-		}
-		expensesByMonth[label].push(expense)
+	rawData.forEach(expense => {
+		const dateObj = new Date(Number.isNaN(+expense.date) ? expense.date : parseInt(expense.date, 10))
+		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
+		if (!expensesByMonth[key]) expensesByMonth[key] = []
+		expensesByMonth[key].push(expense)
 	})
 
-	const sumPerMonth = getSumPerMonth(data)
+	// 4. Construir el resultado para cada mes
+	return months.map(dateObj => {
+		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
+		const expenses = expensesByMonth[key] || []
 
-	const parsedMonthsWithCategoriesAndSubcategories = sumPerMonth.map(month => {
-		const expensesInThisGroup = expensesByMonth[month.label] || []
-		const dataPerCategory = getDataPerCategory(expensesInThisGroup)
-		const groupTotal = getExpenseGroupTotal(expensesInThisGroup)
-		return expenseGroupDTO(month.label, groupTotal, dataPerCategory)
+		// Agrupar por categoría y subcategoría
+		const categoryMap = {}
+		let groupTotal = 0
+		expenses.forEach(expense => {
+			const { category, subcategory, quantity } = expense
+			groupTotal += quantity
+			if (!categoryMap[category]) {
+				categoryMap[category] = { totalInCategory: 0, subcategories: {} }
+			}
+			categoryMap[category].totalInCategory += quantity
+			if (subcategory) {
+				if (!categoryMap[category].subcategories[subcategory]) {
+					categoryMap[category].subcategories[subcategory] = 0
+				}
+				categoryMap[category].subcategories[subcategory] += quantity
+			}
+		})
+
+		const perCategory = Object.entries(categoryMap).map(([idCategory, catData]) => ({
+			idCategory,
+			totalInCategory: catData.totalInCategory,
+			perSubcategory: Object.entries(catData.subcategories).map(([idSubcategory, totalInSubcategory]) => ({
+				idSubcategory,
+				totalInSubcategory
+			}))
+		}))
+
+		const groupTitle = getLocaleDateString(dateObj)
+		return expenseGroupDTO(groupTitle, groupTotal, perCategory)
 	})
-
-	return parsedMonthsWithCategoriesAndSubcategories
 }
 
 /**
