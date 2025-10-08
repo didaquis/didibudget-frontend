@@ -13,10 +13,10 @@ export const ExpensesDropdown = (props) => {
 	return (
 		<div className={`dropdown ${ isDropdownExpanded ? 'position-static' : '' }`}>
 			<button className="navbar-item btn btn-link text-light font-weight-bold dropdown-toggle p-0 border-0" id="expenses-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<BsCreditCard2Back size={props.sizeOfPrimaryIcons} title='Spending' />
+				<BsCreditCard2Back size={props.sizeOfPrimaryIcons} title='Spendings' />
 			</button>
 			<div className={`dropdown-menu ${ isDropdownExpanded ? 'w-100' : '' }`} aria-labelledby="expenses-dropdown">
-				<span className="dropdown-item-text text-muted">Expenses</span>
+				<span className="dropdown-item-text text-muted">Spendings</span>
 				<div className="dropdown-divider"></div>
 				<Link className="dropdown-item py-3" to='/list-expense-categories'>
 					<BsCartPlus size={props.sizeOfSecondaryIcons} title='Add spending'/><span className="ml-3">Add spending</span>
