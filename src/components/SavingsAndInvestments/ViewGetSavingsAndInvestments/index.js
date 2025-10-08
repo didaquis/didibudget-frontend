@@ -8,7 +8,7 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 				<table className="table table-dark table-hover">
 					<thead>
 						<tr className="table-info text-dark">
-							<th scope="col">Concept</th>
+							<th scope="col">Product</th>
 							<th scope="col">Total invested</th>
 						</tr>
 					</thead>
