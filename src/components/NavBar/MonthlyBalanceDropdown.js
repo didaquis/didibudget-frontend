@@ -13,10 +13,10 @@ export const MonthlyBalanceDropdown = (props) => {
 	return (
 		<div className={`dropdown ${ isDropdownExpanded ? 'position-static' : '' }`}>
 			<button className="navbar-item btn btn-link text-light font-weight-bold dropdown-toggle p-0 border-0" id="monthly-balance-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<BsPiggyBank size={props.sizeOfPrimaryIcons} title='Monthly Balance' />
+				<BsPiggyBank size={props.sizeOfPrimaryIcons} title='Savings & investments' />
 			</button>
 			<div className={`dropdown-menu ${ isDropdownExpanded ? 'w-100' : '' }`} aria-labelledby="monthly-balance-dropdown">
-				<span className="dropdown-item-text text-muted">Monthly Balance</span>
+				<span className="dropdown-item-text text-muted">Savings & investments</span>
 				<div className="dropdown-divider"></div>
 				<Link className="dropdown-item py-3" to='/register-monthly-balance'>
 					<BsPiggyBank size={props.sizeOfSecondaryIcons} title='Add monthly balance' /><span className="ml-3">Add monthly balance</span>
