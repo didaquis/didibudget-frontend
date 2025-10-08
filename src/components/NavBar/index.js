@@ -4,7 +4,7 @@ import { BsHouse, BsPeople, BsBoxArrowInRight, BsBoxArrowRight } from 'react-ico
 
 import { AuthContext } from '../../AuthContext'
 
-import { MonthlyBalanceDropdown } from './MonthlyBalanceDropdown'
+import { SavingsAndInvestmentsBalanceDropdown } from './SavingsAndInvestmentsBalanceDropdown'
 import { ExpensesDropdown } from './ExpensesDropdown'
 
 const SIZE_OF_PRIMARY_ICONS = '32px'
@@ -22,7 +22,7 @@ export const NavBar = () => {
 			</Link>
 
 			{
-				isAuth && <MonthlyBalanceDropdown sizeOfPrimaryIcons={SIZE_OF_PRIMARY_ICONS} sizeOfSecondaryIcons={SIZE_OF_SECONDARY_ICONS} />
+				isAuth && <SavingsAndInvestmentsBalanceDropdown sizeOfPrimaryIcons={SIZE_OF_PRIMARY_ICONS} sizeOfSecondaryIcons={SIZE_OF_SECONDARY_ICONS} />
 			}
 
 			{

@@ -5,7 +5,7 @@ import { BsPiggyBank, BsGraphUp, BsListUl } from 'react-icons/bs'
 
 import { useWindowSize } from '../../hooks/useWindowSize'
 
-export const MonthlyBalanceDropdown = (props) => {
+export const SavingsAndInvestmentsBalanceDropdown = (props) => {
 	const size = useWindowSize()
 	const largeBreakPoint = 992
 	const isDropdownExpanded = size.width <= largeBreakPoint
@@ -32,7 +32,7 @@ export const MonthlyBalanceDropdown = (props) => {
 	)
 }
 
-MonthlyBalanceDropdown.propTypes = {
+SavingsAndInvestmentsBalanceDropdown.propTypes = {
 	sizeOfPrimaryIcons: PropTypes.string.isRequired,
 	sizeOfSecondaryIcons: PropTypes.string.isRequired,
 }
