@@ -87,3 +87,13 @@ query ($startDate: String!, $endDate: String!) {
 	}
 }
 `
+
+export const GET_EXPENSES_SUM_BY_TYPE = gql`
+query getExpensesSumByType($categoryType: String!) {
+	getExpensesSumByType (categoryType: $categoryType) {
+		categoryType
+		currencyISO
+		sum
+	}
+}
+`
