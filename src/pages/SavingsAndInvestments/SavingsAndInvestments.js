@@ -2,13 +2,13 @@ import { Fragment } from 'react'
 
 import { PageTitle } from '../../components/PageTitle'
 
-import { GetExpensesSumByType } from '../../components/SavingsAndInvestments/GetExpensesSumByType'
+import { GetSavingsAndInvestments } from '../../components/SavingsAndInvestments/GetSavingsAndInvestments'
 
 const SavingsAndInvestments = () => {
 	return (
 		<Fragment>
 			<PageTitle text='Savings and investments' />
-			<GetExpensesSumByType />
+			<GetSavingsAndInvestments />
 		</Fragment>
 	)
 }
