@@ -72,6 +72,11 @@ export const App = () => {
 											<MonthlyBalanceAdministration />
 										</RequireAuth>
 									} />
+									<Route path='/savings-and-investments' element={
+										<RequireAuth>
+											<MonthlyBalanceAdministration />
+										</RequireAuth>
+									} />
 									<Route path='/list-expense-categories' element={
 										<RequireAuth>
 											<ExpenseCategorySelector />
