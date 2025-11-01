@@ -33,7 +33,7 @@ export const NavBar = () => {
 					<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User administration'/>
 				</Link>
 			}
-			<Link className="navbar-item text-light font-weight-bold" to='/logout'>
+			<Link className="navbar-item text-light font-weight-bold" to={isAuth ? '/logout' : '/login'}>
 				{ !isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Login' /> }
 				{ isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Logout' /> }
 			</Link>
