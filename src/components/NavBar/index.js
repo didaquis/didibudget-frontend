@@ -12,8 +12,7 @@ const SIZE_OF_SECONDARY_ICONS = '24px'
 
 
 export const NavBar = () => {
-	const { isAuth } = useContext(AuthContext)
-	const { userData } = useContext(AuthContext)
+	const { isAuth, userData } = useContext(AuthContext)
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-dark justify-content-between d-flex border-bottom border-info mt-2 mb-5">
