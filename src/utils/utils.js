@@ -93,10 +93,29 @@ const getFirstParamFromSplat = (splat) => {
 	return splat.split('/')[0]
 }
 
+/**
+ * Return the local day-of-month (1-31) as an integer according to the user's current time zone.
+ *
+ * @example
+ *   getLocalDay() // 3 (if today is 3rd in the user's locale)
+ * @returns {number} The current day of the month in the user's local time zone.
+ */
+const getLocalDay = () => {
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    day: 'numeric',
+  })
+
+  return parseInt(formatter.format(new Date()), 10)
+}
+
 export {
 	parseUnixTimestamp,
 	firstDayOfNextMonth,
 	firstDayOfTheMonth,
 	trimDecimalPoints,
-	getFirstParamFromSplat
+	getFirstParamFromSplat,
+	getLocalDay,
 }

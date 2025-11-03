@@ -1,4 +1,4 @@
-import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, getFirstParamFromSplat } from './utils'
+import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, getFirstParamFromSplat, getLocalDay } from './utils'
 
 describe('parseUnixTimestamp', () => {
 	test('should return a valid date in a human readable format', () => {
@@ -108,5 +108,37 @@ describe('getFirstParamFromSplat', () => {
 	test('should return all chars if there are not any slash', () => {
 		const result = getFirstParamFromSplat('47433e518495ea71132965ba')
 		expect(result).toEqual('47433e518495ea71132965ba')
+	})
+})
+
+describe('getLocalDay', () => {
+	beforeEach(() => {
+		jest.useFakeTimers()
+	})
+
+	afterEach(() => {
+		jest.useRealTimers()
+	})
+
+	test('should returns 3 when current date is November 3, 2025', () => {
+		jest.setSystemTime(new Date('2025-11-03T12:00:00'))
+		expect(getLocalDay()).toBe(3)
+	})
+
+	test('should returns 4 when current date is November 4, 2025', () => {
+		jest.setSystemTime(new Date('2025-11-04T01:00:00'))
+		expect(getLocalDay()).toBe(4)
+	})
+
+	test('should returns number between 1 and 31', () => {
+		jest.setSystemTime(new Date('2025-11-15T10:00:00'))
+		const result = getLocalDay()
+		expect(result).toBeGreaterThanOrEqual(1)
+		expect(result).toBeLessThanOrEqual(31)
+	})
+
+	test('should handles edge of month', () => {
+		jest.setSystemTime(new Date('2025-11-30T23:59:59'))
+		expect(getLocalDay()).toBe(30)
 	})
 })
