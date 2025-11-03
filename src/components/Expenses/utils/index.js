@@ -8,7 +8,7 @@ import { firstDayOfNextMonth, firstDayOfTheMonth, parseUnixTimestamp, trimDecima
  * @returns {string}
  */
 const getLocaleDateString = (date) => {
-	return new Date(date).toLocaleDateString('en-EN', { year: 'numeric', month: 'long' })
+	return new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })
 }
 
 /**
