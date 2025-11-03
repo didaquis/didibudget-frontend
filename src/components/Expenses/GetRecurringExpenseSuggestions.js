@@ -4,6 +4,7 @@ import { getLocalDay } from '../../utils/utils'
 
 import { Spinner } from '../Spinner'
 import { ErrorAlert } from '../ErrorAlert'
+import { RecurringExpenseSuggestionsOverview } from '../Expenses/RecurringExpenseSuggestionsOverview'
 
 import { GET_ALL_RECURRING_EXPENSE_SUGGESTIONS_AND_CATEGORIES } from '../../gql/queries/expenses'
 
@@ -14,7 +15,5 @@ export const GetRecurringExpenseSuggestions = () => {
 	if (loading) return <Spinner />
 	if (error) return <ErrorAlert errorMessage={error.message} />
 
-	console.log(data)
-
-	return <p>data is here!</p>
+	return <RecurringExpenseSuggestionsOverview suggestions={data.getRecurringExpenseSuggestionsByDay} categories={data.getExpenseCategory} />
 }
