@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const EXPENSE_FIELDS = gql`
+const EXPENSE_FIELDS = gql`
 fragment ExpenseFields on Expense {
 	category
 	subcategory
