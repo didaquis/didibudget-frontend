@@ -1,9 +1,12 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import { MockedProvider } from '@apollo/client/testing'
+import { InMemoryCache } from '@apollo/client'
 
 import { LOGIN } from '../../gql/mutations/auth'
 import { LoginForm } from './'
+
+const customCache = new InMemoryCache()
 
 describe('LoginForm', () => {
 	it('should render a disabled button until password and email inputs are filled with data', () => {
@@ -11,7 +14,7 @@ describe('LoginForm', () => {
 		const mocks = []
 
 		render(
-			<MockedProvider mocks={mocks} addTypename={false}>
+			<MockedProvider mocks={mocks} cache={customCache}>
 				<LoginForm activateAuth={activateAuth}/>
 			</MockedProvider>
 		)
@@ -56,7 +59,7 @@ describe('LoginForm', () => {
 		]
 
 		render(
-			<MockedProvider mocks={mocks} addTypename={false}>
+			<MockedProvider mocks={mocks} cache={customCache}>
 				<LoginForm activateAuth={activateAuth}/>
 			</MockedProvider>
 		)
@@ -96,7 +99,7 @@ describe('LoginForm', () => {
 		]
 
 		render(
-			<MockedProvider mocks={mocks} addTypename={false}>
+			<MockedProvider mocks={mocks} cache={customCache}>
 				<LoginForm activateAuth={activateAuth}/>
 			</MockedProvider>
 		)

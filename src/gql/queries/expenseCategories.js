@@ -1,7 +1,8 @@
 import gql from 'graphql-tag'
+import { EXPENSE_CATEGORY_FIELDS } from './expenses'
 
 export const LIST_EXPENSE_CATEGORIES = gql`
-{
+query GetExpenseCategories {
 	getExpenseCategory {
 		_id
 		name
@@ -18,16 +19,10 @@ export const LIST_EXPENSE_CATEGORIES = gql`
 `
 
 export const GET_EXPENSE_CATEGORY_BY_ID = gql`
-query getExpenseCategoryById($category: ID!) {
+query GetExpenseCategoryById($category: ID!) {
 	getExpenseCategoryById(category: $category) {
-		_id
-		name
-		subcategories {
-			_id
-			name
-			uuid
-		}
-		uuid
+		...ExpenseCategoryFields
 	}
 }
+${EXPENSE_CATEGORY_FIELDS}
 `
