@@ -4,10 +4,9 @@ import { SubmitButton } from '../../SubmitButton'
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 
 export const RecurringExpenseSuggestion = ({ suggestion }) => {
-	// TODO: remove console logs
-	console.log(suggestion)
 
 	const onSubmit = (event) => {
+		// TODO: pending to implement
 		console.log('submit')
 	}
 
