@@ -14,12 +14,12 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	return (
 		<div className="col-sm-6 col-md-4">
 			<div className="card bg-dark border-info text-light mb-3">
-			<div className="card-body">
-				<h5 className="card-title">{suggestion.suggestedExpense.categoryName} <EmojiListFromCategoryOrSubcategory emojis={suggestion.suggestedExpense.categoryEmojis} /></h5>
-				<h6 className="card-subtitle mb-2">{suggestion.suggestedExpense.subcategoryName} <EmojiListFromCategoryOrSubcategory emojis={suggestion.suggestedExpense.subcategoryEmojis} /></h6>
-				<p className="card-text">{suggestion.suggestedExpense.quantity} EUR</p>
-				<SubmitButton disabled={false} onClick={onSubmit}>Save expense</SubmitButton>
-			</div>
+				<div className="card-body">
+					<h5 className="card-title">{suggestion.suggestedExpense.categoryName} <EmojiListFromCategoryOrSubcategory emojis={suggestion.suggestedExpense.categoryEmojis} /></h5>
+					<h6 className="card-subtitle mb-2">{suggestion.suggestedExpense.subcategoryName} <EmojiListFromCategoryOrSubcategory emojis={suggestion.suggestedExpense.subcategoryEmojis} /></h6>
+					<p className="card-text">{suggestion.suggestedExpense.quantity} EUR</p>
+					<SubmitButton disabled={false} onClick={onSubmit}>Save expense</SubmitButton>
+				</div>
 			</div>
 		</div>
 	)
