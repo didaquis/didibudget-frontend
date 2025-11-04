@@ -11,13 +11,14 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 		console.log('submit')
 	}
 
+	const emojis = [...new Set([...suggestion.suggestedExpense.categoryEmojis, ...suggestion.suggestedExpense.subcategoryEmojis])]
+
 	return (
 		<div className="col-sm-6 col-md-4">
 			<div className="card bg-dark border-info text-light mb-3">
 				<div className="card-body">
-					<h5 className="card-title">{suggestion.suggestedExpense.categoryName} <EmojiListFromCategoryOrSubcategory emojis={suggestion.suggestedExpense.categoryEmojis} /></h5>
-					<h6 className="card-subtitle mb-2">{suggestion.suggestedExpense.subcategoryName} <EmojiListFromCategoryOrSubcategory emojis={suggestion.suggestedExpense.subcategoryEmojis} /></h6>
-					<p className="card-text">{suggestion.suggestedExpense.quantity} EUR</p>
+					<h5 className="card-title">{suggestion.suggestedExpense.categoryName} {(suggestion.suggestedExpense.subcategoryName) ? ` - ${suggestion.suggestedExpense.subcategoryName}` : ''} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></h5>
+					<p className="card-text"><span class="text-nowrap">{suggestion.suggestedExpense.quantity} EUR</span></p>
 					<SubmitButton disabled={false} onClick={onSubmit}>Save expense</SubmitButton>
 				</div>
 			</div>
