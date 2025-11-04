@@ -11,6 +11,7 @@ import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
 export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	const navigate = useNavigate()
 	const [isDisabled, setIsDisabled] = useState(false)
+	const [error, setError] = useState(null)
 
 	const [ registerExpense ] = useMutation(REGISTER_EXPENSE)
 
@@ -30,7 +31,7 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 
 			navigate('/expenses-administration')
 		} catch (error) {
-			console.error('Error registering expense:', error)
+			setError(error.message)
 		} finally {
 			setIsDisabled(false)
 		}
@@ -45,6 +46,9 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 					<h5 className="card-title">{suggestion.suggestedExpense.categoryName} {(suggestion.suggestedExpense.subcategoryName) ? ` - ${suggestion.suggestedExpense.subcategoryName}` : ''} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></h5>
 					<p className="card-text"><span className="text-nowrap">{suggestion.suggestedExpense.quantity} EUR</span></p>
 					<SubmitButton disabled={isDisabled} onClick={onSubmit}>Save expense</SubmitButton>
+					{
+						error && <p className="alert alert-danger py-3 text-center m-3" role="alert">{error}</p>
+					}
 				</div>
 			</div>
 		</div>
