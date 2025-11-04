@@ -1,12 +1,26 @@
 import PropTypes from 'prop-types'
 
-export const RecurringExpenseSuggestionsOverview = ({ suggestions, categories }) => {
-	console.log(suggestions)
-	console.log(categories)
-	
+import { RecurringExpenseSuggestion } from '../RecurringExpenseSuggestion'
+
+export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {	
+	const hasSuggestions = !!suggestions.length
+
 	return (
-		<section className="pt-4">
-		
+		<section className="mt-4">
+			<div className="card bg-dark border-info">
+				<div className="card-header">
+					<h4 className="mb-0 text-light">Suggestions</h4>
+				</div>
+				<div className="card-body pb-0 text-light">
+					{!hasSuggestions ? (
+						<p>No suggestions available right now.</p>
+					) : (
+						suggestions.map(suggestion => (
+							<RecurringExpenseSuggestion key={suggestion.uuid} suggestion={suggestion} />
+						))
+					)}
+				</div>
+			</div>
 		</section>
 	)
 }
@@ -18,23 +32,19 @@ RecurringExpenseSuggestionsOverview.propTypes = {
 			uuid: PropTypes.string.isRequired,
 			suggestedExpense: PropTypes.shape({
 				category: PropTypes.string.isRequired,
-				subcategory: PropTypes.string,
+				categoryName: PropTypes.string.isRequired,
+				categoryEmojis: PropTypes.arrayOf(PropTypes.string).isRequired,
+				subcategory: PropTypes.oneOfType([
+					PropTypes.string,
+					PropTypes.oneOf([null])
+				]),
+				subcategoryName: PropTypes.oneOfType([
+					PropTypes.string,
+					PropTypes.oneOf([null])
+				]),
+				subcategoryEmojis: PropTypes.arrayOf(PropTypes.string),
 				quantity: PropTypes.number.isRequired,
 			}),
 		})
-	),
-	categories: PropTypes.arrayOf(
-		PropTypes.shape({
-			_id: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			subcategories: PropTypes.arrayOf(
-				PropTypes.shape({
-					_id: PropTypes.string.isRequired,
-					name: PropTypes.string.isRequired,
-					uuid: PropTypes.string.isRequired
-				})
-			),
-			uuid: PropTypes.string.isRequired
-		})
-	)
+	).isRequired
 }

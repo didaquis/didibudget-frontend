@@ -88,19 +88,19 @@ query GetExpensesSumByType($categoryType: String!) {
 }
 `
 
-export const GET_ALL_RECURRING_EXPENSE_SUGGESTIONS_AND_CATEGORIES = gql`
+export const GET_ALL_RECURRING_EXPENSE_SUGGESTIONS = gql`
 query GetAllRecurringExpenseSuggestionsAndCategories ($day: Int!) {
 	getRecurringExpenseSuggestionsByDay (day: $day) {
-        uuid
-        suggestedExpense {
-            category
-            subcategory
-            quantity
-        }
-	}
-	getExpenseCategory {
-		...ExpenseCategoryFields
+		uuid
+		suggestedExpense {
+			category
+			categoryName
+			categoryEmojis
+			subcategory
+			subcategoryName
+			subcategoryEmojis
+			quantity
+		}
 	}
 }
-${EXPENSE_CATEGORY_FIELDS}
 `
