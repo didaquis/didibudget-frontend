@@ -8,7 +8,7 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	console.log(suggestion)
 
 	return (
-		<p>{ suggestion.categoryName }</p>
+		<p>{ suggestion.uuid }</p>
 	)
 }
 
