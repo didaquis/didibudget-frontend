@@ -1,14 +1,26 @@
-// RecurringExpenseSuggestion
-
-
 import PropTypes from 'prop-types'
+
+import { SubmitButton } from '../../SubmitButton'
 
 export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	// TODO: remove console logs
 	console.log(suggestion)
 
+	const onSubmit = (event) => {
+		console.log('submit')
+	}
+
 	return (
-		<p>{ suggestion.uuid }</p>
+		<div className="col-sm-6 col-md-4">
+			<div className="card bg-dark border-info text-light mb-3">
+			<div className="card-body">
+				<h5 className="card-title">{suggestion.suggestedExpense.categoryName}</h5>
+				<h6 className="card-subtitle mb-2">{suggestion.suggestedExpense.subcategoryName}</h6>
+				<p className="card-text">{suggestion.suggestedExpense.quantity} EUR</p>
+				<SubmitButton disabled={false} onClick={onSubmit}>Save expense</SubmitButton>
+			</div>
+			</div>
+		</div>
 	)
 }
 

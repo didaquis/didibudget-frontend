@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import { RecurringExpenseSuggestion } from '../RecurringExpenseSuggestion'
 
-export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {	
+export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {
 	const hasSuggestions = !!suggestions.length
 
 	return (
@@ -11,13 +11,17 @@ export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {
 				<div className="card-header">
 					<h4 className="mb-0 text-light">Suggestions</h4>
 				</div>
-				<div className="card-body pb-0 text-light">
+				<div className="card-body pb-0">
 					{!hasSuggestions ? (
-						<p>No suggestions available right now.</p>
+						<p className="text-light">No suggestions available right now.</p>
 					) : (
-						suggestions.map(suggestion => (
-							<RecurringExpenseSuggestion key={suggestion.uuid} suggestion={suggestion} />
-						))
+						<div className="row">
+						{
+							suggestions.map(suggestion => (
+								<RecurringExpenseSuggestion key={suggestion.uuid} suggestion={suggestion} />
+							))
+						}
+						</div>
 					)}
 				</div>
 			</div>
