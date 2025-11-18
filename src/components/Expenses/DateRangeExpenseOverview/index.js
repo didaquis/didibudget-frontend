@@ -15,7 +15,7 @@ export const DateRangeExpenseOverview = ({ startDate, endDate, expenses, categor
 
 	return (
 		<section className="pt-4">
-			<DetailedExpensesGroup expensesGroupData={expensesGroupedData} categories={categories} isDetailedInformationDisplayedByDefault={true} />
+			<DetailedExpensesGroup expensesGroupData={expensesGroupedData} categories={categories} />
 		</section>
 	)
 }
