@@ -102,7 +102,7 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 						<div className="col pl-4 d-flex flex-row align-items-end">
 							<ToggleButton
 								text='Add more'
-								defaultState={toggleRegisterOneMoreExpense}
+								isDefaultOn={toggleRegisterOneMoreExpense}
 								onToggle={onToggleRegisterAnotherExpense}
 							/>
 						</div>
