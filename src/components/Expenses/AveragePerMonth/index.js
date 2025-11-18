@@ -15,25 +15,25 @@ export const AveragePerMonth = ({ data }) => {
 	if (!!lastThreeMonths || !!lastSixMonths || !!lastTwelveMonths || !!lastTwentyFourMonths) {
 		return (
 			<Fragment>
-				<PageSubTitle text="Average spending: (excluding the current month)"/>
+				<PageSubTitle text="Average spending:"/>
 			{
 				!!lastThreeMonths && <p className="font-weight-light text-light">
-					Over the past <strong>3 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastThreeMonths} €.</span>
+					Over past <strong>3 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastThreeMonths} €.</span>
 				</p>
 			}
 			{
 				!!lastSixMonths && <p className="font-weight-light text-light">
-					Over the past <strong>6 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastSixMonths} €.</span>
+					Over past <strong>6 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastSixMonths} €.</span>
 				</p>
 			}
 			{
 				!!lastTwelveMonths && <p className="font-weight-light text-light">
-					Over the past <strong>12 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastTwelveMonths} €.</span>
+					Over past <strong>12 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastTwelveMonths} €.</span>
 				</p>
 			}
 			{
 				!!lastTwentyFourMonths && <p className="font-weight-light text-light">
-					Over the past <strong>24 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastTwentyFourMonths} €.</span>
+					Over past <strong>24 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastTwentyFourMonths} €.</span>
 				</p>
 			}
 			</Fragment>
