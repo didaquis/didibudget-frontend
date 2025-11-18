@@ -51,7 +51,7 @@ export const DetailedExpensesGroup = ( { expensesGroupData, categories, isDetail
 				hasSubcategories && <div className="ml-2">
 					<ToggleButton
 						text='Show detailed information'
-						isDefaultOn={toggleShowDetailedInformation}
+						isOnByDefault={toggleShowDetailedInformation}
 						onToggle={onToggleDetailedInformation}
 						isDisabled={!hasSubcategories}
 					/>
