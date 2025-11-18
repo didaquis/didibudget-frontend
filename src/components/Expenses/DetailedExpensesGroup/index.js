@@ -6,9 +6,9 @@ import { getNameOfCategoryOrSubcategory } from '../utils'
 import { DetailedCategoryInExpensesGroup } from '../DetailedCategoryInExpensesGroup'
 import { ToggleButton } from '../../ToggleButton'
 
-export const DetailedExpensesGroup = ( { expensesGroupData, categories, isDetailedInformationDisplayedByDefault = false } ) => {
+export const DetailedExpensesGroup = ( { expensesGroupData, categories } ) => {
 
-	const [toggleShowDetailedInformation, setToggleShowDetailedInformation] = useState(isDetailedInformationDisplayedByDefault)
+	const [toggleShowDetailedInformation, setToggleShowDetailedInformation] = useState(false)
 
 	const onToggleDetailedInformation = (value) => {
 		setToggleShowDetailedInformation(value)
@@ -51,7 +51,7 @@ export const DetailedExpensesGroup = ( { expensesGroupData, categories, isDetail
 				hasSubcategories && <div className="ml-2">
 					<ToggleButton
 						text='Show detailed information'
-						defaultState={toggleShowDetailedInformation}
+						isOnByDefault={toggleShowDetailedInformation}
 						onToggle={onToggleDetailedInformation}
 						isDisabled={!hasSubcategories}
 					/>
@@ -81,6 +81,5 @@ DetailedExpensesGroup.propTypes = {
 			),
 			uuid: PropTypes.string.isRequired
 		})
-	),
-	isDetailedInformationDisplayedByDefault: PropTypes.bool
+	)
 }

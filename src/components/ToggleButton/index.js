@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Toggle from 'react-toggle'
 import './styles.css'
 
-export const ToggleButton = ({ text, defaultState, onToggle, isDisabled = false }) => {
+export const ToggleButton = ({ text, onToggle, isOnByDefault = false, isDisabled = false }) => {
 
 	const onChange = e => {
 		onToggle(e.target.checked)
@@ -14,7 +14,7 @@ export const ToggleButton = ({ text, defaultState, onToggle, isDisabled = false 
 		<Fragment>
 			<label className="m-0">
 				<Toggle
-					defaultChecked={defaultState}
+					defaultChecked={isOnByDefault}
 					disabled={isDisabled}
 					onChange={onChange}
 				/>
@@ -26,7 +26,7 @@ export const ToggleButton = ({ text, defaultState, onToggle, isDisabled = false 
 
 ToggleButton.propTypes = {
 	text: PropTypes.string.isRequired,
-	defaultState: PropTypes.bool.isRequired,
 	onToggle: PropTypes.func.isRequired,
+	isOnByDefault: PropTypes.bool,
 	isDisabled: PropTypes.bool
 }
