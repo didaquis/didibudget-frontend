@@ -79,7 +79,7 @@ ${EXPENSE_CATEGORY_FIELDS}
 `
 
 export const GET_EXPENSES_SUM_BY_TYPE = gql`
-query GetExpensesSumByType($categoryType: String!) {
+query GetExpensesSumByType($categoryType: CategoryType!) {
 	getExpensesSumByType(categoryType: $categoryType) {
 		categoryType
 		currencyISO
