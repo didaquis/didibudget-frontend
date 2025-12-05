@@ -348,7 +348,7 @@ const getMinAndMaxDateFromExpenses = (expenses = []) => {
  * @param {Date} endDate - The end date.
  * @returns {Array.<Date>} Array of Date objects, one for each month in the range.
  */
-const getMonthsBetweenDates = (startDate, endDate) => {
+const listMonthsInRange = (startDate, endDate) => {
 	const months = []
 	let current = new Date(startDate.getFullYear(), startDate.getMonth(), 1)
 	const end = new Date(endDate.getFullYear(), endDate.getMonth(), 1)
@@ -380,7 +380,7 @@ const groupExpensesByMonth = (expenses = []) => {
 /**
  * This function performs a summation grouping the expenses by months. For each month, the categories of expenses are grouped. For each category their subcategories are also grouped
  * @requires getMinAndMaxDateFromExpenses
- * @requires getMonthsBetweenDates
+ * @requires listMonthsInRange
  * @requires groupExpensesByMonth
  * @requires getLocaleDateString
  * @requires expenseGroupDTO
@@ -400,7 +400,7 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 
 	const { minDate, maxDate } = getMinAndMaxDateFromExpenses(rawData)
 
-	const months = getMonthsBetweenDates(minDate, maxDate)
+	const months = listMonthsInRange(minDate, maxDate)
 
 	const expensesByMonth = groupExpensesByMonth(rawData)
 
@@ -490,6 +490,38 @@ const getLastTwelveValuesFromArrayIfTheyExist = (anArray) => {
 	return anArray.slice(-12)
 }
 
+/**
+ * Returns the number of full months elapsed between two dates.
+ *
+ * A “full month” is counted only when the day of the `to` date is
+ * greater than or equal to the day of the `from` date.  
+ * Otherwise, the last month is not considered complete.
+ *
+ * @param {Date} from - The starting date.
+ * @param {Date} to - The ending date.
+ * @returns {number} The number of full months between the two dates.
+ *
+ * @example
+ * monthsBetweenDates(new Date("2019-12-20"), new Date("2025-12-05"));
+ * // → 71
+ *
+ * @example
+ * monthsBetweenDates(new Date("2024-01-15"), new Date("2024-03-15"));
+ * // → 2
+ *
+ * @example
+ * monthsBetweenDates(new Date("2024-01-20"), new Date("2024-03-15"));
+ * // → 1
+ */
+const monthsBetweenDates = (from, to) => {
+  const years = to.getFullYear() - from.getFullYear()
+  const months = to.getMonth() - from.getMonth()
+  const total = years * 12 + months
+
+  return to.getDate() >= from.getDate() ? total : total - 1
+}
+
+
 export {
 	getNameOfCategoryOrSubcategory,
 	getSumPerMonth,
@@ -498,4 +530,5 @@ export {
 	getAveragePerMonth,
 	averageOfLast,
 	getLastTwelveValuesFromArrayIfTheyExist,
+	monthsBetweenDates
 }
