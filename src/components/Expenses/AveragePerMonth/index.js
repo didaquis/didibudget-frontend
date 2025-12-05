@@ -7,11 +7,15 @@ import { PageSubTitle } from '../../PageSubTitle'
 
 export const AveragePerMonth = ({ averageData, averageDataExcludingSavings }) => {
 
-	const {userData } = useContext(AuthContext)
+	const { userData } = useContext(AuthContext)
 
 	const monthsSinceUserJoined = monthsBetweenDates(new Date(userData.registrationDate), new Date())
 
 	console.log(monthsSinceUserJoined)
+
+	/**
+	 * En realidad, tiene sentido llamar a este componente dos veces: una para el averageData y otra para el averageDataExcludingSavings.
+	 */
 
 	return (		<Fragment></Fragment>)
 	// const averagePerMonthExceptSecondLast = getAveragePerMonth(data)
