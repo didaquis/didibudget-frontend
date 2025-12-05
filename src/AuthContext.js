@@ -24,7 +24,8 @@ const Provider = ({ children }) => {
 				email: decodedToken.email,
 				isAdmin: decodedToken.isAdmin,
 				isActive: decodedToken.isActive,
-				uuid: decodedToken.uuid
+				registrationDate: decodedToken.registrationDate,
+				uuid: decodedToken.uuid,
 			}
 			storeUserDataOnSessionStorage(userData)
 			setUserData(userData)
