@@ -1,4 +1,4 @@
-import { firstDayOfNextMonth, firstDayOfTheMonth, parseUnixTimestamp, trimDecimalPoints } from '../../../utils/utils'
+import { firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints } from '../../../utils/utils'
 
 /**
  * Get name of month and year from a date
@@ -91,61 +91,6 @@ const getSumPerMonth = (data = []) => {
 
 	return result
 }
-
-
-/**
-* Parse the data of expenses to obtain an array of sum per month. This function refill the empty data of every month and do a sum of every months. Moreover, we discard the current month and refill the results until the second last month
-* @requires getSumPerMonth
-* @requires parseUnixTimestamp
-* @example
-* 	const data = [{quantity: 3, date: '2020-10-31'}, {quantity: 99.03, date: '2020-10-31'}, {quantity: 2.45, date: '2020-12-07'}]
-* 	getAveragePerMonth(data) // [102.03, 0, 2.45, 0, 0, 0, 0, 0]
-* @param {Array.<Object>} data - An array of objects
-* @param {string} data.date - A valid date with this format '2018-03-01'
-* @param {float|integer} data.quantity
-* @returns {Array.<number>}
-*/
-const getAveragePerMonth = (data = []) => {
-	if (!data.length) {
-		return []
-	}
-
-	const today = parseUnixTimestamp(new Date(Date.now()).getTime()).substring(0, 10)
-	const currentlyMonth = { quantity: 0, date: today }
-	const completedData = [...data]
-	completedData.push(currentlyMonth)
-
-	const totalPerMonth = getSumPerMonth(completedData)
-	totalPerMonth.pop()	
-
-	return totalPerMonth.map(month => {
-		return month.sum
-	})
-}
-
-
-/**
- * Get the average value of a list of integers (rounded decimals). This function only takes into account the last "x" values on the array.
- * @requires trimDecimalPoints
- * @param {Array<Integer>} listOfData - array with the data
- * @param {Integer} numberOfPositions - number of last positions to use
- * @returns {number | null}
- */
-const averageOfLast = (listOfData = [], numberOfPositions) => {
-	if (!Number.isInteger(numberOfPositions) || numberOfPositions < 1) {
-		throw new Error('You must specify the number of data to take into account in the average')
-	}
-
-	if (listOfData.length < numberOfPositions) {
-		return null
-	}
-
-	const selectedData = listOfData.slice(- numberOfPositions)
-	const average = selectedData.reduce((acc,v) => acc + v) / selectedData.length
-
-	return trimDecimalPoints(average)
-}
-
 
 /**
  * Get name of category or subcategory using provided data.
@@ -348,7 +293,7 @@ const getMinAndMaxDateFromExpenses = (expenses = []) => {
  * @param {Date} endDate - The end date.
  * @returns {Array.<Date>} Array of Date objects, one for each month in the range.
  */
-const getMonthsBetweenDates = (startDate, endDate) => {
+const listMonthsInRange = (startDate, endDate) => {
 	const months = []
 	let current = new Date(startDate.getFullYear(), startDate.getMonth(), 1)
 	const end = new Date(endDate.getFullYear(), endDate.getMonth(), 1)
@@ -380,7 +325,7 @@ const groupExpensesByMonth = (expenses = []) => {
 /**
  * This function performs a summation grouping the expenses by months. For each month, the categories of expenses are grouped. For each category their subcategories are also grouped
  * @requires getMinAndMaxDateFromExpenses
- * @requires getMonthsBetweenDates
+ * @requires listMonthsInRange
  * @requires groupExpensesByMonth
  * @requires getLocaleDateString
  * @requires expenseGroupDTO
@@ -400,7 +345,7 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 
 	const { minDate, maxDate } = getMinAndMaxDateFromExpenses(rawData)
 
-	const months = getMonthsBetweenDates(minDate, maxDate)
+	const months = listMonthsInRange(minDate, maxDate)
 
 	const expensesByMonth = groupExpensesByMonth(rawData)
 
@@ -490,12 +435,43 @@ const getLastTwelveValuesFromArrayIfTheyExist = (anArray) => {
 	return anArray.slice(-12)
 }
 
+/**
+ * Returns the number of full months elapsed between two dates.
+ *
+ * A “full month” is counted only when the day of the `to` date is
+ * greater than or equal to the day of the `from` date.  
+ * Otherwise, the last month is not considered complete.
+ *
+ * @param {Date} from - The starting date.
+ * @param {Date} to - The ending date.
+ * @returns {number} The number of full months between the two dates.
+ *
+ * @example
+ * monthsBetweenDates(new Date("2019-12-20"), new Date("2025-12-05"));
+ * // → 71
+ *
+ * @example
+ * monthsBetweenDates(new Date("2024-01-15"), new Date("2024-03-15"));
+ * // → 2
+ *
+ * @example
+ * monthsBetweenDates(new Date("2024-01-20"), new Date("2024-03-15"));
+ * // → 1
+ */
+const monthsBetweenDates = (from, to) => {
+  const years = to.getFullYear() - from.getFullYear()
+  const months = to.getMonth() - from.getMonth()
+  const total = years * 12 + months
+
+  return to.getDate() >= from.getDate() ? total : total - 1
+}
+
+
 export {
 	getNameOfCategoryOrSubcategory,
 	getSumPerMonth,
 	getDetailedExpensesPerMonth,
 	getDetailedExpensesGroupedFromRange,
-	getAveragePerMonth,
-	averageOfLast,
 	getLastTwelveValuesFromArrayIfTheyExist,
+	monthsBetweenDates
 }

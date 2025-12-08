@@ -23,6 +23,12 @@ fragment ExpenseCategoryFields on ExpenseCategory {
 	uuid
 }
 `
+const EXPENSES_MONTHLY_AVERAGE_FIELDS = gql`
+fragment ExpensesMonthlyAverageFields on ExpensesMonthlyAverage {
+  average
+  currencyISO
+}
+`
 
 export const LIST_ALL_EXPENSES = gql`
 query GetAllExpenses {
@@ -103,4 +109,34 @@ query GetAllRecurringExpenseSuggestionsAndCategories ($day: Int!) {
 		}
 	}
 }
+`
+
+export const GET_EXPENSES_AVERAGES = gql`
+query GetExpensesMonthlyAverage($excludedCategoryTypes: [CategoryType!]) {
+	lastThreeMonthsAverage: getExpensesMonthlyAverage(
+		lastNMonths: 3
+		excludedCategoryTypes: $excludedCategoryTypes
+	) {
+		...ExpensesMonthlyAverageFields
+	}
+	lastSixMonthsAverage: getExpensesMonthlyAverage(
+		lastNMonths: 6
+		excludedCategoryTypes: $excludedCategoryTypes
+	) {
+		...ExpensesMonthlyAverageFields
+	}
+	lastTwelveMonthsAverage: getExpensesMonthlyAverage(
+		lastNMonths: 12
+		excludedCategoryTypes: $excludedCategoryTypes
+	) {
+		...ExpensesMonthlyAverageFields
+	}
+	lastTwentyFourMonthsAverage: getExpensesMonthlyAverage(
+		lastNMonths: 24
+		excludedCategoryTypes: $excludedCategoryTypes
+	) {
+		...ExpensesMonthlyAverageFields
+	}
+}
+${EXPENSES_MONTHLY_AVERAGE_FIELDS}
 `

@@ -1,17 +1,17 @@
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
-import { PageSubTitle } from './'
+import { SectionTitle } from './'
 
-describe('PageSubTitle', () => {
+describe('SectionTitle', () => {
 	it('renders correctly', () => {
-		const { getByText } = render(<PageSubTitle text='biz' />)
+		const { getByText } = render(<SectionTitle text='biz' />)
 
 		expect(getByText('biz')).toBeInTheDocument()
 	})
 
 	it('renders correctly the children value', () => {
-		render(<PageSubTitle>Hello <strong>world</strong></PageSubTitle>)
+		render(<SectionTitle>Hello <strong>world</strong></SectionTitle>)
 
 		const expectedText = 'Hello world'
 
@@ -27,7 +27,7 @@ describe('PageSubTitle', () => {
 	})
 
 	it('is a title', () => {
-		render(<PageSubTitle text='example' />)
+		render(<SectionTitle text='example' />)
 
 		const nodeTitle = screen.getByText('example')
 

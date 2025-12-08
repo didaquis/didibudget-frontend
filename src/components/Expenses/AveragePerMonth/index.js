@@ -1,47 +1,86 @@
-import { Fragment } from 'react'
+import { useContext } from 'react'
 import PropTypes from 'prop-types'
-import { getAveragePerMonth, averageOfLast } from '../utils'
 
-import { PageSubTitle } from '../../PageSubTitle'
+import { monthsBetweenDates } from '../utils'
+import { AuthContext } from '../../../AuthContext'
+import { SectionTitle } from '../../SectionTitle'
 
-export const AveragePerMonth = ({ data }) => {
-	const averagePerMonthExceptSecondLast = getAveragePerMonth(data)
+export const AveragePerMonth = ({ averageData, title }) => {
 
-	const lastThreeMonths = averageOfLast(averagePerMonthExceptSecondLast, 3)
-	const lastSixMonths = averageOfLast(averagePerMonthExceptSecondLast, 6)
-	const lastTwelveMonths = averageOfLast(averagePerMonthExceptSecondLast, 12)
-	const lastTwentyFourMonths = averageOfLast(averagePerMonthExceptSecondLast, 24)
+	const { userData } = useContext(AuthContext)
 
-	if (!!lastThreeMonths || !!lastSixMonths || !!lastTwelveMonths || !!lastTwentyFourMonths) {
-		return (
-			<Fragment>
-				<PageSubTitle text="Average spending:"/>
-			{
-				!!lastThreeMonths && <p className="font-weight-light text-light">
-					Over past <strong>3 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastThreeMonths} €.</span>
-				</p>
-			}
-			{
-				!!lastSixMonths && <p className="font-weight-light text-light">
-					Over past <strong>6 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastSixMonths} €.</span>
-				</p>
-			}
-			{
-				!!lastTwelveMonths && <p className="font-weight-light text-light">
-					Over past <strong>12 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastTwelveMonths} €.</span>
-				</p>
-			}
-			{
-				!!lastTwentyFourMonths && <p className="font-weight-light text-light">
-					Over past <strong>24 months</strong>, the average monthly spending has been <span className="text-nowrap">{lastTwentyFourMonths} €.</span>
-				</p>
-			}
-			</Fragment>
-		)
+	const monthsSinceUserJoined = monthsBetweenDates(new Date(userData.registrationDate), new Date())
+
+	const minimunMonthsRequiredForAverageDisplayThree = 4
+	const minimunMonthsRequiredForAverageDisplaySix = 7
+	const minimunMonthsRequiredForAverageDisplayTwelve = 13
+	const minimunMonthsRequiredForAverageDisplayTwentyFour = 25
+
+	if (monthsSinceUserJoined < minimunMonthsRequiredForAverageDisplayThree) {
+		return null
 	}
 
+	return (
+		<section className="col-12 col-md-6 mb-3">
+			<SectionTitle text={title} />
+
+			<div className="table-responsive">
+				<table className="table table-dark table-hover">
+					<thead>
+						<tr className="table-info text-dark">
+							<th scope="col">Period (months)</th>
+							<th scope="col">Average monthly spending</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>3</td>
+							<td className="text-nowrap">{averageData.lastThreeMonthsAverage.average} €</td>
+						</tr>
+						{
+							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplaySix) && <tr>
+								<td>6</td>
+								<td className="text-nowrap">{averageData.lastSixMonthsAverage.average} €</td>
+							</tr>
+						}
+						{
+							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwelve) && <tr>
+								<td>12</td>
+								<td className="text-nowrap">{averageData.lastTwelveMonthsAverage.average} €</td>
+							</tr>
+						}
+
+						{
+							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwentyFour) && <tr>
+								<td>24</td>
+								<td className="text-nowrap">{averageData.lastTwentyFourMonthsAverage.average} €</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</section>
+	)
 }
 
 AveragePerMonth.propTypes = {
-	data: PropTypes.array.isRequired,
+	averageData: PropTypes.shape({
+		lastThreeMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastSixMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastTwelveMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastTwentyFourMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+	}).isRequired,
+	title: PropTypes.string.isRequired,
 }

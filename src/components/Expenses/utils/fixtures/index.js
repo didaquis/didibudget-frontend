@@ -354,5 +354,3 @@ export const expectedDataForGetDetailedExpensesGroupedFromRangeOnCurrentMonth = 
 		}
 	]
 }
-
-export const expectedAverageData = [ 99, 0, 166.16, 40, 0, 0 ]

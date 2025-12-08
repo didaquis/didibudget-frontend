@@ -10,9 +10,9 @@ import { PageSubTitle } from '../../PageSubTitle'
 import { AveragePerMonth } from '../AveragePerMonth'
 
 
-export const GraphExpensesData = ({ data }) => {	
+export const GraphExpensesData = ({ graphData, averageData, averageDataExcludingSavings }) => {	
 
-	const dataParsed = data.map((expense) => {
+	const dataParsed = graphData.map((expense) => {
 		return {
 			...expense,
 			date: parseUnixTimestamp(expense.date).substring(0, 10)
@@ -62,7 +62,14 @@ export const GraphExpensesData = ({ data }) => {
 					</Fragment>
 				}
 
-				<AveragePerMonth data={dataParsed} />
+				<div className="container">
+					<div className="row">
+						<AveragePerMonth averageData={averageData} title="Average spending:" />
+
+						<AveragePerMonth averageData={averageDataExcludingSavings} title="Average spending (excluding savings):" />
+					</div>
+				</div>
+
 			</Fragment>
 		)
 	} else {
@@ -72,5 +79,41 @@ export const GraphExpensesData = ({ data }) => {
 }
 
 GraphExpensesData.propTypes = {
-	data: PropTypes.array.isRequired,
+	graphData: PropTypes.array.isRequired,
+	averageData: PropTypes.shape({
+		lastThreeMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastSixMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastTwelveMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastTwentyFourMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+	}).isRequired,
+	averageDataExcludingSavings: PropTypes.shape({
+		lastThreeMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastSixMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastTwelveMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+		lastTwentyFourMonthsAverage: PropTypes.shape({
+			average: PropTypes.number.isRequired,
+			currencyISO: PropTypes.string.isRequired,
+		}).isRequired,
+	}).isRequired,
 }
