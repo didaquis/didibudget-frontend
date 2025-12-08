@@ -62,7 +62,8 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 					</Fragment>
 				}
 
-				<AveragePerMonth averageData={averageData} averageDataExcludingSavings={averageDataExcludingSavings} />
+				<AveragePerMonth averageData={averageData} title="Average spending:" />
+				<AveragePerMonth averageData={averageDataExcludingSavings} title="Average spending (excluding savings):" />
 			</Fragment>
 		)
 	} else {
