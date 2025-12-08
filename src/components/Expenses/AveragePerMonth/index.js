@@ -1,7 +1,7 @@
 import { Fragment, useContext } from 'react'
 import PropTypes from 'prop-types'
 
-import { getAveragePerMonth, averageOfLast, monthsBetweenDates } from '../utils'
+import { monthsBetweenDates } from '../utils'
 import { AuthContext } from '../../../AuthContext'
 import { PageSubTitle } from '../../PageSubTitle'
 

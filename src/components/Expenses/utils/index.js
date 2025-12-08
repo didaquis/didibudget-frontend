@@ -92,61 +92,6 @@ const getSumPerMonth = (data = []) => {
 	return result
 }
 
-
-/**
-* Parse the data of expenses to obtain an array of sum per month. This function refill the empty data of every month and do a sum of every months. Moreover, we discard the current month and refill the results until the second last month
-* @requires getSumPerMonth
-* @requires parseUnixTimestamp
-* @example
-* 	const data = [{quantity: 3, date: '2020-10-31'}, {quantity: 99.03, date: '2020-10-31'}, {quantity: 2.45, date: '2020-12-07'}]
-* 	getAveragePerMonth(data) // [102.03, 0, 2.45, 0, 0, 0, 0, 0]
-* @param {Array.<Object>} data - An array of objects
-* @param {string} data.date - A valid date with this format '2018-03-01'
-* @param {float|integer} data.quantity
-* @returns {Array.<number>}
-*/
-const getAveragePerMonth = (data = []) => {
-	if (!data.length) {
-		return []
-	}
-
-	const today = parseUnixTimestamp(new Date(Date.now()).getTime()).substring(0, 10)
-	const currentlyMonth = { quantity: 0, date: today }
-	const completedData = [...data]
-	completedData.push(currentlyMonth)
-
-	const totalPerMonth = getSumPerMonth(completedData)
-	totalPerMonth.pop()	
-
-	return totalPerMonth.map(month => {
-		return month.sum
-	})
-}
-
-
-/**
- * Get the average value of a list of integers (rounded decimals). This function only takes into account the last "x" values on the array.
- * @requires trimDecimalPoints
- * @param {Array<Integer>} listOfData - array with the data
- * @param {Integer} numberOfPositions - number of last positions to use
- * @returns {number | null}
- */
-const averageOfLast = (listOfData = [], numberOfPositions) => {
-	if (!Number.isInteger(numberOfPositions) || numberOfPositions < 1) {
-		throw new Error('You must specify the number of data to take into account in the average')
-	}
-
-	if (listOfData.length < numberOfPositions) {
-		return null
-	}
-
-	const selectedData = listOfData.slice(- numberOfPositions)
-	const average = selectedData.reduce((acc,v) => acc + v) / selectedData.length
-
-	return trimDecimalPoints(average)
-}
-
-
 /**
  * Get name of category or subcategory using provided data.
  * @param {string} target 		MongoDB identifier of category or subcategory
@@ -527,8 +472,6 @@ export {
 	getSumPerMonth,
 	getDetailedExpensesPerMonth,
 	getDetailedExpensesGroupedFromRange,
-	getAveragePerMonth,
-	averageOfLast,
 	getLastTwelveValuesFromArrayIfTheyExist,
 	monthsBetweenDates
 }

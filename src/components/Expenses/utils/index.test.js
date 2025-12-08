@@ -1,4 +1,4 @@
-import { getNameOfCategoryOrSubcategory, getSumPerMonth, getDetailedExpensesPerMonth, getDetailedExpensesGroupedFromRange, getAveragePerMonth, averageOfLast } from './index'
+import { getNameOfCategoryOrSubcategory, getSumPerMonth, getDetailedExpensesPerMonth, getDetailedExpensesGroupedFromRange } from './index'
 
 import {
 	expensesRawData,
@@ -7,7 +7,6 @@ import {
 	expectedDataForGetDetailedExpendesPerMonth,
 	expensesRawDataForGetDetailedExpensesGroupedFromRange,
 	expectedDataForGetDetailedExpensesGroupedFromRange,
-	expectedAverageData,
 	expectedDataForGetDetailedExpensesGroupedFromRangeOnCurrentMonth
 } from './fixtures'
 
@@ -204,58 +203,5 @@ describe('getDetailedExpensesGroupedFromRange', () => {
 		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, new Date(2021, 0, 1), new Date(2021, 0, 1))
 
 		expect(result).toEqual(expectedDataForGetDetailedExpensesGroupedFromRangeOnCurrentMonth)
-	})
-})
-
-describe('getAveragePerMonth', () => {
-	afterEach(() => {    
-		jest.clearAllMocks()
-	})
-
-	test('should return an array', () => {
-		expect(getAveragePerMonth()).toEqual([])
-	})
-
-	test('should return an array of numbers if receive an array of valid data with at least one object from a past month', () => {
-		expect.hasAssertions()
-		const result = getAveragePerMonth(expensesRawData)
-
-		result.forEach(element => {
-			expect(typeof element).toBe('number')
-			expect(element).not.toBeNaN()
-		})
-	})
-
-	test('should fill the gap from the last month until the second to last currently month', () => {
-		jest.spyOn(Date, 'now').mockImplementationOnce(() => 1619323711823)
-
-		const result = getAveragePerMonth(expensesRawData)
-
-		expect(result).toEqual(expectedAverageData)
-	})
-
-})
-
-describe('averageOfLast', () => {
-	test('should return null if there are not enought data', () => {
-		expect(averageOfLast([], 6)).toBeNull()
-		expect(averageOfLast([2, 45, 765.23, 0, 0], 6)).toBeNull()
-	})
-
-	test('should return a number if there are enought data', () => {
-		expect(averageOfLast([0, 0, 0, 0, 0, 0], 6)).toBe(0)
-		expect(averageOfLast([1, 1, 1, 1, 1, 1], 6)).toBe(1)
-		expect(averageOfLast([2, 4, 2, 4, 2, 4], 6)).toBe(3)
-	})
-
-	test('should return the average of last 6 numbers', () => {
-		expect(averageOfLast([999, 0, 888, 2, 4, 2, 4, 2, 4], 6)).toBe(3)
-		expect(averageOfLast([88, 0, 0, 0, 0, 0, 0, 0,], 6)).toBe(0)
-	})
-
-	test('should return the average of last 3 numbers', () => {
-		expect(averageOfLast([20, 4, 2, 4], 3)).toBe(3.33)
-		expect(averageOfLast([77, 0, 0, 0,], 3)).toBe(0)
-		expect(averageOfLast([20.01, 13.67, 0,], 3)).toBe(11.23)
 	})
 })
