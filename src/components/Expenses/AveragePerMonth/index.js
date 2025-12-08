@@ -1,4 +1,4 @@
-import { Fragment, useContext } from 'react'
+import { useContext } from 'react'
 import PropTypes from 'prop-types'
 
 import { monthsBetweenDates } from '../utils'
@@ -21,29 +21,45 @@ export const AveragePerMonth = ({ averageData, title }) => {
 	}
 
 	return (
-		<Fragment>
+		<section>
 			<PageSubTitle text={title}/>
-		{
-			<p className="font-weight-light text-light">
-				Over past <strong>3 months</strong>, the average monthly spending has been <span className="text-nowrap">{averageData.lastThreeMonthsAverage.average} €.</span>
-			</p>
-		}
-		{
-			!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplaySix) && <p className="font-weight-light text-light">
-				Over past <strong>6 months</strong>, the average monthly spending has been <span className="text-nowrap">{averageData.lastSixMonthsAverage.average} €.</span>
-			</p>
-		}
-		{
-			!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwelve) && <p className="font-weight-light text-light">
-				Over past <strong>12 months</strong>, the average monthly spending has been <span className="text-nowrap">{averageData.lastTwelveMonthsAverage.average} €.</span>
-			</p>
-		}
-		{
-			!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwentyFour) && <p className="font-weight-light text-light">
-				Over past <strong>24 months</strong>, the average monthly spending has been <span className="text-nowrap">{averageData.lastTwentyFourMonthsAverage.average} €.</span>
-			</p>
-		}
-		</Fragment>
+
+			<div className="table-responsive">
+				<table className="table table-dark table-hover">
+					<thead>
+						<tr className="table-info text-dark">
+							<th scope="col">Period (months)</th>
+							<th scope="col">Average monthly spending</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>3</td>
+							<td className="text-nowrap">{averageData.lastThreeMonthsAverage.average} €</td>
+						</tr>
+						{
+							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplaySix) && <tr>
+								<td>6</td>
+								<td className="text-nowrap">{averageData.lastSixMonthsAverage.average} €</td>
+							</tr>
+						}
+						{
+							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwelve) && <tr>
+								<td>12</td>
+								<td className="text-nowrap">{averageData.lastTwelveMonthsAverage.average} €</td>
+							</tr>
+						}
+
+						{
+							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwentyFour) && <tr>
+								<td>24</td>
+								<td className="text-nowrap">{averageData.lastTwentyFourMonthsAverage.average} €</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</section>
 	)
 }
 
