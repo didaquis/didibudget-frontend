@@ -1,4 +1,4 @@
-import { firstDayOfNextMonth, firstDayOfTheMonth, parseUnixTimestamp, trimDecimalPoints } from '../../../utils/utils'
+import { firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints } from '../../../utils/utils'
 
 /**
  * Get name of month and year from a date
