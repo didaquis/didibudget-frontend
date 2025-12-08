@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { monthsBetweenDates } from '../utils'
 import { AuthContext } from '../../../AuthContext'
-import { PageSubTitle } from '../../PageSubTitle'
+import { SectionTitle } from '../../SectionTitle'
 
 export const AveragePerMonth = ({ averageData, title }) => {
 
@@ -21,8 +21,8 @@ export const AveragePerMonth = ({ averageData, title }) => {
 	}
 
 	return (
-		<section>
-			<PageSubTitle text={title}/>
+		<section className="col-12 col-md-6 mb-3">
+			<SectionTitle text={title} />
 
 			<div className="table-responsive">
 				<table className="table table-dark table-hover">
