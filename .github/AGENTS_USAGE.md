@@ -8,7 +8,6 @@ This repository contains specialized GitHub Copilot agents to improve developmen
 |-------|------|------------|---------|
 | **@test-agent** | React QA Engineer | Write/improve tests, increase coverage | `npm run test` |
 | **@lint-agent** | Code Quality Specialist | Clean up style, auto-fix ESLint | `npm run lint` |
-| **@docs-agent** | Technical Writer | Generate/update documentation | `cat src/components/...` |
 
 ---
 
@@ -107,48 +106,6 @@ Report what was fixed.
 
 ---
 
-## 📚 @docs-agent: Generate Documentation
-
-**Specialty:** Extract info from React components and GraphQL queries, generate clear markdown.
-
-### When to Use
-- You need to document React components (props, examples, usage)
-- You want to document GraphQL queries/mutations
-- You need clear README for new developers
-- Documentation is out of sync with code
-
-### Usage Examples
-
-```
-@docs-agent
-Document the DateSelector component in docs/components/DateSelector.md.
-Include: props table, usage example, behavior description.
-Analyze src/components/DateSelector.js and extract PropTypes.
-```
-
-```
-@docs-agent
-Create documentation for GraphQL queries in docs/gql/queries.md.
-Cover: LIST_ALL_MONTHLY_BALANCES, LIST_ALL_EXPENSES, LIST_EXPENSE_CATEGORIES
-Include query definition, response example, React usage code.
-```
-
-### What It Does
-
-✅ **Yes:**
-- Writes markdown in `docs/` (creates subdirs if needed)
-- Extracts props, types, examples from real code
-- Includes code examples that can be copy-pasted
-- Verifies components exist before documenting
-
-🚫 **Never:**
-- Modifies code in `src/` (read-only)
-- Creates documentation without examples
-- Documents code that doesn't exist
-- Modifies configs or `.github/`
-
----
-
 ## 📂 Agent Structure
 
 ```
@@ -156,7 +113,6 @@ Include query definition, response example, React usage code.
 ├── agents/
 │   ├── test-agent.md       # @test-agent instructions
 │   ├── lint-agent.md       # @lint-agent instructions
-│   └── docs-agent.md       # @docs-agent instructions
 └── AGENTS_USAGE.md         # This file
 ```
 
@@ -189,14 +145,6 @@ Agents understand:
 ```
 1. @lint-agent: review existing code style
 2. @test-agent: increase coverage on untested components
-3. @docs-agent: document new APIs
-```
-
-### 3. Onboarding New Developers
-```
-1. @docs-agent: generate key component documentation
-2. @docs-agent: document GraphQL queries/mutations
-3. New dev reads docs/ to understand codebase
 ```
 
 ---
@@ -247,13 +195,3 @@ Follow the pattern of the 3 existing ones:
 - **ESLint Config:** Check `package.json` → `eslintConfig`
 - **Jest Docs:** https://jestjs.io/
 
----
-
-## ❓ Questions/Issues
-
-If the agents don't work as expected, first check:
-1. The `.github/agents/[agent].md` file for boundaries
-2. The agent's output for specific error messages
-3. That your project meets requirements (Node 18+, npm install, etc.)
-
-Happy coding! 🚀
