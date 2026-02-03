@@ -125,6 +125,7 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 - Some dependencies polyfill Node.js modules for browser compatibility (stream-browserify, crypto-browserify, etc.) due to `crypto` and `vm` usage in the codebase
 - Route-level components use lazy loading with Suspense for better performance
 - Session-based authentication reuses token across page reloads via sessionStorage
+- Before run git add, git commit, git push, or git checkout automatically. Ask for explicit confirmation before any git-related action.
 
 ## Files Not to Modify Without Consideration
 
