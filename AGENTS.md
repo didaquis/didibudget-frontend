@@ -7,7 +7,7 @@
 - **Tech Stack**: React 18, React Router 6, Apollo Client 3, Reactstrap (Bootstrap 4)
 - **Build Tool**: Create React App (with Craco for config overrides)
 - **Testing**: Jest + React Testing Library
-- **Linting**: ESLint (custom rules via `no-lenght` plugin)
+- **Linting**: ESLint
 
 ## Setup & Development
 
@@ -62,7 +62,6 @@ Apollo is configured in `src/apollo/config.js` with:
 ### Code Style Conventions
 - **Semicolons**: Disabled (eslint rule: `semi: warn, never`)
 - **Quotes**: Single quotes enforced (eslint rule: `quotes: warn, single`)
-- **No-lenght Rule**: Custom ESLint rule that enforces using `.length` not `.lenght` (typo prevention)
 - **Import Statement Order**: No explicit convention, but components typically import React/libraries first, then local components/utilities
 
 ### Routing
@@ -125,7 +124,6 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 - Some dependencies polyfill Node.js modules for browser compatibility (stream-browserify, crypto-browserify, etc.) due to `crypto` and `vm` usage in the codebase
 - Route-level components use lazy loading with Suspense for better performance
 - Session-based authentication reuses token across page reloads via sessionStorage
-- Before run git add, git commit, git push, or git checkout automatically. Ask for explicit confirmation before any git-related action.
 
 ## Files Not to Modify Without Consideration
 

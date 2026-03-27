@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "react-testing-library": {
+      "source": "pproenca/dot-skills",
+      "sourceType": "github",
+      "computedHash": "a4f9b64d36073864bcf07010702d37c035fe5d9f798c2bfbe4456f96f3de624c"
+    }
+  }
+}
