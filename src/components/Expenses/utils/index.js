@@ -316,7 +316,9 @@ const groupExpensesByMonth = (expenses = []) => {
 	expenses.forEach(expense => {
 		const dateObj = new Date(Number.isNaN(+expense.date) ? expense.date : parseInt(expense.date, 10))
 		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
-		if (!expensesByMonth[key]) expensesByMonth[key] = []
+		if (!expensesByMonth[key]) {
+			expensesByMonth[key] = []
+		}
 		expensesByMonth[key].push(expense)
 	})
 	return expensesByMonth

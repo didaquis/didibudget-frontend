@@ -55,7 +55,8 @@
         "warn",
         "single"
       ],
-      "no-return-await": "error"
+      "no-return-await": "error",
+      "curly": "error"
     }
   },
   "browserslist": {

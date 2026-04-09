@@ -2,15 +2,17 @@ import PropTypes from 'prop-types'
 
 import { getCategoryTypeText } from '../utils'
 
-// Helper to extract currency from data
 const getCurrency = (data) => {
-	if (!data || data.length === 0) return null
+	if (!data || data.length === 0) {
+		return null
+	}
 	return data[0].currencyISO
 }
 
-// Helper to calculate total sum
 const calculateTotal = (data) => {
-	if (!data || data.length === 0) return 0
+	if (!data || data.length === 0) {
+		return 0
+	}
 	return data.reduce((sum, item) => sum + item.sum, 0)
 }
 
@@ -39,12 +41,14 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 					})
 				}
 			</tbody>
-			<tfoot>
-				<tr className="table-info text-dark">
-					<td>Total</td>
-					<td>{totalInvested} {currency}</td>
-				</tr>
-			</tfoot>
+			{totalInvested > 0 && (
+				<tfoot>
+					<tr className="table-info text-dark">
+						<td>Total</td>
+						<td>{totalInvested} {currency}</td>
+					</tr>
+				</tfoot>
+			)}
 		</table>
 		</section>
 	)
