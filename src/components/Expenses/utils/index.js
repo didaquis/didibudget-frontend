@@ -425,16 +425,20 @@ const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate
 }
 
 /**
- * Returns a new array with the last 12 elements of original array. If the original array does not have a length of 12 or more, this function returns an empty array.
+ * Returns a new array with the last n elements of original array. If the original array does not have a length of n or more, this function returns an empty array.
  * @param {Array} anArray - An array of any values
- * @returns {Array}
+ * @param {number} [n=12] - The number of elements to retrieve from the end of the array (default: 12)
+ * @returns {Array} A new array containing the last n elements, or an empty array if the input array is shorter than n
+ * @example
+ *   getLastNValuesFromArrayIfTheyExist([1,2,3,4,5], 2); // [4, 5]
+ *   getLastNValuesFromArrayIfTheyExist([1,2,3], 5); // []
  */
-const getLastTwelveValuesFromArrayIfTheyExist = (anArray) => {
-	if (anArray.length < 12) {
+const getLastNValuesFromArrayIfTheyExist = (anArray, n = 12) => {
+	if (anArray.length < n) {
 		return []
 	}
 
-	return anArray.slice(-12)
+	return anArray.slice(-n)
 }
 
 /**
@@ -474,6 +478,6 @@ export {
 	getSumPerMonth,
 	getDetailedExpensesPerMonth,
 	getDetailedExpensesGroupedFromRange,
-	getLastTwelveValuesFromArrayIfTheyExist,
+	getLastNValuesFromArrayIfTheyExist,
 	monthsBetweenDates
 }
