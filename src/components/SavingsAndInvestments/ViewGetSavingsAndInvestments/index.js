@@ -27,19 +27,25 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 						<th scope="col">Total invested</th>
 					</tr>
 				</thead>
-				<tbody>
-					{
-						data.map(expenseSum => {
-							return (
-								<tr key={expenseSum.categoryType}>
-									<td>{ getCategoryTypeText(expenseSum.categoryType) }</td>
-									<td>{expenseSum.sum} {expenseSum.currencyISO}</td>
-								</tr>
-							)
-						})
-					}
-				</tbody>
-			</table>
+			<tbody>
+				{
+					data.map(expenseSum => {
+						return (
+							<tr key={expenseSum.categoryType}>
+								<td>{ getCategoryTypeText(expenseSum.categoryType) }</td>
+								<td>{expenseSum.sum} {expenseSum.currencyISO}</td>
+							</tr>
+						)
+					})
+				}
+			</tbody>
+			<tfoot>
+				<tr className="table-info text-dark">
+					<td>Total</td>
+					<td>{totalInvested} {currency}</td>
+				</tr>
+			</tfoot>
+		</table>
 		</section>
 	)
 }
