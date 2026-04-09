@@ -23,11 +23,12 @@ describe('ViewGetSavingsAndInvestments', () => {
 	})
 
 	test('does not display footer when total is 0', () => {
-		render(<ViewGetSavingsAndInvestments data={[]} />)
+		render(<ViewGetSavingsAndInvestments data={[
+			{ categoryType: CategoryType.INVESTMENT, sum: 0, currencyISO: 'EUR' },
+			{ categoryType: CategoryType.PENSION_PLAN, sum: 0, currencyISO: 'EUR' }
+		]} />)
 		const rows = screen.getAllByRole('row')
-		// Should only have header row when data is empty (no tfoot)
-		expect(rows.length).toBe(1)
-		// Verify Total label is not present
+		expect(rows.length).toBe(3)
 		expect(screen.queryByText('Total')).not.toBeInTheDocument()
 	})
 
