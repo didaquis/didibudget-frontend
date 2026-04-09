@@ -24,8 +24,8 @@ export const GetListOfMonthlyBalancesWithPagination = () => {
 
 	const { loading, error, data, refetch, fetchMore } = useQuery(LIST_ALL_MONTHLY_BALANCES_WITH_PAGINATION, { variables: { page: page, pageSize: defaultPageSize }, fetchPolicy: 'no-cache', notifyOnNetworkStatusChange: true })
 
-	if (loading) return <Spinner />
-	if (error) return <ErrorAlert errorMessage={error.message} />
+	if (loading) { return <Spinner /> }
+	if (error) { return <ErrorAlert errorMessage={error.message} /> }
 
 	return <ListOfMonthlyBalances monthlyBalances={data.getMonthlyBalancesWithPagination.monthlyBalances} paginationData={data.getMonthlyBalancesWithPagination.pagination} refetch={refetch} onChangePage={onChangePage} />
 }
