@@ -2,7 +2,24 @@ import PropTypes from 'prop-types'
 
 import { getCategoryTypeText } from '../utils'
 
+const getCurrency = (data) => {
+	if (!data || data.length === 0) {
+		return null
+	}
+	return data[0].currencyISO
+}
+
+const calculateTotal = (data) => {
+	if (!data || data.length === 0) {
+		return 0
+	}
+	return data.reduce((sum, item) => sum + item.sum, 0)
+}
+
 export const ViewGetSavingsAndInvestments = ({ data }) => {
+	const totalInvested = calculateTotal(data)
+	const currency = getCurrency(data)
+
 	return (
 		<section className="table-responsive">
 			<table className="table table-dark table-hover">
@@ -12,19 +29,27 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 						<th scope="col">Total invested</th>
 					</tr>
 				</thead>
-				<tbody>
-					{
-						data.map(expenseSum => {
-							return (
-								<tr key={expenseSum.categoryType}>
-									<td>{ getCategoryTypeText(expenseSum.categoryType) }</td>
-									<td>{expenseSum.sum} {expenseSum.currencyISO}</td>
-								</tr>
-							)
-						})
-					}
-				</tbody>
-			</table>
+			<tbody>
+				{
+					data.map(expenseSum => {
+						return (
+							<tr key={expenseSum.categoryType}>
+								<td>{ getCategoryTypeText(expenseSum.categoryType) }</td>
+								<td>{expenseSum.sum} {expenseSum.currencyISO}</td>
+							</tr>
+						)
+					})
+				}
+			</tbody>
+			{totalInvested > 0 && (
+				<tfoot>
+					<tr className="table-info text-dark">
+						<td>Total</td>
+						<td>{totalInvested} {currency}</td>
+					</tr>
+				</tfoot>
+			)}
+		</table>
 		</section>
 	)
 }

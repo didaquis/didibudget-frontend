@@ -24,8 +24,8 @@ export const GetListOfExpensesWithPagination = () => {
 
 	const { loading, error, data, refetch, fetchMore } = useQuery(LIST_ALL_EXPENSES_WITH_PAGINATION_AND_CATEGORIES, { variables: { page: page, pageSize: defaultPageSize }, fetchPolicy: 'no-cache', notifyOnNetworkStatusChange: true })
 
-	if (loading) return <Spinner />
-	if (error) return <ErrorAlert errorMessage={error.message} />
+	if (loading) { return <Spinner /> }
+	if (error) { return <ErrorAlert errorMessage={error.message} /> }
 
 	return <ListOfExpenses expenses={data.getExpensesWithPagination.expenses} paginationData={data.getExpensesWithPagination.pagination} categories={data.getExpenseCategory} refetch={refetch} onChangePage={onChangePage} />
 }

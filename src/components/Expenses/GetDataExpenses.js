@@ -13,10 +13,10 @@ export const GetDataExpenses = () => {
 	const expensesAverageExcludingSavingsQuery = useQuery(GET_EXPENSES_AVERAGES, { variables: { excludedCategoryTypes: [CategoryType.INVESTMENT, CategoryType.PENSION_PLAN] } }, { fetchPolicy: 'no-cache' })
 
 
-	if (listAllExpensesQuery.loading || expensesAverageQuery.loading || expensesAverageExcludingSavingsQuery.loading) return <Spinner />
-	if (listAllExpensesQuery.error) return <ErrorAlert errorMessage={listAllExpensesQuery.error.message} />
-	if (expensesAverageQuery.error) return <ErrorAlert errorMessage={expensesAverageQuery.error.message} />
-	if (expensesAverageExcludingSavingsQuery.error) return <ErrorAlert errorMessage={expensesAverageExcludingSavingsQuery.error.message} />
+	if (listAllExpensesQuery.loading || expensesAverageQuery.loading || expensesAverageExcludingSavingsQuery.loading) { return <Spinner /> }
+	if (listAllExpensesQuery.error) { return <ErrorAlert errorMessage={listAllExpensesQuery.error.message} /> }
+	if (expensesAverageQuery.error) { return <ErrorAlert errorMessage={expensesAverageQuery.error.message} /> }
+	if (expensesAverageExcludingSavingsQuery.error) { return <ErrorAlert errorMessage={expensesAverageExcludingSavingsQuery.error.message} /> }
 
 	return <GraphExpensesData graphData={listAllExpensesQuery.data.getExpenses} averageData={expensesAverageQuery.data} averageDataExcludingSavings={expensesAverageExcludingSavingsQuery.data} />
 }

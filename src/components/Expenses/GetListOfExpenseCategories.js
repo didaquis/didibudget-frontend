@@ -9,8 +9,8 @@ import { LIST_EXPENSE_CATEGORIES } from '../../gql/queries/expenseCategories'
 export const GetListOfExpenseCategories = () => {
 	const { loading, error, data } = useQuery(LIST_EXPENSE_CATEGORIES, { fetchPolicy: 'no-cache' })
 
-	if (loading) return <Spinner />
-	if (error) return <ErrorAlert errorMessage={error.message} />
+	if (loading) { return <Spinner /> }
+	if (error) { return <ErrorAlert errorMessage={error.message} /> }
 
 	return <ListOfExpenseCategories getExpenseCategory={data.getExpenseCategory} />
 }

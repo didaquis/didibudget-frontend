@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts'
 
 import { parseUnixTimestamp } from '../../../utils/utils'
-import { getSumPerMonth, getLastTwelveValuesFromArrayIfTheyExist } from '../utils'
+import { getSumPerMonth, getLastNValuesFromArrayIfTheyExist } from '../utils'
 
 import { ErrorAlert } from '../../ErrorAlert'
 import { PageSubTitle } from '../../PageSubTitle'
@@ -20,7 +20,9 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 	})
 
 	const dataGroupedPerMonth = getSumPerMonth(dataParsed)
-	const dataGroupedPerMonthLastYear = getLastTwelveValuesFromArrayIfTheyExist(dataGroupedPerMonth)
+
+	const numberOfMonthsToDisplay = 24
+	const dataGroupedPerMonthSubset = getLastNValuesFromArrayIfTheyExist(dataGroupedPerMonth, numberOfMonthsToDisplay)
 
 	if (dataGroupedPerMonth.length) {
 		return (
@@ -42,13 +44,13 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 				</div>
 
 				{
-					dataGroupedPerMonthLastYear.length  > 0 &&
+					dataGroupedPerMonthSubset.length  > 0 &&
 					<Fragment>
-						<PageSubTitle text="Total spending for the last 12 months:"/>
+						<PageSubTitle text={`Total spending for the last ${numberOfMonthsToDisplay} months:`} />
 						<div style={{ width: '100%', height: 460 }}>
 							<ResponsiveContainer>
 								<BarChart
-									data={dataGroupedPerMonthLastYear}
+									data={dataGroupedPerMonthSubset}
 									margin={{top: 5, right: 20, left: 20, bottom: 20}}
 								>
 									<CartesianGrid strokeDasharray="3 3" />

@@ -11,8 +11,8 @@ export const GetExpenseCategory = ({ categoryID, subcategoryID }) => {
 
 	const { loading, error, data } = useQuery(GET_EXPENSE_CATEGORY_BY_ID, { variables: { category: categoryID }, fetchPolicy: 'no-cache' })
 
-	if (loading) return <Spinner />
-	if (error) return <ErrorAlert errorMessage={error.message} />
+	if (loading) { return <Spinner /> }
+	if (error) { return <ErrorAlert errorMessage={error.message} /> }
 
 	return <RegisterExpenseForm selectedCategoryID={categoryID} selectedSubcategoryID={subcategoryID} categoryData={data.getExpenseCategoryById} />
 }
