@@ -425,7 +425,7 @@ const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate
 }
 
 /**
- * Returns a new array with the last n elements of original array. If the original array does not have a length of n or more, this function returns an empty array.
+ * Returns a new array containing the last n elements of the original array. If the array has fewer than n elements, an empty array is returned.
  * @param {Array} anArray - An array of any values
  * @param {number} [n=12] - The number of elements to retrieve from the end of the array (default: 12)
  * @returns {Array} A new array containing the last n elements, or an empty array if the input array is shorter than n
