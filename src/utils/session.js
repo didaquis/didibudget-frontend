@@ -61,12 +61,3 @@ function recoverUserDataFromSessionStorage() {
 function deleteUserDataFromSessionStorage() {
 	sessionStorage.removeItem('userData')
 }
-
-module.exports = {
-	saveSession,
-	recoverSession,
-	deleteSession,
-	storeUserDataOnSessionStorage,
-	recoverUserDataFromSessionStorage,
-	deleteUserDataFromSessionStorage
-}
