@@ -24,9 +24,11 @@
   },
   "scripts": {
     "lint": "eslint --ext .js ./src",
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test --colors",
+    "start": "vite",
+    "build": "vite build",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
     "eject": "react-scripts eject",
     "prepare": "husky"
   },
