@@ -1,16 +1,18 @@
+import React from 'react'
+
 import { render, screen } from '@testing-library/react'
 
-import { SectionTitle } from './'
+import { PageSubTitle } from './'
 
-describe('SectionTitle', () => {
+describe('PageSubTitle', () => {
 	it('renders correctly', () => {
-		const { getByText } = render(<SectionTitle text='biz' />)
+		const { getByText } = render(<PageSubTitle text='biz' />)
 
 		expect(getByText('biz')).toBeInTheDocument()
 	})
 
 	it('renders correctly the children value', () => {
-		render(<SectionTitle>Hello <strong>world</strong></SectionTitle>)
+		render(<PageSubTitle>Hello <strong>world</strong></PageSubTitle>)
 
 		const expectedText = 'Hello world'
 
@@ -26,7 +28,7 @@ describe('SectionTitle', () => {
 	})
 
 	it('is a title', () => {
-		render(<SectionTitle text='example' />)
+		render(<PageSubTitle text='example' />)
 
 		const nodeTitle = screen.getByText('example')
 

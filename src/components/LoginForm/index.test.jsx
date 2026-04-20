@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
 import { InMemoryCache } from '@apollo/client'
