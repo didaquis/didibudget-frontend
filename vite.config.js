@@ -1,20 +1,26 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import nodePolyfills from '@vitejs/plugin-node-polyfills'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 export default defineConfig({
   plugins: [
-    react({
-      jsxRuntime: 'automatic',
-    }),
-    nodePolyfills({
-      globals: {
-        global: true,
-        process: true,
-        Buffer: true,
-      },
-    }),
+    react(),
+    nodePolyfills(),
   ],
+  esbuild: {
+    include: /\.jsx?$/,
+    loader: 'jsx',
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
   server: {
     port: 3000,
     open: false,
@@ -23,14 +29,8 @@ export default defineConfig({
   build: {
     outDir: 'build',
     sourcemap: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          apollo: ['@apollo/client'],
-          router: ['react-router-dom'],
-          reactstrap: ['reactstrap'],
-        },
-      },
+    commonjsOptions: {
+      include: /node_modules/,
     },
   },
   define: {

@@ -7,6 +7,8 @@ function saveSession(name, data) {
 	sessionStorage.setItem(name, data)
 }
 
+export { saveSession, recoverSession, deleteSession, storeUserDataOnSessionStorage, recoverUserDataFromSessionStorage, deleteUserDataFromSessionStorage }
+
 /**
  * Recover data from Session Storage
  * @param {string} name - key for data to recover
