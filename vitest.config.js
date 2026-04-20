@@ -1,18 +1,8 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import nodePolyfills from '@vitejs/plugin-node-polyfills'
 
 export default defineConfig({
-  plugins: [
-    react(),
-    nodePolyfills({
-      globals: {
-        global: true,
-        process: true,
-        Buffer: true,
-      },
-    }),
-  ],
+  plugins: [react()],
   test: {
     environment: 'jsdom',
     globals: true,
