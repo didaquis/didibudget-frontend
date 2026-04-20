@@ -1,5 +1,4 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
 import { MockedProvider } from '@apollo/client/testing'
 import { InMemoryCache } from '@apollo/client'
 
@@ -10,7 +9,7 @@ const customCache = new InMemoryCache()
 
 describe('LoginForm', () => {
 	it('should render a disabled button until password and email inputs are filled with data', () => {
-		const activateAuth = jest.fn()
+		const activateAuth = vi.fn()
 		const mocks = []
 
 		render(
@@ -38,7 +37,7 @@ describe('LoginForm', () => {
 	})
 
 	it('should call to activateAuth method passing a token as argument if credentials are valid', async () => {
-		const activateAuth = jest.fn()
+		const activateAuth = vi.fn()
 		const mocks = [
 			{
 				request: {
@@ -82,7 +81,7 @@ describe('LoginForm', () => {
 	})
 
 	it('should render an error if credentials are not valid', async () => {
-		const activateAuth = jest.fn()
+		const activateAuth = vi.fn()
 		const mocks = [
 			{
 				request: {

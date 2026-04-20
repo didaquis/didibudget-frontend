@@ -46,6 +46,9 @@
     "plugins": [
       "no-lenght"
     ],
+    "globals": {
+      "vi": "readonly"
+    },
     "rules": {
       "no-lenght/no-lenght": "error",
       "semi": [

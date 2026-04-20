@@ -1,5 +1,4 @@
 import { render, fireEvent } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
 
 import { SubmitButton } from './'
 
@@ -23,7 +22,7 @@ describe('SubmitButton', () => {
 	})
 
 	it('captures clicks', () => {
-		const handleClick = jest.fn()
+		const handleClick = vi.fn()
 
 		const { getByRole } = render(
 			<SubmitButton onClick={handleClick}>Submit</SubmitButton>
