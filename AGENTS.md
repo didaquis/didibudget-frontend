@@ -5,8 +5,8 @@
 **didibudget** is a money management web application built with React and GraphQL. It allows users to track expenses, manage monthly balances, and view savings/investments. The frontend communicates with a separate backend API via Apollo Client.
 
 - **Tech Stack**: React 18, React Router 6, Apollo Client 3, Reactstrap (Bootstrap 4)
-- **Build Tool**: Create React App (with Craco for config overrides)
-- **Testing**: Jest + React Testing Library
+- **Build Tool**: Vite 5
+- **Testing**: Vitest + React Testing Library
 - **Linting**: ESLint
 
 ## Setup & Development
@@ -29,10 +29,10 @@ npm run test -- --testPathPattern=ComponentName  # Run specific test file
 
 ### Environment Configuration (.env)
 Required variables for connecting to backend:
-- `REACT_APP_PROTOCOL`: `http` or `https`
-- `REACT_APP_HOST`: Backend IP or domain
-- `REACT_APP_PORT`: Backend port
-- `REACT_APP_GRAPHQL`: GraphQL endpoint path
+- `VITE_PROTOCOL`: `http` or `https`
+- `VITE_HOST`: Backend IP or domain
+- `VITE_PORT`: Backend port
+- `VITE_GRAPHQL`: GraphQL endpoint path
 
 ## Architecture & Key Concepts
 
@@ -112,9 +112,9 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 
 ## Build & Deployment
 
-- **Development Build**: `npm run start` uses Craco to serve with webpack overrides
-- **Production Build**: `npm run build` creates optimized bundle in `./build/`
-- Webpack is configured via `craco.config.js` to include polyfills for Node.js APIs (process, stream, crypto, buffer, util, vm)
+- **Development Build**: `npm run dev` uses Vite to serve with dev server
+- **Production Build**: `npm run build` creates optimized bundle in `./dist/`
+- Vite is configured via `vite.config.js` to include polyfills for Node.js APIs (process, stream, crypto, buffer, util, vm)
 - Deployed to Netlify (see README for deployment badge/link)
 
 ## Important Notes
@@ -127,6 +127,6 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 
 ## Files Not to Modify Without Consideration
 
-- `craco.config.js` - Webpack config; changes affect build process
+- `vite.config.js` - Vite config; changes affect build process
 - `src/apollo/config.js` - Auth middleware and error handling; affects all API calls
 - `src/AuthContext.js` - Global auth state; affects routing and protected components
