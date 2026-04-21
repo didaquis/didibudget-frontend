@@ -120,7 +120,7 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 ## Important Notes
 
 - Backend must be running for the app to function (API dependency)
-- Node.js 18.20+ required
+- Node.js 24.14 required
 - Some dependencies polyfill Node.js modules for browser compatibility (stream-browserify, crypto-browserify, etc.) due to `crypto` and `vm` usage in the codebase
 - Route-level components use lazy loading with Suspense for better performance
 - Session-based authentication reuses token across page reloads via sessionStorage

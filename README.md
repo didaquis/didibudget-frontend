@@ -17,7 +17,7 @@ This repository is for the frontend and is intended to work with [the backend](h
 
 ### 📝 Frontend Requirements
 * Backend must be running
-* Node.js 18.20 or higher
+* Node.js 24.14 or higher
 
 ### 📚 How to run the application?
 * Use the command: `npm install`.
@@ -47,4 +47,3 @@ Don't worry, here you have a guide:
 * Run app in dev mode: `npm run dev`
 * Run the linter: `npm run lint`
 * Run the test: `npm run test`
-
