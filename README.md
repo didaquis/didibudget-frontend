@@ -24,7 +24,7 @@ This repository is for the frontend and is intended to work with [the backend](h
 * Configure the application:
   * Duplicate the configuration file `_env` and rename it as `.env`
   * Edit the file `.env`
-* Then use: `npm run start`. 
+* Then use: `npm run dev`. 
 
 ### 🚀 How to deploy?
 * Use the command: `npm install --production`.
@@ -44,7 +44,7 @@ Don't worry, here you have a guide:
 | VITE_GRAPHQL | Endpoint of GraphQL API |
 
 ### 💻 Tricks for development
-* Run app in dev mode: `npm run start`
+* Run app in dev mode: `npm run dev`
 * Run the linter: `npm run lint`
 * Run the test: `npm run test`
 

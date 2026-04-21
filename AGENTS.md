@@ -20,7 +20,7 @@ cp _env .env
 
 ### Running Locally
 ```bash
-npm run start              # Dev server at http://localhost:5173
+npm run dev              # Dev server at http://localhost:5173
 npm run build              # Production build (output: ./dist/)
 npm run lint               # ESLint check
 npm run test               # Run all tests with watch mode
@@ -112,7 +112,7 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 
 ## Build & Deployment
 
-- **Development Build**: `npm run start` uses Vite dev server
+- **Development Build**: `npm run dev` uses Vite dev server
 - **Production Build**: `npm run build` creates optimized bundle in `./dist/`
 - Node polyfills for browser compatibility are handled via `vite-plugin-node-polyfills` in `vite.config.js`
 - Deployed to Netlify (see README for deployment badge/link)

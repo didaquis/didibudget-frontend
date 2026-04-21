@@ -23,7 +23,7 @@
   },
   "scripts": {
     "lint": "eslint --ext .js ./src",
-    "start": "vite",
+    "dev": "vite",
     "build": "vite build",
     "test": "vitest --reporter=verbose",
     "preview": "vite preview",
