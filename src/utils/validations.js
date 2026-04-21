@@ -132,11 +132,3 @@ export const validateRegisterExpenseForm = (quantity, date) => {
 
 	return dataIsValid
 }
-
-
-module.exports = {
-	validateLoginForm,
-	validateRegisterForm,
-	validateRegisterMonthlyBalanceForm,
-	validateRegisterExpenseForm,
-}
