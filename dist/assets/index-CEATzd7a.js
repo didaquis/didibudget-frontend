@@ -1,1 +1,0 @@
-const e=Object.freeze({EXPENSE:"expense",INVESTMENT:"investment",PENSION_PLAN:"pension_plan"}),s=t=>({[e.EXPENSE]:"Spending",[e.INVESTMENT]:"Portfolio investment",[e.PENSION_PLAN]:"Pension plan"})[t]||t;export{e as C,s as g};

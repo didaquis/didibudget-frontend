@@ -18,6 +18,7 @@
 
 # production
 /build
+/dist
 
 # MacOS
 .DS_Store
