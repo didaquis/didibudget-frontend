@@ -1,12 +1,13 @@
-const jsonfile = require('jsonfile')
+import { readFileSync } from 'fs'
+import { resolve } from 'path'
 
 let packageJSONData
 
 describe('package.json file', () => {
 
 	beforeAll(() => {
-		const file = './package.json'
-		packageJSONData = jsonfile.readFileSync(file)
+		const file = resolve(process.cwd(), 'package.json')
+		packageJSONData = JSON.parse(readFileSync(file, 'utf-8'))
 	})
 
 	test('Should have all dependencies with semver version fixed', () => {

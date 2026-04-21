@@ -60,7 +60,7 @@ function deleteUserDataFromSessionStorage() {
 	sessionStorage.removeItem('userData')
 }
 
-module.exports = {
+export {
 	saveSession,
 	recoverSession,
 	deleteSession,

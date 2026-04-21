@@ -1,0 +1,1 @@
+import{j as r,r as e,P as a}from"./index-ukl8PQQ5.js";const o=({emojis:t})=>r.jsx(e.Fragment,{children:t.map(s=>r.jsx(e.Fragment,{children:r.jsx("span",{role:"img",className:"ml-2","aria-hidden":"true",children:s})},s))});o.propTypes={emojis:a.arrayOf(a.string)};export{o as E};
