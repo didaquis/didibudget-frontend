@@ -1,7 +1,7 @@
 # HINT: Environments vars in Vite must be named: VITE_FOO
 # HINT: This file must be in root path of project
 
-# VARS FOR BACKEND. Destination: localhost
+# VARIABLES TO CONNECT WITH BACKEND. Destination: localhost
 VITE_PROTOCOL=http
 VITE_HOST=localhost
 VITE_PORT=4000
