@@ -16,17 +16,14 @@
 # testing
 /coverage
 
-# production
-/build
+# build for production
 /dist
 
 # MacOS
 .DS_Store
 
-
 # dotenv environment variables file
 .env
-.env.test
 
 ### VisualStudioCode ###
 .vscode/*
