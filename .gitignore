@@ -1,8 +1,9 @@
 # Adding custom rules
 .eslintcache
 
-# AI generated code
+# AI generated files
 /docs
+.superset/
 
 # Webstorm
 .idea
