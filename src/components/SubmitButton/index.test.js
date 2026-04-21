@@ -23,7 +23,7 @@ describe('SubmitButton', () => {
 	})
 
 	it('captures clicks', () => {
-		const handleClick = jest.fn()
+		const handleClick = vi.fn()
 
 		const { getByRole } = render(
 			<SubmitButton onClick={handleClick}>Submit</SubmitButton>

@@ -51,7 +51,7 @@ const lastYearDataParsed = [
 	{ date: '2015-08-01', balance: 2476.87 }
 ]
 
-module.exports = {
+export {
 	rawData,
 	allDataParsed,
 	allDataParsedFewMonths,

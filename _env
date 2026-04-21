@@ -1,8 +1,8 @@
-# HINT: Environments vars in react must be named: REACT_APP_FOO
+# HINT: Environments vars in Vite must be named: VITE_FOO
 # HINT: This file must be in root path of project
 
-# VARS FOR BACKEND. Destination: localhost
-REACT_APP_PROTOCOL=http
-REACT_APP_HOST=localhost
-REACT_APP_PORT=4000
-REACT_APP_GRAPHQL=/graphql
+# VARIABLES TO CONNECT WITH BACKEND. Destination: localhost
+VITE_PROTOCOL=http
+VITE_HOST=localhost
+VITE_PORT=4000
+VITE_GRAPHQL=/graphql

@@ -2,11 +2,11 @@ import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/clien
 import { onError } from '@apollo/client/link/error'
 import { recoverSession, deleteSession } from '../utils/session'
 
-/* Configuration imported from '.env' file */
-const backendProtocol 	= process.env.REACT_APP_PROTOCOL
-const backendHost 		= process.env.REACT_APP_HOST
-const backendPort 		= process.env.REACT_APP_PORT
-const backendGraphql 	= process.env.REACT_APP_GRAPHQL
+/* Configuration imported from '.env' file (Vite env vars: import.meta.env.VITE_*) */
+const backendProtocol 	= import.meta.env.VITE_PROTOCOL
+const backendHost 		= import.meta.env.VITE_HOST
+const backendPort 		= import.meta.env.VITE_PORT
+const backendGraphql 	= import.meta.env.VITE_GRAPHQL
 
 const backendAddress = `${backendProtocol}://${backendHost}:${backendPort}${backendGraphql}`
 
