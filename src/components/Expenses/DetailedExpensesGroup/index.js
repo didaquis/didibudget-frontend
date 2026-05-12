@@ -48,7 +48,7 @@ export const DetailedExpensesGroup = ( { expensesGroupData, categories } ) => {
 				</tbody>
 			</table>
 			{
-				hasSubcategories && <div className="ml-2">
+				hasSubcategories && <div className="ms-2">
 					<ToggleButton
 						text='Show detailed information'
 						isOnByDefault={toggleShowDetailedInformation}

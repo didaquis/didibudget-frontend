@@ -19,16 +19,16 @@ export const SavingsAndInvestmentsBalanceDropdown = (props) => {
 				<span className="dropdown-item-text text-muted">Cash, savings & investments</span>
 				<div className="dropdown-divider"></div>
 				<Link className="dropdown-item py-3" to='/register-monthly-balance'>
-					<BsCashCoin size={props.sizeOfSecondaryIcons} title='Add monthly balance' /><span className="ml-3">Add monthly balance</span>
+					<BsCashCoin size={props.sizeOfSecondaryIcons} title='Add monthly balance' /><span className="ms-3">Add monthly balance</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/view-monthly-balance'>
-					<BsGraphUp size={props.sizeOfSecondaryIcons} title='Monthly balance overview'/><span className="ml-3">Monthly balance overview</span>
+					<BsGraphUp size={props.sizeOfSecondaryIcons} title='Monthly balance overview'/><span className="ms-3">Monthly balance overview</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/monthly-balance-administration'>
-					<BsListUl size={props.sizeOfSecondaryIcons} title='Monthly balances list'/><span className="ml-3">Monthly balances list</span>
+					<BsListUl size={props.sizeOfSecondaryIcons} title='Monthly balances list'/><span className="ms-3">Monthly balances list</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/savings-and-investments'>
-					<BsPiggyBank size={props.sizeOfSecondaryIcons} title='Savings & investments'/><span className="ml-3">Savings & investments</span>
+					<BsPiggyBank size={props.sizeOfSecondaryIcons} title='Savings & investments'/><span className="ms-3">Savings & investments</span>
 				</Link>
 			</div>
 		</div>

@@ -25,7 +25,7 @@ export const ListOfExpenseCategories = ( { getExpenseCategory } ) => {
 														size={'16px'}
 														title={`Expand the category: ${category.name}`}
 														color={'white'}
-														className={'mr-2'}
+														className={'me-2'}
 													/>
 													{category.name}
 													<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
@@ -39,7 +39,7 @@ export const ListOfExpenseCategories = ( { getExpenseCategory } ) => {
 								</div>
 
 								<div id={`collapse-${category.uuid}`} className="collapse" aria-labelledby={`heading-${category.uuid}`} data-parent="#listOfCategories">
-									<div className="card-body p-0 pl-1">
+									<div className="card-body p-0 ps-1">
 										<ListOfExpenseSubcategories categoryID={category._id} subcategories={category.subcategories}/>
 									</div>
 								</div>

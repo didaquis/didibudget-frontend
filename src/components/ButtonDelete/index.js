@@ -27,7 +27,7 @@ export const ButtonDelete = ( { uuid, deleteMutation, onDelete } ) => {
 
 	return (
 		<div>
-			<Button color="danger" outline={true} disabled={isDisabled} onClick={toggle} className="d-block d-md-inline-block mr-2">Delete</Button>
+			<Button color="danger" outline={true} disabled={isDisabled} onClick={toggle} className="d-block d-md-inline-block me-2">Delete</Button>
 			<Modal isOpen={modal} toggle={toggle}>
 				<ModalHeader toggle={toggle}>Are you sure?</ModalHeader>
 				<ModalBody>

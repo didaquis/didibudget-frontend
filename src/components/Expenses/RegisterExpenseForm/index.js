@@ -95,11 +95,11 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 						<small id="quantityHelp" className="form-text text-muted">Use decimal point as decimal separator. Negative numbers are not valid</small>
 					</div>
 
-					<div className="form-row mt-2 ml-1">
+					<div className="form-row mt-2 ms-1">
 						<div className="col-auto">
 							<SubmitButton disabled={isDisabled || !validateRegisterExpenseForm(quantity.value, date)}>Save expense</SubmitButton>
 						</div>
-						<div className="col pl-4 d-flex flex-row align-items-end">
+						<div className="col ps-4 d-flex flex-row align-items-end">
 							<ToggleButton
 								text='Add more'
 								isOnByDefault={toggleRegisterOneMoreExpense}

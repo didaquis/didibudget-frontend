@@ -87,7 +87,7 @@ export const RegisterForm = ({ activateAuth }) => {
 						/>
 						<small id="repeatPasswordHelp" className="form-text text-muted">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
 					</div>
-					<div className="mt-2 ml-1">
+					<div className="mt-2 ms-1">
 						<SubmitButton disabled={isDisabled || !validateRegisterForm(email.value, password.value, repeatPassword.value)}>
 							{
 							(!isLoading)
@@ -95,7 +95,7 @@ export const RegisterForm = ({ activateAuth }) => {
 									'Create account'
 								:
 									<Fragment>
-										<span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+										<span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
 										<span>Loading</span>
 									</Fragment>
 						}

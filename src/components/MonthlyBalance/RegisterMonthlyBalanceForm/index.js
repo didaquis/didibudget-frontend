@@ -98,7 +98,7 @@ export const RegisterMonthlyBalanceForm = () => {
 						</div>
 					</div>
 
-					<div className="mt-2 ml-1">
+					<div className="mt-2 ms-1">
 						<SubmitButton disabled={isDisabled || !validateRegisterMonthlyBalanceForm(balance.value, year.value, month.value)}>Save monthly balance</SubmitButton>
 						<SubmitButtonHelper mustShowHelper={!validateRegisterMonthlyBalanceForm(balance.value, year.value, month.value)}></SubmitButtonHelper>
 					</div>

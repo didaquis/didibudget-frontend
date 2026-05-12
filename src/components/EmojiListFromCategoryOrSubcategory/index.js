@@ -9,7 +9,7 @@ export const EmojiListFromCategoryOrSubcategory = ({ emojis }) => {
 				emojis.map(emoji => {
 					return (
 						<Fragment key={emoji}>
-							<span role="img" className="ml-2" aria-hidden="true">{ emoji }</span>
+							<span role="img" className="ms-2" aria-hidden="true">{ emoji }</span>
 						</Fragment>
 					)
 				})

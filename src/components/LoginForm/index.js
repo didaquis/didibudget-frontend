@@ -51,7 +51,7 @@ export const LoginForm = ({ activateAuth }) => {
 					<label htmlFor="inputPasswordLoginForm" className="text-light">Password <span className="text-danger">*</span></label>
 					<input disabled={isDisabled} className="form-control" id="inputPasswordLoginForm" placeholder='password' type='password' {...password} required />
 				</div>
-				<div className="mt-2 ml-1">
+				<div className="mt-2 ms-1">
 					<SubmitButton disabled={isDisabled || !validateLoginForm(email.value, password.value)}>
 						{
 							(!isLoading)
@@ -59,7 +59,7 @@ export const LoginForm = ({ activateAuth }) => {
 									'Log in'
 								:
 									<Fragment>
-										<span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+										<span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
 										<span>Loading</span>
 									</Fragment>
 						}
