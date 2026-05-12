@@ -12,7 +12,7 @@ export const ExpensesDropdown = (props) => {
 
 	return (
 		<div className={`dropdown ${ isDropdownExpanded ? 'position-static' : '' }`}>
-			<button className="navbar-item btn btn-link text-light font-weight-bold dropdown-toggle p-0 border-0" id="expenses-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button className="navbar-item btn btn-link text-light font-weight-bold dropdown-toggle p-0 border-0" id="expenses-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<BsCreditCard2Back size={props.sizeOfPrimaryIcons} title='Spendings' />
 			</button>
 			<div className={`dropdown-menu ${ isDropdownExpanded ? 'w-100' : '' }`} aria-labelledby="expenses-dropdown">

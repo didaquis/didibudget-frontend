@@ -12,7 +12,7 @@ export const SavingsAndInvestmentsBalanceDropdown = (props) => {
 
 	return (
 		<div className={`dropdown ${ isDropdownExpanded ? 'position-static' : '' }`}>
-			<button className="navbar-item btn btn-link text-light font-weight-bold dropdown-toggle p-0 border-0" id="monthly-balance-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button className="navbar-item btn btn-link text-light font-weight-bold dropdown-toggle p-0 border-0" id="monthly-balance-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<BsBank size={props.sizeOfPrimaryIcons} title='Cash, savings & investments' />
 			</button>
 			<div className={`dropdown-menu ${ isDropdownExpanded ? 'w-100' : '' }`} aria-labelledby="monthly-balance-dropdown">

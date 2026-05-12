@@ -20,7 +20,7 @@ export const ListOfExpenseCategories = ( { getExpenseCategory } ) => {
 									{
 										(hasSubcategories)
 											?
-												<button className="flex-grow-1 btn btn-link text-left text-light" type="button" data-toggle="collapse" data-target={`#collapse-${category.uuid}`} aria-expanded="true" aria-controls={`collapse-${category.uuid}`}>
+												<button className="flex-grow-1 btn btn-link text-left text-light" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${category.uuid}`} aria-expanded="true" aria-controls={`collapse-${category.uuid}`}>
 													<BsFillCaretDownFill
 														size={'16px'}
 														title={`Expand the category: ${category.name}`}
