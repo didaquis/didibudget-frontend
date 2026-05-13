@@ -5,7 +5,7 @@ import { DidibudgetLogo } from '../DidibudgetLogo'
 import './styles.css'
 
 export const Jumbotron = ({ title, subtitle, subtitleExtraLine }) => (
-	<div className="jumbotron">
+	<div className="bg-light p-4 rounded-3">
 		<div className="col-sm-12 offset-md-2 col-md-8 col-lg-8">
 			<DidibudgetLogo />
 		</div>
