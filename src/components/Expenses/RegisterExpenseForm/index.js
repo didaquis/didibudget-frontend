@@ -21,7 +21,7 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 	const [error, setError] = useState(null)
 	const [toggleRegisterOneMoreExpense, setToggleRegisterOneMoreExpense] = useState(false)
 
-	const [ registerExpense ] = useMutation(REGISTER_EXPENSE)
+	const [registerExpense] = useMutation(REGISTER_EXPENSE)
 
 	const quantity = useInputValue('')
 	const [date, setDate] = useState(null)
@@ -55,8 +55,8 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 	}
 
 	const getCategoryInformation = () => {
-		const categoryName = getNameOfCategoryOrSubcategory(selectedCategoryID, [ categoryData ])
-		const subcategoryName = getNameOfCategoryOrSubcategory(selectedSubcategoryID, [ categoryData ])
+		const categoryName = getNameOfCategoryOrSubcategory(selectedCategoryID, [categoryData])
+		const subcategoryName = getNameOfCategoryOrSubcategory(selectedSubcategoryID, [categoryData])
 
 		if (!subcategoryName) {
 			return categoryName
@@ -72,7 +72,7 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 			<div className="row justify-content-center mt-4">
 				<form className="col-md-8" disabled={isDisabled} onSubmit={handleSubmit}>
 
-					<p className="text-white small text-truncate">{ categoryInformation }</p>
+					<p className="text-white small text-truncate">{categoryInformation}</p>
 
 					<div className="form-row">
 						<DateSelector onChange={onChange} />
@@ -112,9 +112,9 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 					</div>
 				</form>
 				<div className="col-md-8">
-				{
-					error && <ErrorAlert errorMessage={error} />
-				}
+					{
+						error && <ErrorAlert errorMessage={error} />
+					}
 				</div>
 			</div>
 		</Fragment>

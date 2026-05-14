@@ -44,11 +44,11 @@ export const LoginForm = ({ activateAuth }) => {
 		<Fragment>
 			<form className="row mb-3" disabled={isDisabled} onSubmit={handleSubmit}>
 				<div className="col-md-6">
-					<label for="inputEmailLoginForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
+					<label htmlFor="inputEmailLoginForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
 					<input disabled={isDisabled} inputMode="email" className="form-control" id="inputEmailLoginForm" placeholder='email' {...email} required autoFocus />
 				</div>
 				<div className="col-md-6">
-					<label for="inputPasswordLoginForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
+					<label htmlFor="inputPasswordLoginForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
 					<input disabled={isDisabled} className="form-control" id="inputPasswordLoginForm" placeholder='password' type='password' {...password} required />
 				</div>
 				<div className="mt-4">

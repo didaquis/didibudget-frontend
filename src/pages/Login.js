@@ -13,9 +13,10 @@ export const Login = () => {
 		<Fragment>
 			<PageTitle text='Log in' />
 			<LoginForm activateAuth={activateAuth} />
-			<Link className="text-light fw-light" to='/register'>
-				Don't have an account? <span role="img" aria-label="Winking Face">😉</span>
+			<Link className="text-light fw-light me-2" to='/register'>
+				Don't have an account?
 			</Link>
+			<span role="img" aria-label="Winking Face">😉</span>
 		</Fragment>
 	)
 }
