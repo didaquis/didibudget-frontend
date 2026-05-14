@@ -9,7 +9,7 @@ export const UserCard = ({ userData }) => (
 				</h4>
 			</div>
 			<div className="card-body pb-0 text-light">
-				<p>You are logged as: <span className="fw-light ps-3">{userData.email}</span></p>
+				<p>You are logged as: <span className="ps-1 fw-light font-monospace text-secondary">{userData.email}</span></p>
 				{
 					userData.isAdmin && <p>You are an administrator user!</p>
 				}
