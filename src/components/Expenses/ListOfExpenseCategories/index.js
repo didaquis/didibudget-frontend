@@ -5,22 +5,23 @@ import { ErrorAlert } from '../../ErrorAlert'
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 import { ListOfExpenseSubcategories } from '../ListOfExpenseSubcategories'
 
-export const ListOfExpenseCategories = ( { getExpenseCategory } ) => {
+export const ListOfExpenseCategories = ({ getExpenseCategory }) => {
 	if (getExpenseCategory.length) {
 		return (
-			<section className="accordion my-5" id="listOfCategories">
+			<section className="accordion mt-4 mb-5" id="listOfCategories">
 				{
 					getExpenseCategory.map((category) => {
 
 						const hasSubcategories = (category.subcategories.length) ? true : false
 
 						return (
-							<div className="card bg-dark border-info" key={category.uuid}>
-								<div className="card-header d-flex p-2 mb-0">
+							<div className="accordion-item bg-dark border-info" key={category.uuid}>
+								<div className="accordion-header d-flex p-2">
 									{
 										(hasSubcategories)
 											?
-												<button className="flex-grow-1 btn btn-link text-left text-light" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${category.uuid}`} aria-expanded="true" aria-controls={`collapse-${category.uuid}`}>
+											<div className="d-flex align-items-center">
+												<button className="btn btn-link text-start text-info" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${category.uuid}`} aria-expanded="true" aria-controls={`collapse-${category.uuid}`}>
 													<BsFillCaretDownFill
 														size={'16px'}
 														title={`Expand the category: ${category.name}`}
@@ -28,22 +29,25 @@ export const ListOfExpenseCategories = ( { getExpenseCategory } ) => {
 														className={'me-2'}
 													/>
 													{category.name}
-													<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
 												</button>
+												<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
+											</div>
 											:
-												<a className="d-flex flex-grow-1 btn btn-link text-left text-light" href={`/register-expense/${category._id}`} role="button">
+											<div className="d-flex align-items-center">
+												<a className="btn btn-link text-start text-info" href={`/register-expense/${category._id}`} role="button">
 													{category.name}
-													<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
 												</a>
+												<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
+											</div>
 									}
 								</div>
 
 								<div id={`collapse-${category.uuid}`} className="collapse" aria-labelledby={`heading-${category.uuid}`} data-parent="#listOfCategories">
-									<div className="card-body p-0 ps-1">
-										<ListOfExpenseSubcategories categoryID={category._id} subcategories={category.subcategories}/>
+									<div className="accordion-body">
+										<ListOfExpenseSubcategories categoryID={category._id} subcategories={category.subcategories} />
 									</div>
 								</div>
-						  </div>
+							</div>
 						)
 					})
 				}

@@ -2,14 +2,14 @@ import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 export const EmojiListFromCategoryOrSubcategory = ({ emojis }) => {
-	
+
 	return (
 		<Fragment>
 			{
 				emojis.map(emoji => {
 					return (
 						<Fragment key={emoji}>
-							<span role="img" className="ms-2" aria-hidden="true">{ emoji }</span>
+							<span role="img" className="mx-1" aria-hidden="true">{emoji}</span>
 						</Fragment>
 					)
 				})

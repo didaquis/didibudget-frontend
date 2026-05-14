@@ -2,17 +2,19 @@ import PropTypes from 'prop-types'
 
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 
-export const ListOfExpenseSubcategories = ( { categoryID, subcategories } ) => {
+export const ListOfExpenseSubcategories = ({ categoryID, subcategories }) => {
 	if (subcategories.length) {
 		return (
-			<ul className="list-group list-group-flush ms-1 me-2">
+			<ul className="list-group list-group-flush">
 				{
 					subcategories.map((subcategory) => {
 						return (
-							<a className="list-group-item list-group-item-action bg-dark text-light border-info ms-3" href={`/register-expense/${categoryID}/${subcategory._id}`} role="button" key={subcategory.uuid}>
-								{subcategory.name}
+							<div className="list-group-item list-group-item-action bg-dark border-info ms-3" key={subcategory.uuid}>
+								<a className="text-info me-1" href={`/register-expense/${categoryID}/${subcategory._id}`} role="button">
+									{subcategory.name}
+								</a>
 								<EmojiListFromCategoryOrSubcategory emojis={subcategory.emojis} />
-							</a>
+							</div>
 						)
 					})
 				}

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import { getNameOfCategoryOrSubcategory } from '../utils'
 
-export const DetailedCategoryInExpensesGroup = ( { displaySubcategories, categoryInGroup, categories } ) => {
+export const DetailedCategoryInExpensesGroup = ({ displaySubcategories, categoryInGroup, categories }) => {
 
 	const hasSubcategories = categoryInGroup.perSubcategory.length
 
@@ -19,13 +19,13 @@ export const DetailedCategoryInExpensesGroup = ( { displaySubcategories, categor
 						return (
 							<div className="ms-4 py-2 ps-2 d-flex border border-info border-top-0 border-bottom-0 border-right-0" key={subcategory.idSubcategory} >
 								<div className="me-auto px-2">{nameOfSubcategory}</div>
-								<div className="px-2 text-nowrap text-right">{subcategory.totalInSubcategory} EUR</div>
+								<div className="px-2 text-nowrap text-end">{subcategory.totalInSubcategory} EUR</div>
 							</div>
 						)
 					})
 				}
 			</td>
-		</tr>	
+		</tr>
 	)
 }
 

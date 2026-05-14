@@ -6,7 +6,7 @@ import { getNameOfCategoryOrSubcategory } from '../utils'
 import { DetailedCategoryInExpensesGroup } from '../DetailedCategoryInExpensesGroup'
 import { ToggleButton } from '../../ToggleButton'
 
-export const DetailedExpensesGroup = ( { expensesGroupData, categories } ) => {
+export const DetailedExpensesGroup = ({ expensesGroupData, categories }) => {
 
 	const [toggleShowDetailedInformation, setToggleShowDetailedInformation] = useState(false)
 
@@ -22,19 +22,19 @@ export const DetailedExpensesGroup = ( { expensesGroupData, categories } ) => {
 				<thead>
 					<tr className="table-info text-dark">
 						<th scope="col" className="text-nowrap">{expensesGroupData.groupTitle}</th>
-						<th scope="col" className="text-nowrap text-right">{expensesGroupData.groupTotal} EUR</th>
+						<th scope="col" className="text-nowrap text-end">{expensesGroupData.groupTotal} EUR</th>
 					</tr>
 				</thead>
 				<tbody>
 					{
 						expensesGroupData.perCategory.map(category => {
 							const nameOfCategory = getNameOfCategoryOrSubcategory(category.idCategory, categories)
-							
+
 							return (
 								<Fragment key={category.idCategory}>
 									<tr key={category.idCategory}>
 										<td>{nameOfCategory}</td>
-										<td className="text-nowrap text-right">{category.totalInCategory} EUR</td>
+										<td className="text-nowrap text-end">{category.totalInCategory} EUR</td>
 									</tr>
 									<DetailedCategoryInExpensesGroup
 										displaySubcategories={toggleShowDetailedInformation}
