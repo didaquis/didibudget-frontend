@@ -74,7 +74,7 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 
 					<p className="text-white small text-truncate">{categoryInformation}</p>
 
-					<div className="form-row">
+					<div className="row">
 						<DateSelector onChange={onChange} />
 					</div>
 
@@ -95,7 +95,7 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 						<small id="quantityHelp" className="form-text text-muted">Use decimal point as decimal separator. Negative numbers are not valid</small>
 					</div>
 
-					<div className="form-row mt-2 ms-1">
+					<div className="row mt-2 ms-1">
 						<div className="col-auto">
 							<SubmitButton disabled={isDisabled || !validateRegisterExpenseForm(quantity.value, date)}>Save expense</SubmitButton>
 						</div>

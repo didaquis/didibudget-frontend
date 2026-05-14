@@ -73,7 +73,7 @@ export const RegisterForm = ({ activateAuth }) => {
 						/>
 						<small id="passwordHelp" className="form-text text-muted d-block">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
 					</div>
-					<div className="col mb-3">
+					<div className="col mb-4">
 						<label htmlFor="inputRepeatPasswordRegisterForm" className="text-light">Repeat password <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
@@ -87,21 +87,21 @@ export const RegisterForm = ({ activateAuth }) => {
 						/>
 						<small id="repeatPasswordHelp" className="form-text text-muted d-block">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
 					</div>
-					<div className="mt-2">
-						<SubmitButton disabled={isDisabled || !validateRegisterForm(email.value, password.value, repeatPassword.value)}>
-							{
-								(!isLoading)
-									?
-									'Create account'
-									:
-									<Fragment>
-										<span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-										<span>Loading</span>
-									</Fragment>
-							}
-						</SubmitButton>
-						<SubmitButtonHelper mustShowHelper={!validateRegisterForm(email.value, password.value, repeatPassword.value)}></SubmitButtonHelper>
-					</div>
+
+					<SubmitButton disabled={isDisabled || !validateRegisterForm(email.value, password.value, repeatPassword.value)}>
+						{
+							(!isLoading)
+								?
+								'Create account'
+								:
+								<Fragment>
+									<span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+									<span>Loading</span>
+								</Fragment>
+						}
+					</SubmitButton>
+					<SubmitButtonHelper mustShowHelper={!validateRegisterForm(email.value, password.value, repeatPassword.value)}></SubmitButtonHelper>
+
 				</form>
 				<div className="col-md-8">
 					{

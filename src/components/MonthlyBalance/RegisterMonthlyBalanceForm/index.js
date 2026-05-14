@@ -22,7 +22,7 @@ export const RegisterMonthlyBalanceForm = () => {
 	const [isDisabled, setIsDisabled] = useState(false)
 	const [error, setError] = useState(null)
 
-	const [ registerMonthlyBalance ] = useMutation(REGISTER_MONTHLY_BALANCE)
+	const [registerMonthlyBalance] = useMutation(REGISTER_MONTHLY_BALANCE)
 
 	const balance = useInputValue('')
 	const year = useInputValue(currentYear)
@@ -50,7 +50,7 @@ export const RegisterMonthlyBalanceForm = () => {
 		<Fragment>
 			<div className="row justify-content-center mt-4">
 				<form className="col-md-8" disabled={isDisabled} onSubmit={handleSubmit}>
-					<div className="form-group">
+					<div className="col mb-3">
 						<label htmlFor="inputbalanceRegisterMonthlyBalanceForm" className="text-light">Balance <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
@@ -64,49 +64,43 @@ export const RegisterMonthlyBalanceForm = () => {
 							required
 							autoFocus
 						/>
-						<small id="balanceHelp" className="form-text text-muted">
+						<small id="balanceHelp" className="form-text text-muted d-block">
 							Enter the balance on the 1st of each month before the first spend was made. Use decimal point as decimal separator
 						</small>
 					</div>
 
-					<div className="form-row">
+					<div className="row mb-4">
 						<div className="col">
-
-							<div className="form-group">
-								<label htmlFor="selectYear" className="text-light">Year <span className="text-danger">*</span></label>
-								<select className="form-control" id="selectYear" {...year}>
-									{
-										availableYears.map((year) => {
-											return <option key={year}>{year}</option>
-										})
-									}
-								</select>
-							</div>
-
+							<label htmlFor="selectYear" className="text-light">Year <span className="text-danger">*</span></label>
+							<select className="form-control" id="selectYear" {...year}>
+								{
+									availableYears.map((year) => {
+										return <option key={year}>{year}</option>
+									})
+								}
+							</select>
 						</div>
 						<div className="col">
-							<div className="form-group">
-								<label htmlFor="selectMonth" className="text-light">Month <span className="text-danger">*</span></label>
-								<select className="form-control" id="selectMonth" {...month}>
-									{
-										monthNames.map((month) => {
-											return <option key={month}>{month}</option>
-										})
-									}
-								</select>
-							</div>
+							<label htmlFor="selectMonth" className="text-light">Month <span className="text-danger">*</span></label>
+							<select className="form-control" id="selectMonth" {...month}>
+								{
+									monthNames.map((month) => {
+										return <option key={month}>{month}</option>
+									})
+								}
+							</select>
 						</div>
 					</div>
 
-					<div className="mt-2 ms-1">
+					<div className="mt-2">
 						<SubmitButton disabled={isDisabled || !validateRegisterMonthlyBalanceForm(balance.value, year.value, month.value)}>Save monthly balance</SubmitButton>
 						<SubmitButtonHelper mustShowHelper={!validateRegisterMonthlyBalanceForm(balance.value, year.value, month.value)}></SubmitButtonHelper>
 					</div>
 				</form>
 				<div className="col-md-8">
-				{
-					error && <ErrorAlert errorMessage={error} />
-				}
+					{
+						error && <ErrorAlert errorMessage={error} />
+					}
 				</div>
 			</div>
 		</Fragment>

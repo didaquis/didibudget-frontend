@@ -42,7 +42,7 @@ export const LoginForm = ({ activateAuth }) => {
 
 	return (
 		<Fragment>
-			<form className="row mb-3" disabled={isDisabled} onSubmit={handleSubmit}>
+			<form className="row" disabled={isDisabled} onSubmit={handleSubmit}>
 				<div className="col-md-6">
 					<label htmlFor="inputEmailLoginForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
 					<input disabled={isDisabled} inputMode="email" className="form-control" id="inputEmailLoginForm" placeholder='email' {...email} required autoFocus />
@@ -51,7 +51,7 @@ export const LoginForm = ({ activateAuth }) => {
 					<label htmlFor="inputPasswordLoginForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
 					<input disabled={isDisabled} className="form-control" id="inputPasswordLoginForm" placeholder='password' type='password' {...password} required />
 				</div>
-				<div className="mt-4">
+				<div className="my-4">
 					<SubmitButton disabled={isDisabled || !validateLoginForm(email.value, password.value)}>
 						{
 							(!isLoading)
