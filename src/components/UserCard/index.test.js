@@ -11,7 +11,7 @@ describe('UserCard', () => {
 		}
 		const { getByText } = render(<UserCard userData={data} />)
 
-		expect(getByText('foo@mail.com')).toBeInTheDocument()
+		expect(getByText('foo@mail.com')).toBeVisible()
 	})
 
 	it('should show if user is an administrator user', () => {
@@ -28,6 +28,6 @@ describe('UserCard', () => {
 			isAdmin: true
 		}
 		rerender(<UserCard userData={newProps} />)
-		expect(queryByText('You are an administrator user!')).toBeInTheDocument()
+		expect(queryByText('You are an administrator user!')).toBeVisible()
 	})
 })

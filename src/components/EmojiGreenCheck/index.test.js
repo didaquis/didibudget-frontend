@@ -8,8 +8,8 @@ describe('EmojiGreenCheck', () => {
 		render(<EmojiGreenCheck />)
 
 		const element = screen.getByRole('img', { name: /Green check mark/i })
-		
-		expect(element).toBeInTheDocument()
+
+		expect(element).toBeVisible()
 		expect(element).toHaveTextContent(/^✅$/)
 	})
 })

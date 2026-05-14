@@ -7,16 +7,16 @@ describe('Jumbotron', () => {
 	it('contains an expected text', () => {
 		const { getByText } = render(<Jumbotron title='foo' subtitle='bar' />)
 
-		expect(getByText('foo')).toBeInTheDocument()
-		expect(getByText('bar')).toBeInTheDocument()
+		expect(getByText('foo')).toBeVisible()
+		expect(getByText('bar')).toBeVisible()
 	})
 
 	it('contains an expected text, included more content as subtitle', () => {
 		const { getByText } = render(<Jumbotron title='foo' subtitle='bar' subtitleExtraLine='biz' />)
 
-		expect(getByText('foo')).toBeInTheDocument()
-		expect(getByText('bar')).toBeInTheDocument()
-		expect(getByText('biz')).toBeInTheDocument()
+		expect(getByText('foo')).toBeVisible()
+		expect(getByText('bar')).toBeVisible()
+		expect(getByText('biz')).toBeVisible()
 	})
 
 	it('contains the correct DOM nodes', () => {
