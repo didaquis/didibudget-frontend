@@ -17,7 +17,7 @@ export const LoginForm = ({ activateAuth }) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState(null)
 
-	const [ authUser ] = useMutation(LOGIN)
+	const [authUser] = useMutation(LOGIN)
 
 	const email = useInputValue('')
 	const password = useInputValue('')
@@ -42,26 +42,26 @@ export const LoginForm = ({ activateAuth }) => {
 
 	return (
 		<Fragment>
-			<form className="form-row mb-3" disabled={isDisabled} onSubmit={handleSubmit}>
-				<div className="form-group col-md-6">
-					<label htmlFor="inputEmailLoginForm" className="text-light">Email <span className="text-danger">*</span></label>
+			<form className="row mb-3" disabled={isDisabled} onSubmit={handleSubmit}>
+				<div className="col-md-6">
+					<label for="inputEmailLoginForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
 					<input disabled={isDisabled} inputMode="email" className="form-control" id="inputEmailLoginForm" placeholder='email' {...email} required autoFocus />
 				</div>
-				<div className="form-group col-md-6">
-					<label htmlFor="inputPasswordLoginForm" className="text-light">Password <span className="text-danger">*</span></label>
+				<div className="col-md-6">
+					<label for="inputPasswordLoginForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
 					<input disabled={isDisabled} className="form-control" id="inputPasswordLoginForm" placeholder='password' type='password' {...password} required />
 				</div>
-				<div className="mt-2 ms-1">
+				<div className="mt-4">
 					<SubmitButton disabled={isDisabled || !validateLoginForm(email.value, password.value)}>
 						{
 							(!isLoading)
 								?
-									'Log in'
+								'Log in'
 								:
-									<Fragment>
-										<span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-										<span>Loading</span>
-									</Fragment>
+								<Fragment>
+									<span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+									<span>Loading</span>
+								</Fragment>
 						}
 					</SubmitButton>
 					<SubmitButtonHelper mustShowHelper={!validateLoginForm(email.value, password.value)}></SubmitButtonHelper>
