@@ -16,7 +16,7 @@ export const NavBar = () => {
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-dark justify-content-between d-flex border-bottom border-info mt-2 mb-5">
-			<Link className="navbar-item text-light font-weight-bold" to='/'>
+			<Link className="navbar-item text-light" to='/'>
 				<BsHouse size={SIZE_OF_PRIMARY_ICONS} title='Home' />
 			</Link>
 
@@ -28,14 +28,14 @@ export const NavBar = () => {
 				isAuth && <ExpensesDropdown sizeOfPrimaryIcons={SIZE_OF_PRIMARY_ICONS} sizeOfSecondaryIcons={SIZE_OF_SECONDARY_ICONS} />
 			}
 
-			{ 
-				isAuth && userData.isAdmin && <Link className="navbar-item text-light font-weight-bold" to='/user-administration'>
-					<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User administration'/>
+			{
+				isAuth && userData.isAdmin && <Link className="navbar-item text-light" to='/user-administration'>
+					<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User administration' />
 				</Link>
 			}
-			<Link className="navbar-item text-light font-weight-bold" to={isAuth ? '/logout' : '/login'}>
-				{ !isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Login' /> }
-				{ isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Logout' /> }
+			<Link className="navbar-item text-light" to={isAuth ? '/logout' : '/login'}>
+				{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Login' />}
+				{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Logout' />}
 			</Link>
 		</nav>
 	)

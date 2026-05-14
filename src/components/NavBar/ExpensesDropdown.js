@@ -11,18 +11,18 @@ export const ExpensesDropdown = (props) => {
 	const isDropdownExpanded = size.width <= largeBreakPoint
 
 	return (
-		<div className={`dropdown ${ isDropdownExpanded ? 'position-static' : '' }`}>
-			<button className="navbar-item btn btn-link text-light font-weight-bold dropdown-toggle p-0 border-0" id="expenses-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<div className={`dropdown ${isDropdownExpanded ? 'position-static' : ''}`}>
+			<button className="navbar-item btn btn-link text-light dropdown-toggle p-0 border-0" id="expenses-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<BsCreditCard2Back size={props.sizeOfPrimaryIcons} title='Spendings' />
 			</button>
-			<div className={`dropdown-menu ${ isDropdownExpanded ? 'w-100' : '' }`} aria-labelledby="expenses-dropdown">
+			<div className={`dropdown-menu ${isDropdownExpanded ? 'w-100' : ''}`} aria-labelledby="expenses-dropdown">
 				<span className="dropdown-item-text text-muted">Spendings</span>
 				<div className="dropdown-divider"></div>
 				<Link className="dropdown-item py-3" to='/list-expense-categories'>
-					<BsCartPlus size={props.sizeOfSecondaryIcons} title='Add spending'/><span className="ms-3">Add spending</span>
+					<BsCartPlus size={props.sizeOfSecondaryIcons} title='Add spending' /><span className="ms-3">Add spending</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/view-expenses'>
-					<BsBarChart size={props.sizeOfSecondaryIcons} title='Spending overview'/><span className="ms-3">Spending overview</span>
+					<BsBarChart size={props.sizeOfSecondaryIcons} title='Spending overview' /><span className="ms-3">Spending overview</span>
 				</Link>
 				<Link className="dropdown-item py-3" to='/expenses-administration'>
 					<BsListUl size={props.sizeOfSecondaryIcons} title='Spending list' /><span className="ms-3">Spending list</span>
