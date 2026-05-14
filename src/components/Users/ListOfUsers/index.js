@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { parseUnixTimestamp } from '../../../utils/utils'
+import { parseUnixTimestamp, getTimeAgo } from '../../../utils/utils'
 import { EmojiGreenCheck } from '../../EmojiGreenCheck'
 import { EmojiRedCross } from '../../EmojiRedCross'
 
-export const ListOfUsers = ( { users, startPolling, stopPolling } ) => {
+export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 
 	useEffect(() => {
 		const minuteInMilliseconds = 60000
@@ -13,7 +13,7 @@ export const ListOfUsers = ( { users, startPolling, stopPolling } ) => {
 		startPolling(tenMinutes)
 
 		return () => {
-		  stopPolling()
+			stopPolling()
 		}
 	}, [startPolling, stopPolling])
 
@@ -29,15 +29,15 @@ export const ListOfUsers = ( { users, startPolling, stopPolling } ) => {
 						<th scope="col">Last login</th>
 					</tr>
 				</thead>
-  				<tbody>
+				<tbody>
 					{
 						users.map(user => {
 							return (
 								<tr key={user.uuid}>
 									<td>{user.email}</td>
-									<td>{(user.isAdmin) ? <EmojiGreenCheck /> : <EmojiRedCross /> }</td>
-									<td>{(user.isActive) ? <EmojiGreenCheck /> : <EmojiRedCross /> }</td>
-									<td>{parseUnixTimestamp(user.registrationDate)}</td>
+									<td>{(user.isAdmin) ? <EmojiGreenCheck /> : <EmojiRedCross />}</td>
+									<td>{(user.isActive) ? <EmojiGreenCheck /> : <EmojiRedCross />}</td>
+									<td>{getTimeAgo(user.registrationDate)}</td>
 									<td>{parseUnixTimestamp(user.lastLogin)}</td>
 								</tr>
 							)

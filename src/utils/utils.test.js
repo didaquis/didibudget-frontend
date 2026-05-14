@@ -1,4 +1,4 @@
-import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, getFirstParamFromSplat, getLocalDay } from './utils'
+import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, getFirstParamFromSplat, getLocalDay, getTimeAgo } from './utils'
 
 describe('parseUnixTimestamp', () => {
 	test('should return a valid date in a human readable format', () => {
@@ -140,5 +140,57 @@ describe('getLocalDay', () => {
 	test('should handles edge of month', () => {
 		vi.setSystemTime(new Date('2025-11-30T23:59:59'))
 		expect(getLocalDay()).toBe(30)
+	})
+})
+
+describe('getTimeAgo', () => {
+	beforeEach(() => {
+		vi.useFakeTimers()
+	})
+
+	afterEach(() => {
+		vi.useRealTimers()
+	})
+
+	test('should return "2 hours ago" for a timestamp 2 hours in the past', () => {
+		const now = Date.now()
+		vi.setSystemTime(now)
+		const twoHoursAgo = now - 2 * 60 * 60 * 1000
+
+		const result = getTimeAgo(twoHoursAgo)
+		expect(result).toBe('2 hours ago')
+	})
+
+	test('should return "yesterday" for a timestamp 1 day in the past', () => {
+		const now = Date.now()
+		vi.setSystemTime(now)
+		const oneDayAgo = now - 24 * 60 * 60 * 1000
+
+		const result = getTimeAgo(oneDayAgo)
+		expect(result).toBe('yesterday')
+	})
+
+	test('should return "30 seconds ago" for a timestamp 30 seconds in the past', () => {
+		const now = Date.now()
+		vi.setSystemTime(now)
+		const thirtySecondsAgo = now - 30 * 1000
+
+		const result = getTimeAgo(thirtySecondsAgo)
+		expect(result).toBe('30 seconds ago')
+	})
+
+	test('should use the provided locale for formatting', () => {
+		const now = Date.now()
+		vi.setSystemTime(now)
+		const twoHoursAgo = now - 2 * 60 * 60 * 1000
+
+		const result = getTimeAgo(twoHoursAgo, 'es-ES')
+		expect(result).toBe('hace 2 horas')
+	})
+
+	test('should throw RangeError for invalid timestamp', () => {
+		vi.setSystemTime(Date.now())
+
+		expect(() => getTimeAgo('invalid')).toThrow(RangeError)
 	})
 })
