@@ -4,7 +4,7 @@ export const UserCard = ({ userData }) => (
 	<section className="mt-4">
 		<div className="card bg-dark border-info">
 			<div className="card-header">
-				<h4 className="mb-0 text-light">
+				<h4 className="mb-0 fw-light text-light">
 					Your user data
 				</h4>
 			</div>
