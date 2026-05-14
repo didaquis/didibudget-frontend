@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 
+import './styles.css'
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 
 export const ListOfExpenseSubcategories = ({ categoryID, subcategories }) => {
@@ -9,7 +10,10 @@ export const ListOfExpenseSubcategories = ({ categoryID, subcategories }) => {
 				{
 					subcategories.map((subcategory) => {
 						return (
-							<div className="list-group-item list-group-item-action bg-dark border-info ms-3" key={subcategory.uuid}>
+							<div
+								className="list-group-item list-group-item-action bg-dark border-info ms-3 subcategory-item"
+								key={subcategory.uuid}
+							>
 								<a className="text-info me-1" href={`/register-expense/${categoryID}/${subcategory._id}`} role="button">
 									{subcategory.name}
 								</a>
