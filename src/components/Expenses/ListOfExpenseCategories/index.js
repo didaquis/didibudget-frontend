@@ -53,7 +53,7 @@ export const ListOfExpenseCategories = ({ getExpenseCategory }) => {
 
 								<div id={`collapse-${category.uuid}`} className={`collapse ${expandedItems[category.uuid] ? 'show' : ''}`} aria-labelledby={`heading-${category.uuid}`} style={{ display: 'grid', gridTemplateRows: expandedItems[category.uuid] ? '1fr' : '0fr', transition: 'grid-template-rows 0.35s ease-out' }}>
 									<div style={{ overflow: 'hidden' }}>
-										<div className="accordion-body">
+										<div className="accordion-body py-0">
 											<ListOfExpenseSubcategories categoryID={category._id} subcategories={category.subcategories} />
 										</div>
 									</div>
