@@ -10,7 +10,7 @@ import { PageSubTitle } from '../../PageSubTitle'
 import { AveragePerMonth } from '../AveragePerMonth'
 
 
-export const GraphExpensesData = ({ graphData, averageData, averageDataExcludingSavings }) => {	
+export const GraphExpensesData = ({ graphData, averageData, averageDataExcludingSavings }) => {
 
 	const dataParsed = graphData.map((expense) => {
 		return {
@@ -27,40 +27,36 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 	if (dataGroupedPerMonth.length) {
 		return (
 			<Fragment>
-				<PageSubTitle text="Total spending per month:"/>
-				<div style={{ width: '100%', height: 460 }}>
-					<ResponsiveContainer>
-						<BarChart
-							data={dataGroupedPerMonth}
-							margin={{top: 5, right: 20, left: 20, bottom: 20}}
-						>
-							<CartesianGrid strokeDasharray="3 3" />
-							<XAxis dataKey="label" />
-							<YAxis />
-							<Tooltip />
-							<Bar dataKey="sum" fill="#3182BD" />
-						</BarChart>
-					</ResponsiveContainer>
-				</div>
+				<PageSubTitle text="Total spending per month:" />
+				<ResponsiveContainer width="100%" height={460}>
+					<BarChart
+						data={dataGroupedPerMonth}
+						margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
+					>
+						<CartesianGrid strokeDasharray="3 3" />
+						<XAxis dataKey="label" />
+						<YAxis />
+						<Tooltip />
+						<Bar dataKey="sum" fill="#3182BD" />
+					</BarChart>
+				</ResponsiveContainer>
 
 				{
-					dataGroupedPerMonthSubset.length  > 0 &&
+					dataGroupedPerMonthSubset.length > 0 &&
 					<Fragment>
 						<PageSubTitle text={`Total spending for the last ${numberOfMonthsToDisplay} months:`} />
-						<div style={{ width: '100%', height: 460 }}>
-							<ResponsiveContainer>
-								<BarChart
-									data={dataGroupedPerMonthSubset}
-									margin={{top: 5, right: 20, left: 20, bottom: 20}}
-								>
-									<CartesianGrid strokeDasharray="3 3" />
-									<XAxis dataKey="label" />
-									<YAxis />
-									<Tooltip />
-									<Bar dataKey="sum" fill="#3182BD" />
-								</BarChart>
-							</ResponsiveContainer>
-						</div>
+						<ResponsiveContainer width="100%" height={460}>
+							<BarChart
+								data={dataGroupedPerMonthSubset}
+								margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
+							>
+								<CartesianGrid strokeDasharray="3 3" />
+								<XAxis dataKey="label" />
+								<YAxis />
+								<Tooltip />
+								<Bar dataKey="sum" fill="#3182BD" />
+							</BarChart>
+						</ResponsiveContainer>
 					</Fragment>
 				}
 
