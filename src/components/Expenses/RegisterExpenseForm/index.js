@@ -78,8 +78,8 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 						<DateSelector onChange={onChange} />
 					</div>
 
-					<div className="form-group">
-						<label htmlFor="inputQuantityRegisterExpenseForm" className="text-light">quantity <span className="text-danger">*</span></label>
+					<div className="row mb-4">
+						<label htmlFor="inputQuantityRegisterExpenseForm" className="text-light">Quantity <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
 							inputMode="decimal"
@@ -92,10 +92,10 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 							required
 							autoFocus
 						/>
-						<small id="quantityHelp" className="form-text text-muted">Use decimal point as decimal separator. Negative numbers are not valid</small>
+						<small id="quantityHelp" className="form-text text-muted d-block">Use decimal point as decimal separator. Negative numbers are not valid</small>
 					</div>
 
-					<div className="row mt-2 ms-1">
+					<div className="row">
 						<div className="col-auto">
 							<SubmitButton disabled={isDisabled || !validateRegisterExpenseForm(quantity.value, date)}>Save expense</SubmitButton>
 						</div>
