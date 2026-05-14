@@ -69,52 +69,57 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 
 	return (
 		<Fragment>
-			<div className="row justify-content-center mt-4">
-				<form className="col-md-8" disabled={isDisabled} onSubmit={handleSubmit}>
+			<div className="container my-4 mx-0">
+				<div className="row justify-content-center">
+					<form className="col-md-8" disabled={isDisabled} onSubmit={handleSubmit}>
 
-					<p className="text-white small text-truncate">{categoryInformation}</p>
-
-					<div className="row">
-						<DateSelector onChange={onChange} />
-					</div>
-
-					<div className="row mb-4">
-						<label htmlFor="inputQuantityRegisterExpenseForm" className="text-light">Quantity <span className="text-danger">*</span></label>
-						<input
-							disabled={isDisabled}
-							inputMode="decimal"
-							className="form-control"
-							id="inputQuantityRegisterExpenseForm"
-							placeholder='1234.99'
-							type='number'
-							step='0.01'
-							{...quantity}
-							required
-							autoFocus
-						/>
-						<small id="quantityHelp" className="form-text text-muted d-block">Use decimal point as decimal separator. Negative numbers are not valid</small>
-					</div>
-
-					<div className="row">
-						<div className="col-auto">
-							<SubmitButton disabled={isDisabled || !validateRegisterExpenseForm(quantity.value, date)}>Save expense</SubmitButton>
+						<div className="row">
+							<p className="text-white small text-truncate ps-0">{categoryInformation}</p>
 						</div>
-						<div className="col ps-4 d-flex flex-row align-items-end">
-							<ToggleButton
-								text='Add more'
-								isOnByDefault={toggleRegisterOneMoreExpense}
-								onToggle={onToggleRegisterAnotherExpense}
+
+						<div className="row">
+							<DateSelector onChange={onChange} />
+						</div>
+
+						<div className="row mb-4">
+							<label htmlFor="inputQuantityRegisterExpenseForm" className="text-light">Quantity <span className="text-danger">*</span></label>
+							<input
+								disabled={isDisabled}
+								inputMode="decimal"
+								className="form-control"
+								id="inputQuantityRegisterExpenseForm"
+								placeholder='1234.99'
+								type='number'
+								step='0.01'
+								{...quantity}
+								required
+								autoFocus
 							/>
+							<small id="quantityHelp" className="form-text text-muted d-block">Use decimal point as decimal separator. Negative numbers are not valid</small>
 						</div>
-						<div className="col-12">
-							<SubmitButtonHelper mustShowHelper={!validateRegisterExpenseForm(quantity.value, date)}></SubmitButtonHelper>
+
+						<div className="row">
+							<div className="col-12 px-0">
+								<div className="d-flex align-items-end gap-3">
+									<SubmitButton disabled={isDisabled || !validateRegisterExpenseForm(quantity.value, date)}>Save expense</SubmitButton>
+									<ToggleButton
+										text='Add more'
+										isOnByDefault={toggleRegisterOneMoreExpense}
+										onToggle={onToggleRegisterAnotherExpense}
+									/>
+								</div>
+							</div>
+							<div className="col-12 px-0">
+								<SubmitButtonHelper mustShowHelper={!validateRegisterExpenseForm(quantity.value, date)}></SubmitButtonHelper>
+							</div>
 						</div>
+					</form>
+					<div className="col-md-8">
+						{
+							error && <ErrorAlert errorMessage={error} />
+						}
 					</div>
-				</form>
-				<div className="col-md-8">
-					{
-						error && <ErrorAlert errorMessage={error} />
-					}
+
 				</div>
 			</div>
 		</Fragment>
