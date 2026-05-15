@@ -6,7 +6,7 @@ import { BsBank, BsCashCoin, BsGraphUp, BsListUl, BsPiggyBank } from 'react-icon
 export const SavingsAndInvestmentsBalanceDropdown = () => {
 	return (
 		<div className="nav-item dropdown">
-			<button className="nav-link dropdown-toggle text-light border-0 bg-dark" id="monthly-balance-dropdown" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+			<button className="nav-link dropdown-toggle text-light border-0 bg-dark" id="monthly-balance-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
 				<BsBank size='32px' title='Cash, savings & investments' />
 			</button>
 			<ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="monthly-balance-dropdown">
