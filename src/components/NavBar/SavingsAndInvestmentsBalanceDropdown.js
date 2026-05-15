@@ -1,41 +1,38 @@
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import { BsBank, BsCashCoin, BsGraphUp, BsListUl, BsPiggyBank } from 'react-icons/bs'
 
-import { useWindowSize } from '../../hooks/useWindowSize'
 
-export const SavingsAndInvestmentsBalanceDropdown = (props) => {
-	const size = useWindowSize()
-	const largeBreakPoint = 992
-	const isDropdownExpanded = size.width <= largeBreakPoint
-
+export const SavingsAndInvestmentsBalanceDropdown = () => {
 	return (
-		<div className={`dropdown ${isDropdownExpanded ? 'position-static' : ''}`}>
-			<button className="navbar-item btn btn-link text-light dropdown-toggle p-0 border-0" id="monthly-balance-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<BsBank size={props.sizeOfPrimaryIcons} title='Cash, savings & investments' />
+		<div className="nav-item dropdown">
+			<button className="nav-link dropdown-toggle text-light border-0 bg-dark" id="monthly-balance-dropdown" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+				<BsBank size='32px' title='Cash, savings & investments' />
 			</button>
-			<div className={`dropdown-menu ${isDropdownExpanded ? 'w-100' : ''}`} aria-labelledby="monthly-balance-dropdown">
-				<span className="dropdown-item-text text-muted">Cash, savings & investments</span>
-				<div className="dropdown-divider"></div>
-				<Link className="dropdown-item py-3" to='/register-monthly-balance'>
-					<BsCashCoin size={props.sizeOfSecondaryIcons} title='Add monthly balance' /><span className="ms-3">Add monthly balance</span>
-				</Link>
-				<Link className="dropdown-item py-3" to='/view-monthly-balance'>
-					<BsGraphUp size={props.sizeOfSecondaryIcons} title='Monthly balance overview' /><span className="ms-3">Monthly balance overview</span>
-				</Link>
-				<Link className="dropdown-item py-3" to='/monthly-balance-administration'>
-					<BsListUl size={props.sizeOfSecondaryIcons} title='Monthly balances list' /><span className="ms-3">Monthly balances list</span>
-				</Link>
-				<Link className="dropdown-item py-3" to='/savings-and-investments'>
-					<BsPiggyBank size={props.sizeOfSecondaryIcons} title='Savings & investments' /><span className="ms-3">Savings & investments</span>
-				</Link>
-			</div>
+			<ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="monthly-balance-dropdown">
+				<li><span className="dropdown-item-text text-muted">Cash, savings & investments</span></li>
+				<li><hr className="dropdown-divider" /></li>
+				<li>
+					<Link className="dropdown-item py-3" to='/register-monthly-balance'>
+						<BsCashCoin size='24px' title='Add monthly balance' /><span className="ms-3">Add monthly balance</span>
+					</Link>
+				</li>
+				<li>
+					<Link className="dropdown-item py-3" to='/view-monthly-balance'>
+						<BsGraphUp size='24px' title='Monthly balance overview' /><span className="ms-3">Monthly balance overview</span>
+					</Link>
+				</li>
+				<li>
+					<Link className="dropdown-item py-3" to='/monthly-balance-administration'>
+						<BsListUl size='24px' title='Monthly balances list' /><span className="ms-3">Monthly balances list</span>
+					</Link>
+				</li>
+				<li>
+					<Link className="dropdown-item py-3" to='/savings-and-investments'>
+						<BsPiggyBank size='24px' title='Savings & investments' /><span className="ms-3">Savings & investments</span>
+					</Link>
+				</li>
+			</ul>
 		</div>
 	)
-}
-
-SavingsAndInvestmentsBalanceDropdown.propTypes = {
-	sizeOfPrimaryIcons: PropTypes.string.isRequired,
-	sizeOfSecondaryIcons: PropTypes.string.isRequired,
 }
