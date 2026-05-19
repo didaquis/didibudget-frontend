@@ -13,16 +13,12 @@ export const GetListOfExpensesWithPagination = () => {
 
 	const [page, setPage] = useState(defaultPage)
 
-	const onChangePage = (selectedPage) => {
+const onChangePage = (selectedPage) => {
 		setPage(selectedPage)
-		fetchMore({
-			variables: {
-				page: page,
-			},
-		})
+		refetch({ page: selectedPage, pageSize: defaultPageSize })
 	}
 
-	const { loading, error, data, refetch, fetchMore } = useQuery(LIST_ALL_EXPENSES_WITH_PAGINATION_AND_CATEGORIES, { variables: { page: page, pageSize: defaultPageSize }, fetchPolicy: 'no-cache', notifyOnNetworkStatusChange: true })
+	const { loading, error, data, refetch } = useQuery(LIST_ALL_EXPENSES_WITH_PAGINATION_AND_CATEGORIES, { variables: { page: page, pageSize: defaultPageSize }, fetchPolicy: 'no-cache', notifyOnNetworkStatusChange: true })
 
 	if (loading) { return <Spinner /> }
 	if (error) { return <ErrorAlert errorMessage={error.message} /> }

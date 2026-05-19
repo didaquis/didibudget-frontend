@@ -13,7 +13,7 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	const [isDisabled, setIsDisabled] = useState(false)
 	const [error, setError] = useState(null)
 
-	const [ registerExpense ] = useMutation(REGISTER_EXPENSE)
+	const [registerExpense] = useMutation(REGISTER_EXPENSE)
 
 	const onSubmit = async (event) => {
 		try {
@@ -43,7 +43,7 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 		<div className="col-sm-6 col-md-4">
 			<div className="card bg-dark border-info text-light mb-3">
 				<div className="card-body">
-					<h5 className="card-title">{suggestion.suggestedExpense.categoryName} {(suggestion.suggestedExpense.subcategoryName) ? ` - ${suggestion.suggestedExpense.subcategoryName}` : ''} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></h5>
+					<h5 className="fw-light card-title">{suggestion.suggestedExpense.categoryName} {(suggestion.suggestedExpense.subcategoryName) ? ` - ${suggestion.suggestedExpense.subcategoryName}` : ''} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></h5>
 					<p className="card-text"><span className="text-nowrap">{suggestion.suggestedExpense.quantity} EUR</span></p>
 					<SubmitButton disabled={isDisabled} onClick={onSubmit}>Save expense</SubmitButton>
 					{

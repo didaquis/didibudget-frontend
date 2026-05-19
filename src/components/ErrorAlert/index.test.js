@@ -7,7 +7,7 @@ describe('ErrorAlert', () => {
 	it('renders correctly', () => {
 		const { getByRole, getByText } = render(<ErrorAlert errorMessage='foo' />)
 
-		expect(getByRole('alert')).toBeInTheDocument()
-		expect(getByText('foo'))
+		expect(getByRole('alert')).toBeVisible()
+		expect(getByText('foo')).toBeVisible()
 	})
 })

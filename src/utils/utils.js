@@ -103,14 +103,70 @@ const getFirstParamFromSplat = (splat) => {
  * @returns {number} The current day of the month in the user's local time zone.
  */
 const getLocalDay = () => {
-  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+	const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-  const formatter = new Intl.DateTimeFormat('en-GB', {
-    timeZone,
-    day: 'numeric',
-  })
+	const formatter = new Intl.DateTimeFormat('en-GB', {
+		timeZone,
+		day: 'numeric',
+	})
 
-  return parseInt(formatter.format(new Date()), 10)
+	return parseInt(formatter.format(new Date()), 10)
+}
+
+/**
+ * @const {Object.<string, number>} DATE_UNITS - Mapping of time units to their equivalent in seconds.
+ */
+const DATE_UNITS = {
+	year: 31536000,
+	month: 2592000,
+	day: 86400,
+	hour: 3600,
+	minute: 60,
+	second: 1
+}
+
+/**
+ * Calculate the difference in seconds between the current time and a given timestamp.
+ * @param {number} timestamp - The timestamp in milliseconds (e.g., from Date.now()).
+ * @returns {number} The difference in seconds.
+ */
+const getSecondsDiff = (timestamp) => (Date.now() - timestamp) / 1000
+
+/**
+ * Determine the appropriate time unit and value for relative time formatting.
+ * @param {number} secondsElapsed - The number of seconds elapsed.
+ * @returns {Object} An object with 'value' (number) and 'unit' (string) properties.
+ */
+const getUnitAndValueDate = (secondsElapsed) => {
+	for (const [unit, secondsInUnit] of Object.entries(DATE_UNITS)) {
+		if (secondsElapsed >= secondsInUnit || unit === 'second') {
+			const value = Math.floor(secondsElapsed / secondsInUnit) * -1
+			return { value, unit }
+		}
+	}
+}
+
+/**
+ * Get a human-readable relative time string (e.g., "2 hours ago") from a timestamp.
+ * @param {number} timestamp - The timestamp in milliseconds (e.g., from Date.now()).
+ * @param {string} [locale='en-UK'] - The locale for formatting the relative time (e.g., 'en-US', 'es-ES').
+ * @returns {string} A localized relative time string.
+ */
+const getTimeAgo = (timestamp, locale = 'en-UK') => {
+	const rtf = new Intl.RelativeTimeFormat(locale, {
+		numeric: 'auto',
+		style: 'long',
+	})
+
+	const secondsElapsed = getSecondsDiff(timestamp)
+
+	const { value, unit } = getUnitAndValueDate(secondsElapsed) || {}
+
+	if (value === undefined || unit === undefined) {
+		throw new RangeError('Invalid value at getTimeAgo function')
+	}
+
+	return rtf.format(value, unit)
 }
 
 export {
@@ -120,4 +176,5 @@ export {
 	trimDecimalPoints,
 	getFirstParamFromSplat,
 	getLocalDay,
+	getTimeAgo
 }

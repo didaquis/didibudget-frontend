@@ -9,9 +9,9 @@ import { PaginateNavbar } from '../../PaginateNavbar'
 
 import { DELETE_MONTHLY_BALANCE } from '../../../gql/mutations/monthlyBalances'
 
-export const ListOfMonthlyBalances = ( { monthlyBalances, paginationData, refetch, onChangePage } ) => {
+export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch, onChangePage }) => {
 
-	const [ deleteMonthlyBalance ] = useMutation(DELETE_MONTHLY_BALANCE)
+	const [deleteMonthlyBalance] = useMutation(DELETE_MONTHLY_BALANCE)
 
 	const onDeleteMonthlyBalance = () => {
 		const isUniqueResultOnCurrentPage = monthlyBalances.length === 1

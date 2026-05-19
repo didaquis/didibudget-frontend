@@ -7,7 +7,7 @@ describe('SectionTitle', () => {
 	it('renders correctly', () => {
 		const { getByText } = render(<SectionTitle text='biz' />)
 
-		expect(getByText('biz')).toBeInTheDocument()
+		expect(getByText('biz')).toBeVisible()
 	})
 
 	it('renders correctly the children value', () => {
@@ -19,7 +19,7 @@ describe('SectionTitle', () => {
 			const hasText = (node) => node.textContent === expectedText
 			const nodeHasText = hasText(node)
 			const childrenDontHaveText = Array.from(node.children).every(
-			  (child) => !hasText(child)
+				(child) => !hasText(child)
 			)
 
 			return nodeHasText && childrenDontHaveText

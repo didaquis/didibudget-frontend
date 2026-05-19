@@ -7,12 +7,12 @@ describe('SubmitButtonHelper', () => {
 	it('renders helper text if receive true by props', () => {
 		const { getByText } = render(<SubmitButtonHelper mustShowHelper={true} />)
 
-		expect(getByText('Form submission is only enabled with valid data')).toBeInTheDocument()
+		expect(getByText('Form submission is only enabled with valid data')).toBeVisible()
 	})
 
-	it('not renders helper text if receive false by props', () => {
-		const { container } = render(<SubmitButtonHelper mustShowHelper={false} />)
+	it('should not render helper text if receive false by props', () => {
+		const { getByText } = render(<SubmitButtonHelper mustShowHelper={false} />)
 
-		expect(container.firstChild).toBeNull()
+		expect(getByText('Form submission is only enabled with valid data')).toHaveClass('invisible')
 	})
 })

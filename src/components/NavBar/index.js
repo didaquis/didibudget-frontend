@@ -8,35 +8,41 @@ import { SavingsAndInvestmentsBalanceDropdown } from './SavingsAndInvestmentsBal
 import { ExpensesDropdown } from './ExpensesDropdown'
 
 const SIZE_OF_PRIMARY_ICONS = '32px'
-const SIZE_OF_SECONDARY_ICONS = '24px'
 
 
 export const NavBar = () => {
 	const { isAuth, userData } = useContext(AuthContext)
 
 	return (
-		<nav className="navbar navbar-expand-lg navbar-dark justify-content-between d-flex border-bottom border-info mt-2 mb-5">
-			<Link className="navbar-item text-light font-weight-bold" to='/'>
-				<BsHouse size={SIZE_OF_PRIMARY_ICONS} title='Home' />
-			</Link>
-
-			{
-				isAuth && <SavingsAndInvestmentsBalanceDropdown sizeOfPrimaryIcons={SIZE_OF_PRIMARY_ICONS} sizeOfSecondaryIcons={SIZE_OF_SECONDARY_ICONS} />
-			}
-
-			{
-				isAuth && <ExpensesDropdown sizeOfPrimaryIcons={SIZE_OF_PRIMARY_ICONS} sizeOfSecondaryIcons={SIZE_OF_SECONDARY_ICONS} />
-			}
-
-			{ 
-				isAuth && userData.isAdmin && <Link className="navbar-item text-light font-weight-bold" to='/user-administration'>
-					<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User administration'/>
+		<nav className="nav navbar-dark justify-content-between flex-nowrap border-bottom border-info mt-2 mb-5">
+			<div className="nav-item">
+				<Link className="nav-link text-light" to='/'>
+					<BsHouse size={SIZE_OF_PRIMARY_ICONS} title='Home' />
 				</Link>
-			}
-			<Link className="navbar-item text-light font-weight-bold" to={isAuth ? '/logout' : '/login'}>
-				{ !isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Login' /> }
-				{ isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Logout' /> }
-			</Link>
+			</div>
+
+			{isAuth && (
+				<SavingsAndInvestmentsBalanceDropdown />
+			)}
+
+			{isAuth && (
+				<ExpensesDropdown />
+			)}
+
+			{isAuth && userData.isAdmin && (
+				<div className="nav-item">
+					<Link className="nav-link text-light" to='/user-administration'>
+						<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User administration' />
+					</Link>
+				</div>
+			)}
+
+			<div className="nav-item">
+				<Link className="nav-link text-light" to={isAuth ? '/logout' : '/login'}>
+					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Login' />}
+					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Logout' />}
+				</Link>
+			</div>
 		</nav>
 	)
 }

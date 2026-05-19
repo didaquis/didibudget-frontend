@@ -7,16 +7,16 @@ describe('Jumbotron', () => {
 	it('contains an expected text', () => {
 		const { getByText } = render(<Jumbotron title='foo' subtitle='bar' />)
 
-		expect(getByText('foo')).toBeInTheDocument()
-		expect(getByText('bar')).toBeInTheDocument()
+		expect(getByText('foo')).toBeVisible()
+		expect(getByText('bar')).toBeVisible()
 	})
-	
+
 	it('contains an expected text, included more content as subtitle', () => {
 		const { getByText } = render(<Jumbotron title='foo' subtitle='bar' subtitleExtraLine='biz' />)
 
-		expect(getByText('foo')).toBeInTheDocument()
-		expect(getByText('bar')).toBeInTheDocument()
-		expect(getByText('biz')).toBeInTheDocument()
+		expect(getByText('foo')).toBeVisible()
+		expect(getByText('bar')).toBeVisible()
+		expect(getByText('biz')).toBeVisible()
 	})
 
 	it('contains the correct DOM nodes', () => {
@@ -28,7 +28,7 @@ describe('Jumbotron', () => {
 
 		expect(nodeTitle.localName).toBe('h2')
 		expect(nodeTitle.dataset.easteregg).toBe('The cake is a lie')
-		expect(nodeTitle.className).toBe('custom-title m-4')
+		expect(nodeTitle.className).toBe('fs-1 fw-light m-4')
 
 
 		const nodeSubtitle = screen.getByText('my-subtitle')

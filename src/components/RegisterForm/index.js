@@ -17,7 +17,7 @@ export const RegisterForm = ({ activateAuth }) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState(null)
 
-	const [ registerUser ] = useMutation(REGISTER)
+	const [registerUser] = useMutation(REGISTER)
 
 	const email = useInputValue('')
 	const password = useInputValue('')
@@ -45,7 +45,7 @@ export const RegisterForm = ({ activateAuth }) => {
 		<Fragment>
 			<div className="row justify-content-center mt-4">
 				<form className="col-md-8" disabled={isDisabled} onSubmit={handleSubmit}>
-					<div className="form-group">
+					<div className="col mb-3">
 						<label htmlFor="inputEmailRegisterForm" className="text-light">Email <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
@@ -57,9 +57,9 @@ export const RegisterForm = ({ activateAuth }) => {
 							required
 							autoFocus
 						/>
-						<small id="emailHelp" className="form-text text-muted">Make sure it's a valid email address</small>
+						<small id="emailHelp" className="form-text text-muted d-block">Make sure it's a valid email address</small>
 					</div>
-					<div className="form-group">
+					<div className="col mb-3">
 						<label htmlFor="inputPasswordRegisterForm" className="text-light">Password <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
@@ -71,9 +71,9 @@ export const RegisterForm = ({ activateAuth }) => {
 							required
 							pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!*^?+-_@#$%&]{8,}$"
 						/>
-						<small id="passwordHelp" className="form-text text-muted">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
+						<small id="passwordHelp" className="form-text text-muted d-block">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
 					</div>
-					<div className="form-group">
+					<div className="col mb-4">
 						<label htmlFor="inputRepeatPasswordRegisterForm" className="text-light">Repeat password <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
@@ -85,28 +85,28 @@ export const RegisterForm = ({ activateAuth }) => {
 							required
 							pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!*^?+-_@#$%&]{8,}$"
 						/>
-						<small id="repeatPasswordHelp" className="form-text text-muted">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
+						<small id="repeatPasswordHelp" className="form-text text-muted d-block">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
 					</div>
-					<div className="mt-2 ml-1">
-						<SubmitButton disabled={isDisabled || !validateRegisterForm(email.value, password.value, repeatPassword.value)}>
-							{
+
+					<SubmitButton disabled={isDisabled || !validateRegisterForm(email.value, password.value, repeatPassword.value)}>
+						{
 							(!isLoading)
 								?
-									'Create account'
+								'Create account'
 								:
-									<Fragment>
-										<span className="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-										<span>Loading</span>
-									</Fragment>
+								<Fragment>
+									<span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" aria-label="Loading"></span>
+									<span>Loading</span>
+								</Fragment>
 						}
-						</SubmitButton>
-						<SubmitButtonHelper mustShowHelper={!validateRegisterForm(email.value, password.value, repeatPassword.value)}></SubmitButtonHelper>
-					</div>
+					</SubmitButton>
+					<SubmitButtonHelper mustShowHelper={!validateRegisterForm(email.value, password.value, repeatPassword.value)}></SubmitButtonHelper>
+
 				</form>
 				<div className="col-md-8">
-				{
-					error && <ErrorAlert errorMessage={error} />
-				}
+					{
+						error && <ErrorAlert errorMessage={error} />
+					}
 				</div>
 			</div>
 		</Fragment>

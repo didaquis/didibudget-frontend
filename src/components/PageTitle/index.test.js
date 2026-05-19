@@ -7,7 +7,7 @@ describe('PageTitle', () => {
 	it('renders correctly', () => {
 		const { getByText } = render(<PageTitle text='foo' />)
 
-		expect(getByText('foo')).toBeInTheDocument()
+		expect(getByText('foo')).toBeVisible()
 	})
 
 	it('is a title', () => {

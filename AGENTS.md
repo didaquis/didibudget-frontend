@@ -4,7 +4,7 @@
 
 **didibudget** is a money management web application built with React and GraphQL. It allows users to track expenses, manage monthly balances, and view savings/investments. The frontend communicates with a separate backend API via Apollo Client.
 
-- **Tech Stack**: React 18, React Router 6, Apollo Client 3, Reactstrap (Bootstrap 4)
+- **Tech Stack**: React 18, React Router 6, Apollo Client 3, Reactstrap (Bootstrap 5)
 - **Build Tool**: Vite
 - **Testing**: Vitest + React Testing Library
 - **Linting**: ESLint

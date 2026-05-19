@@ -8,8 +8,8 @@ describe('EmojiMagnifyingGlass', () => {
 		render(<EmojiMagnifyingGlass />)
 
 		const element = screen.getByRole('img', { name: /Magnifying glass/i })
-		
-		expect(element).toBeInTheDocument()
+
+		expect(element).toBeVisible()
 		expect(element).toHaveTextContent(/^🔎$/)
 	})
 })

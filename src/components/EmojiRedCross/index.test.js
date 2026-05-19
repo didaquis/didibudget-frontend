@@ -8,8 +8,8 @@ describe('EmojiRedCross', () => {
 		render(<EmojiRedCross />)
 
 		const element = screen.getByRole('img', { name: /Red cross mark/i })
-		
-		expect(element).toBeInTheDocument()
+
+		expect(element).toBeVisible()
 		expect(element).toHaveTextContent(/^❌$/)
 	})
 })

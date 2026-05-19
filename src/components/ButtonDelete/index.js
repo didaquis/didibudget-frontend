@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 
-export const ButtonDelete = ( { uuid, deleteMutation, onDelete } ) => {
+export const ButtonDelete = ({ uuid, deleteMutation, onDelete }) => {
 	const [modal, setModal] = useState(false)
 	const toggle = () => setModal(!modal)
 
@@ -27,14 +27,14 @@ export const ButtonDelete = ( { uuid, deleteMutation, onDelete } ) => {
 
 	return (
 		<div>
-			<Button color="danger" outline={true} disabled={isDisabled} onClick={toggle} className="d-block d-md-inline-block mr-2">Delete</Button>
+			<Button color="danger" outline={true} disabled={isDisabled} onClick={toggle} className="d-block d-md-inline-block me-2">Delete</Button>
 			<Modal isOpen={modal} toggle={toggle}>
 				<ModalHeader toggle={toggle}>Are you sure?</ModalHeader>
 				<ModalBody>
 					Are you sure you want to delete this registry?
 				</ModalBody>
 				<ModalFooter>
-					<Button color="info" outline={true} onClick={toggle}>Cancel</Button>
+					<Button outline={true} onClick={toggle}>Cancel</Button>
 					<Button color="danger" outline={true} onClick={handleClick} disabled={isDisabled}>Delete</Button>
 				</ModalFooter>
 				{

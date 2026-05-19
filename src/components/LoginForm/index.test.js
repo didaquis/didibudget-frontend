@@ -15,13 +15,13 @@ describe('LoginForm', () => {
 
 		render(
 			<MockedProvider mocks={mocks} cache={customCache}>
-				<LoginForm activateAuth={activateAuth}/>
+				<LoginForm activateAuth={activateAuth} />
 			</MockedProvider>
 		)
 		const emailInput = screen.getByRole('textbox', { name: /Email/i })
 		const passwordInput = screen.getByPlaceholderText(/password/)
 		const submitButton = screen.getByRole('button', { name: 'Log in' })
-		
+
 		expect(emailInput.value).toBe('')
 		expect(passwordInput.value).toBe('')
 		expect(submitButton).toBeDisabled()
@@ -60,7 +60,7 @@ describe('LoginForm', () => {
 
 		render(
 			<MockedProvider mocks={mocks} cache={customCache}>
-				<LoginForm activateAuth={activateAuth}/>
+				<LoginForm activateAuth={activateAuth} />
 			</MockedProvider>
 		)
 
@@ -74,7 +74,7 @@ describe('LoginForm', () => {
 
 		const submitButtonLoadingState = screen.getByRole('button', { name: 'Loading' })
 
-		expect(submitButtonLoadingState).toBeInTheDocument()
+		expect(submitButtonLoadingState).toBeVisible()
 		expect(submitButtonLoadingState).toBeDisabled()
 
 		await waitFor(() => expect(activateAuth).toHaveBeenCalled())
@@ -100,7 +100,7 @@ describe('LoginForm', () => {
 
 		render(
 			<MockedProvider mocks={mocks} cache={customCache}>
-				<LoginForm activateAuth={activateAuth}/>
+				<LoginForm activateAuth={activateAuth} />
 			</MockedProvider>
 		)
 
