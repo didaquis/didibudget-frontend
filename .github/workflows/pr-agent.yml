@@ -27,7 +27,7 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   GROQ.KEY: ${{ secrets.GROQ_KEY }}
-				  # View the models available here: https://console.groq.com/docs/rate-limits
+                  # View the models available here: https://console.groq.com/docs/rate-limits
                   config.model: 'openai/gpt-oss-120b'
                   config.fallback_models: '["qwen/qwen3-32b", "llama-3.3-70b-versatile"]'
                   github_action_config.auto_describe: 'true'
