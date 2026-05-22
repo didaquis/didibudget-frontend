@@ -23,8 +23,9 @@ cp _env .env
 npm run dev              # Dev server at http://localhost:5173
 npm run build              # Production build (output: ./dist/)
 npm run lint               # ESLint check
-npm run test               # Run all tests with watch mode
-npm run test -- utils        # Run specific test file (pattern match)
+npm run test               # Run all tests
+npm run test:watch         # Run all tests with watch mode
+npm run test -- utils      # Run specific test file (pattern match)
 ```
 
 ### Environment Configuration (.env)
@@ -97,8 +98,9 @@ Mutations typically use `useMutation` hook with error/success handling.
 
 Run tests:
 ```bash
-npm run test                                    # All tests, watch mode
-npm run test -- --coverage                     # With coverage report
+npm run test                 # All tests
+npm run test:watch           # All tests, watch mode
+npm run test -- --coverage   # With coverage report
 npm run test -- utils        # Tests matching pattern
 ```
 
