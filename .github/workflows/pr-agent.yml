@@ -15,7 +15,7 @@ jobs:
             issues: write
             pull-requests: write
             contents: read
-        name: Run PR Agent on pull requests targeting main or master
+        name: Run PR Agent on pull requests
         steps:
             - name: PR Agent action step
               id: pragent
