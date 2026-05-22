@@ -47,3 +47,4 @@ Don't worry, here you have a guide:
 * Run app in dev mode: `npm run dev`
 * Run the linter: `npm run lint`
 * Run the test: `npm run test`
+* Run the tests in watch mode: `npm run test:watch`
