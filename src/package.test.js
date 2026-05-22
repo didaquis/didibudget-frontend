@@ -1,12 +1,14 @@
 import { readFileSync } from 'fs'
-import { resolve } from 'path'
+import { resolve, dirname } from 'path'
+
+const __dirname = dirname(new URL(import.meta.url).pathname)
 
 let packageJSONData
 
 describe('package.json file', () => {
 
 	beforeAll(() => {
-		const file = resolve(process.cwd(), 'package.json')
+		const file = resolve(__dirname, '..', 'package.json')
 		packageJSONData = JSON.parse(readFileSync(file, 'utf-8'))
 	})
 
