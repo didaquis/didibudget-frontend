@@ -120,7 +120,7 @@ describe('computeDifferential', () => {
 			{ date: '2015-02-01', balance: 200.4567 },
 			{ date: '2015-03-01', balance: 350.789 },
 		]
-		expect(computeDifferential(data)).toBeCloseTo(250.67, 2)
+		expect(computeDifferential(data)).toBe(250.67)
 	})
 
 	test('should work with real parsed data shape', () => {
@@ -131,7 +131,7 @@ describe('computeDifferential', () => {
 			{ date: '2015-02-01' },
 			{ date: '2015-03-01', balance: 8110.37 },
 		]
-		expect(computeDifferential(data)).toBeCloseTo(8110.37, 2)
+		expect(computeDifferential(data)).toBe(8110.37)
 	})
 })
 
@@ -160,8 +160,12 @@ describe('formatDifferential', () => {
 		expect(formatDifferential(1234567.89)).toBe('+ 1234567.89 €')
 	})
 
-	test('should format integer with two decimals', () => {
-		expect(formatDifferential(1000)).toBe('+ 1000 €')
+	test('should format decimal number with two decimals', () => {
+		expect(formatDifferential(1000.00)).toBe('+ 1000 €')
+	})
+
+	test('should format integer', () => {
+		expect(formatDifferential(2000)).toBe('+ 2000 €')
 	})
 
 	test('should format small decimal', () => {
@@ -169,6 +173,6 @@ describe('formatDifferential', () => {
 	})
 
 	test('should format negative small decimal', () => {
-		expect(formatDifferential(-0.5)).toBe('- 0.50 €')
+		expect(formatDifferential(-0.3)).toBe('- 0.30 €')
 	})
 })
