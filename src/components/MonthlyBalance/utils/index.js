@@ -120,26 +120,23 @@ function computeDifferential (data = []) {
 }
 
 /**
- * Format a number to Spanish locale Euro string.
+ * Format a number to a Euro string with 2 decimals using dot as decimal separator.
  * @example
- *   formatEuro(3140.26) // '+ 3.140,26 €'
- *   formatEuro(-1200.50) // '- 1.200,50 €'
- *   formatEuro(0) // '0,00 €'
+ *   formatEuro(3140.26) // '+ 3140.26 €'
+ *   formatEuro(-1200.50) // '- 1200.50 €'
+ *   formatEuro(0) // '0.00 €'
  * @param {number|null|undefined} value - Numeric value to format
  * @returns {string} Formatted Euro string
  */
 function formatEuro (value) {
 	if (value === null || value === undefined) {
-		return '0,00 €'
+		return '0.00 €'
 	}
 
 	const absValue = Math.abs(value)
 	const sign = value > 0 ? '+ ' : value < 0 ? '- ' : ''
-	const [integerPart, decimalPart] = absValue.toFixed(2).split('.')
 
-	const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-
-	return `${sign}${formattedInteger},${decimalPart} €`
+	return `${sign}${absValue.toFixed(2)} €`
 }
 
 export {

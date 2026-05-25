@@ -137,38 +137,38 @@ describe('computeDifferential', () => {
 
 describe('formatEuro', () => {
 	test('should format positive number', () => {
-		expect(formatEuro(3140.26)).toBe('+ 3.140,26 €')
+		expect(formatEuro(3140.26)).toBe('+ 3140.26 €')
 	})
 
 	test('should format negative number', () => {
-		expect(formatEuro(-1200.50)).toBe('- 1.200,50 €')
+		expect(formatEuro(-1200.50)).toBe('- 1200.50 €')
 	})
 
 	test('should format zero', () => {
-		expect(formatEuro(0)).toBe('0,00 €')
+		expect(formatEuro(0)).toBe('0.00 €')
 	})
 
 	test('should format null as zero', () => {
-		expect(formatEuro(null)).toBe('0,00 €')
+		expect(formatEuro(null)).toBe('0.00 €')
 	})
 
 	test('should format undefined as zero', () => {
-		expect(formatEuro(undefined)).toBe('0,00 €')
+		expect(formatEuro(undefined)).toBe('0.00 €')
 	})
 
-	test('should format large number with thousands separators', () => {
-		expect(formatEuro(1234567.89)).toBe('+ 1.234.567,89 €')
+	test('should format large number without thousands separators', () => {
+		expect(formatEuro(1234567.89)).toBe('+ 1234567.89 €')
 	})
 
 	test('should format integer with two decimals', () => {
-		expect(formatEuro(1000)).toBe('+ 1.000,00 €')
+		expect(formatEuro(1000)).toBe('+ 1000.00 €')
 	})
 
 	test('should format small decimal', () => {
-		expect(formatEuro(0.5)).toBe('+ 0,50 €')
+		expect(formatEuro(0.5)).toBe('+ 0.50 €')
 	})
 
 	test('should format negative small decimal', () => {
-		expect(formatEuro(-0.5)).toBe('- 0,50 €')
+		expect(formatEuro(-0.5)).toBe('- 0.50 €')
 	})
 })
