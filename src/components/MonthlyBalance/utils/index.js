@@ -97,8 +97,55 @@ const getLastFiveYearsFrom = (year) => {
 	return result
 }
 
+/**
+ * Calculate the net balance change (last - first) from an array of monthly data entries.
+ * Entries without a balance property are filtered out.
+ * @param {Object[]} [data=[]] - Array of objects with optional balance property
+ * @param {string} data[].date - Date in 'YYYY-MM-DD' format
+ * @param {float} [data[].balance] - Monthly balance amount
+ * @returns {number|null} The differential rounded to 2 decimals, or null if <2 entries with balance
+ */
+function computeDifferential (data = []) {
+	const entriesWithBalance = data.filter(entry => entry.balance !== undefined)
+
+	if (entriesWithBalance.length < 2) {
+		return null
+	}
+
+	const first = entriesWithBalance[0].balance
+	const last = entriesWithBalance[entriesWithBalance.length - 1].balance
+	const diff = last - first
+
+	return parseFloat(diff.toFixed(2))
+}
+
+/**
+ * Format a number to Spanish locale Euro string.
+ * @example
+ *   formatEuro(3140.26) // '+ 3.140,26 €'
+ *   formatEuro(-1200.50) // '- 1.200,50 €'
+ *   formatEuro(0) // '0,00 €'
+ * @param {number|null|undefined} value - Numeric value to format
+ * @returns {string} Formatted Euro string
+ */
+function formatEuro (value) {
+	if (value === null || value === undefined) {
+		return '0,00 €'
+	}
+
+	const absValue = Math.abs(value)
+	const sign = value > 0 ? '+ ' : value < 0 ? '- ' : ''
+	const [integerPart, decimalPart] = absValue.toFixed(2).split('.')
+
+	const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+
+	return `${sign}${formattedInteger},${decimalPart} €`
+}
+
 export {
 	parseDataForGraph, 
 	getLastMonthsData,
 	getLastFiveYearsFrom,
+	computeDifferential,
+	formatEuro,
 }
