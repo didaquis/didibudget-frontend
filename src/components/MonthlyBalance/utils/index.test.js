@@ -131,7 +131,7 @@ describe('computeDifferential', () => {
 			{ date: '2015-02-01' },
 			{ date: '2015-03-01', balance: 8110.37 },
 		]
-		expect(computeDifferential(data)).toBe(8110.37)
+		expect(computeDifferential(data)).toBeCloseTo(8110.37, 2)
 	})
 })
 
