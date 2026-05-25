@@ -129,7 +129,7 @@ function computeDifferential (data = []) {
  * @returns {string} Formatted Euro string
  */
 function formatEuro (value) {
-	if (value === null || value === undefined) {
+	if (value === null || value === undefined || Number.isNaN(value)) {
 		return '0.00 €'
 	}
 
