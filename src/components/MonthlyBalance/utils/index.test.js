@@ -1,16 +1,16 @@
-import { parseDataForGraph, getLastMonthsData, computeDifferential, formatEuro } from './index'
+import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from './index'
 import { rawData, allDataParsed, allDataParsedFewMonths, allDataParsedEnoughtMonths, allDataParsedLotOfMonths, lastYearDataParsed } from './fixtures'
 
 describe('parseDataForGraph', () => {
 	test('should return an empty array if receive an empty array', () => {
 		const data = []
 		const result = parseDataForGraph(data)
-	 	expect(result).toEqual([])
+		expect(result).toEqual([])
 	})
 
 	test('should returns an array of valid data for the graph. Refill the empty data of every month (without balance) and do an average of repeated months. It must respect the balance with value 0', () => {
 		const result = parseDataForGraph(rawData)
-	 	expect(result).toEqual(allDataParsed)
+		expect(result).toEqual(allDataParsed)
 	})
 })
 
@@ -18,13 +18,13 @@ describe('getLastMonthsData', () => {
 	test('should return an empty array if receive an empty array or nothing', () => {
 		const result = getLastMonthsData([])
 		const anotherResult = getLastMonthsData()
-	 	expect(result).toEqual([])
-	 	expect(anotherResult).toEqual([])
+		expect(result).toEqual([])
+		expect(anotherResult).toEqual([])
 	})
 
 	test('should return an empty array if receive an array with length minor than 12', () => {
 		const result = getLastMonthsData(allDataParsedFewMonths)
-	 	expect(result).toEqual([])
+		expect(result).toEqual([])
 	})
 
 	test('should return the same array if receive a valid array with length equal of 12', () => {
@@ -35,8 +35,8 @@ describe('getLastMonthsData', () => {
 
 	test('should returns an array with length of 12 if receive an array of valid data with a length of more than 12 months', () => {
 		const result = getLastMonthsData(allDataParsedLotOfMonths)
-	 	expect(result).toEqual(lastYearDataParsed)
-	 	expect(result.length).toEqual(12)
+		expect(result).toEqual(lastYearDataParsed)
+		expect(result.length).toEqual(12)
 	})
 
 	test('should return an empty array if the are not enough data', () => {
@@ -135,40 +135,40 @@ describe('computeDifferential', () => {
 	})
 })
 
-describe('formatEuro', () => {
+describe('formatDifferential', () => {
 	test('should format positive number', () => {
-		expect(formatEuro(3140.26)).toBe('+ 3140.26 €')
+		expect(formatDifferential(3140.26)).toBe('+ 3140.26 €')
 	})
 
 	test('should format negative number', () => {
-		expect(formatEuro(-1200.50)).toBe('- 1200.50 €')
+		expect(formatDifferential(-1200.50)).toBe('- 1200.50 €')
 	})
 
 	test('should format zero', () => {
-		expect(formatEuro(0)).toBe('0.00 €')
+		expect(formatDifferential(0)).toBe('0 €')
 	})
 
 	test('should format null as zero', () => {
-		expect(formatEuro(null)).toBe('0.00 €')
+		expect(formatDifferential(null)).toBe('0 €')
 	})
 
 	test('should format undefined as zero', () => {
-		expect(formatEuro(undefined)).toBe('0.00 €')
+		expect(formatDifferential(undefined)).toBe('0 €')
 	})
 
 	test('should format large number without thousands separators', () => {
-		expect(formatEuro(1234567.89)).toBe('+ 1234567.89 €')
+		expect(formatDifferential(1234567.89)).toBe('+ 1234567.89 €')
 	})
 
 	test('should format integer with two decimals', () => {
-		expect(formatEuro(1000)).toBe('+ 1000.00 €')
+		expect(formatDifferential(1000)).toBe('+ 1000 €')
 	})
 
 	test('should format small decimal', () => {
-		expect(formatEuro(0.5)).toBe('+ 0.50 €')
+		expect(formatDifferential(0.5)).toBe('+ 0.50 €')
 	})
 
 	test('should format negative small decimal', () => {
-		expect(formatEuro(-0.5)).toBe('- 0.50 €')
+		expect(formatDifferential(-0.5)).toBe('- 0.50 €')
 	})
 })

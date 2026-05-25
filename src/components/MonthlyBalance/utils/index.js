@@ -1,4 +1,4 @@
-import { firstDayOfNextMonth } from '../../../utils/utils'
+import { firstDayOfNextMonth, trimDecimalPoints } from '../../../utils/utils'
 
 /**
 * Calculate the average of values in an array
@@ -7,7 +7,7 @@ import { firstDayOfNextMonth } from '../../../utils/utils'
 * @param {Array} arr - An array of integers or floats
 * @returns {number}
 */
-const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length
+const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length
 
 /**
 * Parse the data for monthly balance graph. This function refill the empty data of every month and do an average of repeated months.
@@ -20,7 +20,7 @@ const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length
 * @param {float|integer} data.balance
 * @returns {Array.<Object>}
 */
-function parseDataForGraph (data = []) {
+function parseDataForGraph(data = []) {
 	if (!data.length) {
 		return []
 	}
@@ -30,8 +30,8 @@ function parseDataForGraph (data = []) {
 	const lastDate = data[data.length - 1].date
 
 	const listOfAllDates = [firstDate]
-	while (listOfAllDates[listOfAllDates.length -1] !== lastDate) {
-		const nextMonth = firstDayOfNextMonth(listOfAllDates[listOfAllDates.length -1])
+	while (listOfAllDates[listOfAllDates.length - 1] !== lastDate) {
+		const nextMonth = firstDayOfNextMonth(listOfAllDates[listOfAllDates.length - 1])
 		if (!listOfAllDates.includes(nextMonth)) {
 			listOfAllDates.push(nextMonth)
 		}
@@ -72,10 +72,10 @@ function parseDataForGraph (data = []) {
  * @param {number} [months=12] - Number of months to return. Default is 12.
  * @returns {Array.<Object>|Array}
  */
-function getLastMonthsData (dataParsedForGraph = [], months = 12) {
+function getLastMonthsData(dataParsedForGraph = [], months = 12) {
 	if (!Array.isArray(dataParsedForGraph) || dataParsedForGraph.length < months) {
-        return []
-    }
+		return []
+	}
 
 	return dataParsedForGraph.slice(Math.max(dataParsedForGraph.length - months, 0))
 }
@@ -100,12 +100,13 @@ const getLastFiveYearsFrom = (year) => {
 /**
  * Calculate the net balance change (last - first) from an array of monthly data entries.
  * Entries without a balance property are filtered out.
+ * @requires trimDecimalPoints
  * @param {Object[]} [data=[]] - Array of objects with optional balance property
  * @param {string} data[].date - Date in 'YYYY-MM-DD' format
  * @param {float} [data[].balance] - Monthly balance amount
  * @returns {number|null} The differential rounded to 2 decimals, or null if <2 entries with balance
  */
-function computeDifferential (data = []) {
+const computeDifferential = (data = []) => {
 	const entriesWithBalance = data.filter(entry => entry.balance !== undefined)
 
 	if (entriesWithBalance.length < 2) {
@@ -116,33 +117,38 @@ function computeDifferential (data = []) {
 	const last = entriesWithBalance[entriesWithBalance.length - 1].balance
 	const diff = last - first
 
-	return parseFloat(diff.toFixed(2))
+	return trimDecimalPoints(diff)
 }
 
 /**
  * Format a number to a Euro string with 2 decimals using dot as decimal separator.
  * @example
- *   formatEuro(3140.26) // '+ 3140.26 €'
- *   formatEuro(-1200.50) // '- 1200.50 €'
- *   formatEuro(0) // '0.00 €'
+ *   formatDifferential(3140.26) // '+ 3140.26 €'
+ *   formatDifferential(-1200.50) // '- 1200.50 €'
+ *   formatDifferential(0) // '0 €'
  * @param {number|null|undefined} value - Numeric value to format
  * @returns {string} Formatted Euro string
  */
-function formatEuro (value) {
+const formatDifferential = (value) => {
 	if (value === null || value === undefined || Number.isNaN(value)) {
-		return '0.00 €'
+		return '0 €'
+	}
+
+	if (value === 0) {
+		return '0 €'
 	}
 
 	const absValue = Math.abs(value)
-	const sign = value > 0 ? '+ ' : value < 0 ? '- ' : ''
+	const sign = value > 0 ? '+ ' : '- '
+	const formatted = absValue % 1 === 0 ? absValue : absValue.toFixed(2)
 
-	return `${sign}${absValue.toFixed(2)} €`
+	return `${sign}${formatted} €`
 }
 
 export {
-	parseDataForGraph, 
+	parseDataForGraph,
 	getLastMonthsData,
 	getLastFiveYearsFrom,
 	computeDifferential,
-	formatEuro,
+	formatDifferential,
 }

@@ -7,7 +7,7 @@ import { parseUnixTimestamp } from '../../../utils/utils'
 import { ErrorAlert } from '../../ErrorAlert'
 import { PageSubTitle } from '../../PageSubTitle'
 
-import { parseDataForGraph, getLastMonthsData, computeDifferential, formatEuro } from '../utils'
+import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
 
 class CustomizedAxisTick extends PureComponent {
@@ -56,7 +56,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastYearDataParsed.length > 0 &&
 					<Fragment>
-						<PageSubTitle text={`Data from the last 12 entries is shown${lastYearDifferential !== null ? ` (net change: ${formatEuro(lastYearDifferential)})` : ''}:`} />
+						<PageSubTitle text={`Data from the last 12 entries is shown${lastYearDifferential !== null ? ` (net change: ${formatDifferential(lastYearDifferential)})` : ''}:`} />
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastYearDataParsed}
@@ -74,7 +74,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastTwoYearsDataParsed.length > 0 &&
 					<Fragment>
-						<PageSubTitle text={`Data from the last 24 entries is shown${lastTwoYearsDifferential !== null ? ` (net change: ${formatEuro(lastTwoYearsDifferential)})` : ''}:`} />
+						<PageSubTitle text={`Data from the last 24 entries is shown${lastTwoYearsDifferential !== null ? ` (net change: ${formatDifferential(lastTwoYearsDifferential)})` : ''}:`} />
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastTwoYearsDataParsed}
