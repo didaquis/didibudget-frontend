@@ -137,11 +137,11 @@ describe('computeDifferential', () => {
 
 describe('formatDifferential', () => {
 	test('should format positive number', () => {
-		expect(formatDifferential(3140.26)).toBe('+ 3140.26 €')
+		expect(formatDifferential(3140.26)).toBe('+3140.26 €')
 	})
 
 	test('should format negative number', () => {
-		expect(formatDifferential(-1200.50)).toBe('- 1200.50 €')
+		expect(formatDifferential(-1200.50)).toBe('-1200.50 €')
 	})
 
 	test('should format zero', () => {
@@ -157,22 +157,22 @@ describe('formatDifferential', () => {
 	})
 
 	test('should format large number without thousands separators', () => {
-		expect(formatDifferential(1234567.89)).toBe('+ 1234567.89 €')
+		expect(formatDifferential(1234567.89)).toBe('+1234567.89 €')
 	})
 
 	test('should format decimal number with two decimals', () => {
-		expect(formatDifferential(1000.00)).toBe('+ 1000 €')
+		expect(formatDifferential(1000.00)).toBe('+1000 €')
 	})
 
 	test('should format integer', () => {
-		expect(formatDifferential(2000)).toBe('+ 2000 €')
+		expect(formatDifferential(2000)).toBe('+2000 €')
 	})
 
 	test('should format small decimal', () => {
-		expect(formatDifferential(0.5)).toBe('+ 0.50 €')
+		expect(formatDifferential(0.5)).toBe('+0.50 €')
 	})
 
 	test('should format negative small decimal', () => {
-		expect(formatDifferential(-0.3)).toBe('- 0.30 €')
+		expect(formatDifferential(-0.3)).toBe('-0.30 €')
 	})
 })

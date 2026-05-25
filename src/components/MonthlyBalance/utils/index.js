@@ -139,7 +139,7 @@ const formatDifferential = (value) => {
 	}
 
 	const absValue = Math.abs(value)
-	const sign = value > 0 ? '+ ' : '- '
+	const sign = value > 0 ? '+' : '-'
 	const formatted = absValue % 1 === 0 ? absValue : absValue.toFixed(2)
 
 	return `${sign}${formatted} €`
