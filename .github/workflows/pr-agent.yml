@@ -32,5 +32,5 @@ jobs:
                   config.fallback_models: '["groq/llama-3.1-8b-instant"]'
                   github_action_config.auto_describe: 'true'
                   github_action_config.auto_review: 'true'
-                  github_action_config.auto_improve: 'true'
+                  github_action_config.auto_improve: 'false'
                   github_action_config.pr_actions: '["opened", "reopened", "synchronize"]'
