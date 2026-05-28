@@ -79,7 +79,11 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastTwoYearsDataParsed.length > 0 &&
 					<Fragment>
-						<PageSubTitle text={`Data from the last 24 entries is shown${lastTwoYearsDifferential !== null ? ` (net change: ${formatDifferential(lastTwoYearsDifferential)})` : ''}:`} />
+						<PageSubTitle text={'Data from the last 24 entries is shown:'}>
+							{
+								lastTwoYearsDifferential !== null && <span className="badge ms-2 text-dark bg-info">Net change: {formatDifferential(lastTwoYearsDifferential)}</span>
+							}
+						</PageSubTitle>
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastTwoYearsDataParsed}
