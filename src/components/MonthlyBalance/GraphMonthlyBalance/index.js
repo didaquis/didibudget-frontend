@@ -6,6 +6,7 @@ import { parseUnixTimestamp } from '../../../utils/utils'
 
 import { ErrorAlert } from '../../ErrorAlert'
 import { PageSubTitle } from '../../PageSubTitle'
+import { InformativeBadge } from '../../InformativeBadge'
 
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
@@ -58,7 +59,8 @@ export const GraphMonthlyBalance = ({ data }) => {
 					<Fragment>
 						<PageSubTitle text={'Data from the last 12 entries is shown:'}>
 							{
-								lastYearDifferential !== null && <span className="badge ms-2 text-dark bg-info">Net change: {formatDifferential(lastYearDifferential)}</span>
+								lastYearDifferential !== null &&
+								<InformativeBadge className="ms-2">Net change: {formatDifferential(lastYearDifferential)}</InformativeBadge>
 							}
 						</PageSubTitle>
 
@@ -81,7 +83,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 					<Fragment>
 						<PageSubTitle text={'Data from the last 24 entries is shown:'}>
 							{
-								lastTwoYearsDifferential !== null && <span className="badge ms-2 text-dark bg-info">Net change: {formatDifferential(lastTwoYearsDifferential)}</span>
+								lastTwoYearsDifferential !== null && <InformativeBadge className="ms-2">Net change: {formatDifferential(lastTwoYearsDifferential)}</InformativeBadge>
 							}
 						</PageSubTitle>
 						<ResponsiveContainer width="100%" height={460}>
