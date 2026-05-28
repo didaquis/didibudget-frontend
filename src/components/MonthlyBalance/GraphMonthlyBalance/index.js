@@ -6,6 +6,7 @@ import { parseUnixTimestamp } from '../../../utils/utils'
 
 import { ErrorAlert } from '../../ErrorAlert'
 import { PageSubTitle } from '../../PageSubTitle'
+import { InformativeBadge } from '../../InformativeBadge'
 
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
@@ -56,7 +57,13 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastYearDataParsed.length > 0 &&
 					<Fragment>
-						<PageSubTitle text={`Data from the last 12 entries is shown${lastYearDifferential !== null ? ` (net change: ${formatDifferential(lastYearDifferential)})` : ''}:`} />
+						<PageSubTitle text={'Data from the last 12 entries is shown:'}>
+							{
+								lastYearDifferential !== null &&
+								<InformativeBadge className="ms-2">Net change: {formatDifferential(lastYearDifferential)}</InformativeBadge>
+							}
+						</PageSubTitle>
+
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastYearDataParsed}
@@ -74,7 +81,11 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastTwoYearsDataParsed.length > 0 &&
 					<Fragment>
-						<PageSubTitle text={`Data from the last 24 entries is shown${lastTwoYearsDifferential !== null ? ` (net change: ${formatDifferential(lastTwoYearsDifferential)})` : ''}:`} />
+						<PageSubTitle text={'Data from the last 24 entries is shown:'}>
+							{
+								lastTwoYearsDifferential !== null && <InformativeBadge className="ms-2">Net change: {formatDifferential(lastTwoYearsDifferential)}</InformativeBadge>
+							}
+						</PageSubTitle>
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastTwoYearsDataParsed}
