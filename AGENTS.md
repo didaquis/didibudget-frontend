@@ -142,4 +142,3 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 - Tests are expected. Most non-trivial code must be accompanied by appropriate unit tests. Tests should be meaningful, readable, and cover the main execution paths and edge cases.
 - Consistency matters. Follow existing project conventions, naming standards, and architectural patterns.
 - Fail explicitly. Handle errors clearly and predictably; avoid silent failures or ambiguous behavior.
-- TypeScript over JavaScript. Prefer TypeScript instead of JavaScript. Use strict typing, explicit interfaces, and meaningful types to improve correctness and maintainability.
