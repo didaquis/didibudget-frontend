@@ -1,7 +1,6 @@
 import { createContext, useState } from 'react'
 
-import jwt from 'jsonwebtoken'
-
+import { decodeToken } from './utils/token'
 import { saveSession, recoverSession, deleteSession, storeUserDataOnSessionStorage, recoverUserDataFromSessionStorage, deleteUserDataFromSessionStorage } from './utils/session'
 
 export const AuthContext = createContext()
@@ -19,7 +18,7 @@ const Provider = ({ children }) => {
 		isAuth,
 		userData,
 		activateAuth: (token) => {
-			const decodedToken = jwt.decode(token) || {}
+			const decodedToken = decodeToken(token)
 			const userData = {
 				email: decodedToken.email,
 				isAdmin: decodedToken.isAdmin,
