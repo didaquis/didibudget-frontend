@@ -28,6 +28,13 @@ const jsxInJs = () => {
 }
 
 export default defineConfig({
+  // Vite 8 changed CommonJS interop so a default import resolves to the whole
+  // `module.exports` (Node-aligned), which breaks default imports of CJS packages
+  // that set `__esModule` (react-toggle, moment, react-widgets-moment, prop-types).
+  // This restores the Vite 7 interop that unwraps `.default`.
+  legacy: {
+    inconsistentCjsInterop: true,
+  },
   optimizeDeps: {
     rolldownOptions: {
       moduleTypes: {
