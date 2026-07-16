@@ -1,20 +1,49 @@
-import { defineConfig } from 'vite'
+import { defineConfig, transformWithOxc } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// Vite 8 bundles with Rolldown/Oxc, which infers the loader from the file
+// extension and dropped esbuild's loader-by-regex option. Since this project
+// keeps JSX inside `.js` files, this pre-plugin transforms them as JSX (using
+// React's automatic runtime, matching @vitejs/plugin-react) before the rest of
+// the pipeline sees them. @vitejs/plugin-react still handles Fast Refresh.
+// See https://github.com/vitejs/vite/discussions/21505
+const jsxInJs = () => {
+  let isProduction = false
+  return {
+    name: 'jsx-in-js',
+    enforce: 'pre',
+    configResolved(config) {
+      isProduction = config.isProduction
+    },
+    transform(code, id) {
+      if (!/src\/.*\.js$/.test(id)) {
+        return null
+      }
+      return transformWithOxc(code, id, {
+        lang: 'jsx',
+        jsx: { runtime: 'automatic', development: !isProduction },
+      })
+    },
+  }
+}
+
 export default defineConfig({
-  esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.js$/,
-    exclude: [],
+  // Vite 8 changed CommonJS interop so a default import resolves to the whole
+  // `module.exports` (Node-aligned), which breaks default imports of CJS packages
+  // that set `__esModule` (react-toggle, moment, react-widgets-moment, prop-types).
+  // This restores the Vite 7 interop that unwraps `.default`.
+  legacy: {
+    inconsistentCjsInterop: true,
   },
   optimizeDeps: {
-    esbuildOptions: {
-      loader: {
+    rolldownOptions: {
+      moduleTypes: {
         '.js': 'jsx',
       },
     },
   },
   plugins: [
+    jsxInJs(),
     react(),
   ],
   test: {
