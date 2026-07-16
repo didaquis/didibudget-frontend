@@ -29,7 +29,6 @@ Requires Node 24.14 (see `.nvmrc`). Copy `_env` to `.env` and set `VITE_PROTOCOL
 
 - **No semicolons**, **single quotes**, `curly` required, `no-return-await`.
 - Indentation is **tabs**.
-- Custom rule `no-lenght/no-lenght` catches the common `.lenght` typo (should be `.length`) — it errors the build.
 - Source files are `.js` but **contain JSX**; Vite's esbuild is configured to load `src/**/*.js` as JSX (`vite.config.js`). Do not rename to `.jsx`.
 
 ## Architecture
