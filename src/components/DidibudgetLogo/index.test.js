@@ -10,7 +10,7 @@ describe('DidibudgetLogo', () => {
 
 		const svg = screen.getByRole('img', { name: /^didibudget$/i })
 
-		expect(svg).toBeInTheDocument()
+		expect(svg).toBeVisible()
 	})
 
 	it('should be an accessible SVG with a title received by props', () => {
@@ -18,6 +18,6 @@ describe('DidibudgetLogo', () => {
 
 		const svg = screen.getByRole('img', { name: /^This is an accessible title$/i })
 
-		expect(svg).toBeInTheDocument()
+		expect(svg).toBeVisible()
 	})
 })

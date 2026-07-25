@@ -1,4 +1,5 @@
-import { render, fireEvent } from '@testing-library/react'
+import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/extend-expect'
 
 import { SubmitButton } from './'
@@ -22,7 +23,8 @@ describe('SubmitButton', () => {
 		expect(getByRole('button', { name: /^Submit$/i })).not.toBeDisabled()
 	})
 
-	it('captures clicks', () => {
+	it('captures clicks', async () => {
+		const user = userEvent.setup()
 		const handleClick = vi.fn()
 
 		const { getByRole } = render(
@@ -32,7 +34,7 @@ describe('SubmitButton', () => {
 		const node = getByRole('button', { name: /^Submit$/i })
 
 		expect(handleClick).not.toHaveBeenCalled()
-		fireEvent.click(node)
+		await user.click(node)
 		expect(handleClick).toHaveBeenCalled()
 	})
 })

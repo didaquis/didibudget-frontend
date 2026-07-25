@@ -37,15 +37,15 @@ describe('SearchExpensesFilters', () => {
 
 		render(<SearchExpensesFilters categories={[...categories, categoryWithoutSubcategories]} onSearch={vi.fn()} />)
 
-		expect(screen.getByRole('option', { name: 'Select a category first' })).toBeInTheDocument()
+		expect(screen.getByRole('option', { name: 'Select a category first' })).toBeVisible()
 
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-3')
 
-		expect(screen.getByRole('option', { name: 'No subcategories' })).toBeInTheDocument()
+		expect(screen.getByRole('option', { name: 'No subcategories' })).toBeVisible()
 
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
 
-		expect(screen.getByRole('option', { name: 'All subcategories' })).toBeInTheDocument()
+		expect(screen.getByRole('option', { name: 'All subcategories' })).toBeVisible()
 	})
 
 	it('should keep the subcategory selector disabled for a category that has no subcategories', async () => {
@@ -67,8 +67,8 @@ describe('SearchExpensesFilters', () => {
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
 
 		expect(screen.getByLabelText('Subcategory')).not.toBeDisabled()
-		expect(screen.getByRole('option', { name: 'Fuel' })).toBeInTheDocument()
-		expect(screen.getByRole('option', { name: 'Garage' })).toBeInTheDocument()
+		expect(screen.getByRole('option', { name: 'Fuel' })).toBeVisible()
+		expect(screen.getByRole('option', { name: 'Garage' })).toBeVisible()
 		expect(screen.queryByRole('option', { name: 'Electricity bill' })).not.toBeInTheDocument()
 	})
 

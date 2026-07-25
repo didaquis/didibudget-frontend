@@ -1,4 +1,5 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/extend-expect'
 import { MockedProvider } from '@apollo/client/testing'
 import { InMemoryCache } from '@apollo/client'
@@ -9,7 +10,8 @@ import { LoginForm } from './'
 const customCache = new InMemoryCache()
 
 describe('LoginForm', () => {
-	it('should render a disabled button until password and email inputs are filled with data', () => {
+	it('should render a disabled button until password and email inputs are filled with data', async () => {
+		const user = userEvent.setup()
 		const activateAuth = vi.fn()
 		const mocks = []
 
@@ -26,18 +28,19 @@ describe('LoginForm', () => {
 		expect(passwordInput.value).toBe('')
 		expect(submitButton).toBeDisabled()
 
-		fireEvent.change(emailInput, { target: { value: 'example@mail.com' } })
+		await user.type(emailInput, 'example@mail.com')
 		expect(submitButton).toBeDisabled()
 
-		fireEvent.change(passwordInput, { target: { value: 'ABCabc*1234*4321' } })
+		await user.type(passwordInput, 'ABCabc*1234*4321')
 		expect(submitButton).not.toBeDisabled()
 
-		fireEvent.change(emailInput, { target: { value: '' } })
-		fireEvent.change(passwordInput, { target: { value: '' } })
+		await user.clear(emailInput)
+		await user.clear(passwordInput)
 		expect(submitButton).toBeDisabled()
 	})
 
 	it('should call to activateAuth method passing a token as argument if credentials are valid', async () => {
+		const user = userEvent.setup()
 		const activateAuth = vi.fn()
 		const mocks = [
 			{
@@ -68,9 +71,9 @@ describe('LoginForm', () => {
 		const passwordInput = screen.getByPlaceholderText(/password/)
 		const submitButton = screen.getByRole('button', { name: 'Log in' })
 
-		fireEvent.change(emailInput, { target: { value: 'example@mail.com' } })
-		fireEvent.change(passwordInput, { target: { value: 'ABCabc*1234*4321' } })
-		fireEvent.click(submitButton)
+		await user.type(emailInput, 'example@mail.com')
+		await user.type(passwordInput, 'ABCabc*1234*4321')
+		await user.click(submitButton)
 
 		const submitButtonLoadingState = screen.getByRole('button', { name: 'Loading' })
 
@@ -82,6 +85,7 @@ describe('LoginForm', () => {
 	})
 
 	it('should render an error if credentials are not valid', async () => {
+		const user = userEvent.setup()
 		const activateAuth = vi.fn()
 		const mocks = [
 			{
@@ -108,18 +112,18 @@ describe('LoginForm', () => {
 		const passwordInput = screen.getByPlaceholderText(/password/)
 		const submitButton = screen.getByRole('button', { name: 'Log in' })
 
-		fireEvent.change(emailInput, { target: { value: 'example@mail.com' } })
-		fireEvent.change(passwordInput, { target: { value: 'ABCabc*1234*4321' } })
-		fireEvent.click(submitButton)
+		await user.type(emailInput, 'example@mail.com')
+		await user.type(passwordInput, 'ABCabc*1234*4321')
+		await user.click(submitButton)
 
 		await waitFor(() => expect(activateAuth).not.toHaveBeenCalled())
 
 		const submitButtonAfterCTA = await screen.findByRole('button', { name: 'Log in' })
 
-		expect(submitButtonAfterCTA).toBeInTheDocument()
+		expect(submitButtonAfterCTA).toBeVisible()
 		expect(submitButtonAfterCTA).not.toBeDisabled()
 
-		expect(screen.getByRole('alert')).toBeInTheDocument()
+		expect(screen.getByRole('alert')).toBeVisible()
 		expect(screen.getByText('Invalid credentials'))
 	})
 })

@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MockedProvider } from '@apollo/client/testing'
 
 import { GetSearchExpenses } from './GetSearchExpenses'
@@ -126,28 +127,32 @@ describe('GetSearchExpenses', () => {
 	})
 
 	it('should run the search with the variables built from the filters and display the results', async () => {
+		const user = userEvent.setup()
+
 		render(
 			<MockedProvider mocks={[categoriesMock, searchExpensesPage1Mock]} addTypename={false}>
 				<GetSearchExpenses />
 			</MockedProvider>
 		)
 
-		fireEvent.click(await screen.findByText('search'))
+		await user.click(await screen.findByText('search'))
 
 		expect(await screen.findByText('results')).toBeVisible()
 	})
 
 	it('should re-issue the search with the same filters and the new page when the page changes', async () => {
+		const user = userEvent.setup()
+
 		render(
 			<MockedProvider mocks={[categoriesMock, searchExpensesPage1Mock, searchExpensesPage2Mock]} addTypename={false}>
 				<GetSearchExpenses />
 			</MockedProvider>
 		)
 
-		fireEvent.click(await screen.findByText('search'))
+		await user.click(await screen.findByText('search'))
 		await screen.findByText('results')
 
-		fireEvent.click(screen.getByText('next page'))
+		await user.click(screen.getByText('next page'))
 
 		expect(await screen.findByText('results')).toBeVisible()
 	})
