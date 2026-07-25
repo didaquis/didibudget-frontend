@@ -1,9 +1,4 @@
-/*
- * The date inputs are read only on purpose, so the calendar is the only way a date gets in.
- * react-widgets styles any read only input with a "not allowed" cursor, which is misleading
- * here: tapping the field does something, it opens the calendar.
- */
-
+/* react-widgets sets "not allowed" on read only inputs, but tapping these opens the calendar */
 .search-expenses-filters .rw-input[readonly] {
 	cursor: pointer;
 }

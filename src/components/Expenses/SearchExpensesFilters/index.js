@@ -23,7 +23,6 @@ const INITIAL_FILTERS = {
 const SELECT_CLASS_NAME = 'form-select'
 const INPUT_CLASS_NAME = 'form-control'
 const FILTERS_PANEL_ID = 'searchExpensesFiltersPanel'
-// Matches how the results table renders dates, and avoids the ambiguity of a day/month order
 const DATE_FORMAT = 'YYYY-MM-DD'
 
 export const SearchExpensesFilters = ({ categories, onSearch }) => {
@@ -46,8 +45,6 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 		setFilters({ ...filters, [field]: date })
 	}
 
-	// The date inputs are read only so a typed date can never be silently discarded:
-	// the calendar is the only way in, and tapping the field opens it
 	const onTogglePicker = (field) => (isPickerOpen) => {
 		setOpenPicker(isPickerOpen ? field : null)
 	}
@@ -63,8 +60,6 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 		inputProps: { 'aria-label': label, readOnly: true, onClick: () => setOpenPicker(field) }
 	})
 
-	// The selector is disabled in two different situations, and Bootstrap's disabled styling is too
-	// subtle to notice on a phone. Saying why it cannot be used beats making it look greyer
 	const getSubcategoryPlaceholder = () => {
 		if (filters.category === '') {
 			return 'Select a category first'
