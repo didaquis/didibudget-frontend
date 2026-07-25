@@ -10,6 +10,22 @@ Stack: React 18, React Router 6, Apollo Client 3, Reactstrap (Bootstrap 5), Rech
 
 `AGENTS.md` contains a longer Copilot-oriented walkthrough — consult it for additional detail. The codebase is plain JavaScript.
 
+## Target viewport: 390px
+
+The app is used almost exclusively on a **390px-wide phone viewport** (iPhone 14). This is not a
+majority to weigh against a desktop minority — it is where the app is used.
+
+- Design and verify UI changes at 390px, not as an afterthought at the end.
+- When mobile comfort conflicts with desktop convention or visual consistency, mobile wins.
+- **Check new screens at that width in a real browser before calling them done.** A passing test
+  suite says nothing about whether a value wraps mid-word, whether a control is reachable with a
+  thumb, or whether a table needs sideways dragging.
+
+## UI
+
+The page is dark but form controls are **not**: the app uses default Bootstrap `form-control` /
+`form-select` with no colour overrides. Match that in new forms.
+
 ## Commands
 
 ```bash

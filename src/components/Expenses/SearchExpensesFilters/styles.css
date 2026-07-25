@@ -1,0 +1,4 @@
+/* react-widgets sets "not allowed" on read only inputs, but tapping these opens the calendar */
+.search-expenses-filters .rw-input[readonly] {
+	cursor: pointer;
+}

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { BsCreditCard2Back, BsCartPlus, BsBarChart, BsListUl, BsCalendarCheck, BsCalendar3 } from 'react-icons/bs'
+import { BsCreditCard2Back, BsCartPlus, BsBarChart, BsListUl, BsCalendarCheck, BsCalendar3, BsSearch } from 'react-icons/bs'
 
 
 export const ExpensesDropdown = () => {
@@ -40,6 +40,11 @@ export const ExpensesDropdown = () => {
 				<li>
 					<Link className="dropdown-item py-3" to='/expenses-analysis'>
 						<BsCalendarCheck size='24px' title='Monthly spending breakdown' /><span className="ms-3">Monthly spending breakdown</span>
+					</Link>
+				</li>
+				<li>
+					<Link className="dropdown-item py-3" to='/search-expenses'>
+						<BsSearch size='24px' title='Search spendings' /><span className="ms-3">Search spendings</span>
 					</Link>
 				</li>
 			</ul>
