@@ -1,4 +1,21 @@
-import { parseAmount, startOfDay, endOfDay, buildSearchVariables } from './utils'
+import { parseAmount, startOfDay, endOfDay, buildSearchVariables, isValidAmountInput, buildFiltersSummary } from './utils'
+
+const categories = [
+	{
+		_id: 'category-id-1',
+		name: 'Private vehicles',
+		uuid: 'category-uuid-1',
+		subcategories: [
+			{ _id: 'subcategory-id-1', name: 'Fuel', uuid: 'subcategory-uuid-1' }
+		]
+	},
+	{
+		_id: 'category-id-2',
+		name: 'Home',
+		uuid: 'category-uuid-2',
+		subcategories: []
+	}
+]
 
 const emptyFilters = {
 	category: '',
@@ -127,5 +144,118 @@ describe('buildSearchVariables', () => {
 		const variables = buildSearchVariables(emptyFilters, 1, 25)
 
 		expect(Object.values(variables)).not.toContain('')
+	})
+})
+
+describe('isValidAmountInput', () => {
+	it('should accept an empty value', () => {
+		expect(isValidAmountInput('')).toBe(true)
+	})
+
+	it('should accept a blank value', () => {
+		expect(isValidAmountInput('   ')).toBe(true)
+	})
+
+	it('should accept a value written with a decimal point', () => {
+		expect(isValidAmountInput('23.15')).toBe(true)
+	})
+
+	it('should accept a value written with a decimal comma', () => {
+		expect(isValidAmountInput('23,15')).toBe(true)
+	})
+
+	it('should accept zero', () => {
+		expect(isValidAmountInput('0')).toBe(true)
+	})
+
+	it('should reject a negative number', () => {
+		expect(isValidAmountInput('-5')).toBe(false)
+	})
+
+	it('should reject a value with more than one decimal separator', () => {
+		expect(isValidAmountInput('1.234,56')).toBe(false)
+	})
+
+	it('should reject a value with a stray character', () => {
+		expect(isValidAmountInput('12€')).toBe(false)
+	})
+
+	it('should reject a value that is not a number', () => {
+		expect(isValidAmountInput('abc')).toBe(false)
+	})
+})
+
+describe('buildFiltersSummary', () => {
+	it('should say "All categories" when no category is selected', () => {
+		expect(buildFiltersSummary(emptyFilters, categories)).toBe('All categories')
+	})
+
+	it('should include the category name when a category is selected', () => {
+		const filters = { ...emptyFilters, category: 'category-id-1' }
+
+		expect(buildFiltersSummary(filters, categories)).toBe('Private vehicles')
+	})
+
+	it('should include the category and subcategory names when a subcategory is selected', () => {
+		const filters = { ...emptyFilters, category: 'category-id-1', subcategory: 'subcategory-id-1' }
+
+		expect(buildFiltersSummary(filters, categories)).toBe('Private vehicles - Fuel')
+	})
+
+	it('should omit the date part when neither date is set', () => {
+		expect(buildFiltersSummary(emptyFilters, categories)).not.toContain('to')
+	})
+
+	it('should describe a date range when both dates are set', () => {
+		const filters = { ...emptyFilters, startDate: new Date(2026, 0, 1), endDate: new Date(2026, 5, 30) }
+
+		expect(buildFiltersSummary(filters, categories)).toBe('All categories · 2026-01-01 to 2026-06-30')
+	})
+
+	it('should describe an open-ended start date', () => {
+		const filters = { ...emptyFilters, startDate: new Date(2026, 0, 1) }
+
+		expect(buildFiltersSummary(filters, categories)).toBe('All categories · from 2026-01-01')
+	})
+
+	it('should describe an open-ended end date', () => {
+		const filters = { ...emptyFilters, endDate: new Date(2026, 5, 30) }
+
+		expect(buildFiltersSummary(filters, categories)).toBe('All categories · until 2026-06-30')
+	})
+
+	it('should omit the amount part when neither amount is set', () => {
+		expect(buildFiltersSummary(emptyFilters, categories)).toBe('All categories')
+	})
+
+	it('should describe an amount range when both amounts are set, using the raw strings typed', () => {
+		const filters = { ...emptyFilters, minQuantity: '10', maxQuantity: '20,50' }
+
+		expect(buildFiltersSummary(filters, categories)).toBe('All categories · 10 to 20,50')
+	})
+
+	it('should describe an open-ended minimum amount', () => {
+		const filters = { ...emptyFilters, minQuantity: '10' }
+
+		expect(buildFiltersSummary(filters, categories)).toBe('All categories · from 10')
+	})
+
+	it('should describe an open-ended maximum amount', () => {
+		const filters = { ...emptyFilters, maxQuantity: '20,50' }
+
+		expect(buildFiltersSummary(filters, categories)).toBe('All categories · up to 20,50')
+	})
+
+	it('should join category, date and amount parts together', () => {
+		const filters = {
+			...emptyFilters,
+			category: 'category-id-1',
+			startDate: new Date(2026, 0, 1),
+			endDate: new Date(2026, 5, 30),
+			minQuantity: '10',
+			maxQuantity: '20,50'
+		}
+
+		expect(buildFiltersSummary(filters, categories)).toBe('Private vehicles · 2026-01-01 to 2026-06-30 · 10 to 20,50')
 	})
 })

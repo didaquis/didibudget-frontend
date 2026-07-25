@@ -16,7 +16,7 @@ const DATE_LENGTH = 10
  * @returns {string}
  */
 const getFullName = (category, subcategory, categories) => {
-	const nameOfCategory = getNameOfCategoryOrSubcategory(category, categories)
+	const nameOfCategory = getNameOfCategoryOrSubcategory(category, categories) ?? ''
 	const nameOfSubcategory = getNameOfCategoryOrSubcategory(subcategory, categories)
 
 	return `${nameOfCategory}${(nameOfSubcategory) ? ` - ${nameOfSubcategory}` : ''}`

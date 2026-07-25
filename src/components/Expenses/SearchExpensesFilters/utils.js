@@ -1,3 +1,5 @@
+import { getNameOfCategoryOrSubcategory } from '../utils'
+
 /**
  * Check if a filter value has been filled in by the user.
  * An empty string must never reach the API: the backend treats it as a provided
@@ -93,9 +95,82 @@ const buildSearchVariables = (filters, page, pageSize) => {
 	return variables
 }
 
+/**
+ * Check if the value written by the user for an amount field is valid.
+ * An empty or blank value is valid (an empty filter is valid). Otherwise, the value
+ * must parse to a finite number greater than or equal to zero: the backend rejects
+ * negative amounts.
+ * @param {string} value
+ * @returns {boolean}
+ */
+const isValidAmountInput = (value) => {
+	if (!isFilled(value) || value.trim() === '') {
+		return true
+	}
+
+	const parsed = Number(value.trim().replace(',', '.'))
+
+	return Number.isFinite(parsed) && parsed >= 0
+}
+
+/**
+ * Format a date as YYYY-MM-DD using local time, matching how the results table
+ * renders dates.
+ * @param {Date} date
+ * @returns {string}
+ */
+const formatDateAsLocalISO = (date) => {
+	const year = date.getFullYear()
+	const month = String(date.getMonth() + 1).padStart(2, '0')
+	const day = String(date.getDate()).padStart(2, '0')
+
+	return `${year}-${month}-${day}`
+}
+
+/**
+ * Build a human readable summary of the active filters, meant to be shown as the
+ * label of the collapsed filters header.
+ * @param {Object} filters
+ * @param {Array} categories
+ * @returns {string}
+ */
+const buildFiltersSummary = (filters, categories) => {
+	const parts = []
+
+	if (isFilled(filters.subcategory)) {
+		const categoryName = getNameOfCategoryOrSubcategory(filters.category, categories)
+		const subcategoryName = getNameOfCategoryOrSubcategory(filters.subcategory, categories)
+		parts.push(`${categoryName} - ${subcategoryName}`)
+	} else if (isFilled(filters.category)) {
+		parts.push(getNameOfCategoryOrSubcategory(filters.category, categories))
+	} else {
+		parts.push('All categories')
+	}
+
+	if (isFilled(filters.startDate) && isFilled(filters.endDate)) {
+		parts.push(`${formatDateAsLocalISO(filters.startDate)} to ${formatDateAsLocalISO(filters.endDate)}`)
+	} else if (isFilled(filters.startDate)) {
+		parts.push(`from ${formatDateAsLocalISO(filters.startDate)}`)
+	} else if (isFilled(filters.endDate)) {
+		parts.push(`until ${formatDateAsLocalISO(filters.endDate)}`)
+	}
+
+	if (isFilled(filters.minQuantity) && isFilled(filters.maxQuantity)) {
+		parts.push(`${filters.minQuantity} to ${filters.maxQuantity}`)
+	} else if (isFilled(filters.minQuantity)) {
+		parts.push(`from ${filters.minQuantity}`)
+	} else if (isFilled(filters.maxQuantity)) {
+		parts.push(`up to ${filters.maxQuantity}`)
+	}
+
+	return parts.join(' · ')
+}
+
 export {
 	parseAmount,
 	startOfDay,
 	endOfDay,
-	buildSearchVariables
+	buildSearchVariables,
+	isValidAmountInput,
+	buildFiltersSummary
 }

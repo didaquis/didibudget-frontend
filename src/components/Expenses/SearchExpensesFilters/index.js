@@ -7,6 +7,8 @@ import { DatePicker } from 'react-widgets'
 import { Collapse } from 'reactstrap'
 import 'react-widgets/dist/css/react-widgets.css'
 
+import { buildFiltersSummary, isValidAmountInput } from './utils'
+
 Moment.locale('en', {
 	week: {
 		dow: 1 // Monday is the first day of the week.
@@ -27,6 +29,7 @@ const INITIAL_FILTERS = {
 
 const SELECT_CLASS_NAME = 'form-select bg-dark text-light border-secondary'
 const INPUT_CLASS_NAME = 'form-control bg-dark text-light border-secondary'
+const FILTERS_PANEL_ID = 'searchExpensesFiltersPanel'
 
 export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	const [filters, setFilters] = useState(INITIAL_FILTERS)
@@ -53,6 +56,10 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 		onSearch(filters)
 	}
 
+	const isMinQuantityValid = isValidAmountInput(filters.minQuantity)
+	const isMaxQuantityValid = isValidAmountInput(filters.maxQuantity)
+	const isAmountInvalid = !isMinQuantityValid || !isMaxQuantityValid
+
 	return (
 		<section className="mb-4">
 			<button
@@ -60,11 +67,12 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 				className="btn btn-outline-info w-100 mb-2"
 				onClick={() => setIsOpen(!isOpen)}
 				aria-expanded={isOpen}
+				aria-controls={FILTERS_PANEL_ID}
 			>
-				Filters
+				{buildFiltersSummary(filters, categories)}
 			</button>
 
-			<Collapse isOpen={isOpen}>
+			<Collapse id={FILTERS_PANEL_ID} isOpen={isOpen}>
 				<form onSubmit={onSubmit} className="card bg-dark border-secondary p-3">
 					<div className="mb-3">
 						<label className="form-label text-muted" htmlFor="category">Category</label>
@@ -91,13 +99,13 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 					</div>
 
 					<div className="row">
-						<div className="col-6 mb-3">
+						<div className="col-12 col-sm-6 mb-3">
 							<label className="form-label text-muted" htmlFor="startDate">From</label>
-							<DatePicker id="startDate" value={filters.startDate} onChange={onChangeDate('startDate')} />
+							<DatePicker id="startDate" inputProps={{ 'aria-label': 'From' }} value={filters.startDate} onChange={onChangeDate('startDate')} />
 						</div>
-						<div className="col-6 mb-3">
+						<div className="col-12 col-sm-6 mb-3">
 							<label className="form-label text-muted" htmlFor="endDate">To</label>
-							<DatePicker id="endDate" value={filters.endDate} onChange={onChangeDate('endDate')} />
+							<DatePicker id="endDate" inputProps={{ 'aria-label': 'To' }} value={filters.endDate} onChange={onChangeDate('endDate')} />
 						</div>
 					</div>
 
@@ -110,6 +118,13 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 							<label className="form-label text-muted" htmlFor="maxQuantity">Max amount</label>
 							<input id="maxQuantity" type="text" inputMode="decimal" className={INPUT_CLASS_NAME} value={filters.maxQuantity} onChange={onChangeField('maxQuantity')} />
 						</div>
+						{
+							isAmountInvalid && (
+								<div className="col-12">
+									<small className="d-block text-muted mb-3">Amount must be a number using a decimal point or comma</small>
+								</div>
+							)
+						}
 					</div>
 
 					<div className="row">
@@ -129,7 +144,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 						</div>
 					</div>
 
-					<button type="submit" className="btn btn-info">Search</button>
+					<button type="submit" className="btn btn-info" disabled={isAmountInvalid}>Search</button>
 				</form>
 			</Collapse>
 		</section>

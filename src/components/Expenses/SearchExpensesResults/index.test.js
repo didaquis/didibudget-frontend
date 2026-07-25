@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 
 import { SearchExpensesResults } from './'
 
@@ -57,11 +57,16 @@ describe('SearchExpensesResults', () => {
 		expect(screen.getByText('37 expenses')).toBeInTheDocument()
 	})
 
-	it('should display one breakdown row per entry, with resolved names', () => {
+	it('should display the breakdown rows in the order returned by the backend, with resolved names', () => {
 		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
 
-		expect(screen.getByText('Private vehicles - Fuel · 18')).toBeInTheDocument()
-		expect(screen.getByText('Groceries, personal care products · 19')).toBeInTheDocument()
+		const totalCard = screen.getByText('Total spent').closest('.card')
+		const items = within(totalCard).getAllByRole('listitem')
+
+		expect(items.map(item => item.textContent)).toEqual([
+			'Private vehicles - Fuel · 18612.4 EUR',
+			'Groceries, personal care products · 19672.2 EUR'
+		])
 	})
 
 	it('should display one table row per expense, with the date and the resolved names', () => {
@@ -70,6 +75,27 @@ describe('SearchExpensesResults', () => {
 		expect(screen.getAllByText('2026-02-01')).toHaveLength(2)
 		expect(screen.getByText('64.2 EUR')).toBeInTheDocument()
 		expect(screen.getByText('23.15 EUR')).toBeInTheDocument()
+	})
+
+	it('should render nothing instead of the literal "null" when a category cannot be resolved', () => {
+		const resultWithDeletedCategory = {
+			...searchResult,
+			expenses: [
+				{
+					uuid: 'expense-uuid-3',
+					date: firstOfFebruary,
+					category: 'deleted-category-id',
+					subcategory: null,
+					quantity: 10,
+					currencyISO: 'EUR'
+				}
+			]
+		}
+
+		render(<SearchExpensesResults searchResult={resultWithDeletedCategory} categories={categories} onChangePage={vi.fn()} />)
+
+		expect(screen.getByRole('cell', { name: '' })).toBeInTheDocument()
+		expect(screen.queryByText('null')).not.toBeInTheDocument()
 	})
 
 	it('should not offer any action to delete an expense', () => {

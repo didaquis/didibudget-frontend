@@ -1,16 +1,44 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
 
 import { GetSearchExpenses } from './GetSearchExpenses'
 import { LIST_EXPENSE_CATEGORIES } from '../../gql/queries/expenseCategories'
+import { SEARCH_EXPENSES } from '../../gql/queries/expenses'
+import { buildSearchVariables } from './SearchExpensesFilters/utils'
 
-vi.mock('./SearchExpensesFilters', () => ({
-	SearchExpensesFilters: () => 'filters form'
+const someFilters = vi.hoisted(() => ({
+	category: 'category-id-1',
+	subcategory: 'subcategory-id-1',
+	startDate: null,
+	endDate: null,
+	minQuantity: '',
+	maxQuantity: '',
+	sortBy: 'date',
+	sortDirection: 'desc'
 }))
 
-vi.mock('./SearchExpensesResults', () => ({
-	SearchExpensesResults: () => 'results'
-}))
+vi.mock('./SearchExpensesFilters', () => {
+	const React = require('react')
+	return {
+		SearchExpensesFilters: ({ onSearch }) => React.createElement(
+			'button',
+			{ onClick: () => onSearch(someFilters) },
+			'search'
+		)
+	}
+})
+
+vi.mock('./SearchExpensesResults', () => {
+	const React = require('react')
+	return {
+		SearchExpensesResults: ({ onChangePage }) => React.createElement(
+			'div',
+			null,
+			'results',
+			React.createElement('button', { onClick: () => onChangePage(2) }, 'next page')
+		)
+	}
+})
 
 const categoriesMock = {
 	request: { query: LIST_EXPENSE_CATEGORIES },
@@ -31,6 +59,24 @@ const categoriesMock = {
 	}
 }
 
+const searchResultMock = {
+	expenses: [],
+	pagination: { currentPage: 1, totalPages: 1, totalCount: 0 },
+	totalSum: 0,
+	currencyISO: 'EUR',
+	breakdown: []
+}
+
+const searchExpensesPage1Mock = {
+	request: { query: SEARCH_EXPENSES, variables: buildSearchVariables(someFilters, 1, 25) },
+	result: { data: { searchExpenses: searchResultMock } }
+}
+
+const searchExpensesPage2Mock = {
+	request: { query: SEARCH_EXPENSES, variables: buildSearchVariables(someFilters, 2, 25) },
+	result: { data: { searchExpenses: searchResultMock } }
+}
+
 describe('GetSearchExpenses', () => {
 	it('should display a spinner while the categories are loading', () => {
 		render(
@@ -49,7 +95,7 @@ describe('GetSearchExpenses', () => {
 			</MockedProvider>
 		)
 
-		expect(await screen.findByText('filters form')).toBeInTheDocument()
+		expect(await screen.findByText('search')).toBeInTheDocument()
 	})
 
 	it('should not display any result before the first search', async () => {
@@ -59,7 +105,7 @@ describe('GetSearchExpenses', () => {
 			</MockedProvider>
 		)
 
-		await screen.findByText('filters form')
+		await screen.findByText('search')
 
 		expect(screen.queryByText('results')).not.toBeInTheDocument()
 	})
@@ -77,5 +123,32 @@ describe('GetSearchExpenses', () => {
 		)
 
 		expect(await screen.findByText('Categories are not available')).toBeInTheDocument()
+	})
+
+	it('should run the search with the variables built from the filters and display the results', async () => {
+		render(
+			<MockedProvider mocks={[categoriesMock, searchExpensesPage1Mock]} addTypename={false}>
+				<GetSearchExpenses />
+			</MockedProvider>
+		)
+
+		fireEvent.click(await screen.findByText('search'))
+
+		expect(await screen.findByText('results')).toBeInTheDocument()
+	})
+
+	it('should re-issue the search with the same filters and the new page when the page changes', async () => {
+		render(
+			<MockedProvider mocks={[categoriesMock, searchExpensesPage1Mock, searchExpensesPage2Mock]} addTypename={false}>
+				<GetSearchExpenses />
+			</MockedProvider>
+		)
+
+		fireEvent.click(await screen.findByText('search'))
+		await screen.findByText('results')
+
+		fireEvent.click(screen.getByText('next page'))
+
+		expect(await screen.findByText('results')).toBeInTheDocument()
 	})
 })

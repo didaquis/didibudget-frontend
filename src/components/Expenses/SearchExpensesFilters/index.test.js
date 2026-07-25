@@ -41,13 +41,19 @@ describe('SearchExpensesFilters', () => {
 	})
 
 	it('should reset the selected subcategory when the category changes', () => {
-		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+		const onSearch = vi.fn()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
 
 		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-1' } })
 		fireEvent.change(screen.getByLabelText('Subcategory'), { target: { value: 'subcategory-id-1' } })
 		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-2' } })
 
 		expect(screen.getByLabelText('Subcategory')).toHaveValue('')
+
+		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+
+		expect(onSearch).toHaveBeenCalledWith(expect.objectContaining({ subcategory: '' }))
 	})
 
 	it('should call onSearch with the filters filled in', () => {
@@ -86,7 +92,7 @@ describe('SearchExpensesFilters', () => {
 	it('should collapse the filters after searching, and expand them again on demand', () => {
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		const toggle = screen.getByRole('button', { name: 'Filters' })
+		const toggle = screen.getByRole('button', { name: 'All categories' })
 		expect(toggle).toHaveAttribute('aria-expanded', 'true')
 
 		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
@@ -94,5 +100,74 @@ describe('SearchExpensesFilters', () => {
 
 		fireEvent.click(toggle)
 		expect(toggle).toHaveAttribute('aria-expanded', 'true')
+	})
+
+	it('should point the toggle button at the collapsed region via aria-controls', () => {
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		const toggle = screen.getByRole('button', { name: 'All categories' })
+		const panelId = toggle.getAttribute('aria-controls')
+
+		expect(panelId).toBeTruthy()
+		expect(document.getElementById(panelId)).toBeInTheDocument()
+	})
+
+	it('should summarize the active filters as the toggle button label', () => {
+		const onSearch = vi.fn()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
+
+		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-1' } })
+
+		expect(screen.getByRole('button', { name: 'Private vehicles' })).toBeInTheDocument()
+
+		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+
+		expect(screen.getByRole('button', { name: 'Private vehicles' })).toHaveAttribute('aria-expanded', 'false')
+	})
+
+	it('should give the date fields an accessible name reaching the real input', () => {
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		expect(screen.getByLabelText('From')).toBeInTheDocument()
+		expect(screen.getByLabelText('To')).toBeInTheDocument()
+	})
+
+	it('should reach onSearch with a Date when a start date is typed into the field', () => {
+		const onSearch = vi.fn()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
+
+		fireEvent.change(screen.getByLabelText('From'), { target: { value: '02/01/2026' } })
+		fireEvent.blur(screen.getByLabelText('From'))
+		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+
+		expect(onSearch).toHaveBeenCalledTimes(1)
+		expect(onSearch.mock.calls[0][0].startDate).toBeInstanceOf(Date)
+	})
+
+	it('should disable the Search button and show a message when an amount is not a valid number', () => {
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		fireEvent.change(screen.getByLabelText('Min amount'), { target: { value: 'abc' } })
+
+		expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
+		expect(screen.getByText('Amount must be a number using a decimal point or comma')).toBeInTheDocument()
+	})
+
+	it('should keep the Search button enabled when the amount is a valid number', () => {
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		fireEvent.change(screen.getByLabelText('Min amount'), { target: { value: '23,15' } })
+
+		expect(screen.getByRole('button', { name: 'Search' })).not.toBeDisabled()
+		expect(screen.queryByText('Amount must be a number using a decimal point or comma')).not.toBeInTheDocument()
+	})
+
+	it('should keep the Search button enabled when the amount is left empty', () => {
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		expect(screen.getByRole('button', { name: 'Search' })).not.toBeDisabled()
+		expect(screen.queryByText('Amount must be a number using a decimal point or comma')).not.toBeInTheDocument()
 	})
 })
