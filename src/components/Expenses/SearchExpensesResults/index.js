@@ -22,6 +22,15 @@ const getFullName = (category, subcategory, categories) => {
 	return `${nameOfCategory}${(nameOfSubcategory) ? ` - ${nameOfSubcategory}` : ''}`
 }
 
+/**
+ * Get a number of expenses with its noun, so the figure is never displayed unlabelled
+ * @example
+ * 	getExpensesLabel(1) // '1 expense'
+ * @param {number} count
+ * @returns {string}
+ */
+const getExpensesLabel = (count) => `${count} ${(count === 1) ? 'expense' : 'expenses'}`
+
 export const SearchExpensesResults = ({ searchResult, categories, onChangePage }) => {
 	const { expenses, pagination, totalSum, currencyISO, breakdown } = searchResult
 
@@ -35,14 +44,17 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 				<div className="card-body">
 					<p className="text-muted mb-1">Total spent</p>
 					<p className="h3 text-info">{totalSum} {currencyISO}</p>
-					<p className="text-muted">{pagination.totalCount} expenses</p>
+					<p className="text-muted">{getExpensesLabel(pagination.totalCount)}</p>
 
 					<ul className="list-unstyled mb-0">
 						{
 							breakdown.map(entry => (
-								<li key={`${entry.category}-${entry.subcategory}`} className="d-flex justify-content-between text-light border-top border-secondary py-1">
-									<span>{getFullName(entry.category, entry.subcategory, categories)} · {entry.count}</span>
-									<span>{entry.sum} {currencyISO}</span>
+								<li key={`${entry.category}-${entry.subcategory}`} className="text-light border-top border-secondary py-2">
+									<p className="mb-1">{getFullName(entry.category, entry.subcategory, categories)}</p>
+									<div className="d-flex justify-content-between small">
+										<span className="text-muted">{getExpensesLabel(entry.count)}</span>
+										<span>{entry.sum} {currencyISO}</span>
+									</div>
 								</li>
 							))
 						}

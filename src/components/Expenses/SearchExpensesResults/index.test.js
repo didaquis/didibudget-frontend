@@ -63,10 +63,30 @@ describe('SearchExpensesResults', () => {
 		const totalCard = screen.getByText('Total spent').closest('.card')
 		const items = within(totalCard).getAllByRole('listitem')
 
-		expect(items.map(item => item.textContent)).toEqual([
-			'Private vehicles - Fuel · 18612.4 EUR',
-			'Groceries, personal care products · 19672.2 EUR'
+		expect(items.map(item => item.querySelector('p').textContent)).toEqual([
+			'Private vehicles - Fuel',
+			'Groceries, personal care products'
 		])
+
+		expect(within(items[0]).getByText('18 expenses')).toBeInTheDocument()
+		expect(within(items[0]).getByText('612.4 EUR')).toBeInTheDocument()
+		expect(within(items[1]).getByText('19 expenses')).toBeInTheDocument()
+		expect(within(items[1]).getByText('672.2 EUR')).toBeInTheDocument()
+	})
+
+	it('should label a single expense in the singular', () => {
+		const singleExpenseResult = {
+			...searchResult,
+			pagination: { currentPage: 1, totalPages: 1, totalCount: 1 },
+			breakdown: [
+				{ category: 'category-id-1', subcategory: 'subcategory-id-1', sum: 64.2, count: 1 }
+			]
+		}
+
+		render(<SearchExpensesResults searchResult={singleExpenseResult} categories={categories} onChangePage={vi.fn()} />)
+
+		expect(screen.getAllByText('1 expense')).toHaveLength(2)
+		expect(screen.queryByText('1 expenses')).not.toBeInTheDocument()
 	})
 
 	it('should display one table row per expense, with the date and the resolved names', () => {
