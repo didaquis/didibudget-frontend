@@ -135,6 +135,6 @@ describe('SearchExpensesResults', () => {
 
 		render(<SearchExpensesResults searchResult={emptyResult} categories={categories} onChangePage={vi.fn()} />)
 
-		expect(screen.getByText('No expenses found')).toBeInTheDocument()
+		expect(screen.getByText('No expenses found')).toBeVisible()
 	})
 })

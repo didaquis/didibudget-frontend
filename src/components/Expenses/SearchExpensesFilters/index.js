@@ -71,6 +71,16 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 		inputProps: { 'aria-label': label, readOnly: true, onClick: () => setOpenPicker(field) }
 	})
 
+	// The selector is disabled in two different situations, and Bootstrap's disabled styling is too
+	// subtle to notice on a phone. Saying why it cannot be used beats making it look greyer
+	const getSubcategoryPlaceholder = () => {
+		if (filters.category === '') {
+			return 'Select a category first'
+		}
+
+		return subcategories.length ? 'All subcategories' : 'No subcategories'
+	}
+
 	const onSubmit = (event) => {
 		event.preventDefault()
 		setIsOpen(false)
@@ -110,7 +120,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 					<div className="mb-3">
 						<label className="form-label text-muted" htmlFor="subcategory">Subcategory</label>
 						<select id="subcategory" className={SELECT_CLASS_NAME} value={filters.subcategory} onChange={onChangeField('subcategory')} disabled={!subcategories.length}>
-							<option value="">All subcategories</option>
+							<option value="">{getSubcategoryPlaceholder()}</option>
 							{
 								subcategories.map(subcategory => (
 									<option key={subcategory._id} value={subcategory._id}>{subcategory.name}</option>

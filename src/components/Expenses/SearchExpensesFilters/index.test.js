@@ -29,6 +29,25 @@ describe('SearchExpensesFilters', () => {
 		expect(screen.getByLabelText('Subcategory')).toBeDisabled()
 	})
 
+	it('should say why the subcategory selector cannot be used, in each of the two cases', () => {
+		const mixedCategories = [
+			...categories,
+			{ _id: 'category-id-3', name: 'Public transport', uuid: 'category-uuid-3', subcategories: [] }
+		]
+
+		render(<SearchExpensesFilters categories={mixedCategories} onSearch={vi.fn()} />)
+
+		expect(screen.getByRole('option', { name: 'Select a category first' })).toBeInTheDocument()
+
+		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-3' } })
+
+		expect(screen.getByRole('option', { name: 'No subcategories' })).toBeInTheDocument()
+
+		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-1' } })
+
+		expect(screen.getByRole('option', { name: 'All subcategories' })).toBeInTheDocument()
+	})
+
 	it('should keep the subcategory selector disabled for a category that has no subcategories', () => {
 		const categoriesWithoutSubcategories = [
 			{ _id: 'category-id-3', name: 'Public transport', uuid: 'category-uuid-3', subcategories: [] }
@@ -185,7 +204,7 @@ describe('SearchExpensesFilters', () => {
 		fireEvent.change(screen.getByLabelText('Min amount'), { target: { value: 'abc' } })
 
 		expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
-		expect(screen.getByText('Amount must be a number using a decimal point or comma')).toBeInTheDocument()
+		expect(screen.getByText('Amount must be a number using a decimal point or comma')).toBeVisible()
 	})
 
 	it('should keep the Search button enabled when the amount is a valid number', () => {
