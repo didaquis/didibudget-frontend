@@ -63,21 +63,21 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 			</div>
 
 			<div className="table-responsive">
-				<table className="table table-dark table-hover">
+				<table className="table table-dark table-hover table-sm align-middle">
 					<thead>
 						<tr className="table-info text-dark">
-							<th scope="col">Date</th>
+							<th scope="col" className="text-nowrap">Date</th>
 							<th scope="col">Category &amp; subcategory</th>
-							<th scope="col">Quantity</th>
+							<th scope="col" className="text-nowrap">Quantity</th>
 						</tr>
 					</thead>
 					<tbody>
 						{
 							expenses.map(expense => (
 								<tr key={expense.uuid}>
-									<td>{parseUnixTimestamp(expense.date).substring(0, DATE_LENGTH)}</td>
+									<td className="text-nowrap">{parseUnixTimestamp(expense.date).substring(0, DATE_LENGTH)}</td>
 									<td>{getFullName(expense.category, expense.subcategory, categories)}</td>
-									<td>{expense.quantity} {expense.currencyISO}</td>
+									<td className="text-nowrap">{expense.quantity} {expense.currencyISO}</td>
 								</tr>
 							))
 						}
