@@ -29,6 +29,19 @@ describe('SearchExpensesFilters', () => {
 		expect(screen.getByLabelText('Subcategory')).toBeDisabled()
 	})
 
+	it('should keep the subcategory selector disabled for a category that has no subcategories', () => {
+		const categoriesWithoutSubcategories = [
+			{ _id: 'category-id-3', name: 'Public transport', uuid: 'category-uuid-3', subcategories: [] }
+		]
+
+		render(<SearchExpensesFilters categories={categoriesWithoutSubcategories} onSearch={vi.fn()} />)
+
+		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-3' } })
+
+		expect(screen.getByLabelText('Category')).toHaveValue('category-id-3')
+		expect(screen.getByLabelText('Subcategory')).toBeDisabled()
+	})
+
 	it('should offer the subcategories of the selected category', () => {
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
