@@ -53,25 +53,19 @@ describe('SearchExpensesResults', () => {
 	it('should display the total amount and the number of expenses', () => {
 		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
 
-		expect(screen.getByText('1284.6 EUR')).toBeInTheDocument()
-		expect(screen.getByText('37 expenses')).toBeInTheDocument()
+		expect(screen.getByText('1284.6 EUR')).toBeVisible()
+		expect(screen.getByText('37 expenses')).toBeVisible()
 	})
 
 	it('should display the breakdown rows in the order returned by the backend, with resolved names', () => {
 		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
 
-		const totalCard = screen.getByText('Total spent').closest('.card')
-		const items = within(totalCard).getAllByRole('listitem')
+		const summary = screen.getByRole('region', { name: 'Search summary' })
+		const items = within(summary).getAllByRole('listitem')
 
-		expect(items.map(item => item.querySelector('p').textContent)).toEqual([
-			'Private vehicles - Fuel',
-			'Groceries, personal care products'
-		])
-
-		expect(within(items[0]).getByText('18 expenses')).toBeInTheDocument()
-		expect(within(items[0]).getByText('612.4 EUR')).toBeInTheDocument()
-		expect(within(items[1]).getByText('19 expenses')).toBeInTheDocument()
-		expect(within(items[1]).getByText('672.2 EUR')).toBeInTheDocument()
+		expect(items).toHaveLength(2)
+		expect(items[0]).toHaveTextContent(/^Private vehicles - Fuel18 expenses612\.4 EUR$/)
+		expect(items[1]).toHaveTextContent(/^Groceries, personal care products19 expenses672\.2 EUR$/)
 	})
 
 	it('should label a single expense in the singular', () => {
@@ -93,8 +87,8 @@ describe('SearchExpensesResults', () => {
 		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
 
 		expect(screen.getAllByText('2026-02-01')).toHaveLength(2)
-		expect(screen.getByText('64.2 EUR')).toBeInTheDocument()
-		expect(screen.getByText('23.15 EUR')).toBeInTheDocument()
+		expect(screen.getByText('64.2 EUR')).toBeVisible()
+		expect(screen.getByText('23.15 EUR')).toBeVisible()
 	})
 
 	it('should render nothing instead of the literal "null" when a category cannot be resolved', () => {
@@ -114,7 +108,7 @@ describe('SearchExpensesResults', () => {
 
 		render(<SearchExpensesResults searchResult={resultWithDeletedCategory} categories={categories} onChangePage={vi.fn()} />)
 
-		expect(screen.getByRole('cell', { name: '' })).toBeInTheDocument()
+		expect(screen.getByRole('cell', { name: '' })).toBeVisible()
 		expect(screen.queryByText('null')).not.toBeInTheDocument()
 	})
 

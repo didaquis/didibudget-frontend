@@ -40,7 +40,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 
 	return (
 		<section>
-			<div className="card bg-dark border-info mb-4">
+			<section className="card bg-dark border-info mb-4" aria-label="Search summary">
 				<div className="card-body">
 					<p className="text-muted mb-1">Total spent</p>
 					<p className="h3 text-info">{totalSum} {currencyISO}</p>
@@ -60,7 +60,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 						}
 					</ul>
 				</div>
-			</div>
+			</section>
 
 			<div className="table-responsive">
 				<table className="table table-dark table-hover table-sm align-middle">

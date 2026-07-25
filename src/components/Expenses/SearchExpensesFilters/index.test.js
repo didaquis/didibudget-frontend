@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { SearchExpensesFilters } from './'
 
@@ -22,6 +23,8 @@ const categories = [
 	}
 ]
 
+const categoryWithoutSubcategories = { _id: 'category-id-3', name: 'Public transport', uuid: 'category-uuid-3', subcategories: [] }
+
 describe('SearchExpensesFilters', () => {
 	it('should disable the subcategory selector while no category is selected', () => {
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
@@ -29,42 +32,39 @@ describe('SearchExpensesFilters', () => {
 		expect(screen.getByLabelText('Subcategory')).toBeDisabled()
 	})
 
-	it('should say why the subcategory selector cannot be used, in each of the two cases', () => {
-		const mixedCategories = [
-			...categories,
-			{ _id: 'category-id-3', name: 'Public transport', uuid: 'category-uuid-3', subcategories: [] }
-		]
+	it('should say why the subcategory selector cannot be used, in each of the two cases', async () => {
+		const user = userEvent.setup()
 
-		render(<SearchExpensesFilters categories={mixedCategories} onSearch={vi.fn()} />)
+		render(<SearchExpensesFilters categories={[...categories, categoryWithoutSubcategories]} onSearch={vi.fn()} />)
 
 		expect(screen.getByRole('option', { name: 'Select a category first' })).toBeInTheDocument()
 
-		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-3' } })
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-3')
 
 		expect(screen.getByRole('option', { name: 'No subcategories' })).toBeInTheDocument()
 
-		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-1' } })
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
 
 		expect(screen.getByRole('option', { name: 'All subcategories' })).toBeInTheDocument()
 	})
 
-	it('should keep the subcategory selector disabled for a category that has no subcategories', () => {
-		const categoriesWithoutSubcategories = [
-			{ _id: 'category-id-3', name: 'Public transport', uuid: 'category-uuid-3', subcategories: [] }
-		]
+	it('should keep the subcategory selector disabled for a category that has no subcategories', async () => {
+		const user = userEvent.setup()
 
-		render(<SearchExpensesFilters categories={categoriesWithoutSubcategories} onSearch={vi.fn()} />)
+		render(<SearchExpensesFilters categories={[categoryWithoutSubcategories]} onSearch={vi.fn()} />)
 
-		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-3' } })
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-3')
 
 		expect(screen.getByLabelText('Category')).toHaveValue('category-id-3')
 		expect(screen.getByLabelText('Subcategory')).toBeDisabled()
 	})
 
-	it('should offer the subcategories of the selected category', () => {
+	it('should offer the subcategories of the selected category', async () => {
+		const user = userEvent.setup()
+
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-1' } })
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
 
 		expect(screen.getByLabelText('Subcategory')).not.toBeDisabled()
 		expect(screen.getByRole('option', { name: 'Fuel' })).toBeInTheDocument()
@@ -72,30 +72,32 @@ describe('SearchExpensesFilters', () => {
 		expect(screen.queryByRole('option', { name: 'Electricity bill' })).not.toBeInTheDocument()
 	})
 
-	it('should reset the selected subcategory when the category changes', () => {
+	it('should reset the selected subcategory when the category changes', async () => {
+		const user = userEvent.setup()
 		const onSearch = vi.fn()
 
 		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
 
-		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-1' } })
-		fireEvent.change(screen.getByLabelText('Subcategory'), { target: { value: 'subcategory-id-1' } })
-		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-2' } })
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
+		await user.selectOptions(screen.getByLabelText('Subcategory'), 'subcategory-id-1')
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-2')
 
 		expect(screen.getByLabelText('Subcategory')).toHaveValue('')
 
-		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+		await user.click(screen.getByRole('button', { name: 'Search' }))
 
 		expect(onSearch).toHaveBeenCalledWith(expect.objectContaining({ subcategory: '' }))
 	})
 
-	it('should call onSearch with the filters filled in', () => {
+	it('should call onSearch with the filters filled in', async () => {
+		const user = userEvent.setup()
 		const onSearch = vi.fn()
 
 		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
 
-		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-1' } })
-		fireEvent.change(screen.getByLabelText('Min amount'), { target: { value: '23,15' } })
-		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
+		await user.type(screen.getByLabelText('Min amount'), '23,15')
+		await user.click(screen.getByRole('button', { name: 'Search' }))
 
 		expect(onSearch).toHaveBeenCalledTimes(1)
 		expect(onSearch).toHaveBeenCalledWith({
@@ -110,27 +112,30 @@ describe('SearchExpensesFilters', () => {
 		})
 	})
 
-	it('should search sorted by date descending by default', () => {
+	it('should search sorted by date descending by default', async () => {
+		const user = userEvent.setup()
 		const onSearch = vi.fn()
 
 		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
 
-		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+		await user.click(screen.getByRole('button', { name: 'Search' }))
 
 		expect(onSearch.mock.calls[0][0].sortBy).toBe('date')
 		expect(onSearch.mock.calls[0][0].sortDirection).toBe('desc')
 	})
 
-	it('should collapse the filters after searching, and expand them again on demand', () => {
+	it('should collapse the filters after searching, and expand them again on demand', async () => {
+		const user = userEvent.setup()
+
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
 		const toggle = screen.getByRole('button', { name: 'All categories' })
 		expect(toggle).toHaveAttribute('aria-expanded', 'true')
 
-		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+		await user.click(screen.getByRole('button', { name: 'Search' }))
 		expect(toggle).toHaveAttribute('aria-expanded', 'false')
 
-		fireEvent.click(toggle)
+		await user.click(toggle)
 		expect(toggle).toHaveAttribute('aria-expanded', 'true')
 	})
 
@@ -141,19 +146,19 @@ describe('SearchExpensesFilters', () => {
 		const panelId = toggle.getAttribute('aria-controls')
 
 		expect(panelId).toBeTruthy()
-		expect(document.getElementById(panelId)).toBeInTheDocument()
+		expect(document.getElementById(panelId)).toBeVisible()
 	})
 
-	it('should summarize the active filters as the toggle button label', () => {
-		const onSearch = vi.fn()
+	it('should summarize the active filters as the toggle button label', async () => {
+		const user = userEvent.setup()
 
-		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		fireEvent.change(screen.getByLabelText('Category'), { target: { value: 'category-id-1' } })
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
 
-		expect(screen.getByRole('button', { name: 'Private vehicles' })).toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Private vehicles' })).toBeVisible()
 
-		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+		await user.click(screen.getByRole('button', { name: 'Search' }))
 
 		expect(screen.getByRole('button', { name: 'Private vehicles' })).toHaveAttribute('aria-expanded', 'false')
 	})
@@ -161,8 +166,8 @@ describe('SearchExpensesFilters', () => {
 	it('should give the date fields an accessible name reaching the real input', () => {
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		expect(screen.getByLabelText('From')).toBeInTheDocument()
-		expect(screen.getByLabelText('To')).toBeInTheDocument()
+		expect(screen.getByLabelText('From')).toBeVisible()
+		expect(screen.getByLabelText('To')).toBeVisible()
 	})
 
 	it('should keep the date fields read only, so a typed date can never be silently discarded', () => {
@@ -172,45 +177,49 @@ describe('SearchExpensesFilters', () => {
 		expect(screen.getByLabelText('To')).toHaveAttribute('readonly')
 	})
 
-	it('should open the calendar when a date field is tapped', () => {
+	it('should open the calendar when a date field is tapped', async () => {
+		const user = userEvent.setup()
+
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		expect(document.querySelector('table')).not.toBeInTheDocument()
+		expect(screen.queryByRole('grid')).not.toBeInTheDocument()
 
-		fireEvent.click(screen.getByLabelText('From'))
+		await user.click(screen.getByLabelText('From'))
 
-		expect(document.querySelector('table')).toBeInTheDocument()
+		expect(screen.getByRole('grid')).toBeVisible()
 	})
 
-	it('should reach onSearch with a Date when a day is picked from the calendar', () => {
+	it('should reach onSearch with a Date when a day is picked from the calendar', async () => {
+		const user = userEvent.setup()
 		const onSearch = vi.fn()
 
 		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
 
-		fireEvent.click(screen.getByLabelText('From'))
-
-		const dayCells = document.querySelectorAll('table tbody td')
-		fireEvent.click(dayCells[15])
-
-		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
+		await user.click(screen.getByLabelText('From'))
+		await user.click(screen.getAllByRole('gridcell')[15])
+		await user.click(screen.getByRole('button', { name: 'Search' }))
 
 		expect(onSearch).toHaveBeenCalledTimes(1)
 		expect(onSearch.mock.calls[0][0].startDate).toBeInstanceOf(Date)
 	})
 
-	it('should disable the Search button and show a message when an amount is not a valid number', () => {
+	it('should disable the Search button and show a message when an amount is not a valid number', async () => {
+		const user = userEvent.setup()
+
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		fireEvent.change(screen.getByLabelText('Min amount'), { target: { value: 'abc' } })
+		await user.type(screen.getByLabelText('Min amount'), 'abc')
 
 		expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
 		expect(screen.getByText('Amount must be a number using a decimal point or comma')).toBeVisible()
 	})
 
-	it('should keep the Search button enabled when the amount is a valid number', () => {
+	it('should keep the Search button enabled when the amount is a valid number', async () => {
+		const user = userEvent.setup()
+
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		fireEvent.change(screen.getByLabelText('Min amount'), { target: { value: '23,15' } })
+		await user.type(screen.getByLabelText('Min amount'), '23,15')
 
 		expect(screen.getByRole('button', { name: 'Search' })).not.toBeDisabled()
 		expect(screen.queryByText('Amount must be a number using a decimal point or comma')).not.toBeInTheDocument()

@@ -85,7 +85,7 @@ describe('GetSearchExpenses', () => {
 			</MockedProvider>
 		)
 
-		expect(screen.getByText('Loading...')).toBeInTheDocument()
+		expect(screen.getByText('Loading...')).toBeVisible()
 	})
 
 	it('should display the filters form once the categories are loaded', async () => {
@@ -95,7 +95,7 @@ describe('GetSearchExpenses', () => {
 			</MockedProvider>
 		)
 
-		expect(await screen.findByText('search')).toBeInTheDocument()
+		expect(await screen.findByText('search')).toBeVisible()
 	})
 
 	it('should not display any result before the first search', async () => {
@@ -122,7 +122,7 @@ describe('GetSearchExpenses', () => {
 			</MockedProvider>
 		)
 
-		expect(await screen.findByText('Categories are not available')).toBeInTheDocument()
+		expect(await screen.findByText('Categories are not available')).toBeVisible()
 	})
 
 	it('should run the search with the variables built from the filters and display the results', async () => {
@@ -134,7 +134,7 @@ describe('GetSearchExpenses', () => {
 
 		fireEvent.click(await screen.findByText('search'))
 
-		expect(await screen.findByText('results')).toBeInTheDocument()
+		expect(await screen.findByText('results')).toBeVisible()
 	})
 
 	it('should re-issue the search with the same filters and the new page when the page changes', async () => {
@@ -149,6 +149,6 @@ describe('GetSearchExpenses', () => {
 
 		fireEvent.click(screen.getByText('next page'))
 
-		expect(await screen.findByText('results')).toBeInTheDocument()
+		expect(await screen.findByText('results')).toBeVisible()
 	})
 })
