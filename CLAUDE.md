@@ -21,6 +21,11 @@ majority to weigh against a desktop minority — it is where the app is used.
   suite says nothing about whether a value wraps mid-word, whether a control is reachable with a
   thumb, or whether a table needs sideways dragging.
 
+## UI
+
+The page is dark but form controls are **not**: the app uses default Bootstrap `form-control` /
+`form-select` with no colour overrides. Match that in new forms.
+
 ## Commands
 
 ```bash
