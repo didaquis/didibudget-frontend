@@ -1,21 +1,13 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import Moment from 'moment'
-import momentLocalizer from 'react-widgets-moment'
 import { DatePicker } from 'react-widgets'
 import { Collapse } from 'reactstrap'
 import 'react-widgets/dist/css/react-widgets.css'
 import './styles.css'
 
+import '../../../utils/dateLocalizer'
 import { buildFiltersSummary, isValidAmountInput } from './utils'
-
-Moment.locale('en', {
-	week: {
-		dow: 1 // Monday is the first day of the week.
-	}
-})
-momentLocalizer()
 
 const INITIAL_FILTERS = {
 	category: '',
