@@ -6,6 +6,7 @@ import momentLocalizer from 'react-widgets-moment'
 import { DatePicker } from 'react-widgets'
 import { Collapse } from 'reactstrap'
 import 'react-widgets/dist/css/react-widgets.css'
+import './styles.css'
 
 import { buildFiltersSummary, isValidAmountInput } from './utils'
 
@@ -27,13 +28,16 @@ const INITIAL_FILTERS = {
 	sortDirection: 'desc'
 }
 
-const SELECT_CLASS_NAME = 'form-select bg-dark text-light border-secondary'
-const INPUT_CLASS_NAME = 'form-control bg-dark text-light border-secondary'
+const SELECT_CLASS_NAME = 'form-select'
+const INPUT_CLASS_NAME = 'form-control'
 const FILTERS_PANEL_ID = 'searchExpensesFiltersPanel'
+// Matches how the results table renders dates, and avoids the ambiguity of a day/month order
+const DATE_FORMAT = 'YYYY-MM-DD'
 
 export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	const [filters, setFilters] = useState(INITIAL_FILTERS)
 	const [isOpen, setIsOpen] = useState(true)
+	const [openPicker, setOpenPicker] = useState(null)
 
 	const selectedCategory = categories.find(category => category._id === filters.category)
 	const subcategories = selectedCategory ? selectedCategory.subcategories : []
@@ -49,6 +53,23 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	const onChangeDate = (field) => (date) => {
 		setFilters({ ...filters, [field]: date })
 	}
+
+	// The date inputs are read only so a typed date can never be silently discarded:
+	// the calendar is the only way in, and tapping the field opens it
+	const onTogglePicker = (field) => (isPickerOpen) => {
+		setOpenPicker(isPickerOpen ? field : null)
+	}
+
+	const getDatePickerProps = (field, label) => ({
+		id: field,
+		format: DATE_FORMAT,
+		value: filters[field],
+		onChange: onChangeDate(field),
+		// react-widgets types this prop as false | 'date' | 'time'; a boolean silently never opens
+		open: openPicker === field ? 'date' : false,
+		onToggle: onTogglePicker(field),
+		inputProps: { 'aria-label': label, readOnly: true, onClick: () => setOpenPicker(field) }
+	})
 
 	const onSubmit = (event) => {
 		event.preventDefault()
@@ -73,7 +94,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 			</button>
 
 			<Collapse id={FILTERS_PANEL_ID} isOpen={isOpen}>
-				<form onSubmit={onSubmit} className="card bg-dark border-secondary p-3">
+				<form onSubmit={onSubmit} className="card bg-dark border-secondary p-3 search-expenses-filters">
 					<div className="mb-3">
 						<label className="form-label text-muted" htmlFor="category">Category</label>
 						<select id="category" className={SELECT_CLASS_NAME} value={filters.category} onChange={onChangeCategory}>
@@ -101,11 +122,11 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 					<div className="row">
 						<div className="col-12 col-sm-6 mb-3">
 							<label className="form-label text-muted" htmlFor="startDate">From</label>
-							<DatePicker id="startDate" inputProps={{ 'aria-label': 'From' }} value={filters.startDate} onChange={onChangeDate('startDate')} />
+							<DatePicker {...getDatePickerProps('startDate', 'From')} />
 						</div>
 						<div className="col-12 col-sm-6 mb-3">
 							<label className="form-label text-muted" htmlFor="endDate">To</label>
-							<DatePicker id="endDate" inputProps={{ 'aria-label': 'To' }} value={filters.endDate} onChange={onChangeDate('endDate')} />
+							<DatePicker {...getDatePickerProps('endDate', 'To')} />
 						</div>
 					</div>
 

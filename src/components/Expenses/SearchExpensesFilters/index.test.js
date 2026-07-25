@@ -133,13 +133,33 @@ describe('SearchExpensesFilters', () => {
 		expect(screen.getByLabelText('To')).toBeInTheDocument()
 	})
 
-	it('should reach onSearch with a Date when a start date is typed into the field', () => {
+	it('should keep the date fields read only, so a typed date can never be silently discarded', () => {
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		expect(screen.getByLabelText('From')).toHaveAttribute('readonly')
+		expect(screen.getByLabelText('To')).toHaveAttribute('readonly')
+	})
+
+	it('should open the calendar when a date field is tapped', () => {
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		expect(document.querySelector('table')).not.toBeInTheDocument()
+
+		fireEvent.click(screen.getByLabelText('From'))
+
+		expect(document.querySelector('table')).toBeInTheDocument()
+	})
+
+	it('should reach onSearch with a Date when a day is picked from the calendar', () => {
 		const onSearch = vi.fn()
 
 		render(<SearchExpensesFilters categories={categories} onSearch={onSearch} />)
 
-		fireEvent.change(screen.getByLabelText('From'), { target: { value: '02/01/2026' } })
-		fireEvent.blur(screen.getByLabelText('From'))
+		fireEvent.click(screen.getByLabelText('From'))
+
+		const dayCells = document.querySelectorAll('table tbody td')
+		fireEvent.click(dayCells[15])
+
 		fireEvent.click(screen.getByRole('button', { name: 'Search' }))
 
 		expect(onSearch).toHaveBeenCalledTimes(1)
