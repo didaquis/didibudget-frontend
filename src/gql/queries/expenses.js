@@ -140,3 +140,38 @@ query GetExpensesMonthlyAverage($excludedCategoryTypes: [CategoryType!]) {
 }
 ${EXPENSES_MONTHLY_AVERAGE_FIELDS}
 `
+
+export const SEARCH_EXPENSES = gql`
+query SearchExpenses($category: ID, $subcategory: ID, $startDate: String, $endDate: String, $minQuantity: Float, $maxQuantity: Float, $sortBy: ExpenseSortField, $sortDirection: SortDirection, $page: Int!, $pageSize: Int!) {
+	searchExpenses(
+		category: $category
+		subcategory: $subcategory
+		startDate: $startDate
+		endDate: $endDate
+		minQuantity: $minQuantity
+		maxQuantity: $maxQuantity
+		sortBy: $sortBy
+		sortDirection: $sortDirection
+		page: $page
+		pageSize: $pageSize
+	) {
+		expenses {
+			...ExpenseFields
+		}
+		pagination {
+			currentPage
+			totalPages
+			totalCount
+		}
+		totalSum
+		currencyISO
+		breakdown {
+			category
+			subcategory
+			sum
+			count
+		}
+	}
+}
+${EXPENSE_FIELDS}
+`
