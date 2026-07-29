@@ -1,4 +1,36 @@
-import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, getFirstParamFromSplat, getLocalDay, getTimeAgo } from './utils'
+import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, getFirstParamFromSplat, startOfDay, endOfDay, getLocalDay, getTimeAgo } from './utils'
+
+describe('startOfDay and endOfDay', () => {
+	test('should move a date to the very beginning of its day', () => {
+		const result = startOfDay(new Date(2026, 1, 1, 17, 42, 13, 500))
+
+		expect(result.getFullYear()).toBe(2026)
+		expect(result.getMonth()).toBe(1)
+		expect(result.getDate()).toBe(1)
+		expect(result.getHours()).toBe(0)
+		expect(result.getMinutes()).toBe(0)
+		expect(result.getSeconds()).toBe(0)
+		expect(result.getMilliseconds()).toBe(0)
+	})
+
+	test('should move a date to the very end of its day', () => {
+		const result = endOfDay(new Date(2026, 3, 30, 8, 5, 0, 0))
+
+		expect(result.getDate()).toBe(30)
+		expect(result.getHours()).toBe(23)
+		expect(result.getMinutes()).toBe(59)
+		expect(result.getSeconds()).toBe(59)
+		expect(result.getMilliseconds()).toBe(999)
+	})
+
+	test('should not mutate the date received', () => {
+		const original = new Date(2026, 1, 1, 17, 42, 13, 500)
+
+		startOfDay(original)
+
+		expect(original.getHours()).toBe(17)
+	})
+})
 
 describe('parseUnixTimestamp', () => {
 	test('should return a valid date in a human readable format', () => {

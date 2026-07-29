@@ -20,6 +20,7 @@ const InsertMonthlyBalance = lazy(() => import('./pages/MonthlyBalance/InsertMon
 const ViewMonthlyBalance = lazy(() => import('./pages/MonthlyBalance/ViewMonthlyBalance'))
 const MonthlyBalanceAdministration = lazy(() => import('./pages/MonthlyBalance/MonthlyBalanceAdministration'))
 const SavingsAndInvestments = lazy(() => import('./pages/SavingsAndInvestments/SavingsAndInvestments'))
+const AddExpense = lazy(() => import('./pages/Expenses/AddExpense'))
 const ExpenseCategorySelector = lazy(() => import('./pages/Expenses/ExpenseCategorySelector'))
 const InsertExpense = lazy(() => import('./pages/Expenses/InsertExpense'))
 const ViewExpenses = lazy(() => import('./pages/Expenses/ViewExpenses'))
@@ -77,6 +78,11 @@ export const App = () => {
 									<Route path='/savings-and-investments' element={
 										<RequireAuth>
 											<SavingsAndInvestments />
+										</RequireAuth>
+									} />
+									<Route path='/add-expense' element={
+										<RequireAuth>
+											<AddExpense />
 										</RequireAuth>
 									} />
 									<Route path='/list-expense-categories' element={

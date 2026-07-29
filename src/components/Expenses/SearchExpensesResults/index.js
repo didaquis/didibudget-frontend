@@ -68,7 +68,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 						<tr className="table-info text-dark">
 							<th scope="col" className="text-nowrap">Date</th>
 							<th scope="col">Category &amp; subcategory</th>
-							<th scope="col" className="text-nowrap">Quantity</th>
+							<th scope="col" className="text-nowrap">Amount</th>
 						</tr>
 					</thead>
 					<tbody>

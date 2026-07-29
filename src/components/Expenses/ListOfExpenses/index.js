@@ -37,7 +37,7 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 						<tr className="table-info text-dark">
 							<th scope="col">Date</th>
 							<th scope="col">Category & subcategory</th>
-							<th scope="col">Quantity</th>
+							<th scope="col">Amount</th>
 							<th scope="col">Actions</th>
 						</tr>
 					</thead>
