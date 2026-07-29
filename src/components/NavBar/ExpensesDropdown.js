@@ -18,11 +18,6 @@ export const ExpensesDropdown = () => {
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/list-expense-categories'>
-						<BsCartPlus size='24px' title='Add spending (classic)' /><span className="ms-3">Add spending (classic)</span>
-					</Link>
-				</li>
-				<li>
 					<Link className="dropdown-item py-3" to='/view-expenses'>
 						<BsBarChart size='24px' title='Spending overview' /><span className="ms-3">Spending overview</span>
 					</Link>

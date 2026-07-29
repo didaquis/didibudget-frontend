@@ -1,4 +1,4 @@
-import { validateLoginForm, validateRegisterForm, validateRegisterMonthlyBalanceForm, validateRegisterExpenseForm, validateAddExpenseForm } from './validations'
+import { validateLoginForm, validateRegisterForm, validateRegisterMonthlyBalanceForm, validateExpenseAmountAndDate, validateAddExpenseForm } from './validations'
 
 describe('validateLoginForm', () => {
 	test('should return false if email is not valid', () => {
@@ -237,13 +237,13 @@ describe('validateRegisterMonthlyBalanceForm', () => {
 	})
 })
 
-describe('validateRegisterExpenseForm', () => {
+describe('validateExpenseAmountAndDate', () => {
 	test('should return false if quantity is not valid', () => {
 		const listOfNotValidQuantities = [null, undefined, 'foo', 56.0007777, 0, 0.00, -0.00, '0', '0.00', '-0.00', -42]
 		const date = new Date()
 
 		listOfNotValidQuantities.forEach(quantity => {
-			const result = validateRegisterExpenseForm(quantity, date)
+			const result = validateExpenseAmountAndDate(quantity, date)
 
 			expect(result).toBe(false)
 		})
@@ -254,7 +254,7 @@ describe('validateRegisterExpenseForm', () => {
 		const listOfNotValidDates = ['foo', null, undefined, 123.45]
 
 		listOfNotValidDates.forEach(date => {
-			const result = validateRegisterExpenseForm(quantity, date)
+			const result = validateExpenseAmountAndDate(quantity, date)
 
 			expect(result).toBe(false)
 		})
@@ -281,7 +281,7 @@ describe('validateRegisterExpenseForm', () => {
 		]
 
 		listOfValidExpenses.forEach(expense => {
-			const result = validateRegisterExpenseForm(expense.quantity, expense.date)
+			const result = validateExpenseAmountAndDate(expense.quantity, expense.date)
 
 			expect(result).toBe(true)
 		})
