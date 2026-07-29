@@ -16,6 +16,13 @@ const isSameDay = (one, other) => {
 	return startOfDay(one).getTime() === startOfDay(other).getTime()
 }
 
+const formatDate = (date) => {
+	const year = date.getFullYear()
+	const month = String(date.getMonth() + 1).padStart(2, '0')
+	const day = String(date.getDate()).padStart(2, '0')
+	return `${year}-${month}-${day}`
+}
+
 export const DateQuickSelector = ({ value, onChange }) => {
 	const [isCalendarOpen, setIsCalendarOpen] = useState(false)
 
@@ -23,6 +30,8 @@ export const DateQuickSelector = ({ value, onChange }) => {
 
 	const yesterday = startOfDay(new Date())
 	yesterday.setDate(yesterday.getDate() - 1)
+
+	const isOtherDate = !isSameDay(value, today) && !isSameDay(value, yesterday)
 
 	const chooseDate = (date) => {
 		setIsCalendarOpen(false)
@@ -50,12 +59,12 @@ export const DateQuickSelector = ({ value, onChange }) => {
 				</button>
 				<button
 					type="button"
-					className="btn btn-sm btn-outline-info"
+					className={`btn btn-sm ${isOtherDate ? 'btn-info' : 'btn-outline-info'}`}
 					aria-expanded={isCalendarOpen}
 					onClick={() => setIsCalendarOpen(!isCalendarOpen)}
 				>
 					<BsCalendar3 size={'16px'} className={'me-2'} />
-					Pick another date
+					{isOtherDate ? formatDate(value) : 'Pick another date'}
 				</button>
 			</div>
 

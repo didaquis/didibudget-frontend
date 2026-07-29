@@ -50,4 +50,24 @@ describe('DateQuickSelector', () => {
 
 		expect(screen.getByRole('grid')).toBeVisible()
 	})
+
+	it('shows the formatted date on the third button when the value is neither today nor yesterday', () => {
+		const otherDay = startOfDay(new Date())
+		otherDay.setDate(otherDay.getDate() - 5)
+		const year = otherDay.getFullYear()
+		const month = String(otherDay.getMonth() + 1).padStart(2, '0')
+		const day = String(otherDay.getDate()).padStart(2, '0')
+		const expectedLabel = `${year}-${month}-${day}`
+
+		render(<DateQuickSelector value={otherDay} onChange={vi.fn()} />)
+
+		expect(screen.queryByRole('button', { name: 'Pick another date' })).not.toBeInTheDocument()
+		expect(screen.getByRole('button', { name: expectedLabel })).toHaveClass('btn-info')
+	})
+
+	it('leaves the third button reading Pick another date and unselected when the value is today', () => {
+		render(<DateQuickSelector value={today} onChange={vi.fn()} />)
+
+		expect(screen.getByRole('button', { name: 'Pick another date' })).toHaveClass('btn-outline-info')
+	})
 })
