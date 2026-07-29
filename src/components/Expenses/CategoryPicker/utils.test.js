@@ -1,4 +1,4 @@
-import { flattenCategories, filterLeaves, isSameLeaf } from './utils'
+import { flattenCategories, filterLeaves, isSameLeaf, buildLeaf } from './utils'
 
 const categories = [
 	{
@@ -77,6 +77,39 @@ describe('filterLeaves', () => {
 
 	it('returns nothing when the filter is empty', () => {
 		expect(filterLeaves(leaves, '   ')).toStrictEqual([])
+	})
+})
+
+describe('buildLeaf', () => {
+	it('builds a leaf for a category without a subcategory', () => {
+		const category = { _id: 'category-id-2', name: 'Taxes', emojis: ['🏛'] }
+
+		expect(buildLeaf(category, null)).toStrictEqual({
+			key: 'category-id-2',
+			label: 'Taxes',
+			categoryID: 'category-id-2',
+			subcategoryID: null,
+			emojis: ['🏛']
+		})
+	})
+
+	it('defaults missing emojis to an empty array', () => {
+		const category = { _id: 'category-id-3', name: 'No emojis' }
+
+		expect(buildLeaf(category, null).emojis).toStrictEqual([])
+	})
+
+	it('merges category and subcategory emojis without repeats', () => {
+		const category = { _id: 'category-id-1', name: 'Private vehicles', emojis: ['🚙'] }
+		const subcategory = { _id: 'subcategory-id-1', name: 'Fuel', emojis: ['🚙', '⛽️'] }
+
+		expect(buildLeaf(category, subcategory)).toStrictEqual({
+			key: 'category-id-1-subcategory-id-1',
+			label: 'Private vehicles › Fuel',
+			categoryID: 'category-id-1',
+			subcategoryID: 'subcategory-id-1',
+			emojis: ['🚙', '⛽️']
+		})
 	})
 })
 

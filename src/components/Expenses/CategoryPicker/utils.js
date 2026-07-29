@@ -1,4 +1,4 @@
-const buildLeaf = (category, subcategory) => {
+export const buildLeaf = (category, subcategory) => {
 	if (!subcategory) {
 		return {
 			key: category._id,

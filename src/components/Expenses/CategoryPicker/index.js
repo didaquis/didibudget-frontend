@@ -4,7 +4,7 @@ import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs'
 
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 
-import { flattenCategories, filterLeaves, isSameLeaf } from './utils'
+import { flattenCategories, filterLeaves, isSameLeaf, buildLeaf } from './utils'
 
 const buildFrequentLeaf = (frequent) => {
 	if (!frequent.subcategory) {
@@ -122,25 +122,23 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 									const isExpanded = Boolean(expandedItems[category.uuid])
 
 									if (!hasSubcategories) {
+										const leaf = buildLeaf(category, null)
+
 										return (
 											<li className="list-group-item bg-dark border-info px-0" key={category.uuid}>
 												<button
 													type="button"
 													className="btn btn-link text-start text-info p-0"
-													onClick={() => chooseLeaf({
-														key: category._id,
-														label: category.name,
-														categoryID: category._id,
-														subcategoryID: null,
-														emojis: category.emojis ?? []
-													})}
+													onClick={() => chooseLeaf(leaf)}
 												>
 													{category.name}
 												</button>
-												<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
+												<EmojiListFromCategoryOrSubcategory emojis={leaf.emojis} />
 											</li>
 										)
 									}
+
+									const categoryLeaf = buildLeaf(category, null)
 
 									return (
 										<li className="list-group-item bg-dark border-info px-0" key={category.uuid}>
@@ -157,30 +155,28 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 												}
 												{category.name}
 											</button>
-											<EmojiListFromCategoryOrSubcategory emojis={category.emojis} />
+											<EmojiListFromCategoryOrSubcategory emojis={categoryLeaf.emojis} />
 
 											{
 												isExpanded && (
 													<ul className="list-group list-group-flush ms-3">
 														{
-															category.subcategories.map(subcategory => (
-																<li className="list-group-item bg-dark border-info px-0" key={subcategory.uuid}>
-																	<button
-																		type="button"
-																		className="btn btn-link text-start text-info p-0"
-																		onClick={() => chooseLeaf({
-																			key: `${category._id}-${subcategory._id}`,
-																			label: `${category.name} › ${subcategory.name}`,
-																			categoryID: category._id,
-																			subcategoryID: subcategory._id,
-																			emojis: [...new Set([...(category.emojis ?? []), ...(subcategory.emojis ?? [])])]
-																		})}
-																	>
-																		{subcategory.name}
-																	</button>
-																	<EmojiListFromCategoryOrSubcategory emojis={subcategory.emojis} />
-																</li>
-															))
+															category.subcategories.map(subcategory => {
+																const subcategoryLeaf = buildLeaf(category, subcategory)
+
+																return (
+																	<li className="list-group-item bg-dark border-info px-0" key={subcategory.uuid}>
+																		<button
+																			type="button"
+																			className="btn btn-link text-start text-info p-0"
+																			onClick={() => chooseLeaf(subcategoryLeaf)}
+																		>
+																			{subcategory.name}
+																		</button>
+																		<EmojiListFromCategoryOrSubcategory emojis={subcategoryLeaf.emojis} />
+																	</li>
+																)
+															})
 														}
 													</ul>
 												)
