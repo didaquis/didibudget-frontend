@@ -82,7 +82,7 @@ export const RegisterExpenseForm = ({ selectedCategoryID, selectedSubcategoryID,
 						</div>
 
 						<div className="row mb-4">
-							<label htmlFor="inputQuantityRegisterExpenseForm" className="text-light">Quantity <span className="text-danger">*</span></label>
+							<label htmlFor="inputQuantityRegisterExpenseForm" className="text-light">Amount <span className="text-danger">*</span></label>
 							<input
 								disabled={isDisabled}
 								inputMode="decimal"
