@@ -39,6 +39,9 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
+		if (!isValid) {
+			return
+		}
 		setIsDisabled(true)
 		setError(null)
 		setSavedMessage(null)

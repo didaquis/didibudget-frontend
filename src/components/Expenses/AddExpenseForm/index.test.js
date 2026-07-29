@@ -121,5 +121,47 @@ describe('AddExpenseForm', () => {
 
 		expect(await screen.findByRole('alert')).toBeVisible()
 		expect(screen.getByLabelText(/Amount/)).toHaveValue(12.4)
+		expect(screen.getByRole('button', { name: 'Change' })).toBeVisible()
+		expect(screen.getByRole('button', { name: 'Save expense' })).toBeEnabled()
+	})
+
+	it('resets the date to today after saving', async () => {
+		const user = userEvent.setup()
+		const yesterday = new Date()
+		yesterday.setHours(0, 0, 0, 0)
+		yesterday.setDate(yesterday.getDate() - 1)
+
+		const yesterdayMutation = {
+			request: {
+				query: REGISTER_EXPENSE,
+				variables: {
+					category: 'category-id-2',
+					subcategory: null,
+					quantity: 12.4,
+					date: yesterday
+				}
+			},
+			result: {
+				data: {
+					registerExpense: {
+						quantity: 12.4,
+						date: String(yesterday.getTime()),
+						currencyISO: 'EUR',
+						uuid: 'expense-uuid-1'
+					}
+				}
+			}
+		}
+
+		renderForm([yesterdayMutation])
+
+		await user.click(screen.getByRole('button', { name: 'Yesterday' }))
+		await user.type(screen.getByLabelText(/Amount/), '12.40')
+		await user.click(screen.getAllByRole('button', { name: /Taxes/ })[0])
+		await user.click(screen.getByRole('button', { name: 'Save expense' }))
+
+		await screen.findByRole('status')
+
+		expect(screen.getByRole('button', { name: 'Today', pressed: true })).toBeVisible()
 	})
 })
