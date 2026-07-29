@@ -26,3 +26,16 @@ query GetExpenseCategoryById($category: ID!) {
 }
 ${EXPENSE_CATEGORY_FIELDS}
 `
+
+export const GET_MOST_USED_EXPENSE_CATEGORIES = gql`
+query GetMostUsedExpenseCategories($days: Int, $limit: Int) {
+	getMostUsedExpenseCategories(days: $days, limit: $limit) {
+		category
+		categoryName
+		categoryEmojis
+		subcategory
+		subcategoryName
+		subcategoryEmojis
+	}
+}
+`
