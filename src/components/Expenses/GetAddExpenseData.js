@@ -19,6 +19,10 @@ export const GetAddExpenseData = () => {
 	if (categories.loading || frequent.loading) { return <Spinner /> }
 	if (categories.error) { return <ErrorAlert errorMessage={categories.error.message} /> }
 
+	if (frequent.error) {
+		console.error('Failed to load the most used expense categories:', frequent.error.message)
+	}
+
 	const frequentCategories = frequent.error ? [] : frequent.data.getMostUsedExpenseCategories
 
 	return <AddExpenseForm categories={categories.data.getExpenseCategory} frequentCategories={frequentCategories} />

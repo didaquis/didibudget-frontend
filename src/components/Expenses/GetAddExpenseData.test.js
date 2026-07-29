@@ -66,6 +66,8 @@ describe('GetAddExpenseData', () => {
 	})
 
 	it('still renders the form when the frequent categories fail', async () => {
+		const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+
 		render(
 			<MockedProvider mocks={[categoriesMock, failingFrequentMock]} addTypename={false}>
 				<GetAddExpenseData />
@@ -73,6 +75,9 @@ describe('GetAddExpenseData', () => {
 		)
 
 		expect(await screen.findByText('form with 0 frequent categories')).toBeVisible()
+		expect(consoleError).toHaveBeenCalledWith(expect.stringContaining('most used expense categories'), 'No frequent categories available')
+
+		consoleError.mockRestore()
 	})
 
 	it('shows an error when the categories fail', async () => {
