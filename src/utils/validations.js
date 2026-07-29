@@ -110,12 +110,12 @@ const validateRegisterMonthlyBalanceForm = (balance, year, month) => {
 }
 
 /**
- * Validate the registration of expense
+ * Validate the amount and date of an expense
  * @param {Integer|Float|string} quantity - Zero is not a valid value
  * @param {Date} date
  * @returns {boolean}         		- True means data is valid
  */
-const validateRegisterExpenseForm = (quantity, date) => {
+const validateExpenseAmountAndDate = (quantity, date) => {
 	let dataIsValid = true
 
 	if (!quantity || Math.sign(quantity) !== 1) {
@@ -145,7 +145,7 @@ const validateAddExpenseForm = (quantity, date, selectedCategory) => {
 		return false
 	}
 
-	return validateRegisterExpenseForm(quantity, date)
+	return validateExpenseAmountAndDate(quantity, date)
 }
 
 
@@ -153,6 +153,6 @@ export {
 	validateLoginForm,
 	validateRegisterForm,
 	validateRegisterMonthlyBalanceForm,
-	validateRegisterExpenseForm,
+	validateExpenseAmountAndDate,
 	validateAddExpenseForm,
 }

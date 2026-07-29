@@ -80,22 +80,6 @@ const trimDecimalPoints = (number) => {
 }
 
 /**
- * This function splits a string and returns all the characters it finds before a slash
- * @example
- *   getFirstParamFromSplat('5ea7113296474318495ba3e5/discarted/text') //'5ea7113296474318495ba3e5'
- *   getFirstParamFromSplat('') // null
- * @param {string} splat
- * @returns {string|null}
- */
-const getFirstParamFromSplat = (splat) => {
-	if (!splat) {
-		return null
-	}
-
-	return splat.split('/')[0]
-}
-
-/**
  * Get a copy of a date placed at the very beginning of its day
  * @param {Date} date
  * @returns {Date}
@@ -196,7 +180,6 @@ export {
 	firstDayOfNextMonth,
 	firstDayOfTheMonth,
 	trimDecimalPoints,
-	getFirstParamFromSplat,
 	startOfDay,
 	endOfDay,
 	getLocalDay,
