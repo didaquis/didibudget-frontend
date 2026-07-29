@@ -146,7 +146,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 										<li className="list-group-item bg-dark border-info px-0" key={category.uuid}>
 											<button
 												type="button"
-												className="btn btn-link text-start text-info p-0"
+												className="btn btn-link text-start text-info p-0 d-inline-flex align-items-center"
 												onClick={() => toggleItem(category.uuid)}
 												aria-expanded={isExpanded}
 											>

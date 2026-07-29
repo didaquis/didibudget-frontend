@@ -54,7 +54,7 @@ export const DateQuickSelector = ({ value, onChange }) => {
 				</button>
 				<button
 					type="button"
-					className={`btn btn-sm ${isOtherDate ? 'btn-info' : 'btn-outline-info'}`}
+					className={`btn btn-sm d-inline-flex align-items-center ${isOtherDate ? 'btn-info' : 'btn-outline-info'}`}
 					aria-expanded={isCalendarOpen}
 					onClick={() => setIsCalendarOpen(!isCalendarOpen)}
 				>
