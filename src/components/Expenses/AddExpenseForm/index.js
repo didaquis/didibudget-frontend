@@ -73,6 +73,17 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 			<div className="row justify-content-center">
 				<form className="col-md-8" onSubmit={handleSubmit}>
 
+					{
+						// Feedback sits above every field on purpose: saving reopens the category picker,
+						// so anything below it gets pushed off a 390px screen.
+					}
+					{
+						savedMessage && <p className="alert alert-success py-3 text-center mb-4" role="status">{savedMessage}</p>
+					}
+					{
+						error && <ErrorAlert errorMessage={error} />
+					}
+
 					<div className="mb-4">
 						<label htmlFor="inputAmountAddExpenseForm" className="text-light">Amount <span className="text-danger">*</span></label>
 						<input
@@ -112,15 +123,6 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 						<SubmitButtonHelper mustShowHelper={!isValid} />
 					</div>
 				</form>
-
-				<div className="col-md-8">
-					{
-						savedMessage && <p className="alert alert-success py-3 text-center my-4" role="status">{savedMessage}</p>
-					}
-					{
-						error && <ErrorAlert errorMessage={error} />
-					}
-				</div>
 			</div>
 		</div>
 	)
