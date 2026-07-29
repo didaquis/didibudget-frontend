@@ -49,11 +49,13 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 	if (!isOpen) {
 		const selectedLeaf = leaves.find(leaf => isSameLeaf(leaf, selected))
+		const label = selected.label ?? selectedLeaf?.label ?? 'Unknown category'
+		const emojis = selected.emojis ?? selectedLeaf?.emojis ?? []
 
 		return (
 			<div className="d-flex align-items-center justify-content-between border border-info rounded p-2">
 				<span className="text-light">
-					{selectedLeaf ? selectedLeaf.label : ''} <EmojiListFromCategoryOrSubcategory emojis={selectedLeaf?.emojis ?? []} />
+					{label} <EmojiListFromCategoryOrSubcategory emojis={emojis} />
 				</span>
 				<button type="button" className="btn btn-sm btn-outline-info" onClick={() => setIsChanging(true)}>Change</button>
 			</div>
@@ -221,7 +223,9 @@ CategoryPicker.propTypes = {
 	).isRequired,
 	selected: PropTypes.shape({
 		categoryID: PropTypes.string.isRequired,
-		subcategoryID: PropTypes.string
+		subcategoryID: PropTypes.string,
+		label: PropTypes.string,
+		emojis: PropTypes.arrayOf(PropTypes.string)
 	}),
 	onSelect: PropTypes.func.isRequired
 }

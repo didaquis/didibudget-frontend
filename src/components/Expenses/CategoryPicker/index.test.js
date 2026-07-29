@@ -107,6 +107,12 @@ describe('CategoryPicker', () => {
 		expect(screen.queryByLabelText('Filter categories')).not.toBeInTheDocument()
 	})
 
+	it('shows a readable name when the selected pair is not in the catalogue', () => {
+		renderPicker({ selected: { categoryID: 'missing-category', subcategoryID: null, label: 'Deleted category', emojis: ['🗑'] } })
+
+		expect(screen.getByText('Deleted category')).toBeVisible()
+	})
+
 	it('reopens the list when change is pressed, without losing the current selection', async () => {
 		const user = userEvent.setup()
 		renderPicker({ selected: { categoryID: 'category-id-1', subcategoryID: 'subcategory-id-1' } })
