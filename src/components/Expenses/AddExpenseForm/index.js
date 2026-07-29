@@ -9,14 +9,11 @@ import { DateQuickSelector } from '../../DateQuickSelector'
 import { CategoryPicker } from '../CategoryPicker'
 
 import { validateAddExpenseForm } from '../../../utils/validations'
+import { startOfDay } from '../../../utils/utils'
 
 import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
 
-const startOfToday = () => {
-	const date = new Date()
-	date.setHours(0, 0, 0, 0)
-	return date
-}
+const startOfToday = () => startOfDay(new Date())
 
 export const AddExpenseForm = ({ categories, frequentCategories }) => {
 	const [isDisabled, setIsDisabled] = useState(false)

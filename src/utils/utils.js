@@ -96,6 +96,28 @@ const getFirstParamFromSplat = (splat) => {
 }
 
 /**
+ * Get a copy of a date placed at the very beginning of its day
+ * @param {Date} date
+ * @returns {Date}
+ */
+const startOfDay = (date) => {
+	const result = new Date(date)
+	result.setHours(0, 0, 0, 0)
+	return result
+}
+
+/**
+ * Get a copy of a date placed at the very end of its day
+ * @param {Date} date
+ * @returns {Date}
+ */
+const endOfDay = (date) => {
+	const result = new Date(date)
+	result.setHours(23, 59, 59, 999)
+	return result
+}
+
+/**
  * Return the local day-of-month (1-31) as an integer according to the user's current time zone.
  *
  * @example
@@ -175,6 +197,8 @@ export {
 	firstDayOfTheMonth,
 	trimDecimalPoints,
 	getFirstParamFromSplat,
+	startOfDay,
+	endOfDay,
 	getLocalDay,
 	getTimeAgo
 }

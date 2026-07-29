@@ -1,4 +1,5 @@
 import { getNameOfCategoryOrSubcategory } from '../utils'
+import { startOfDay, endOfDay } from '../../../utils/utils'
 
 /**
  * Check if a filter value has been filled in by the user.
@@ -24,28 +25,6 @@ const parseAmount = (value) => {
 	const parsed = Number(value.trim().replace(',', '.'))
 
 	return Number.isFinite(parsed) ? parsed : undefined
-}
-
-/**
- * Get a copy of a date placed at the very beginning of its day
- * @param {Date} date
- * @returns {Date}
- */
-const startOfDay = (date) => {
-	const result = new Date(date)
-	result.setHours(0, 0, 0, 0)
-	return result
-}
-
-/**
- * Get a copy of a date placed at the very end of its day
- * @param {Date} date
- * @returns {Date}
- */
-const endOfDay = (date) => {
-	const result = new Date(date)
-	result.setHours(23, 59, 59, 999)
-	return result
 }
 
 /**
@@ -168,8 +147,6 @@ const buildFiltersSummary = (filters, categories) => {
 
 export {
 	parseAmount,
-	startOfDay,
-	endOfDay,
 	buildSearchVariables,
 	isValidAmountInput,
 	buildFiltersSummary

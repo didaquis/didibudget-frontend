@@ -5,12 +5,7 @@ import { BsCalendar3 } from 'react-icons/bs'
 import 'react-widgets/dist/css/react-widgets.css'
 
 import '../../utils/dateLocalizer'
-
-const startOfDay = (date) => {
-	const copy = new Date(date)
-	copy.setHours(0, 0, 0, 0)
-	return copy
-}
+import { startOfDay } from '../../utils/utils'
 
 const isSameDay = (one, other) => {
 	return startOfDay(one).getTime() === startOfDay(other).getTime()

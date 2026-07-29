@@ -2,12 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { DateQuickSelector } from './index'
-
-const startOfDay = (date) => {
-	const copy = new Date(date)
-	copy.setHours(0, 0, 0, 0)
-	return copy
-}
+import { startOfDay } from '../../utils/utils'
 
 const today = startOfDay(new Date())
 

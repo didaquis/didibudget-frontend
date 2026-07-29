@@ -4,6 +4,7 @@ import { MockedProvider } from '@apollo/client/testing'
 
 import { AddExpenseForm } from './index'
 import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
+import { startOfDay } from '../../../utils/utils'
 
 const categories = [
 	{
@@ -26,11 +27,7 @@ const frequentCategories = [
 	}
 ]
 
-const startOfToday = () => {
-	const date = new Date()
-	date.setHours(0, 0, 0, 0)
-	return date
-}
+const startOfToday = () => startOfDay(new Date())
 
 const successfulMutation = {
 	request: {
@@ -127,8 +124,7 @@ describe('AddExpenseForm', () => {
 
 	it('resets the date to today after saving', async () => {
 		const user = userEvent.setup()
-		const yesterday = new Date()
-		yesterday.setHours(0, 0, 0, 0)
+		const yesterday = startOfDay(new Date())
 		yesterday.setDate(yesterday.getDate() - 1)
 
 		const yesterdayMutation = {
