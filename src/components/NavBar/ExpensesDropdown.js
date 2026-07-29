@@ -13,8 +13,13 @@ export const ExpensesDropdown = () => {
 				<li><span className="dropdown-item-text text-muted">Spendings</span></li>
 				<li><hr className="dropdown-divider" /></li>
 				<li>
-					<Link className="dropdown-item py-3" to='/list-expense-categories'>
+					<Link className="dropdown-item py-3" to='/add-expense'>
 						<BsCartPlus size='24px' title='Add spending' /><span className="ms-3">Add spending</span>
+					</Link>
+				</li>
+				<li>
+					<Link className="dropdown-item py-3" to='/list-expense-categories'>
+						<BsCartPlus size='24px' title='Add spending (classic)' /><span className="ms-3">Add spending (classic)</span>
 					</Link>
 				</li>
 				<li>
