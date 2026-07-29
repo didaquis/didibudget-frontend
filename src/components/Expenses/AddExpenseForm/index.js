@@ -57,7 +57,7 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 		}
 
 		registerExpense({ variables }).then(() => {
-			setSavedMessage(`Saved: ${quantity} EUR · ${label}`)
+			setSavedMessage(`Saved: ${quantity.toFixed(2)} EUR · ${label}`)
 			setAmount('')
 			setDate(startOfToday())
 			setSelected(null)
@@ -103,13 +103,13 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 						<small className="form-text text-muted d-block">Use decimal point as decimal separator. Negative numbers are not valid</small>
 					</div>
 
-					<div className="mb-4">
-						<p className="text-light mb-1">Date <span className="text-danger">*</span></p>
+					<div className="mb-4" role="group" aria-labelledby="addExpenseFormDateLabel">
+						<p id="addExpenseFormDateLabel" className="text-light mb-1">Date <span className="text-danger">*</span></p>
 						<DateQuickSelector value={date} onChange={setDate} />
 					</div>
 
-					<div className="mb-4">
-						<p className="text-light mb-1">Category <span className="text-danger">*</span></p>
+					<div className="mb-4" role="group" aria-labelledby="addExpenseFormCategoryLabel">
+						<p id="addExpenseFormCategoryLabel" className="text-light mb-1">Category <span className="text-danger">*</span></p>
 						<CategoryPicker
 							categories={categories}
 							frequentCategories={frequentCategories}

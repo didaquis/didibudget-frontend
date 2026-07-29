@@ -92,7 +92,7 @@ describe('AddExpenseForm', () => {
 		await user.click(screen.getAllByRole('button', { name: /Taxes/ })[0])
 		await user.click(screen.getByRole('button', { name: 'Save expense' }))
 
-		expect(await screen.findByRole('status')).toHaveTextContent('Saved: 12.4 EUR · Taxes')
+		expect(await screen.findByRole('status')).toHaveTextContent('Saved: 12.40 EUR · Taxes')
 	})
 
 	it('clears the amount and the category after saving', async () => {
