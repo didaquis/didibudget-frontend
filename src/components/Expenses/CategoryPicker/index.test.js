@@ -109,12 +109,12 @@ describe('CategoryPicker', () => {
 
 	it('reopens the list when change is pressed, without losing the current selection', async () => {
 		const user = userEvent.setup()
-		renderPicker({ selected: { categoryID: 'category-id-2', subcategoryID: null } })
+		renderPicker({ selected: { categoryID: 'category-id-1', subcategoryID: 'subcategory-id-1' } })
 
 		await user.click(screen.getByRole('button', { name: 'Change' }))
 
 		expect(screen.getByLabelText('Filter categories')).toBeVisible()
-		expect(screen.getByRole('button', { name: /Taxes/ })).toBeVisible()
+		expect(screen.getByRole('button', { name: /Private vehicles › Fuel/ })).toHaveClass('btn-info')
 	})
 
 	it('reports the leaf when a subcategory is chosen from the accordion', async () => {
@@ -167,7 +167,8 @@ describe('CategoryPicker', () => {
 		expect(screen.getByLabelText('Filter categories')).toBeVisible()
 	})
 
-	it('renders without crashing when a category has no emojis field', () => {
+	it('renders without crashing when a category has no emojis field', async () => {
+		const user = userEvent.setup()
 		const categoriesWithoutEmojis = [
 			{
 				_id: 'category-id-3',
@@ -182,5 +183,9 @@ describe('CategoryPicker', () => {
 		renderPicker({ categories: categoriesWithoutEmojis, frequentCategories: [] })
 
 		expect(screen.getByRole('button', { name: /No emoji category/ })).toBeVisible()
+
+		await user.click(screen.getByRole('button', { name: /No emoji category/ }))
+
+		expect(screen.getByRole('button', { name: /No emoji subcategory/ })).toBeVisible()
 	})
 })

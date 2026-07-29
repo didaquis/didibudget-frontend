@@ -99,6 +99,13 @@ describe('buildLeaf', () => {
 		expect(buildLeaf(category, null).emojis).toStrictEqual([])
 	})
 
+	it('defaults missing emojis to an empty array for subcategory leaves', () => {
+		const category = { _id: 'category-id-3', name: 'No emojis' }
+		const subcategory = { _id: 'subcategory-id-3', name: 'No emoji subcategory' }
+
+		expect(buildLeaf(category, subcategory).emojis).toStrictEqual([])
+	})
+
 	it('merges category and subcategory emojis without repeats', () => {
 		const category = { _id: 'category-id-1', name: 'Private vehicles', emojis: ['🚙'] }
 		const subcategory = { _id: 'subcategory-id-1', name: 'Fuel', emojis: ['🚙', '⛽️'] }
