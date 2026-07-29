@@ -1,4 +1,4 @@
-import { validateLoginForm, validateRegisterForm, validateRegisterMonthlyBalanceForm, validateRegisterExpenseForm } from './validations'
+import { validateLoginForm, validateRegisterForm, validateRegisterMonthlyBalanceForm, validateRegisterExpenseForm, validateAddExpenseForm } from './validations'
 
 describe('validateLoginForm', () => {
 	test('should return false if email is not valid', () => {
@@ -285,5 +285,26 @@ describe('validateRegisterExpenseForm', () => {
 
 			expect(result).toBe(true)
 		})
+	})
+})
+
+describe('validateAddExpenseForm', () => {
+	const aDate = new Date('2026-07-29T10:00:00')
+	const aCategory = { categoryID: 'category-id-1', subcategoryID: null }
+
+	test('should return true if amount, date and category are valid', () => {
+		expect(validateAddExpenseForm('12.40', aDate, aCategory)).toBe(true)
+	})
+
+	test('should return false if no category is selected', () => {
+		expect(validateAddExpenseForm('12.40', aDate, null)).toBe(false)
+	})
+
+	test('should return false if the amount is negative', () => {
+		expect(validateAddExpenseForm('-12.40', aDate, aCategory)).toBe(false)
+	})
+
+	test('should return false if there is no date', () => {
+		expect(validateAddExpenseForm('12.40', null, aCategory)).toBe(false)
 	})
 })

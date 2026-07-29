@@ -133,10 +133,26 @@ const validateRegisterExpenseForm = (quantity, date) => {
 	return dataIsValid
 }
 
+/**
+ * Validate the add expense form with category selection
+ * @param {Integer|Float|string} quantity - Zero is not a valid value
+ * @param {Date} date
+ * @param {Object|null} selectedCategory - Category object with categoryID and optional subcategoryID
+ * @returns {boolean}         		- True means data is valid
+ */
+const validateAddExpenseForm = (quantity, date, selectedCategory) => {
+	if (!selectedCategory || !selectedCategory.categoryID) {
+		return false
+	}
+
+	return validateRegisterExpenseForm(quantity, date)
+}
+
 
 export {
 	validateLoginForm,
 	validateRegisterForm,
 	validateRegisterMonthlyBalanceForm,
 	validateRegisterExpenseForm,
+	validateAddExpenseForm,
 }
