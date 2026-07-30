@@ -42,7 +42,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 		<section>
 			<section className="card bg-dark border-info mb-4" aria-label="Search summary">
 				<div className="card-body">
-					<p className="text-muted mb-1">Total spent</p>
+					<p className="text-light mb-1">Total spent</p>
 					<p className="h3 text-info">{totalSum} {currencyISO}</p>
 					<p className="text-muted">{getExpensesLabel(pagination.totalCount)}</p>
 

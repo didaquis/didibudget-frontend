@@ -90,7 +90,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 			<Collapse id={FILTERS_PANEL_ID} isOpen={isOpen}>
 				<form onSubmit={onSubmit} className="card bg-dark border-secondary p-3 search-expenses-filters">
 					<div className="mb-3">
-						<label className="form-label text-muted" htmlFor="category">Category</label>
+						<label className="form-label text-light" htmlFor="category">Category</label>
 						<select id="category" className={SELECT_CLASS_NAME} value={filters.category} onChange={onChangeCategory}>
 							<option value="">All categories</option>
 							{
@@ -102,7 +102,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 					</div>
 
 					<div className="mb-3">
-						<label className="form-label text-muted" htmlFor="subcategory">Subcategory</label>
+						<label className="form-label text-light" htmlFor="subcategory">Subcategory</label>
 						<select id="subcategory" className={SELECT_CLASS_NAME} value={filters.subcategory} onChange={onChangeField('subcategory')} disabled={!subcategories.length}>
 							<option value="">{getSubcategoryPlaceholder()}</option>
 							{
@@ -115,22 +115,22 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 
 					<div className="row">
 						<div className="col-12 col-sm-6 mb-3">
-							<label className="form-label text-muted" htmlFor="startDate">From</label>
+							<label className="form-label text-light" htmlFor="startDate">From</label>
 							<DatePicker {...getDatePickerProps('startDate', 'From')} />
 						</div>
 						<div className="col-12 col-sm-6 mb-3">
-							<label className="form-label text-muted" htmlFor="endDate">To</label>
+							<label className="form-label text-light" htmlFor="endDate">To</label>
 							<DatePicker {...getDatePickerProps('endDate', 'To')} />
 						</div>
 					</div>
 
 					<div className="row">
 						<div className="col-6 mb-3">
-							<label className="form-label text-muted" htmlFor="minQuantity">Min amount</label>
+							<label className="form-label text-light" htmlFor="minQuantity">Min amount</label>
 							<input id="minQuantity" type="text" inputMode="decimal" className={INPUT_CLASS_NAME} value={filters.minQuantity} onChange={onChangeField('minQuantity')} />
 						</div>
 						<div className="col-6 mb-3">
-							<label className="form-label text-muted" htmlFor="maxQuantity">Max amount</label>
+							<label className="form-label text-light" htmlFor="maxQuantity">Max amount</label>
 							<input id="maxQuantity" type="text" inputMode="decimal" className={INPUT_CLASS_NAME} value={filters.maxQuantity} onChange={onChangeField('maxQuantity')} />
 						</div>
 						{
@@ -144,14 +144,14 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 
 					<div className="row">
 						<div className="col-6 mb-3">
-							<label className="form-label text-muted" htmlFor="sortBy">Sort by</label>
+							<label className="form-label text-light" htmlFor="sortBy">Sort by</label>
 							<select id="sortBy" className={SELECT_CLASS_NAME} value={filters.sortBy} onChange={onChangeField('sortBy')}>
 								<option value="date">Date</option>
 								<option value="quantity">Amount</option>
 							</select>
 						</div>
 						<div className="col-6 mb-3">
-							<label className="form-label text-muted" htmlFor="sortDirection">Order</label>
+							<label className="form-label text-light" htmlFor="sortDirection">Order</label>
 							<select id="sortDirection" className={SELECT_CLASS_NAME} value={filters.sortDirection} onChange={onChangeField('sortDirection')}>
 								<option value="desc">Descending</option>
 								<option value="asc">Ascending</option>
