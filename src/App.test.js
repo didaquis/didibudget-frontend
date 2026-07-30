@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 import { MockedProvider } from '@apollo/client/testing'
 import { InMemoryCache } from '@apollo/client'
@@ -17,6 +18,22 @@ const renderAppAt = (path, authValue = { isAuth: false, userData: {} }) => {
 		</MockedProvider>
 	)
 }
+
+const LAZY_ROUTE_PATHS = [
+	'/',
+	'/register-monthly-balance',
+	'/view-monthly-balance',
+	'/monthly-balance-administration',
+	'/savings-and-investments',
+	'/add-expense',
+	'/view-expenses',
+	'/expenses-administration',
+	'/expenses-analysis',
+	'/monthly-expense-overview',
+	'/yearly-expense-overview',
+	'/search-expenses',
+	'/user-administration'
+]
 
 describe('App routing', () => {
 	it('shows the not found screen for an unknown url', () => {
@@ -37,9 +54,30 @@ describe('App routing', () => {
 		expect(screen.getByRole('button', { name: 'Log in' })).toBeVisible()
 	})
 
-	it('shows the spinner while a lazy screen is loading', () => {
+	// Must run before any other test renders '/': React.lazy resolves its import once and never
+	// suspends again, so a later run of this test would find Home already loaded.
+	it('shows the spinner while navigating from a screen without a lazy boundary to one with one', async () => {
+		const user = userEvent.setup()
+		renderAppAt('/login')
+
+		await user.click(screen.getByRole('link', { name: 'Home' }))
+
+		expect(await screen.findByText('Loading...')).toBeVisible()
+	})
+
+	it('shows the spinner while a lazy screen is loading', async () => {
 		renderAppAt('/')
 
 		expect(screen.getByText('Loading...')).toBeVisible()
+
+		expect(await screen.findByText('Welcome to didibudget!')).toBeVisible()
+	})
+
+	describe.each(LAZY_ROUTE_PATHS)('lazy route %s', (path) => {
+		it('shows the spinner while the screen is loading', () => {
+			renderAppAt(path, { isAuth: true, userData: { isAdmin: true } })
+
+			expect(screen.getByText('Loading...')).toBeVisible()
+		})
 	})
 })

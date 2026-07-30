@@ -42,7 +42,7 @@ export const App = () => {
 										<Home />
 									</LazyRoute>
 								} />
-								<Route path="*" element={<Page404 />} />
+								<Route path='*' element={<Page404 />} />
 
 								{
 									// Restricted routes for non-authenticated users
