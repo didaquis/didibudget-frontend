@@ -21,11 +21,11 @@ describe('LoginForm', () => {
 			</MockedProvider>
 		)
 		const emailInput = screen.getByRole('textbox', { name: /Email/i })
-		const passwordInput = screen.getByPlaceholderText(/password/)
+		const passwordInput = screen.getByLabelText(/Password/i)
 		const submitButton = screen.getByRole('button', { name: 'Log in' })
 
-		expect(emailInput.value).toBe('')
-		expect(passwordInput.value).toBe('')
+		expect(emailInput).toHaveValue('')
+		expect(passwordInput).toHaveValue('')
 		expect(submitButton).toBeDisabled()
 
 		await user.type(emailInput, 'example@mail.com')
@@ -37,6 +37,42 @@ describe('LoginForm', () => {
 		await user.clear(emailInput)
 		await user.clear(passwordInput)
 		expect(submitButton).toBeDisabled()
+	})
+
+	it('should expose the autofill hints that password managers rely on', () => {
+		const activateAuth = vi.fn()
+
+		render(
+			<MockedProvider mocks={[]} cache={customCache}>
+				<LoginForm activateAuth={activateAuth} />
+			</MockedProvider>
+		)
+
+		const emailInput = screen.getByRole('textbox', { name: /Email/i })
+		const passwordInput = screen.getByLabelText(/Password/i)
+
+		expect(emailInput).toHaveAttribute('type', 'email')
+		expect(emailInput).toHaveAttribute('autocomplete', 'username')
+		expect(passwordInput).toHaveAttribute('autocomplete', 'current-password')
+	})
+
+	it('should enable the button for a stored password that would not pass the registration rules', async () => {
+		const user = userEvent.setup()
+		const activateAuth = vi.fn()
+
+		render(
+			<MockedProvider mocks={[]} cache={customCache}>
+				<LoginForm activateAuth={activateAuth} />
+			</MockedProvider>
+		)
+
+		const emailInput = screen.getByRole('textbox', { name: /Email/i })
+		const passwordInput = screen.getByLabelText(/Password/i)
+
+		await user.type(emailInput, 'example@mail.com')
+		await user.type(passwordInput, 'w~mb(3Qz)tf')
+
+		expect(screen.getByRole('button', { name: 'Log in' })).not.toBeDisabled()
 	})
 
 	it('should call to activateAuth method passing a token as argument if credentials are valid', async () => {
@@ -68,7 +104,7 @@ describe('LoginForm', () => {
 		)
 
 		const emailInput = screen.getByRole('textbox', { name: /Email/i })
-		const passwordInput = screen.getByPlaceholderText(/password/)
+		const passwordInput = screen.getByLabelText(/Password/i)
 		const submitButton = screen.getByRole('button', { name: 'Log in' })
 
 		await user.type(emailInput, 'example@mail.com')
@@ -109,7 +145,7 @@ describe('LoginForm', () => {
 		)
 
 		const emailInput = screen.getByRole('textbox', { name: /Email/i })
-		const passwordInput = screen.getByPlaceholderText(/password/)
+		const passwordInput = screen.getByLabelText(/Password/i)
 		const submitButton = screen.getByRole('button', { name: 'Log in' })
 
 		await user.type(emailInput, 'example@mail.com')

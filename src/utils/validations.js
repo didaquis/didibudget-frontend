@@ -20,7 +20,9 @@ const regexPassword = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!*^?+
 const regexQuantityOfMoney = new RegExp(/^\s*-?\d+(\.\d{1,2})?\s*$/)
 
 /**
- * Validate the login form data. This is useful for reduce traffic to backend
+ * Validate the login form data. This is useful for reduce traffic to backend.
+ * Password strength is not checked here: rejecting a stored password that does not
+ * match the current rules would lock out password managers. Only the backend decides
  * @param {string} email
  * @param {string} password
  * @returns {boolean}                - True means data is valid
@@ -36,9 +38,6 @@ const validateLoginForm = (email, password) => {
 		dataIsValid = false
 	}
 
-	if (!regexPassword.test(password)) {
-		dataIsValid = false
-	}
 	return dataIsValid
 }
 
