@@ -159,7 +159,11 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 						</div>
 					</div>
 
-					<button type="submit" className="btn btn-info" disabled={isAmountInvalid}>Search</button>
+					<div className="row">
+						<div className="col-12 col-sm-6 col-md-4">
+							<button type="submit" className="btn btn-outline-info w-100" disabled={isAmountInvalid}>Search</button>
+						</div>
+					</div>
 				</form>
 			</Collapse>
 		</section>
