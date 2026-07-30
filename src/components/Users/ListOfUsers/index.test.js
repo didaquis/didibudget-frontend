@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ListOfUsers } from './'
 
@@ -49,38 +49,43 @@ describe('ListOfUsers', () => {
 
   it('renders table headers', () => {
     renderList()
-    expect(screen.getByText('Email')).toBeInTheDocument()
-    expect(screen.getByText('Role')).toBeInTheDocument()
-    expect(screen.getByText('Status')).toBeInTheDocument()
-    expect(screen.getByText('Registered')).toBeInTheDocument()
-    expect(screen.getByText('Last login')).toBeInTheDocument()
+    const table = within(screen.getByRole('table'))
+    expect(table.getByText('Email')).toBeInTheDocument()
+    expect(table.getByText('Role')).toBeInTheDocument()
+    expect(table.getByText('Status')).toBeInTheDocument()
+    expect(table.getByText('Registered')).toBeInTheDocument()
+    expect(table.getByText('Last login')).toBeInTheDocument()
   })
 
-  it('renders all users', () => {
+  it('renders all users in table and cards', () => {
     renderList()
-    expect(screen.getByText('alice@example.com')).toBeInTheDocument()
-    expect(screen.getByText('bob@example.com')).toBeInTheDocument()
-    expect(screen.getByText('carol@example.com')).toBeInTheDocument()
+    expect(screen.getAllByText('alice@example.com')).toHaveLength(2)
+    expect(screen.getAllByText('bob@example.com')).toHaveLength(2)
+    expect(screen.getAllByText('carol@example.com')).toHaveLength(2)
   })
 
-  it('shows Admin badge for admin users', () => {
+  it('shows Admin badge in table', () => {
     renderList()
-    expect(screen.getAllByText('Admin')).toHaveLength(2)
+    const table = within(screen.getByRole('table'))
+    expect(table.getAllByText('Admin')).toHaveLength(2)
   })
 
-  it('shows User badge for non-admin users', () => {
+  it('shows User badge in table', () => {
     renderList()
-    expect(screen.getByText('User')).toBeInTheDocument()
+    const table = within(screen.getByRole('table'))
+    expect(table.getByText('User')).toBeInTheDocument()
   })
 
-  it('shows Active badge for active users', () => {
+  it('shows Active badge in table', () => {
     renderList()
-    expect(screen.getAllByText('Active')).toHaveLength(2)
+    const table = within(screen.getByRole('table'))
+    expect(table.getAllByText('Active')).toHaveLength(2)
   })
 
-  it('shows Inactive badge for inactive users', () => {
+  it('shows Inactive badge in table', () => {
     renderList()
-    expect(screen.getByText('Inactive')).toBeInTheDocument()
+    const table = within(screen.getByRole('table'))
+    expect(table.getByText('Inactive')).toBeInTheDocument()
   })
 
   it('filters users by email search', async () => {
@@ -88,7 +93,7 @@ describe('ListOfUsers', () => {
     renderList()
     const input = screen.getByPlaceholderText('Search by email...')
     await user.type(input, 'alice')
-    expect(screen.getByText('alice@example.com')).toBeInTheDocument()
+    expect(screen.getAllByText('alice@example.com')).toHaveLength(2)
     expect(screen.queryByText('bob@example.com')).not.toBeInTheDocument()
     expect(screen.queryByText('carol@example.com')).not.toBeInTheDocument()
   })
@@ -98,7 +103,7 @@ describe('ListOfUsers', () => {
     renderList()
     const input = screen.getByPlaceholderText('Search by email...')
     await user.type(input, 'BOB')
-    expect(screen.getByText('bob@example.com')).toBeInTheDocument()
+    expect(screen.getAllByText('bob@example.com')).toHaveLength(2)
     expect(screen.queryByText('alice@example.com')).not.toBeInTheDocument()
   })
 
@@ -112,12 +117,13 @@ describe('ListOfUsers', () => {
 
   it('renders relative time for registration and last login', () => {
     renderList()
-    expect(screen.getAllByText(/ago/)).toHaveLength(6)
+    expect(screen.getAllByText(/ago/)).toHaveLength(12)
   })
 
   it('renders empty state when no users provided', () => {
     renderList([])
-    expect(screen.getByText('Email')).toBeInTheDocument()
+    const table = within(screen.getByRole('table'))
+    expect(table.getByText('Email')).toBeInTheDocument()
   })
 
   it('starts polling on mount', () => {
