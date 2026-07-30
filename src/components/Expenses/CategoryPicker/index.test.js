@@ -90,6 +90,15 @@ describe('CategoryPicker', () => {
 		expect(screen.getByRole('button', { name: /Fuel/ })).toBeVisible()
 	})
 
+	it('exposes the subcategories of an expanded category as a named list', async () => {
+		const user = userEvent.setup()
+		renderPicker({ frequentCategories: [] })
+
+		await user.click(screen.getByRole('button', { name: /Private vehicles/ }))
+
+		expect(screen.getByRole('list', { name: 'Subcategories of Private vehicles' })).toBeVisible()
+	})
+
 	it('flattens the list into matching leaves while filtering', async () => {
 		const user = userEvent.setup()
 		renderPicker({ frequentCategories: [] })

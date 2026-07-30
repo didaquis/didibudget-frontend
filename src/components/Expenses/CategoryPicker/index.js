@@ -161,7 +161,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 											{
 												isExpanded && (
-													<ul className="list-group list-group-flush ms-3">
+													<ul className="list-group list-group-flush ms-3" aria-label={`Subcategories of ${category.name}`}>
 														{
 															category.subcategories.map(subcategory => {
 																const subcategoryLeaf = buildLeaf(category, subcategory)
