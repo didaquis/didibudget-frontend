@@ -17,4 +17,10 @@ describe('PageTitle', () => {
 
 		expect(nodeTitle.localName).toBe('h2')
 	})
+
+	it('names the browser tab after the screen', () => {
+		render(<PageTitle text='Spending list' />)
+
+		expect(document.title).toBe('Spending list | didibudget')
+	})
 })

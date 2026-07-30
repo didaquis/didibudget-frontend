@@ -74,6 +74,24 @@ describe('App routing', () => {
 		expect(await screen.findByText('Welcome to didibudget!')).toBeVisible()
 	})
 
+	describe('browser tab title', () => {
+		it('names the tab after the current screen', () => {
+			renderAppAt('/register')
+
+			expect(document.title).toBe('Create an account | didibudget')
+		})
+
+		it('drops the previous screen name when a visitor returns to the landing screen', async () => {
+			const user = userEvent.setup()
+			renderAppAt('/register')
+
+			await user.click(screen.getByRole('link', { name: 'Home' }))
+			await screen.findByText('Welcome to didibudget!')
+
+			expect(document.title).toBe('didibudget')
+		})
+	})
+
 	describe.each(LAZY_ROUTE_PATHS)('lazy route %s', (path) => {
 		it('shows the spinner while the screen is loading', () => {
 			renderAppAt(path, { isAuth: true, userData: { isAdmin: true } })
