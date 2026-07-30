@@ -49,7 +49,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 
 	const getDatePickerProps = (field, label) => ({
 		id: field,
-		format: DATE_FORMAT,
+		valueFormat: DATE_FORMAT,
 		value: filters[field],
 		onChange: onChangeDate(field),
 		open: openPicker === field,
