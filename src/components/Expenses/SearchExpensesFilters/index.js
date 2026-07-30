@@ -136,7 +136,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 						{
 							isAmountInvalid && (
 								<div className="col-12">
-									<small className="d-block text-muted mb-3">Amount must be a number using a decimal point or comma</small>
+									<small className="d-block text-white-50 mb-3">Amount must be a number using a decimal point or comma</small>
 								</div>
 							)
 						}

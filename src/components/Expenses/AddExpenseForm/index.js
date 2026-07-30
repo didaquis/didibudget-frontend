@@ -97,7 +97,7 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 							required
 							autoFocus
 						/>
-						<small className="form-text text-muted d-block">Use decimal point as decimal separator. Negative numbers are not valid</small>
+						<small className="form-text text-white-50 d-block">Use decimal point as decimal separator. Negative numbers are not valid</small>
 					</div>
 
 					<div className="mb-4" role="group" aria-labelledby="addExpenseFormDateLabel">
