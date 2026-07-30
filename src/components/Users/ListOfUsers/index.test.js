@@ -44,7 +44,9 @@ const renderList = (users = mockUsers) => {
 
 const getTable = () => within(screen.getByRole('table'))
 
-const getSearchInput = () => screen.getByRole('searchbox', { name: 'Search by email' })
+const getSearchInput = () => screen.getByRole('textbox', { name: 'Search by email' })
+
+const getClearButton = () => screen.getByRole('button', { name: 'Clear search' })
 
 describe('ListOfUsers', () => {
 	beforeEach(() => {
@@ -123,6 +125,42 @@ describe('ListOfUsers', () => {
 
 		expect(getTable().getByText('bob@example.com')).toBeVisible()
 		expect(screen.queryByText('alice@example.com')).not.toBeInTheDocument()
+	})
+
+	it('hides the clear button while the search is empty', () => {
+		renderList()
+
+		expect(screen.queryByRole('button', { name: 'Clear search' })).not.toBeInTheDocument()
+	})
+
+	it('offers a clear button once something is typed', async () => {
+		const user = userEvent.setup()
+		renderList()
+
+		await user.type(getSearchInput(), 'alice')
+
+		expect(getClearButton()).toBeVisible()
+	})
+
+	it('empties the search and restores every user when the clear button is used', async () => {
+		const user = userEvent.setup()
+		renderList()
+		await user.type(getSearchInput(), 'alice')
+
+		await user.click(getClearButton())
+
+		expect(getSearchInput()).toHaveValue('')
+		expect(getTable().getByText('bob@example.com')).toBeVisible()
+	})
+
+	it('returns the focus to the search input after clearing', async () => {
+		const user = userEvent.setup()
+		renderList()
+		await user.type(getSearchInput(), 'alice')
+
+		await user.click(getClearButton())
+
+		expect(getSearchInput()).toHaveFocus()
 	})
 
 	it('shows a no results message when search matches nothing', async () => {

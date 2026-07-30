@@ -1,5 +1,6 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import { BsX } from 'react-icons/bs'
 
 import { roleBadge, statusBadge } from './badges'
 import { formatTimeAgo } from './formatters'
@@ -7,6 +8,7 @@ import { UserListItemCard } from './UserListItemCard'
 
 export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 	const [search, setSearch] = useState('')
+	const searchInput = useRef(null)
 
 	useEffect(() => {
 		const minuteInMilliseconds = 60000
@@ -18,6 +20,11 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 		}
 	}, [startPolling, stopPolling])
 
+	const clearSearch = () => {
+		setSearch('')
+		searchInput.current.focus()
+	}
+
 	const filteredUsers = users.filter(user =>
 		user.email.toLowerCase().includes(search.toLowerCase())
 	)
@@ -26,15 +33,32 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 		<section>
 			<div className="row mb-4">
 				<div className="col-12 col-md-6 col-lg-4">
-					<input
-						id="searchUsersByEmail"
-						type="search"
-						className="form-control"
-						placeholder="Search by email..."
-						aria-label="Search by email"
-						value={search}
-						onChange={(e) => setSearch(e.target.value)}
-					/>
+					<div className="input-group">
+						<input
+							id="searchUsersByEmail"
+							type="text"
+							inputMode="search"
+							enterKeyHint="search"
+							className="form-control"
+							placeholder="Search by email..."
+							aria-label="Search by email"
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							ref={searchInput}
+						/>
+						{
+							(search !== '') && (
+								<button
+									type="button"
+									className="btn btn-outline-secondary"
+									aria-label="Clear search"
+									onClick={clearSearch}
+								>
+									<BsX size={'24px'} />
+								</button>
+							)
+						}
+					</div>
 				</div>
 			</div>
 
