@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { DatePicker } from 'react-widgets'
+import DatePicker from 'react-widgets/DatePicker'
 import { Collapse } from 'reactstrap'
-import 'react-widgets/dist/css/react-widgets.css'
+import 'react-widgets/styles.css'
 import './styles.css'
-
-import '../../../utils/dateLocalizer'
 import { buildFiltersSummary, isValidAmountInput } from './utils'
 
 const INITIAL_FILTERS = {
@@ -54,8 +52,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 		format: DATE_FORMAT,
 		value: filters[field],
 		onChange: onChangeDate(field),
-		// react-widgets types this prop as false | 'date' | 'time'; a boolean silently never opens
-		open: openPicker === field ? 'date' : false,
+		open: openPicker === field,
 		onToggle: onTogglePicker(field),
 		inputProps: { 'aria-label': label, readOnly: true, onClick: () => setOpenPicker(field) }
 	})
