@@ -55,11 +55,11 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 					<tbody>
 						{filteredUsers.map(user => (
 							<tr key={user.uuid}>
-								<td data-label="Email">{user.email}</td>
-								<td data-label="Role">{roleBadge(user.isAdmin)}</td>
-								<td data-label="Status">{statusBadge(user.isActive)}</td>
-								<td data-label="Registered">{getTimeAgo(user.registrationDate)}</td>
-								<td data-label="Last login">{getTimeAgo(user.lastLogin)}</td>
+								<td data-label="Email"><span className="value">{user.email}</span></td>
+								<td data-label="Role"><span className="value">{roleBadge(user.isAdmin)}</span></td>
+								<td data-label="Status"><span className="value">{statusBadge(user.isActive)}</span></td>
+								<td data-label="Registered"><span className="value">{getTimeAgo(user.registrationDate)}</span></td>
+								<td data-label="Last login"><span className="value">{getTimeAgo(user.lastLogin)}</span></td>
 							</tr>
 						))}
 					</tbody>

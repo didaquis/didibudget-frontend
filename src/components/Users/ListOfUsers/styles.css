@@ -36,6 +36,10 @@
   .responsive-table td:last-child {
     border-bottom: none;
   }
+
+  .responsive-table td .value {
+    text-align: right;
+  }
 }
 
 .responsive-table th {
