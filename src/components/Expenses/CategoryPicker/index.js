@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs'
+import { BsFillCaretDownFill, BsFillCaretUpFill, BsX } from 'react-icons/bs'
 
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 
@@ -30,6 +30,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 	const [filterText, setFilterText] = useState('')
 	const [expandedItems, setExpandedItems] = useState({})
 	const [isChanging, setIsChanging] = useState(false)
+	const filterInput = useRef(null)
 
 	const leaves = useMemo(() => flattenCategories(categories), [categories])
 	const frequentLeaves = useMemo(() => frequentCategories.map(buildFrequentLeaf), [frequentCategories])
@@ -39,6 +40,11 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 	const toggleItem = (uuid) => {
 		setExpandedItems((previous) => ({ ...previous, [uuid]: !previous[uuid] }))
+	}
+
+	const clearFilter = () => {
+		setFilterText('')
+		filterInput.current.focus()
 	}
 
 	const chooseLeaf = (leaf) => {
@@ -66,20 +72,37 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 	return (
 		<div>
-			<input
-				id="categoryPickerFilter"
-				type="search"
-				className="form-control mb-3"
-				placeholder="Search…"
-				aria-label="Filter categories"
-				value={filterText}
-				onChange={(event) => setFilterText(event.target.value)}
-			/>
+			<div className="input-group mb-3">
+				<input
+					id="categoryPickerFilter"
+					type="text"
+					inputMode="search"
+					enterKeyHint="search"
+					className="form-control"
+					placeholder="Search…"
+					aria-label="Filter categories"
+					value={filterText}
+					onChange={(event) => setFilterText(event.target.value)}
+					ref={filterInput}
+				/>
+				{
+					(filterText !== '') && (
+						<button
+							type="button"
+							className="btn btn-light"
+							aria-label="Clear filter"
+							onClick={clearFilter}
+						>
+							<BsX size={'24px'} />
+						</button>
+					)
+				}
+			</div>
 
 			{
 				!isFiltering && frequentLeaves.length > 0 && (
 					<div className="mb-3">
-						<p className="text-light small mb-1">Frequent</p>
+						<p className="text-light small mb-1">Most used</p>
 						<div className="d-flex flex-wrap gap-2">
 							{
 								frequentLeaves.map(leaf => (
@@ -98,15 +121,15 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 				)
 			}
 
-			<p className="text-light small mb-1">All</p>
+			<p className="text-light small mb-0">All categories</p>
 
 			{
 				isFiltering
 					? (
 						<ul className="list-group list-group-flush">
 							{
-								filteredLeaves.map(leaf => (
-									<li className="list-group-item bg-dark border-info px-0" key={leaf.key}>
+								filteredLeaves.map((leaf, index) => (
+									<li className={`list-group-item bg-dark border-info px-0 ${index === 0 ? 'pt-0' : ''}`} key={leaf.key}>
 										<button type="button" className="btn btn-link text-start text-info p-0" onClick={() => chooseLeaf(leaf)}>
 											{leaf.label}
 										</button>
@@ -119,15 +142,16 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 					: (
 						<ul className="list-group list-group-flush">
 							{
-								categories.map(category => {
+								categories.map((category, index) => {
 									const hasSubcategories = Boolean(category.subcategories?.length)
 									const isExpanded = Boolean(expandedItems[category.uuid])
+									const itemClassName = `list-group-item bg-dark border-info px-0 ${index === 0 ? 'pt-0' : ''}`
 
 									if (!hasSubcategories) {
 										const leaf = buildLeaf(category, null)
 
 										return (
-											<li className="list-group-item bg-dark border-info px-0" key={category.uuid}>
+											<li className={itemClassName} key={category.uuid}>
 												<button
 													type="button"
 													className="btn btn-link text-start text-info p-0"
@@ -143,7 +167,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 									const categoryLeaf = buildLeaf(category, null)
 
 									return (
-										<li className="list-group-item bg-dark border-info px-0" key={category.uuid}>
+										<li className={itemClassName} key={category.uuid}>
 											<button
 												type="button"
 												className="btn btn-link text-start text-info p-0 d-inline-flex align-items-center"

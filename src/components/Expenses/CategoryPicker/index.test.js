@@ -71,7 +71,7 @@ describe('CategoryPicker', () => {
 	it('hides the frequent section when there are no frequent categories', () => {
 		renderPicker({ frequentCategories: [] })
 
-		expect(screen.queryByText('Frequent')).not.toBeInTheDocument()
+		expect(screen.queryByText('Most used')).not.toBeInTheDocument()
 	})
 
 	it('lists the categories as an accordion while the filter is empty', () => {
@@ -129,6 +129,34 @@ describe('CategoryPicker', () => {
 
 		expect(screen.getByRole('button', { name: /Private vehicles › Fuel/ })).toBeVisible()
 		expect(screen.queryByRole('button', { name: /Taxes/ })).not.toBeInTheDocument()
+	})
+
+	it('hides the clear button while the filter is empty', () => {
+		renderPicker({ frequentCategories: [] })
+
+		expect(screen.queryByRole('button', { name: 'Clear filter' })).not.toBeInTheDocument()
+	})
+
+	it('restores the accordion when the filter is cleared', async () => {
+		const user = userEvent.setup()
+		renderPicker({ frequentCategories: [] })
+		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+
+		await user.click(screen.getByRole('button', { name: 'Clear filter' }))
+
+		expect(screen.getByLabelText('Filter categories')).toHaveValue('')
+		expect(screen.queryByRole('button', { name: 'Private vehicles › Fuel' })).not.toBeInTheDocument()
+		expect(screen.getByRole('button', { name: /Taxes/ })).toBeVisible()
+	})
+
+	it('returns the focus to the filter input after clearing', async () => {
+		const user = userEvent.setup()
+		renderPicker({ frequentCategories: [] })
+		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+
+		await user.click(screen.getByRole('button', { name: 'Clear filter' }))
+
+		expect(screen.getByLabelText('Filter categories')).toHaveFocus()
 	})
 
 	it('collapses the list once a category is selected', () => {
