@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { MobileUserCard } from './MobileUserCard'
+import { UserListItemCard } from './UserListItemCard'
 
 const mockUser = {
 	uuid: '1',
@@ -10,9 +10,9 @@ const mockUser = {
 	lastLogin: '1700000000'
 }
 
-const renderCard = (user = mockUser) => render(<MobileUserCard user={user} />)
+const renderCard = (user = mockUser) => render(<UserListItemCard user={user} />)
 
-describe('MobileUserCard', () => {
+describe('UserListItemCard', () => {
 	it('renders email in card header', () => {
 		renderCard()
 		expect(screen.getByText('alice@example.com')).toBeVisible()
@@ -53,5 +53,15 @@ describe('MobileUserCard', () => {
 	it('renders relative time for registration and last login', () => {
 		renderCard()
 		expect(screen.getAllByText(/ago/)).toHaveLength(2)
+	})
+
+	it('renders "Never" when the user never logged in', () => {
+		renderCard({ ...mockUser, lastLogin: null })
+		expect(screen.getByText('Never')).toBeVisible()
+	})
+
+	it('renders "Unknown" when there is no registration date', () => {
+		renderCard({ ...mockUser, registrationDate: null })
+		expect(screen.getByText('Unknown')).toBeVisible()
 	})
 })

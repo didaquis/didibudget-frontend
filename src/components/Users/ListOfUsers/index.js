@@ -1,9 +1,9 @@
 import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { getTimeAgo } from '../../../utils/utils'
 import { roleBadge, statusBadge } from './badges'
-import { MobileUserCard } from './MobileUserCard'
+import { formatTimeAgo } from './formatters'
+import { UserListItemCard } from './UserListItemCard'
 
 export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 	const [search, setSearch] = useState('')
@@ -62,8 +62,8 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 												<td>{user.email}</td>
 												<td>{roleBadge(user.isAdmin)}</td>
 												<td>{statusBadge(user.isActive)}</td>
-												<td>{getTimeAgo(user.registrationDate)}</td>
-												<td>{getTimeAgo(user.lastLogin)}</td>
+												<td>{formatTimeAgo(user.registrationDate, 'Unknown')}</td>
+												<td>{formatTimeAgo(user.lastLogin, 'Never')}</td>
 											</tr>
 										))}
 									</tbody>
@@ -73,7 +73,7 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 
 						<div className="d-md-none">
 							{filteredUsers.map(user => (
-								<MobileUserCard key={user.uuid} user={user} />
+								<UserListItemCard key={user.uuid} user={user} />
 							))}
 						</div>
 					</Fragment>
@@ -90,7 +90,7 @@ ListOfUsers.propTypes = {
 			isAdmin: PropTypes.bool.isRequired,
 			isActive: PropTypes.bool.isRequired,
 			registrationDate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-			lastLogin: PropTypes.string.isRequired
+			lastLogin: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 		})
 	),
 	startPolling: PropTypes.func.isRequired,
