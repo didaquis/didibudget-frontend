@@ -24,6 +24,7 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 	return (
 		<section>
 			<input
+				id="searchUsersByEmail"
 				type="search"
 				className="form-control mb-3"
 				placeholder="Search by email..."
