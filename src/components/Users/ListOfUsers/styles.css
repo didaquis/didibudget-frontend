@@ -1,3 +1,14 @@
+.responsive-table th {
+  white-space: nowrap;
+}
+
+.responsive-table td[data-label="Email"] {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (max-width: 767.98px) {
   .responsive-table thead {
     position: absolute;
@@ -48,18 +59,6 @@
     overflow: visible;
     white-space: normal;
   }
-
-}
-
-.responsive-table th {
-  white-space: nowrap;
-}
-
-.responsive-table td[data-label="Email"] {
-  max-width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .badge-admin {
