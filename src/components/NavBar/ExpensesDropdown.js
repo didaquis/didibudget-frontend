@@ -7,10 +7,10 @@ export const ExpensesDropdown = () => {
 	return (
 		<div className="nav-item dropdown">
 			<button className="nav-link dropdown-toggle text-light border-0 bg-dark" id="expenses-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-				<BsCreditCard2Back size='32px' title='Spendings' />
+				<BsCreditCard2Back size='32px' title='Spending' />
 			</button>
 			<ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="expenses-dropdown">
-				<li><span className="dropdown-item-text text-light">Spendings</span></li>
+				<li><span className="dropdown-item-text text-light">Spending</span></li>
 				<li><hr className="dropdown-divider" /></li>
 				<li>
 					<Link className="dropdown-item py-3" to='/spending/add'>
@@ -44,7 +44,7 @@ export const ExpensesDropdown = () => {
 				</li>
 				<li>
 					<Link className="dropdown-item py-3" to='/spending/search'>
-						<BsSearch size='24px' title='Search spendings' /><span className="ms-3">Search spendings</span>
+						<BsSearch size='24px' title='Spending search' /><span className="ms-3">Spending search</span>
 					</Link>
 				</li>
 			</ul>

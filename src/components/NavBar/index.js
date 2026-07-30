@@ -39,8 +39,8 @@ export const NavBar = () => {
 
 			<div className="nav-item">
 				<Link className="nav-link text-light" to={isAuth ? '/logout' : '/login'}>
-					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Login' />}
-					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Logout' />}
+					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Log in' />}
+					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Log out' />}
 				</Link>
 			</div>
 		</nav>
