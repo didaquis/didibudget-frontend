@@ -27,7 +27,7 @@
 
   .responsive-table td::before {
     content: attr(data-label);
-    color: #86868b;
+    color: #a1a1a6;
     font-size: 0.75rem;
     flex-shrink: 0;
     margin-right: 1rem;
@@ -47,20 +47,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.search-input {
-  background: #3d3d3f;
-  border: 1px solid #424245;
-  border-radius: 8px;
-  padding: 0.5rem 0.75rem;
-  color: #f5f5f7;
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.search-input::placeholder {
-  color: #636366;
 }
 
 .badge-admin {
@@ -96,7 +82,7 @@
 .badge-user {
   display: inline-block;
   background: rgba(134, 134, 139, 0.15);
-  color: #86868b;
+  color: #a1a1a6;
   font-size: 0.75rem;
   padding: 0.1rem 0.5rem;
   border-radius: 4px;

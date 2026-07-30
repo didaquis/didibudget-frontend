@@ -134,6 +134,10 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 - `src/AuthContext.js` - Global auth state; affects routing and protected components
 
 
+## UI Patterns
+
+Before creating any new UI element, find an existing similar element in the codebase and match its styling approach — same Bootstrap classes, same custom CSS patterns, same markup structure. Don't invent new custom styles when the project already has a convention.
+
 ## Accessibility & Dark Theme Colors
 
 This app uses a dark theme (`bg-dark`, `#212529`). Text on dark backgrounds must meet WCAG AA contrast (≥4.5:1). Conventions for text utility classes:

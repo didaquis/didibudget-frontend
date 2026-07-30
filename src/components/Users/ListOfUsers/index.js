@@ -34,8 +34,8 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 	return (
 		<section>
 			<input
-				type="text"
-				className="search-input"
+				type="search"
+				className="form-control mb-3"
 				placeholder="Search by email..."
 				aria-label="Search by email"
 				value={search}
