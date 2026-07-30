@@ -10,7 +10,7 @@ export const SavingsAndInvestmentsBalanceDropdown = () => {
 				<BsBank size='32px' title='Cash, savings & investments' />
 			</button>
 			<ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="monthly-balance-dropdown">
-				<li><span className="dropdown-item-text text-muted">Cash, savings & investments</span></li>
+				<li><span className="dropdown-item-text text-light">Cash, savings & investments</span></li>
 				<li><hr className="dropdown-divider" /></li>
 				<li>
 					<Link className="dropdown-item py-3" to='/register-monthly-balance'>

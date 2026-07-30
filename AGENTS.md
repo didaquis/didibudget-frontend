@@ -134,6 +134,14 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 - `src/AuthContext.js` - Global auth state; affects routing and protected components
 
 
+## Accessibility & Dark Theme Colors
+
+This app uses a dark theme (`bg-dark`, `#212529`). Text on dark backgrounds must meet WCAG AA contrast (≥4.5:1). Conventions for text utility classes:
+- **`text-light`** — Primary labels, section headers, and any text that guides user navigation
+- **`text-white-50`** — Secondary text: helper/validation messages, counts, footer, disabled labels
+- **`text-muted`** — **Do not use on dark backgrounds.** Bootstrap's `#6c757d` has insufficient contrast (~4.6:1) for comfortable reading.
+- Text in other contexts (light cards, alerts) follows Bootstrap defaults.
+
 ## Code quality guidelines
 
 - No hacks or quick fixes. We do not accept sloppy, fragile, or shortcut-based solutions. Code must be robust, intentional, and maintainable.

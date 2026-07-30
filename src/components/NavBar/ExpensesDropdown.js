@@ -10,7 +10,7 @@ export const ExpensesDropdown = () => {
 				<BsCreditCard2Back size='32px' title='Spendings' />
 			</button>
 			<ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="expenses-dropdown">
-				<li><span className="dropdown-item-text text-muted">Spendings</span></li>
+				<li><span className="dropdown-item-text text-light">Spendings</span></li>
 				<li><hr className="dropdown-divider" /></li>
 				<li>
 					<Link className="dropdown-item py-3" to='/add-expense'>
