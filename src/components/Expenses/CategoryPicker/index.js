@@ -66,12 +66,12 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 	return (
 		<div>
-			<label htmlFor="categoryPickerFilter" className="text-light">Filter categories</label>
 			<input
 				id="categoryPickerFilter"
 				type="search"
 				className="form-control mb-3"
-				placeholder="Fuel"
+				placeholder="Search…"
+				aria-label="Filter categories"
 				value={filterText}
 				onChange={(event) => setFilterText(event.target.value)}
 			/>
