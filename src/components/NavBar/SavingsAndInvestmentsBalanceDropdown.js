@@ -14,22 +14,22 @@ export const SavingsAndInvestmentsBalanceDropdown = () => {
 				<li><hr className="dropdown-divider" /></li>
 				<li>
 					<Link className="dropdown-item py-3" to='/monthly-balance/add'>
-						<BsCashCoin size='24px' title='Add monthly balance' /><span className="ms-3">Add monthly balance</span>
+						<BsCashCoin size='24px' aria-hidden='true' /><span className="ms-3">Add monthly balance</span>
 					</Link>
 				</li>
 				<li>
 					<Link className="dropdown-item py-3" to='/monthly-balance/overview'>
-						<BsGraphUp size='24px' title='Monthly balance overview' /><span className="ms-3">Monthly balance overview</span>
+						<BsGraphUp size='24px' aria-hidden='true' /><span className="ms-3">Monthly balance overview</span>
 					</Link>
 				</li>
 				<li>
 					<Link className="dropdown-item py-3" to='/monthly-balance/list'>
-						<BsListUl size='24px' title='Monthly balances list' /><span className="ms-3">Monthly balances list</span>
+						<BsListUl size='24px' aria-hidden='true' /><span className="ms-3">Monthly balances list</span>
 					</Link>
 				</li>
 				<li>
 					<Link className="dropdown-item py-3" to='/savings-and-investments'>
-						<BsPiggyBank size='24px' title='Savings & investments' /><span className="ms-3">Savings & investments</span>
+						<BsPiggyBank size='24px' aria-hidden='true' /><span className="ms-3">Savings & investments</span>
 					</Link>
 				</li>
 			</ul>
