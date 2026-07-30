@@ -44,12 +44,14 @@ export const RegisterForm = ({ activateAuth }) => {
 	return (
 		<Fragment>
 			<div className="row justify-content-center mt-4">
-				<form className="col-md-8" disabled={isDisabled} onSubmit={handleSubmit}>
+				<form className="col-md-8" onSubmit={handleSubmit}>
 					<div className="col mb-3">
 						<label htmlFor="inputEmailRegisterForm" className="text-light">Email <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
-							inputMode="email"
+							type='email'
+							name="email"
+							autoComplete="username"
 							className="form-control"
 							id="inputEmailRegisterForm"
 							placeholder='email'
@@ -67,6 +69,8 @@ export const RegisterForm = ({ activateAuth }) => {
 							id="inputPasswordRegisterForm"
 							placeholder='password'
 							type='password'
+							name="password"
+							autoComplete="new-password"
 							{...password}
 							required
 							pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!*^?+-_@#$%&]{8,}$"
@@ -81,6 +85,8 @@ export const RegisterForm = ({ activateAuth }) => {
 							id="inputRepeatPasswordRegisterForm"
 							placeholder='repeat password'
 							type='password'
+							name="repeatPassword"
+							autoComplete="new-password"
 							{...repeatPassword}
 							required
 							pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!*^?+-_@#$%&]{8,}$"

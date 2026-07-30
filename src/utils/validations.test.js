@@ -19,15 +19,15 @@ describe('validateLoginForm', () => {
 		expect(result).toBe(false)
 	})
 
-	test('should return false if password is not enough secure', () => {
+	test('should return true regardless of the password strength, because only the backend decides', () => {
 		const email = 'example@mail.com'
 
-		const listOfUnsecurePasswords = ['foo', '1234', 'blablabla', 'AAAAAAAAAAA', '*_*_*_*_*_*_*', '1aA*']
+		const listOfPasswordsRejectedOnRegistration = ['foo', '1234', 'blablabla', 'AAAAAAAAAAA', '*_*_*_*_*_*_*', '1aA*', 'w~mb(3Qz)tf']
 
-		listOfUnsecurePasswords.forEach(password => {
+		listOfPasswordsRejectedOnRegistration.forEach(password => {
 			const result = validateLoginForm(email, password)
 
-			expect(result).toBe(false)
+			expect(result).toBe(true)
 		})
 	})
 
