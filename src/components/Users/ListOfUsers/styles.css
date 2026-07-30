@@ -13,6 +13,10 @@
     border: 0;
   }
 
+  .responsive-table > :not(:first-child) {
+    border-top: 0;
+  }
+
   .responsive-table tr {
     display: block;
     margin-bottom: 0.75rem;
