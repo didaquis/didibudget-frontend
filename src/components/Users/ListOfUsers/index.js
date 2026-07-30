@@ -50,7 +50,7 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 							(search !== '') && (
 								<button
 									type="button"
-									className="btn btn-outline-secondary"
+									className="btn btn-light"
 									aria-label="Clear search"
 									onClick={clearSearch}
 								>
