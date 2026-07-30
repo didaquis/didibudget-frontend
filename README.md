@@ -8,13 +8,6 @@ The project is splitted on two repositories: one for the backend and one for the
 
 This repository is for the frontend and is intended to work with [the backend](https://github.com/didaquis/didibudget-backend)
 
-![preview_01](./docs-and-assets/preview_01.png)  
-
-![preview_02](./docs-and-assets/preview_02.png)  
-
-![preview_03](./docs-and-assets/preview_03.png)  
-
-
 ### 📝 Frontend Requirements
 * Backend must be running
 * Node.js 24.14 or higher
@@ -48,3 +41,13 @@ Don't worry, here you have a guide:
 * Run the linter: `npm run lint`
 * Run the test: `npm run test`
 * Run the tests in watch mode: `npm run test:watch`
+
+### Screenshots
+
+![preview_01](./docs-and-assets/preview_01.png)  
+
+![preview_02](./docs-and-assets/preview_02.png)  
+
+![preview_03](./docs-and-assets/preview_03.png)  
+
+![preview_04](./docs-and-assets/preview_04.png)  
