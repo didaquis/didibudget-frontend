@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { getTimeAgo } from '../../../utils/utils'
+import { roleBadge, statusBadge } from './badges'
 import { MobileUserCard } from './MobileUserCard'
 
 export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
@@ -23,56 +24,60 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 
 	return (
 		<section>
-			<input
-				id="searchUsersByEmail"
-				type="search"
-				className="form-control mb-3"
-				placeholder="Search by email..."
-				aria-label="Search by email"
-				value={search}
-				onChange={(e) => setSearch(e.target.value)}
-			/>
-
-			<div className="d-none d-md-block">
-				<div className="table-responsive">
-					<table className="table table-dark">
-						<thead>
-							<tr>
-								<th scope="col">Email</th>
-								<th scope="col">Role</th>
-								<th scope="col">Status</th>
-								<th scope="col">Registered</th>
-								<th scope="col">Last login</th>
-							</tr>
-						</thead>
-						<tbody>
-							{filteredUsers.map(user => (
-								<tr key={user.uuid}>
-									<td>{user.email}</td>
-									<td>
-										{user.isAdmin
-											? <span className="badge bg-primary">Admin</span>
-											: <span className="badge bg-secondary">User</span>}
-									</td>
-									<td>
-										{user.isActive
-											? <span className="badge bg-success">Active</span>
-											: <span className="badge bg-danger">Inactive</span>}
-									</td>
-									<td>{getTimeAgo(user.registrationDate)}</td>
-									<td>{getTimeAgo(user.lastLogin)}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
+			<div className="row mb-4">
+				<div className="col-12 col-md-6 col-lg-4">
+					<input
+						id="searchUsersByEmail"
+						type="search"
+						className="form-control"
+						placeholder="Search by email..."
+						aria-label="Search by email"
+						value={search}
+						onChange={(e) => setSearch(e.target.value)}
+					/>
 				</div>
 			</div>
 
-			<div className="d-md-none">
-				{filteredUsers.map(user => (
-					<MobileUserCard key={user.uuid} user={user} />
-				))}
-			</div>
+			{
+				(filteredUsers.length === 0)
+					?
+					<p className="text-white-50" role="status">No users found</p>
+					:
+					<Fragment>
+						<div className="d-none d-md-block">
+							<div className="table-responsive">
+								<table className="table table-dark table-hover">
+									<thead>
+										<tr className="table-info text-dark text-nowrap">
+											<th scope="col">Email</th>
+											<th scope="col">Role</th>
+											<th scope="col">Status</th>
+											<th scope="col">Registered</th>
+											<th scope="col">Last login</th>
+										</tr>
+									</thead>
+									<tbody>
+										{filteredUsers.map(user => (
+											<tr key={user.uuid}>
+												<td>{user.email}</td>
+												<td>{roleBadge(user.isAdmin)}</td>
+												<td>{statusBadge(user.isActive)}</td>
+												<td>{getTimeAgo(user.registrationDate)}</td>
+												<td>{getTimeAgo(user.lastLogin)}</td>
+											</tr>
+										))}
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div className="d-md-none">
+							{filteredUsers.map(user => (
+								<MobileUserCard key={user.uuid} user={user} />
+							))}
+						</div>
+					</Fragment>
+			}
 		</section>
 	)
 }

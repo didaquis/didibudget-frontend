@@ -1,29 +1,27 @@
 import PropTypes from 'prop-types'
+
 import { getTimeAgo } from '../../../utils/utils'
+import { roleBadge, statusBadge } from './badges'
 
 export const MobileUserCard = ({ user }) => (
 	<div className="card bg-dark border-info mb-3">
 		<div className="card-header">
-			<span className="text-light">{user.email}</span>
+			<span className="text-light text-break">{user.email}</span>
 		</div>
-		<div className="card-body text-light py-2">
-			<div className="d-flex justify-content-between">
+		<div className="card-body text-light py-2 d-flex flex-column gap-2">
+			<div className="d-flex justify-content-between align-items-center">
 				<span className="text-white-50">Role</span>
-				{user.isAdmin
-					? <span className="badge bg-primary">Admin</span>
-					: <span className="badge bg-secondary">User</span>}
+				{roleBadge(user.isAdmin)}
 			</div>
-			<div className="d-flex justify-content-between">
+			<div className="d-flex justify-content-between align-items-center">
 				<span className="text-white-50">Status</span>
-				{user.isActive
-					? <span className="badge bg-success">Active</span>
-					: <span className="badge bg-danger">Inactive</span>}
+				{statusBadge(user.isActive)}
 			</div>
-			<div className="d-flex justify-content-between">
+			<div className="d-flex justify-content-between align-items-center">
 				<span className="text-white-50">Registered</span>
 				<span>{getTimeAgo(user.registrationDate)}</span>
 			</div>
-			<div className="d-flex justify-content-between">
+			<div className="d-flex justify-content-between align-items-center">
 				<span className="text-white-50">Last login</span>
 				<span>{getTimeAgo(user.lastLogin)}</span>
 			</div>
@@ -33,7 +31,6 @@ export const MobileUserCard = ({ user }) => (
 
 MobileUserCard.propTypes = {
 	user: PropTypes.shape({
-		uuid: PropTypes.string.isRequired,
 		email: PropTypes.string.isRequired,
 		isAdmin: PropTypes.bool.isRequired,
 		isActive: PropTypes.bool.isRequired,

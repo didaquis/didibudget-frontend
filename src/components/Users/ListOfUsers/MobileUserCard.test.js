@@ -15,32 +15,43 @@ const renderCard = (user = mockUser) => render(<MobileUserCard user={user} />)
 describe('MobileUserCard', () => {
 	it('renders email in card header', () => {
 		renderCard()
-		expect(screen.getByText('alice@example.com')).toBeInTheDocument()
+		expect(screen.getByText('alice@example.com')).toBeVisible()
 	})
 
-	it('renders role and status badges', () => {
+	it('renders Admin badge for admin', () => {
 		renderCard()
-		expect(screen.getByText('Admin')).toBeInTheDocument()
-		expect(screen.getByText('Active')).toBeInTheDocument()
+		expect(screen.getByText('Admin')).toBeVisible()
+		expect(screen.queryByText('User')).not.toBeInTheDocument()
 	})
 
 	it('renders User badge for non-admin', () => {
 		renderCard({ ...mockUser, isAdmin: false })
-		expect(screen.getByText('User')).toBeInTheDocument()
+		expect(screen.getByText('User')).toBeVisible()
 		expect(screen.queryByText('Admin')).not.toBeInTheDocument()
+	})
+
+	it('renders Active badge for active user', () => {
+		renderCard()
+		expect(screen.getByText('Active')).toBeVisible()
+		expect(screen.queryByText('Inactive')).not.toBeInTheDocument()
 	})
 
 	it('renders Inactive badge for inactive user', () => {
 		renderCard({ ...mockUser, isActive: false })
-		expect(screen.getByText('Inactive')).toBeInTheDocument()
+		expect(screen.getByText('Inactive')).toBeVisible()
 		expect(screen.queryByText('Active')).not.toBeInTheDocument()
 	})
 
-	it('renders labels (Role, Status, Registered, Last login)', () => {
+	it('renders a label for every field', () => {
 		renderCard()
-		expect(screen.getByText('Role')).toBeInTheDocument()
-		expect(screen.getByText('Status')).toBeInTheDocument()
-		expect(screen.getByText('Registered')).toBeInTheDocument()
-		expect(screen.getByText('Last login')).toBeInTheDocument()
+		expect(screen.getByText('Role')).toBeVisible()
+		expect(screen.getByText('Status')).toBeVisible()
+		expect(screen.getByText('Registered')).toBeVisible()
+		expect(screen.getByText('Last login')).toBeVisible()
+	})
+
+	it('renders relative time for registration and last login', () => {
+		renderCard()
+		expect(screen.getAllByText(/ago/)).toHaveLength(2)
 	})
 })

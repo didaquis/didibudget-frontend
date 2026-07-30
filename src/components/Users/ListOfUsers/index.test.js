@@ -42,6 +42,10 @@ const renderList = (users = mockUsers) => {
 	)
 }
 
+const getTable = () => within(screen.getByRole('table'))
+
+const getSearchInput = () => screen.getByRole('searchbox', { name: 'Search by email' })
+
 describe('ListOfUsers', () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
@@ -49,51 +53,64 @@ describe('ListOfUsers', () => {
 
 	it('renders table headers', () => {
 		renderList()
-		const table = within(screen.getByRole('table'))
-		expect(table.getByText('Email')).toBeInTheDocument()
-		expect(table.getByText('Role')).toBeInTheDocument()
-		expect(table.getByText('Status')).toBeInTheDocument()
-		expect(table.getByText('Registered')).toBeInTheDocument()
-		expect(table.getByText('Last login')).toBeInTheDocument()
+		const table = getTable()
+		expect(table.getByText('Email')).toBeVisible()
+		expect(table.getByText('Role')).toBeVisible()
+		expect(table.getByText('Status')).toBeVisible()
+		expect(table.getByText('Registered')).toBeVisible()
+		expect(table.getByText('Last login')).toBeVisible()
 	})
 
-	it('renders all users in table and cards', () => {
+	it('renders every user in the table', () => {
+		renderList()
+		const table = getTable()
+		expect(table.getByText('alice@example.com')).toBeVisible()
+		expect(table.getByText('bob@example.com')).toBeVisible()
+		expect(table.getByText('carol@example.com')).toBeVisible()
+	})
+
+	// The desktop table and the mobile cards are both rendered, and Bootstrap
+	// shows only one of them per breakpoint. jsdom applies no CSS, so this is
+	// the single place that asserts the duplication.
+	it('renders both a table row and a mobile card for every user', () => {
 		renderList()
 		expect(screen.getAllByText('alice@example.com')).toHaveLength(2)
 		expect(screen.getAllByText('bob@example.com')).toHaveLength(2)
 		expect(screen.getAllByText('carol@example.com')).toHaveLength(2)
 	})
 
-	it('shows Admin badge in table', () => {
+	it('shows Admin badge in table for admin users', () => {
 		renderList()
-		const table = within(screen.getByRole('table'))
-		expect(table.getAllByText('Admin')).toHaveLength(2)
+		expect(getTable().getAllByText('Admin')).toHaveLength(2)
 	})
 
-	it('shows User badge in table', () => {
+	it('shows User badge in table for non-admin users', () => {
 		renderList()
-		const table = within(screen.getByRole('table'))
-		expect(table.getByText('User')).toBeInTheDocument()
+		expect(getTable().getByText('User')).toBeVisible()
 	})
 
-	it('shows Active badge in table', () => {
+	it('shows Active badge in table for active users', () => {
 		renderList()
-		const table = within(screen.getByRole('table'))
-		expect(table.getAllByText('Active')).toHaveLength(2)
+		expect(getTable().getAllByText('Active')).toHaveLength(2)
 	})
 
-	it('shows Inactive badge in table', () => {
+	it('shows Inactive badge in table for inactive users', () => {
 		renderList()
-		const table = within(screen.getByRole('table'))
-		expect(table.getByText('Inactive')).toBeInTheDocument()
+		expect(getTable().getByText('Inactive')).toBeVisible()
+	})
+
+	it('renders relative time for registration and last login', () => {
+		renderList()
+		expect(getTable().getAllByText(/ago/)).toHaveLength(6)
 	})
 
 	it('filters users by email search', async () => {
 		const user = userEvent.setup()
 		renderList()
-		const input = screen.getByPlaceholderText('Search by email...')
-		await user.type(input, 'alice')
-		expect(screen.getAllByText('alice@example.com')).toHaveLength(2)
+
+		await user.type(getSearchInput(), 'alice')
+
+		expect(getTable().getByText('alice@example.com')).toBeVisible()
 		expect(screen.queryByText('bob@example.com')).not.toBeInTheDocument()
 		expect(screen.queryByText('carol@example.com')).not.toBeInTheDocument()
 	})
@@ -101,29 +118,33 @@ describe('ListOfUsers', () => {
 	it('filters users case-insensitively', async () => {
 		const user = userEvent.setup()
 		renderList()
-		const input = screen.getByPlaceholderText('Search by email...')
-		await user.type(input, 'BOB')
-		expect(screen.getAllByText('bob@example.com')).toHaveLength(2)
+
+		await user.type(getSearchInput(), 'BOB')
+
+		expect(getTable().getByText('bob@example.com')).toBeVisible()
 		expect(screen.queryByText('alice@example.com')).not.toBeInTheDocument()
 	})
 
-	it('shows no users when search matches nothing', async () => {
+	it('shows a no results message when search matches nothing', async () => {
 		const user = userEvent.setup()
 		renderList()
-		const input = screen.getByPlaceholderText('Search by email...')
-		await user.type(input, 'zzzzz')
+
+		await user.type(getSearchInput(), 'zzzzz')
+
+		expect(screen.getByText('No users found')).toBeVisible()
 		expect(screen.queryByText('alice@example.com')).not.toBeInTheDocument()
+		expect(screen.queryByRole('table')).not.toBeInTheDocument()
 	})
 
-	it('renders relative time for registration and last login', () => {
-		renderList()
-		expect(screen.getAllByText(/ago/)).toHaveLength(12)
-	})
-
-	it('renders empty state when no users provided', () => {
+	it('shows a no results message when no users provided', () => {
 		renderList([])
-		const table = within(screen.getByRole('table'))
-		expect(table.getByText('Email')).toBeInTheDocument()
+		expect(screen.getByText('No users found')).toBeVisible()
+		expect(screen.queryByRole('table')).not.toBeInTheDocument()
+	})
+
+	it('keeps the search input available when there are no results', () => {
+		renderList([])
+		expect(getSearchInput()).toBeVisible()
 	})
 
 	it('starts polling on mount', () => {
