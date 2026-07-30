@@ -64,21 +64,21 @@ export const App = () => {
 								{
 									// Restricted routes for authenticated users
 								}
-								<Route path='/register-monthly-balance' element={
+								<Route path='/monthly-balance/add' element={
 									<RequireAuth>
 										<LazyRoute>
 											<InsertMonthlyBalance />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/view-monthly-balance' element={
+								<Route path='/monthly-balance/overview' element={
 									<RequireAuth>
 										<LazyRoute>
 											<ViewMonthlyBalance />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/monthly-balance-administration' element={
+								<Route path='/monthly-balance/list' element={
 									<RequireAuth>
 										<LazyRoute>
 											<MonthlyBalanceAdministration />
@@ -92,49 +92,49 @@ export const App = () => {
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/add-expense' element={
+								<Route path='/spending/add' element={
 									<RequireAuth>
 										<LazyRoute>
 											<AddExpense />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/view-expenses' element={
+								<Route path='/spending/overview' element={
 									<RequireAuth>
 										<LazyRoute>
 											<ViewExpenses />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/expenses-administration' element={
+								<Route path='/spending/list' element={
 									<RequireAuth>
 										<LazyRoute>
 											<ExpenseAdministration />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/expenses-analysis' element={
+								<Route path='/spending/monthly-breakdown' element={
 									<RequireAuth>
 										<LazyRoute>
 											<ExpenseAnalysis />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/monthly-expense-overview' element={
+								<Route path='/spending/monthly' element={
 									<RequireAuth>
 										<LazyRoute>
 											<MonthlyExpenseOverview />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/yearly-expense-overview' element={
+								<Route path='/spending/yearly' element={
 									<RequireAuth>
 										<LazyRoute>
 											<YearlyExpenseOverview />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/search-expenses' element={
+								<Route path='/spending/search' element={
 									<RequireAuth>
 										<LazyRoute>
 											<SearchExpenses />
@@ -150,7 +150,7 @@ export const App = () => {
 								{
 									// Restricted routes for authenticated administrator users
 								}
-								<Route path='/user-administration' element={
+								<Route path='/users' element={
 									<RequireAuth>
 										<RequireAdminRole>
 											<LazyRoute>

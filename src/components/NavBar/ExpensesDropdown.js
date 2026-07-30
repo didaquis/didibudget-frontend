@@ -13,37 +13,37 @@ export const ExpensesDropdown = () => {
 				<li><span className="dropdown-item-text text-light">Spendings</span></li>
 				<li><hr className="dropdown-divider" /></li>
 				<li>
-					<Link className="dropdown-item py-3" to='/add-expense'>
+					<Link className="dropdown-item py-3" to='/spending/add'>
 						<BsCartPlus size='24px' title='Add spending' /><span className="ms-3">Add spending</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/view-expenses'>
+					<Link className="dropdown-item py-3" to='/spending/overview'>
 						<BsBarChart size='24px' title='Spending overview' /><span className="ms-3">Spending overview</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/expenses-administration'>
+					<Link className="dropdown-item py-3" to='/spending/list'>
 						<BsListUl size='24px' title='Spending list' /><span className="ms-3">Spending list</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/monthly-expense-overview'>
+					<Link className="dropdown-item py-3" to='/spending/monthly'>
 						<BsCalendar3 size='24px' title='Monthly spending overview' /><span className="ms-3">Monthly spending overview</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/yearly-expense-overview'>
+					<Link className="dropdown-item py-3" to='/spending/yearly'>
 						<BsCalendar3 size='24px' title='Yearly spending overview' /><span className="ms-3">Yearly spending overview</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/expenses-analysis'>
+					<Link className="dropdown-item py-3" to='/spending/monthly-breakdown'>
 						<BsCalendarCheck size='24px' title='Monthly spending breakdown' /><span className="ms-3">Monthly spending breakdown</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/search-expenses'>
+					<Link className="dropdown-item py-3" to='/spending/search'>
 						<BsSearch size='24px' title='Search spendings' /><span className="ms-3">Search spendings</span>
 					</Link>
 				</li>

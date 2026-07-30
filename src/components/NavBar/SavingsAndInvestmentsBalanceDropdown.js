@@ -13,17 +13,17 @@ export const SavingsAndInvestmentsBalanceDropdown = () => {
 				<li><span className="dropdown-item-text text-light">Cash, savings & investments</span></li>
 				<li><hr className="dropdown-divider" /></li>
 				<li>
-					<Link className="dropdown-item py-3" to='/register-monthly-balance'>
+					<Link className="dropdown-item py-3" to='/monthly-balance/add'>
 						<BsCashCoin size='24px' title='Add monthly balance' /><span className="ms-3">Add monthly balance</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/view-monthly-balance'>
+					<Link className="dropdown-item py-3" to='/monthly-balance/overview'>
 						<BsGraphUp size='24px' title='Monthly balance overview' /><span className="ms-3">Monthly balance overview</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/monthly-balance-administration'>
+					<Link className="dropdown-item py-3" to='/monthly-balance/list'>
 						<BsListUl size='24px' title='Monthly balances list' /><span className="ms-3">Monthly balances list</span>
 					</Link>
 				</li>
