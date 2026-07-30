@@ -157,8 +157,13 @@ const getUnitAndValueDate = (secondsElapsed) => {
  * @param {number} timestamp - The timestamp in milliseconds (e.g., from Date.now()).
  * @param {string} [locale='en-UK'] - The locale for formatting the relative time (e.g., 'en-US', 'es-ES').
  * @returns {string} A localized relative time string.
+ * @throws {RangeError} If the timestamp is missing or cannot be formatted.
  */
 const getTimeAgo = (timestamp, locale = 'en-UK') => {
+	if (timestamp === null || timestamp === undefined) {
+		throw new RangeError('Invalid value at getTimeAgo function')
+	}
+
 	const rtf = new Intl.RelativeTimeFormat(locale, {
 		numeric: 'auto',
 		style: 'long',
@@ -168,7 +173,7 @@ const getTimeAgo = (timestamp, locale = 'en-UK') => {
 
 	const { value, unit } = getUnitAndValueDate(secondsElapsed) || {}
 
-	if (value === undefined || unit === undefined) {
+	if (!Number.isFinite(value) || unit === undefined) {
 		throw new RangeError('Invalid value at getTimeAgo function')
 	}
 

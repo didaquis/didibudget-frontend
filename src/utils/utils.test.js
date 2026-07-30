@@ -203,4 +203,16 @@ describe('getTimeAgo', () => {
 
 		expect(() => getTimeAgo('invalid')).toThrow(RangeError)
 	})
+
+	test('should throw RangeError for a null timestamp instead of reporting a bogus date', () => {
+		vi.setSystemTime(Date.now())
+
+		expect(() => getTimeAgo(null)).toThrow(RangeError)
+	})
+
+	test('should throw RangeError for an undefined timestamp', () => {
+		vi.setSystemTime(Date.now())
+
+		expect(() => getTimeAgo(undefined)).toThrow(RangeError)
+	})
 })
