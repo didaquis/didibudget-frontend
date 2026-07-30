@@ -4,6 +4,7 @@
 # AI generated files
 /docs
 .superset/
+.claude/launch.json
 
 # Webstorm
 .idea
