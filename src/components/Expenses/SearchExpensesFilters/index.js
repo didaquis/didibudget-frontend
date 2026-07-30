@@ -142,7 +142,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 						}
 					</div>
 
-					<div className="row">
+					<div className="row mb-3">
 						<div className="col-6 mb-3">
 							<label className="form-label text-light" htmlFor="sortBy">Sort by</label>
 							<select id="sortBy" className={SELECT_CLASS_NAME} value={filters.sortBy} onChange={onChangeField('sortBy')}>
