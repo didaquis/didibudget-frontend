@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 didibudget is a money-management SPA (track expenses, monthly balances, savings/investments). It is the **frontend only** and talks to a separate GraphQL backend (https://github.com/didaquis/didibudget-backend) via Apollo Client. The backend must be running for the app to function.
 
-Stack: React 18, React Router 6, Apollo Client 3, Reactstrap (Bootstrap 5), Recharts. Build/dev with Vite; tests with Vitest + React Testing Library.
+Stack: React 18, React Router 7, Apollo Client 3, Reactstrap (Bootstrap 5), Recharts. Build/dev with Vite; tests with Vitest + React Testing Library.
 
 `AGENTS.md` contains a longer Copilot-oriented walkthrough — consult it for additional detail. The codebase is plain JavaScript.
 
@@ -52,7 +52,7 @@ Requires Node 24.14 (see `.nvmrc`). Copy `_env` to `.env` and set `VITE_PROTOCOL
 - **Entry**: `src/index.js` mounts `<App>` wrapped in `AuthContext` Provider and Apollo Provider. `src/App.js` defines all routes.
 - **Auth** (`src/AuthContext.js`): global `isAuth` / `userData` state. `userData` is decoded from the JWT (`jsonwebtoken`) and holds email, isAdmin, isActive, registrationDate, uuid. Tokens + user data live in **sessionStorage** via `src/utils/session.js`, so auth survives page reloads.
 - **Apollo** (`src/apollo/config.js`): a link chain — `authMiddleware` (attaches `Bearer <token>` from session) → `errorLink` (on `UNAUTHENTICATED`/`FORBIDDEN` graphQL errors or `invalid_token` network errors, clears session and hard-redirects to `/`; rewrites `INTERNAL_SERVER_ERROR` messages) → `httpLink`. Changing this affects every API call.
-- **Routing** (`src/App.js`): React Router 6. Pages are lazy-loaded behind a `<Suspense>` spinner. Routes are guarded by wrapper components `RequireAuth`, `RequireUnauthenticated`, and `RequireAdminRole` (admin routes nest `RequireAdminRole` inside `RequireAuth`).
+- **Routing** (`src/App.js`): React Router 7. There is no outer `<Suspense>` — every lazily-loaded screen must be wrapped in `<LazyRoute>` (`src/components/LazyRoute/index.js`), inside its guard. Routes are guarded by wrapper components `RequireAuth`, `RequireUnauthenticated`, and `RequireAdminRole` (admin routes nest `RequireAdminRole` inside `RequireAuth`).
 - **GraphQL** (`src/gql/`): `queries/` and `mutations/` split by entity (expenses, users, monthlyBalances, expenseCategories, auth). Operations are named exports (e.g. `LIST_ALL_EXPENSES`).
 - **Data-fetching components**: under `src/components/<Entity>/`, files named `Get*.js` (e.g. `GetListOfExpensesWithPagination.js`) wrap a `useQuery`/`useMutation` and handle loading/error, keeping fetching separate from presentation. Standard pattern: `if (loading) return <Spinner />; if (error) return <ErrorAlert error={error} />`.
 - **pages/** are route-level screens; **components/** are reusable UI (each usually an `index.js`, often with a colocated `index.test.js`).
