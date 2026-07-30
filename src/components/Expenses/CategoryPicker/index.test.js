@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { CategoryPicker } from './index'
@@ -88,6 +88,37 @@ describe('CategoryPicker', () => {
 		await user.click(screen.getByRole('button', { name: /Private vehicles/ }))
 
 		expect(screen.getByRole('button', { name: /Fuel/ })).toBeVisible()
+	})
+
+	it('exposes the subcategories of an expanded category as a named list', async () => {
+		const user = userEvent.setup()
+		renderPicker({ frequentCategories: [] })
+
+		await user.click(screen.getByRole('button', { name: /Private vehicles/ }))
+
+		expect(screen.getByRole('list', { name: 'Subcategories of Private vehicles' })).toBeVisible()
+	})
+
+	it('shows only the own emojis of a subcategory in the accordion', async () => {
+		const user = userEvent.setup()
+		renderPicker({ frequentCategories: [] })
+
+		await user.click(screen.getByRole('button', { name: /Private vehicles/ }))
+
+		const subcategories = screen.getByRole('list', { name: 'Subcategories of Private vehicles' })
+		const subcategory = within(subcategories).getByRole('listitem')
+
+		expect(subcategory).toHaveTextContent('⛽️')
+		expect(subcategory).not.toHaveTextContent('🚙')
+	})
+
+	it('keeps both category and subcategory emojis on a frequent chip', () => {
+		renderPicker()
+
+		const frequentChip = screen.getByRole('button', { name: 'Private vehicles › Fuel' })
+
+		expect(frequentChip).toHaveTextContent('🚙')
+		expect(frequentChip).toHaveTextContent('⛽️')
 	})
 
 	it('flattens the list into matching leaves while filtering', async () => {
