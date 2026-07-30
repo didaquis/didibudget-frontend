@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Calendar } from 'react-widgets'
+import Calendar from 'react-widgets/Calendar'
 import { BsCalendar3 } from 'react-icons/bs'
-import 'react-widgets/dist/css/react-widgets.css'
-
-import '../../utils/dateLocalizer'
+import 'react-widgets/styles.css'
 import { startOfDay } from '../../utils/utils'
 
 const isSameDay = (one, other) => {
@@ -72,7 +70,6 @@ export const DateQuickSelector = ({ value, onChange }) => {
 						value={value}
 						onChange={chooseDate}
 						views={['month', 'year']}
-						footer={false}
 					/>
 				)
 			}

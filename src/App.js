@@ -1,6 +1,7 @@
 import { StrictMode, lazy } from 'react'
 
 import { Routes, Route } from 'react-router'
+import Localization from 'react-widgets/Localization'
 
 import { Login } from './pages/Login'
 import { Registration } from './pages/Registration'
@@ -13,6 +14,7 @@ import { LazyRoute } from './components/LazyRoute'
 import { RequireAuth } from './components/RequireAuth'
 import { RequireUnauthenticated } from './components/RequireUnauthenticated'
 import { RequireAdminRole } from './components/RequireAdminRole'
+import { dateLocalizer } from './utils/dateLocalizer'
 
 const Home = lazy(() => import('./pages/Home'))
 const UserAdministration = lazy(() => import('./pages/Users/UserAdministration'))
@@ -31,6 +33,7 @@ const SearchExpenses = lazy(() => import('./pages/Expenses/SearchExpenses'))
 
 export const App = () => {
 	return (
+		<Localization date={dateLocalizer}>
 		<StrictMode>
 			<div className="container-fluid bg-dark">
 				<div className="container">
@@ -163,5 +166,6 @@ export const App = () => {
 				</div>
 			</div>
 		</StrictMode>
+		</Localization>
 	)
 }
