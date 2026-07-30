@@ -95,6 +95,7 @@ Mutations typically use `useMutation` hook with error/success handling.
 - Test files colocated with components/modules (`.test.js` suffix)
 - Uses React Testing Library (component testing, NOT enzyme)
 - Tests typically verify rendering and user interactions
+- There is a [react-testing-library skill](.agents/skills/react-testing-library/SKILL.md) with 43 rules (query selection, async handling, anti-patterns, etc.). Reference it when writing or reviewing tests.
 
 Run tests:
 ```bash
