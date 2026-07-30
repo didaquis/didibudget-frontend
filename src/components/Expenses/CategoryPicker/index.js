@@ -175,7 +175,8 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 																		>
 																			{subcategory.name}
 																		</button>
-																		<EmojiListFromCategoryOrSubcategory emojis={subcategoryLeaf.emojis} />
+																		{/* Own emojis only: subcategoryLeaf merges them with the parent category ones */}
+																		<EmojiListFromCategoryOrSubcategory emojis={subcategory.emojis ?? []} />
 																	</li>
 																)
 															})
