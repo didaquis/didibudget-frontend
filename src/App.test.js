@@ -1,0 +1,84 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router'
+import { MockedProvider } from '@apollo/client/testing'
+import { InMemoryCache } from '@apollo/client'
+
+import { App } from './App'
+import { AuthContext } from './AuthContext'
+
+const renderAppAt = (path, authValue = { isAuth: false, userData: {} }) => {
+	return render(
+		<MockedProvider mocks={[]} cache={new InMemoryCache()}>
+			<AuthContext.Provider value={authValue}>
+				<MemoryRouter initialEntries={[path]}>
+					<App />
+				</MemoryRouter>
+			</AuthContext.Provider>
+		</MockedProvider>
+	)
+}
+
+// '/' is deliberately absent: the two tests above already pin it, and by the time this table runs
+// Home is resolved, so the row would pass on Home's own data-loading Spinner instead of the boundary.
+const LAZY_ROUTE_PATHS = [
+	'/register-monthly-balance',
+	'/view-monthly-balance',
+	'/monthly-balance-administration',
+	'/savings-and-investments',
+	'/add-expense',
+	'/view-expenses',
+	'/expenses-administration',
+	'/expenses-analysis',
+	'/monthly-expense-overview',
+	'/yearly-expense-overview',
+	'/search-expenses',
+	'/user-administration'
+]
+
+describe('App routing', () => {
+	it('shows the not found screen for an unknown url', () => {
+		renderAppAt('/this-route-does-not-exist')
+
+		expect(screen.getByRole('alert')).toHaveTextContent('404')
+	})
+
+	it('shows the login screen to a visitor without a session', () => {
+		renderAppAt('/login')
+
+		expect(screen.getByRole('button', { name: 'Log in' })).toBeVisible()
+	})
+
+	it('sends a visitor without a session away from a protected screen', () => {
+		renderAppAt('/add-expense')
+
+		expect(screen.getByRole('button', { name: 'Log in' })).toBeVisible()
+	})
+
+	// Must run before any other test renders '/': React.lazy resolves its import once and never
+	// suspends again, so a later run of this test would find Home already loaded.
+	it('shows the spinner while navigating from a screen without a lazy boundary to one with one', async () => {
+		const user = userEvent.setup()
+		renderAppAt('/login')
+
+		await user.click(screen.getByRole('link', { name: 'Home' }))
+
+		expect(await screen.findByText('Loading...')).toBeVisible()
+	})
+
+	it('shows the spinner while a lazy screen is loading', async () => {
+		renderAppAt('/')
+
+		expect(screen.getByText('Loading...')).toBeVisible()
+
+		expect(await screen.findByText('Welcome to didibudget!')).toBeVisible()
+	})
+
+	describe.each(LAZY_ROUTE_PATHS)('lazy route %s', (path) => {
+		it('shows the spinner while the screen is loading', () => {
+			renderAppAt(path, { isAuth: true, userData: { isAdmin: true } })
+
+			expect(screen.getByText('Loading...')).toBeVisible()
+		})
+	})
+})

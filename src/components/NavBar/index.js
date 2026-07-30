@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { BsHouse, BsPeople, BsBoxArrowInRight, BsBoxArrowRight } from 'react-icons/bs'
 
 import { AuthContext } from '../../AuthContext'

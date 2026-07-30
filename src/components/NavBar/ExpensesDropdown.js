@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 import { BsCreditCard2Back, BsCartPlus, BsBarChart, BsListUl, BsCalendarCheck, BsCalendar3, BsSearch } from 'react-icons/bs'
 

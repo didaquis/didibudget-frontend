@@ -4,7 +4,7 @@
 
 **didibudget** is a money management web application built with React and GraphQL. It allows users to track expenses, manage monthly balances, and view savings/investments. The frontend communicates with a separate backend API via Apollo Client.
 
-- **Tech Stack**: React 18, React Router 6, Apollo Client 3, Reactstrap (Bootstrap 5)
+- **Tech Stack**: React 18, React Router 7, Apollo Client 3, Reactstrap (Bootstrap 5)
 - **Build Tool**: Vite
 - **Testing**: Vitest + React Testing Library
 - **Linting**: ESLint
@@ -66,8 +66,8 @@ Apollo is configured in `src/apollo/config.js` with:
 - **Import Statement Order**: No explicit convention, but components typically import React/libraries first, then local components/utilities
 
 ### Routing
-- React Router 6 (DOM-based)
-- Lazy-loaded pages with `Suspense` fallback spinner
+- React Router 7 (DOM-based)
+- No outer `Suspense` boundary — every lazily-loaded screen must be wrapped in `<LazyRoute>` (`src/components/LazyRoute/index.js`), inside its guard
 - Dynamic route parameters (e.g., `/register-expense/:categoryID/*`)
 - Protected routes wrapped with context-based guards
 
