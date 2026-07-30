@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<title>Face ID autofill test: remount</title>
+</head>
+
+<body>
+	<!--
+		Throwaway page, companion to faceid-test.html.
+
+		faceid-test.html proved Safari offers the credential with no interaction when the
+		form is in the HTML at parse time. This page answers the follow-up: does that offer
+		survive React throwing the parsed markup away?
+
+		`createRoot(container).render(...)` empties the container and builds fresh nodes.
+		So here the form ships in the HTML exactly as before, and then a script empties the
+		container and rebuilds an identical form from scratch, which is what the real app
+		would do to prerendered markup.
+
+		If Face ID still fires and fills the rebuilt fields, prerendering plus a plain
+		createRoot is enough. If it does not, the fix has to use hydrateRoot so React adopts
+		the existing nodes instead of replacing them.
+
+		Delete this file once the question is answered.
+	-->
+	<h1>Face ID autofill test: remount</h1>
+	<p>Open this page and do not touch anything. The form below gets rebuilt from scratch shortly
+		after load. Does the saved password still get offered, and does it fill the fields?</p>
+
+	<div id="root">
+		<form id="login" method="post" action="/faceid-test-remount.html">
+			<label for="email">Email</label>
+			<input type="email" name="email" id="email" autocomplete="username" required />
+
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password" autocomplete="current-password" required />
+
+			<button type="submit">Log in</button>
+		</form>
+	</div>
+
+	<p id="status">Waiting to rebuild the form…</p>
+
+	<script>
+		// Mimic what createRoot().render() does to server-rendered markup: drop every parsed
+		// node, then build equivalent ones. The delay stands in for parsing and running the
+		// app bundle on a phone.
+		setTimeout(function () {
+			var root = document.getElementById('root')
+			root.textContent = ''
+
+			var form = document.createElement('form')
+			form.id = 'login'
+			form.method = 'post'
+			form.action = '/faceid-test-remount.html'
+
+			var fields = [
+				{ label: 'Email', type: 'email', name: 'email', id: 'email', autocomplete: 'username' },
+				{ label: 'Password', type: 'password', name: 'password', id: 'password', autocomplete: 'current-password' }
+			]
+
+			fields.forEach(function (field) {
+				var label = document.createElement('label')
+				label.htmlFor = field.id
+				label.textContent = field.label
+
+				var input = document.createElement('input')
+				input.type = field.type
+				input.name = field.name
+				input.id = field.id
+				input.autocomplete = field.autocomplete
+				input.required = true
+
+				form.appendChild(label)
+				form.appendChild(input)
+			})
+
+			var button = document.createElement('button')
+			button.type = 'submit'
+			button.textContent = 'Log in'
+			form.appendChild(button)
+
+			root.appendChild(form)
+
+			document.getElementById('status').textContent = 'Form rebuilt from scratch.'
+		}, 400)
+	</script>
+</body>
+
+</html>
