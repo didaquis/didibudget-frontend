@@ -95,6 +95,7 @@ Mutations typically use `useMutation` hook with error/success handling.
 - Test files colocated with components/modules (`.test.js` suffix)
 - Uses React Testing Library (component testing, NOT enzyme)
 - Tests typically verify rendering and user interactions
+- There is a [react-testing-library skill](.agents/skills/react-testing-library/SKILL.md) with 43 rules (query selection, async handling, anti-patterns, etc.). Reference it when writing or reviewing tests.
 
 Run tests:
 ```bash
@@ -133,6 +134,10 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 - `src/apollo/config.js` - Auth middleware and error handling; affects all API calls
 - `src/AuthContext.js` - Global auth state; affects routing and protected components
 
+
+## UI Patterns
+
+Before creating any new UI element, find an existing similar element in the codebase and match its styling approach — same Bootstrap classes, same custom CSS patterns, same markup structure. Don't invent new custom styles when the project already has a convention.
 
 ## Accessibility & Dark Theme Colors
 

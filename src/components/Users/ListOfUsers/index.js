@@ -1,11 +1,21 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { parseUnixTimestamp, getTimeAgo } from '../../../utils/utils'
-import { EmojiGreenCheck } from '../../EmojiGreenCheck'
-import { EmojiRedCross } from '../../EmojiRedCross'
+import { getTimeAgo } from '../../../utils/utils'
+import './styles.css'
+
+const roleBadge = (isAdmin) => {
+	if (isAdmin) { return <span className="badge-admin">Admin</span> }
+	return <span className="badge-user">User</span>
+}
+
+const statusBadge = (isActive) => {
+	if (isActive) { return <span className="badge-active">Active</span> }
+	return <span className="badge-inactive">Inactive</span>
+}
 
 export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
+	const [search, setSearch] = useState('')
 
 	useEffect(() => {
 		const minuteInMilliseconds = 60000
@@ -17,38 +27,47 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 		}
 	}, [startPolling, stopPolling])
 
+	const filteredUsers = users.filter(user =>
+		user.email.toLowerCase().includes(search.toLowerCase())
+	)
+
 	return (
-		<section className="table-responsive">
-			<table className="table text-light">
-				<thead>
-					<tr>
-						<th scope="col">Email</th>
-						<th scope="col">Is administrator?</th>
-						<th scope="col">Is active?</th>
-						<th scope="col">Registration date</th>
-						<th scope="col">Last login</th>
-					</tr>
-				</thead>
-				<tbody>
-					{
-						users.map(user => {
-							return (
-								<tr key={user.uuid}>
-									<td>{user.email}</td>
-									<td>{(user.isAdmin) ? <EmojiGreenCheck /> : <EmojiRedCross />}</td>
-									<td>{(user.isActive) ? <EmojiGreenCheck /> : <EmojiRedCross />}</td>
-									<td>{getTimeAgo(user.registrationDate)}</td>
-									<td>{parseUnixTimestamp(user.lastLogin)}</td>
-								</tr>
-							)
-						})
-					}
-				</tbody>
-			</table>
+		<section>
+			<input
+				type="search"
+				className="form-control mb-3"
+				placeholder="Search by email..."
+				aria-label="Search by email"
+				value={search}
+				onChange={(e) => setSearch(e.target.value)}
+			/>
+			<div className="table-responsive">
+				<table className="table text-light responsive-table">
+					<thead>
+						<tr>
+							<th scope="col">Email</th>
+							<th scope="col">Role</th>
+							<th scope="col">Status</th>
+							<th scope="col">Registered</th>
+							<th scope="col">Last login</th>
+						</tr>
+					</thead>
+					<tbody>
+						{filteredUsers.map(user => (
+							<tr key={user.uuid}>
+								<td data-label="Email"><span className="value">{user.email}</span></td>
+								<td data-label="Role"><span className="value">{roleBadge(user.isAdmin)}</span></td>
+								<td data-label="Status"><span className="value">{statusBadge(user.isActive)}</span></td>
+								<td data-label="Registered"><span className="value">{getTimeAgo(user.registrationDate)}</span></td>
+								<td data-label="Last login"><span className="value">{getTimeAgo(user.lastLogin)}</span></td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 		</section>
 	)
 }
-
 
 ListOfUsers.propTypes = {
 	users: PropTypes.arrayOf(
@@ -57,7 +76,7 @@ ListOfUsers.propTypes = {
 			uuid: PropTypes.string.isRequired,
 			isAdmin: PropTypes.bool.isRequired,
 			isActive: PropTypes.bool.isRequired,
-			registrationDate: PropTypes.string.isRequired,
+			registrationDate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 			lastLogin: PropTypes.string.isRequired
 		})
 	),
