@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { BsFillCaretDownFill, BsFillCaretUpFill } from 'react-icons/bs'
+import { BsFillCaretDownFill, BsFillCaretUpFill, BsX } from 'react-icons/bs'
 
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 
@@ -30,6 +30,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 	const [filterText, setFilterText] = useState('')
 	const [expandedItems, setExpandedItems] = useState({})
 	const [isChanging, setIsChanging] = useState(false)
+	const filterInput = useRef(null)
 
 	const leaves = useMemo(() => flattenCategories(categories), [categories])
 	const frequentLeaves = useMemo(() => frequentCategories.map(buildFrequentLeaf), [frequentCategories])
@@ -39,6 +40,11 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 	const toggleItem = (uuid) => {
 		setExpandedItems((previous) => ({ ...previous, [uuid]: !previous[uuid] }))
+	}
+
+	const clearFilter = () => {
+		setFilterText('')
+		filterInput.current.focus()
 	}
 
 	const chooseLeaf = (leaf) => {
@@ -66,15 +72,32 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 	return (
 		<div>
-			<input
-				id="categoryPickerFilter"
-				type="search"
-				className="form-control mb-3"
-				placeholder="Search…"
-				aria-label="Filter categories"
-				value={filterText}
-				onChange={(event) => setFilterText(event.target.value)}
-			/>
+			<div className="input-group mb-3">
+				<input
+					id="categoryPickerFilter"
+					type="text"
+					inputMode="search"
+					enterKeyHint="search"
+					className="form-control"
+					placeholder="Search…"
+					aria-label="Filter categories"
+					value={filterText}
+					onChange={(event) => setFilterText(event.target.value)}
+					ref={filterInput}
+				/>
+				{
+					(filterText !== '') && (
+						<button
+							type="button"
+							className="btn btn-light"
+							aria-label="Clear filter"
+							onClick={clearFilter}
+						>
+							<BsX size={'24px'} />
+						</button>
+					)
+				}
+			</div>
 
 			{
 				!isFiltering && frequentLeaves.length > 0 && (
