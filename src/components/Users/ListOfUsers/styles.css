@@ -38,8 +38,17 @@
   }
 
   .responsive-table td .value {
+    flex: 1;
     text-align: right;
+    min-width: 0;
   }
+
+  .responsive-table td[data-label="Email"] {
+    max-width: none;
+    overflow: visible;
+    white-space: normal;
+  }
+
 }
 
 .responsive-table th {
