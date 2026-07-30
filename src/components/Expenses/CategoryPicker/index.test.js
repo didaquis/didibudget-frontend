@@ -71,7 +71,7 @@ describe('CategoryPicker', () => {
 	it('hides the frequent section when there are no frequent categories', () => {
 		renderPicker({ frequentCategories: [] })
 
-		expect(screen.queryByText('Frequent')).not.toBeInTheDocument()
+		expect(screen.queryByText('Most used')).not.toBeInTheDocument()
 	})
 
 	it('lists the categories as an accordion while the filter is empty', () => {

@@ -79,7 +79,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 			{
 				!isFiltering && frequentLeaves.length > 0 && (
 					<div className="mb-3">
-						<p className="text-light small mb-1">Frequent</p>
+						<p className="text-light small mb-1">Most used</p>
 						<div className="d-flex flex-wrap gap-2">
 							{
 								frequentLeaves.map(leaf => (
@@ -98,7 +98,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 				)
 			}
 
-			<p className="text-light small mb-0">All</p>
+			<p className="text-light small mb-0">All categories</p>
 
 			{
 				isFiltering
