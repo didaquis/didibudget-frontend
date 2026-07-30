@@ -19,8 +19,9 @@ const renderAppAt = (path, authValue = { isAuth: false, userData: {} }) => {
 	)
 }
 
+// '/' is deliberately absent: the two tests above already pin it, and by the time this table runs
+// Home is resolved, so the row would pass on Home's own data-loading Spinner instead of the boundary.
 const LAZY_ROUTE_PATHS = [
-	'/',
 	'/register-monthly-balance',
 	'/view-monthly-balance',
 	'/monthly-balance-administration',
