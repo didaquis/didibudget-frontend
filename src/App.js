@@ -1,4 +1,4 @@
-import { StrictMode, Suspense, lazy } from 'react'
+import { StrictMode, lazy } from 'react'
 
 import { Routes, Route } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ import { Page404 } from './pages/Page404'
 
 import { NavBar } from './components/NavBar'
 import { Footer } from './components/Footer'
-import { Spinner } from './components/Spinner'
+import { LazyRoute } from './components/LazyRoute'
 import { RequireAuth } from './components/RequireAuth'
 import { RequireUnauthenticated } from './components/RequireUnauthenticated'
 import { RequireAdminRole } from './components/RequireAdminRole'
@@ -36,101 +36,127 @@ export const App = () => {
 				<div className="container">
 					<NavBar />
 						<main className="pb-4">
-							<Suspense fallback={<Spinner />}>
-								<Routes>
-									<Route path='/' element={<Home />} />
-									<Route path="*" element={<Page404 />} />
+							<Routes>
+								<Route path='/' element={
+									<LazyRoute>
+										<Home />
+									</LazyRoute>
+								} />
+								<Route path="*" element={<Page404 />} />
 
-									{
-										// Restricted routes for non-authenticated users
-									}
-									<Route path='/login' element={
-										<RequireUnauthenticated>
-											<Login />
-										</RequireUnauthenticated>
-									} />
-									<Route path='/register' element={
-										<RequireUnauthenticated>
-											<Registration />
-										</RequireUnauthenticated>
-									} />
+								{
+									// Restricted routes for non-authenticated users
+								}
+								<Route path='/login' element={
+									<RequireUnauthenticated>
+										<Login />
+									</RequireUnauthenticated>
+								} />
+								<Route path='/register' element={
+									<RequireUnauthenticated>
+										<Registration />
+									</RequireUnauthenticated>
+								} />
 
-									{
-										// Restricted routes for authenticated users
-									}
-									<Route path='/register-monthly-balance' element={
-										<RequireAuth>
+								{
+									// Restricted routes for authenticated users
+								}
+								<Route path='/register-monthly-balance' element={
+									<RequireAuth>
+										<LazyRoute>
 											<InsertMonthlyBalance />
-										</RequireAuth>
-									} />
-									<Route path='/view-monthly-balance' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/view-monthly-balance' element={
+									<RequireAuth>
+										<LazyRoute>
 											<ViewMonthlyBalance />
-										</RequireAuth>
-									} />
-									<Route path='/monthly-balance-administration' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/monthly-balance-administration' element={
+									<RequireAuth>
+										<LazyRoute>
 											<MonthlyBalanceAdministration />
-										</RequireAuth>
-									} />
-									<Route path='/savings-and-investments' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/savings-and-investments' element={
+									<RequireAuth>
+										<LazyRoute>
 											<SavingsAndInvestments />
-										</RequireAuth>
-									} />
-									<Route path='/add-expense' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/add-expense' element={
+									<RequireAuth>
+										<LazyRoute>
 											<AddExpense />
-										</RequireAuth>
-									} />
-									<Route path='/view-expenses' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/view-expenses' element={
+									<RequireAuth>
+										<LazyRoute>
 											<ViewExpenses />
-										</RequireAuth>
-									} />
-									<Route path='/expenses-administration' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/expenses-administration' element={
+									<RequireAuth>
+										<LazyRoute>
 											<ExpenseAdministration />
-										</RequireAuth>
-									} />
-									<Route path='/expenses-analysis' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/expenses-analysis' element={
+									<RequireAuth>
+										<LazyRoute>
 											<ExpenseAnalysis />
-										</RequireAuth>
-									} />
-									<Route path='/monthly-expense-overview' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/monthly-expense-overview' element={
+									<RequireAuth>
+										<LazyRoute>
 											<MonthlyExpenseOverview />
-										</RequireAuth>
-									} />
-									<Route path='/yearly-expense-overview' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/yearly-expense-overview' element={
+									<RequireAuth>
+										<LazyRoute>
 											<YearlyExpenseOverview />
-										</RequireAuth>
-									} />
-									<Route path='/search-expenses' element={
-										<RequireAuth>
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/search-expenses' element={
+									<RequireAuth>
+										<LazyRoute>
 											<SearchExpenses />
-										</RequireAuth>
-									} />
-									<Route path='/logout' element={
-										<RequireAuth>
-											<Logout />
-										</RequireAuth>
-									} />
+										</LazyRoute>
+									</RequireAuth>
+								} />
+								<Route path='/logout' element={
+									<RequireAuth>
+										<Logout />
+									</RequireAuth>
+								} />
 
-									{
-										// Restricted routes for authenticated administrator users
-									}
-									<Route path='/user-administration' element={
-										<RequireAuth>
-											<RequireAdminRole>
+								{
+									// Restricted routes for authenticated administrator users
+								}
+								<Route path='/user-administration' element={
+									<RequireAuth>
+										<RequireAdminRole>
+											<LazyRoute>
 												<UserAdministration />
-											</RequireAdminRole>
-										</RequireAuth>
-									} />
-								</Routes>
-							</Suspense>
+											</LazyRoute>
+										</RequireAdminRole>
+									</RequireAuth>
+								} />
+							</Routes>
 						</main>
 					<div className="row pb-5"></div>
 					<Footer />

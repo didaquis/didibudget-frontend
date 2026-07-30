@@ -19,7 +19,7 @@ const root = createRoot(container)
 root.render(
 	<AuthContext.Provider>
 		<ApolloProvider client={apolloClient}>
-			<BrowserRouter future={{ v7_relativeSplatPath: true }}>
+			<BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
 				<App />
 			</BrowserRouter>
 		</ApolloProvider>
