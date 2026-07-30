@@ -98,15 +98,15 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 				)
 			}
 
-			<p className="text-light small mb-1">All</p>
+			<p className="text-light small mb-0">All</p>
 
 			{
 				isFiltering
 					? (
 						<ul className="list-group list-group-flush">
 							{
-								filteredLeaves.map(leaf => (
-									<li className="list-group-item bg-dark border-info px-0" key={leaf.key}>
+								filteredLeaves.map((leaf, index) => (
+									<li className={`list-group-item bg-dark border-info px-0 ${index === 0 ? 'pt-0' : ''}`} key={leaf.key}>
 										<button type="button" className="btn btn-link text-start text-info p-0" onClick={() => chooseLeaf(leaf)}>
 											{leaf.label}
 										</button>
@@ -119,15 +119,16 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 					: (
 						<ul className="list-group list-group-flush">
 							{
-								categories.map(category => {
+								categories.map((category, index) => {
 									const hasSubcategories = Boolean(category.subcategories?.length)
 									const isExpanded = Boolean(expandedItems[category.uuid])
+									const itemClassName = `list-group-item bg-dark border-info px-0 ${index === 0 ? 'pt-0' : ''}`
 
 									if (!hasSubcategories) {
 										const leaf = buildLeaf(category, null)
 
 										return (
-											<li className="list-group-item bg-dark border-info px-0" key={category.uuid}>
+											<li className={itemClassName} key={category.uuid}>
 												<button
 													type="button"
 													className="btn btn-link text-start text-info p-0"
@@ -143,7 +144,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 									const categoryLeaf = buildLeaf(category, null)
 
 									return (
-										<li className="list-group-item bg-dark border-info px-0" key={category.uuid}>
+										<li className={itemClassName} key={category.uuid}>
 											<button
 												type="button"
 												className="btn btn-link text-start text-info p-0 d-inline-flex align-items-center"
