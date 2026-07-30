@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { parseUnixTimestamp, getTimeAgo } from '../../../utils/utils'
+import { getTimeAgo } from '../../../utils/utils'
 import './styles.css'
 
 const roleBadge = (isAdmin) => {
@@ -59,7 +59,7 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 								<td data-label="Role">{roleBadge(user.isAdmin)}</td>
 								<td data-label="Status">{statusBadge(user.isActive)}</td>
 								<td data-label="Registered">{getTimeAgo(user.registrationDate)}</td>
-								<td data-label="Last login">{parseUnixTimestamp(user.lastLogin)}</td>
+								<td data-label="Last login">{getTimeAgo(user.lastLogin)}</td>
 							</tr>
 						))}
 					</tbody>

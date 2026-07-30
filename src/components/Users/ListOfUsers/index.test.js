@@ -110,9 +110,9 @@ describe('ListOfUsers', () => {
     expect(screen.queryByText('alice@example.com')).not.toBeInTheDocument()
   })
 
-  it('renders registration date', () => {
+  it('renders relative time for registration and last login', () => {
     renderList()
-    expect(screen.getAllByText(/ago/)).toHaveLength(3)
+    expect(screen.getAllByText(/ago/)).toHaveLength(6)
   })
 
   it('renders empty state when no users provided', () => {
