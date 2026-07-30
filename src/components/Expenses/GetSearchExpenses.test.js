@@ -47,12 +47,12 @@ const categoriesMock = {
 		data: {
 			getExpenseCategory: [
 				{
-					_id: 'category-id-1',
+					__typename: 'ExpenseCategory', _id: 'category-id-1',
 					name: 'Private vehicles',
 					emojis: ['🚙'],
 					uuid: 'category-uuid-1',
 					subcategories: [
-						{ _id: 'subcategory-id-1', name: 'Fuel', uuid: 'subcategory-uuid-1', emojis: ['⛽️'] }
+						{ __typename: 'ExpenseSubcategory', _id: 'subcategory-id-1', name: 'Fuel', uuid: 'subcategory-uuid-1', emojis: ['⛽️'] }
 					]
 				}
 			]
@@ -61,8 +61,8 @@ const categoriesMock = {
 }
 
 const searchResultMock = {
-	expenses: [],
-	pagination: { currentPage: 1, totalPages: 1, totalCount: 0 },
+	__typename: 'ExpenseSearchResult', expenses: [],
+	pagination: { __typename: 'PaginationData', currentPage: 1, totalPages: 1, totalCount: 0 },
 	totalSum: 0,
 	currencyISO: 'EUR',
 	breakdown: []
@@ -81,7 +81,7 @@ const searchExpensesPage2Mock = {
 describe('GetSearchExpenses', () => {
 	it('should display a spinner while the categories are loading', () => {
 		render(
-			<MockedProvider mocks={[categoriesMock]} addTypename={false}>
+			<MockedProvider mocks={[categoriesMock]} >
 				<GetSearchExpenses />
 			</MockedProvider>
 		)
@@ -91,7 +91,7 @@ describe('GetSearchExpenses', () => {
 
 	it('should display the filters form once the categories are loaded', async () => {
 		render(
-			<MockedProvider mocks={[categoriesMock]} addTypename={false}>
+			<MockedProvider mocks={[categoriesMock]} >
 				<GetSearchExpenses />
 			</MockedProvider>
 		)
@@ -101,7 +101,7 @@ describe('GetSearchExpenses', () => {
 
 	it('should not display any result before the first search', async () => {
 		render(
-			<MockedProvider mocks={[categoriesMock]} addTypename={false}>
+			<MockedProvider mocks={[categoriesMock]} >
 				<GetSearchExpenses />
 			</MockedProvider>
 		)
@@ -118,7 +118,7 @@ describe('GetSearchExpenses', () => {
 		}
 
 		render(
-			<MockedProvider mocks={[errorMock]} addTypename={false}>
+			<MockedProvider mocks={[errorMock]} >
 				<GetSearchExpenses />
 			</MockedProvider>
 		)
@@ -130,7 +130,7 @@ describe('GetSearchExpenses', () => {
 		const user = userEvent.setup()
 
 		render(
-			<MockedProvider mocks={[categoriesMock, searchExpensesPage1Mock]} addTypename={false}>
+			<MockedProvider mocks={[categoriesMock, searchExpensesPage1Mock]} >
 				<GetSearchExpenses />
 			</MockedProvider>
 		)
@@ -144,7 +144,7 @@ describe('GetSearchExpenses', () => {
 		const user = userEvent.setup()
 
 		render(
-			<MockedProvider mocks={[categoriesMock, searchExpensesPage1Mock, searchExpensesPage2Mock]} addTypename={false}>
+			<MockedProvider mocks={[categoriesMock, searchExpensesPage1Mock, searchExpensesPage2Mock]} >
 				<GetSearchExpenses />
 			</MockedProvider>
 		)

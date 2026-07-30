@@ -7,7 +7,7 @@ import { InMemoryCache } from '@apollo/client'
 import { App } from './App'
 import { AuthContext } from './AuthContext'
 
-const renderAppAt = (path, authValue = { isAuth: false, userData: {} }) => {
+const renderAppAt = (path, authValue = { isAuth: false, userData: {}, activateAuth: vi.fn(), removeAuth: vi.fn() }) => {
 	return render(
 		<MockedProvider mocks={[]} cache={new InMemoryCache()}>
 			<AuthContext.Provider value={authValue}>
