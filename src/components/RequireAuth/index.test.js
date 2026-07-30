@@ -13,9 +13,9 @@ const LoginProbe = () => {
 const renderGuardedRoute = (isAuth) => {
 	return render(
 		<AuthContext.Provider value={{ isAuth }}>
-			<MemoryRouter initialEntries={['/add-expense']}>
+			<MemoryRouter initialEntries={['/spending/add']}>
 				<Routes>
-					<Route path='/add-expense' element={
+					<Route path='/spending/add' element={
 						<RequireAuth>
 							<p>Protected screen</p>
 						</RequireAuth>
@@ -43,6 +43,6 @@ describe('RequireAuth', () => {
 	it('sends the user to the login screen keeping the attempted location', () => {
 		renderGuardedRoute(false)
 
-		expect(screen.getByText('Login screen, coming from /add-expense')).toBeVisible()
+		expect(screen.getByText('Login screen, coming from /spending/add')).toBeVisible()
 	})
 })

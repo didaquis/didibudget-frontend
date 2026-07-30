@@ -31,7 +31,7 @@ export const NavBar = () => {
 
 			{isAuth && userData.isAdmin && (
 				<div className="nav-item">
-					<Link className="nav-link text-light" to='/user-administration'>
+					<Link className="nav-link text-light" to='/users'>
 						<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User administration' />
 					</Link>
 				</div>
@@ -39,8 +39,8 @@ export const NavBar = () => {
 
 			<div className="nav-item">
 				<Link className="nav-link text-light" to={isAuth ? '/logout' : '/login'}>
-					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Login' />}
-					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Logout' />}
+					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Log in' />}
+					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Log out' />}
 				</Link>
 			</div>
 		</nav>

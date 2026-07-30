@@ -29,7 +29,7 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 
 			await registerExpense({ variables })
 
-			navigate('/expenses-administration')
+			navigate('/spending/list')
 		} catch (error) {
 			setError(error.message)
 		} finally {

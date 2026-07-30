@@ -7,9 +7,9 @@ import { AuthContext } from '../../AuthContext'
 const renderGuardedRoute = (userData) => {
 	return render(
 		<AuthContext.Provider value={{ userData }}>
-			<MemoryRouter initialEntries={['/user-administration']}>
+			<MemoryRouter initialEntries={['/users']}>
 				<Routes>
-					<Route path='/user-administration' element={
+					<Route path='/users' element={
 						<RequireAdminRole>
 							<p>User administration screen</p>
 						</RequireAdminRole>

@@ -39,7 +39,7 @@ export const RegisterMonthlyBalanceForm = () => {
 		const variables = { balance: parseFloat(balance.value), date: dateToRegister }
 
 		registerMonthlyBalance({ variables }).then(() => {
-			navigate('/view-monthly-balance')
+			navigate('/monthly-balance/overview')
 		}).catch(e => {
 			setError(e.message)
 			setIsDisabled(false)

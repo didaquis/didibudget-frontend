@@ -68,7 +68,8 @@ Apollo is configured in `src/apollo/config.js` with:
 ### Routing
 - React Router 7 (DOM-based)
 - No outer `Suspense` boundary — every lazily-loaded screen must be wrapped in `<LazyRoute>` (`src/components/LazyRoute/index.js`), inside its guard
-- Dynamic route parameters (e.g., `/register-expense/:categoryID/*`)
+- All routes are static paths; there are no dynamic route parameters
+- Paths follow `/<resource-singular>/<action-or-view>` (e.g. `/spending/add`, `/monthly-balance/list`), using the same wording as the page title and the NavBar label
 - Protected routes wrapped with context-based guards
 
 ## Code Patterns
