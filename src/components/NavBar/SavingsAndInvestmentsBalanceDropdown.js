@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 import { BsBank, BsCashCoin, BsGraphUp, BsListUl, BsPiggyBank } from 'react-icons/bs'
 

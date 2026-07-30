@@ -1,6 +1,6 @@
 import { useState, Fragment } from 'react'
 import { useMutation } from '@apollo/client'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import { ErrorAlert } from '../../ErrorAlert'
 import { SubmitButton } from '../../SubmitButton'

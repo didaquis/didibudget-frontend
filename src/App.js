@@ -1,6 +1,6 @@
 import { StrictMode, lazy } from 'react'
 
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router'
 
 import { Login } from './pages/Login'
 import { Registration } from './pages/Registration'

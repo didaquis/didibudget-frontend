@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { MemoryRouter, Routes, Route, useLocation } from 'react-router'
 
 import { RequireAuth } from './index'
 import { AuthContext } from '../../AuthContext'
