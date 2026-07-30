@@ -20,7 +20,7 @@ const categoriesMock = {
 	result: {
 		data: {
 			getExpenseCategory: [
-				{ _id: 'category-id-2', name: 'Taxes', emojis: ['🏛'], uuid: 'category-uuid-2', subcategories: [] }
+				{ __typename: 'ExpenseCategory', _id: 'category-id-2', name: 'Taxes', emojis: ['🏛'], uuid: 'category-uuid-2', subcategories: [] }
 			]
 		}
 	}
@@ -32,7 +32,7 @@ const frequentMock = {
 		data: {
 			getMostUsedExpenseCategories: [
 				{
-					category: 'category-id-2',
+					__typename: 'MostUsedExpenseCategory', category: 'category-id-2',
 					categoryName: 'Taxes',
 					categoryEmojis: ['🏛'],
 					subcategory: null,
@@ -57,7 +57,7 @@ const failingCategoriesMock = {
 describe('GetAddExpenseData', () => {
 	it('passes the frequent categories to the form', async () => {
 		render(
-			<MockedProvider mocks={[categoriesMock, frequentMock]} addTypename={false}>
+			<MockedProvider mocks={[categoriesMock, frequentMock]} >
 				<GetAddExpenseData />
 			</MockedProvider>
 		)
@@ -69,7 +69,7 @@ describe('GetAddExpenseData', () => {
 		const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
 
 		render(
-			<MockedProvider mocks={[categoriesMock, failingFrequentMock]} addTypename={false}>
+			<MockedProvider mocks={[categoriesMock, failingFrequentMock]} >
 				<GetAddExpenseData />
 			</MockedProvider>
 		)
@@ -82,7 +82,7 @@ describe('GetAddExpenseData', () => {
 
 	it('shows an error when the categories fail', async () => {
 		render(
-			<MockedProvider mocks={[failingCategoriesMock, frequentMock]} addTypename={false}>
+			<MockedProvider mocks={[failingCategoriesMock, frequentMock]} >
 				<GetAddExpenseData />
 			</MockedProvider>
 		)

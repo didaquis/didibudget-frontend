@@ -42,7 +42,7 @@ const successfulMutation = {
 	result: {
 		data: {
 			registerExpense: {
-				quantity: 12.4,
+				__typename: 'Expense', quantity: 12.4,
 				date: String(startOfToday().getTime()),
 				currencyISO: 'EUR',
 				uuid: 'expense-uuid-1'
@@ -59,7 +59,7 @@ const failingMutation = {
 
 const renderForm = (mocks = [successfulMutation]) => {
 	render(
-		<MockedProvider mocks={mocks} addTypename={false}>
+		<MockedProvider mocks={mocks} >
 			<AddExpenseForm categories={categories} frequentCategories={frequentCategories} />
 		</MockedProvider>
 	)
