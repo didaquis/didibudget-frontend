@@ -18,7 +18,7 @@ export const UserListItemCard = ({ user }) => (
 				{statusBadge(user.isActive)}
 			</div>
 			<div className="d-flex justify-content-between align-items-center">
-				<span className="text-white-50">Registered</span>
+				<span className="text-white-50">Registration</span>
 				<span>{formatTimeAgo(user.registrationDate, 'Unknown')}</span>
 			</div>
 			<div className="d-flex justify-content-between align-items-center">

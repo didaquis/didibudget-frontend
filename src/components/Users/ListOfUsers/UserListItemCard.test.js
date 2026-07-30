@@ -46,7 +46,7 @@ describe('UserListItemCard', () => {
 		renderCard()
 		expect(screen.getByText('Role')).toBeVisible()
 		expect(screen.getByText('Status')).toBeVisible()
-		expect(screen.getByText('Registered')).toBeVisible()
+		expect(screen.getByText('Registration')).toBeVisible()
 		expect(screen.getByText('Last login')).toBeVisible()
 	})
 

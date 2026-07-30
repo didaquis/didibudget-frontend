@@ -57,7 +57,7 @@ describe('ListOfUsers', () => {
 		expect(table.getByText('Email')).toBeVisible()
 		expect(table.getByText('Role')).toBeVisible()
 		expect(table.getByText('Status')).toBeVisible()
-		expect(table.getByText('Registered')).toBeVisible()
+		expect(table.getByText('Registration')).toBeVisible()
 		expect(table.getByText('Last login')).toBeVisible()
 	})
 
