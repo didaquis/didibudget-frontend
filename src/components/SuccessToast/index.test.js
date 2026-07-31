@@ -66,4 +66,34 @@ describe('SuccessToast', () => {
 
 		expect(screen.getByRole('status')).toHaveTextContent('12.40 EUR · Taxes')
 	})
+
+	it('re-announces an identical message that arrives while the previous one is still visible', () => {
+		vi.useFakeTimers()
+
+		const { rerender } = render(<SuccessToast notice={{ id: 1, message: '12.40 EUR · Taxes' }} />)
+
+		act(() => {
+			vi.advanceTimersByTime(2000)
+		})
+
+		const firstNode = screen.getByRole('status').firstChild
+
+		rerender(<SuccessToast notice={{ id: 2, message: '12.40 EUR · Taxes' }} />)
+
+		// jsdom offers no other observable for "the node was replaced" than identity,
+		// so we assert on it directly even though it is an implementation detail.
+		expect(screen.getByRole('status').firstChild).not.toBe(firstNode)
+
+		act(() => {
+			vi.advanceTimersByTime(2500)
+		})
+
+		expect(screen.getByRole('status')).toHaveTextContent('12.40 EUR · Taxes')
+	})
+
+	it('hides the decorative check mark from assistive technology', () => {
+		render(<SuccessToast notice={{ id: 1, message: '12.40 EUR · Taxes' }} />)
+
+		expect(screen.getByRole('status').querySelector('span[aria-hidden="true"]')).toBeInTheDocument()
+	})
 })
