@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { parseUnixTimestamp } from '../../../utils/utils'
 import { getNameOfCategoryOrSubcategory } from '../utils'
 
-import { ErrorAlert } from '../../ErrorAlert'
+import { EmptyState } from '../../EmptyState'
 import { PaginateNavbar } from '../../PaginateNavbar'
 
 const DATE_LENGTH = 10
@@ -35,7 +35,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 	const { expenses, pagination, totalSum, currencyISO, breakdown } = searchResult
 
 	if (!expenses.length) {
-		return <ErrorAlert errorMessage='No expenses found' />
+		return <EmptyState message='No expenses match this search — try adjusting the filters' />
 	}
 
 	return (
