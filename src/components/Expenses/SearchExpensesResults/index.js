@@ -35,7 +35,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 	const { expenses, pagination, totalSum, currencyISO, breakdown } = searchResult
 
 	if (!expenses.length) {
-		return <EmptyState message='No expenses match this search — try adjusting the filters' />
+		return <EmptyState message='No expenses match this search. Try adjusting the filters' />
 	}
 
 	return (

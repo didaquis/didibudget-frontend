@@ -60,7 +60,7 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 			</section>
 		)
 	} else {
-		const message = 'No monthly balances recorded yet — add your first one to see the list'
+		const message = 'No monthly balances recorded yet. Add your first one to see the list'
 		return <EmptyState message={message} />
 	}
 }
