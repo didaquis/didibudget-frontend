@@ -63,7 +63,10 @@ Requires Node 24.14 (see `.nvmrc`). Copy `_env` to `.env` and set `VITE_PROTOCOL
 ## Testing notes
 
 - Test files are colocated with the `.test.js` suffix; environment is `jsdom` with globals enabled and `TZ=Europe/Madrid` (set in `vite.config.js`) — relevant for date-sensitive tests.
-- Setup file `vitest.setup.js` pulls in `@testing-library/jest-dom` matchers.
+- Setup file `vitest.setup.js` pulls in `@testing-library/jest-dom` matchers. Never import
+  `@testing-library/jest-dom/extend-expect` in a test file — it is already loaded.
+- Query through `screen`, never through the object destructured from `render()`. Only `rerender` comes
+  from that object.
 
 ## Files to change with care
 
