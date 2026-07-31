@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
-import { recoverSession, deleteSession } from '../utils/session'
+import { recoverSession, forceSessionExpiry } from '../utils/session'
 
 /* Configuration imported from '.env' file (Vite env vars: import.meta.env.VITE_*) */
 const backendProtocol 	= import.meta.env.VITE_PROTOCOL
@@ -14,7 +14,7 @@ const httpLink = new HttpLink({
 	uri: backendAddress
 })
 
-const authMiddleware = new ApolloLink((operation, forward) => {
+export const authMiddleware = new ApolloLink((operation, forward) => {
 	const token = recoverSession('token')
 	const authorization = token ? `Bearer ${token}` : ''
 	operation.setContext(({ headers = {} }) => ({
@@ -27,24 +27,22 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 	return forward(operation)
 })
 
-const errorLink = onError(({ operation, graphQLErrors, networkError, response }) => {
+export const errorLink = onError(({ operation, graphQLErrors, networkError, response }) => {
 	if (graphQLErrors) {
 		graphQLErrors.forEach(err => {
 			// err.message, err.locations, err.path, err.extensions
-			if (err.extensions.code === 'UNAUTHENTICATED' || err.extensions.code === 'FORBIDDEN') {
-				deleteSession()
-				window.location.href = '/'
+			if (err.extensions?.code === 'UNAUTHENTICATED' || err.extensions?.code === 'FORBIDDEN') {
+				forceSessionExpiry()
 			}
 
-			if (err.extensions.code === 'INTERNAL_SERVER_ERROR') {
+			if (err.extensions?.code === 'INTERNAL_SERVER_ERROR') {
 				err.message = 'An error has occurred'
 			}
 		})
 	}
 
 	if (networkError && networkError.response === 'invalid_token') {
-		deleteSession()
-		window.location.href = '/'
+		forceSessionExpiry()
 	}
 })
 
