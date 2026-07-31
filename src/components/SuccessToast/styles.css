@@ -1,0 +1,25 @@
+/* La duración está duplicada en index.js (LEAVE_DURATION). Si cambias una, cambia la otra. */
+.success-toast {
+  animation: success-toast-in 150ms ease-out;
+}
+
+.success-toast--leaving {
+  animation: success-toast-out 150ms ease-in forwards;
+}
+
+@keyframes success-toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes success-toast-out {
+  from { opacity: 1; transform: none; }
+  to { opacity: 0; transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .success-toast,
+  .success-toast--leaving {
+    animation: none;
+  }
+}
