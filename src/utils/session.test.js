@@ -60,10 +60,16 @@ describe('session', () => {
 			expect(recovered.uuid).toBe('abc-123')
 		})
 
-		it('turns numbers into strings, so callers must not assume a number comes back', () => {
+		it('keeps numbers as numbers across a store and recover cycle', () => {
 			storeUserDataOnSessionStorage({ registrationDate: 1715776800000 })
 
-			expect(recoverUserDataFromSessionStorage().registrationDate).toBe('1715776800000')
+			expect(recoverUserDataFromSessionStorage().registrationDate).toBe(1715776800000)
+		})
+
+		it('keeps a string that reads like a boolean as a string', () => {
+			storeUserDataOnSessionStorage({ email: 'true' })
+
+			expect(recoverUserDataFromSessionStorage().email).toBe('true')
 		})
 
 		it('returns an empty object when nothing was stored', () => {

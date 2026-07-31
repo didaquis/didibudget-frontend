@@ -94,7 +94,7 @@ describe('AuthContext', () => {
 		expect(result.current.userData.email).toBeUndefined()
 	})
 
-	it('turns the registration date into a string once the session is reloaded', () => {
+	it('keeps the registration date unchanged once the session is reloaded', () => {
 		const { result, unmount } = renderAuth()
 		act(() => result.current.activateAuth(makeToken(anAdmin)))
 		expect(result.current.userData.registrationDate).toBe(1715776800000)
@@ -102,6 +102,6 @@ describe('AuthContext', () => {
 
 		const { result: afterReload } = renderAuth()
 
-		expect(afterReload.current.userData.registrationDate).toBe('1715776800000')
+		expect(afterReload.current.userData.registrationDate).toBe(1715776800000)
 	})
 })

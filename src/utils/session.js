@@ -34,16 +34,10 @@ function forceSessionExpiry() {
 
 /**
  * Serialize and save user data in Session Storage
- * @param {string|number|Array|Object} data - data to store
+ * @param {Object} data - data to store
  */
 function storeUserDataOnSessionStorage(data) {
-	const replacer = (key, value) => {
-		if (typeof value === 'boolean' || typeof value === 'number') {
-			return String(value)
-		}
-		return value
-	}
-	sessionStorage.setItem('userData', JSON.stringify(data, replacer))
+	sessionStorage.setItem('userData', JSON.stringify(data))
 }
 
 /**
@@ -51,16 +45,7 @@ function storeUserDataOnSessionStorage(data) {
  * @returns {Object}
  */
 function recoverUserDataFromSessionStorage() {
-	const reviver = (key, value) => {
-		if (value === 'true') {
-			return true
-		}
-		if (value === 'false') {
-			return false
-		}
-		return value
-	}
-	return JSON.parse(sessionStorage.getItem('userData'), reviver) || {}
+	return JSON.parse(sessionStorage.getItem('userData')) || {}
 }
 
 /**
