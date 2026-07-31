@@ -23,6 +23,16 @@ function deleteSession() {
 }
 
 /**
+ * Tear down an invalidated session and send the user back to the landing page.
+ * The redirect is a full page load on purpose: it drops the Apollo cache and
+ * every piece of React state left over from the expired session.
+ */
+function forceSessionExpiry() {
+	deleteSession()
+	window.location.href = '/'
+}
+
+/**
  * Serialize and save user data in Session Storage
  * @param {string|number|Array|Object} data - data to store
  */
@@ -64,6 +74,7 @@ export {
 	saveSession,
 	recoverSession,
 	deleteSession,
+	forceSessionExpiry,
 	storeUserDataOnSessionStorage,
 	recoverUserDataFromSessionStorage,
 	deleteUserDataFromSessionStorage
