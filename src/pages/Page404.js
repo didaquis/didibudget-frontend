@@ -1,14 +1,12 @@
 import { Fragment } from 'react'
+import { Link } from 'react-router'
 
-import { ErrorAlert } from '../components/ErrorAlert'
-import { useDocumentTitle } from '../hooks/useDocumentTitle'
+import { PageTitle } from '../components/PageTitle'
 
-export const Page404 = () => {
-	useDocumentTitle('Page not found')
-
-	return (
-		<Fragment>
-			<ErrorAlert errorMessage='404' />
-		</Fragment>
-	)
-}
+export const Page404 = () => (
+	<Fragment>
+		<PageTitle text='Page not found' />
+		<p className="text-light">The page you are looking for does not exist or has been moved.</p>
+		<Link to='/' className="btn btn-primary">Go to the home page</Link>
+	</Fragment>
+)
