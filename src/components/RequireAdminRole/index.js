@@ -6,7 +6,7 @@ import { AuthContext } from '../../AuthContext'
 export const RequireAdminRole = ({ children }) => {
 	const { userData } = useContext(AuthContext)
 
-	if (!userData.isAdmin) {
+	if (userData.isAdmin !== true) {
 		return <Navigate to="/" />
 	}
 

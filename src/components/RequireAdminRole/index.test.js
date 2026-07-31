@@ -39,4 +39,10 @@ describe('RequireAdminRole', () => {
 
 		expect(screen.getByText('Home screen')).toBeVisible()
 	})
+
+	it('redirects to the home screen when the role is anything other than a true boolean', () => {
+		renderGuardedRoute({ isAdmin: 'false' })
+
+		expect(screen.getByText('Home screen')).toBeVisible()
+	})
 })
