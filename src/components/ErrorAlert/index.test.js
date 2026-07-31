@@ -1,13 +1,12 @@
-import { render } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
+import { render, screen } from '@testing-library/react'
 
 import { ErrorAlert } from './'
 
 describe('ErrorAlert', () => {
 	it('renders correctly', () => {
-		const { getByRole, getByText } = render(<ErrorAlert errorMessage='foo' />)
+		render(<ErrorAlert errorMessage='foo' />)
 
-		expect(getByRole('alert')).toBeVisible()
-		expect(getByText('foo')).toBeVisible()
+		expect(screen.getByRole('alert')).toBeVisible()
+		expect(screen.getByText('foo')).toBeVisible()
 	})
 })

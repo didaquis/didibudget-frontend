@@ -1,22 +1,21 @@
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
 
 import { Jumbotron } from './'
 
 describe('Jumbotron', () => {
 	it('contains an expected text', () => {
-		const { getByText } = render(<Jumbotron title='foo' subtitle='bar' />)
+		render(<Jumbotron title='foo' subtitle='bar' />)
 
-		expect(getByText('foo')).toBeVisible()
-		expect(getByText('bar')).toBeVisible()
+		expect(screen.getByText('foo')).toBeVisible()
+		expect(screen.getByText('bar')).toBeVisible()
 	})
 
 	it('contains an expected text, included more content as subtitle', () => {
-		const { getByText } = render(<Jumbotron title='foo' subtitle='bar' subtitleExtraLine='biz' />)
+		render(<Jumbotron title='foo' subtitle='bar' subtitleExtraLine='biz' />)
 
-		expect(getByText('foo')).toBeVisible()
-		expect(getByText('bar')).toBeVisible()
-		expect(getByText('biz')).toBeVisible()
+		expect(screen.getByText('foo')).toBeVisible()
+		expect(screen.getByText('bar')).toBeVisible()
+		expect(screen.getByText('biz')).toBeVisible()
 	})
 
 	it('contains the correct DOM nodes', () => {
