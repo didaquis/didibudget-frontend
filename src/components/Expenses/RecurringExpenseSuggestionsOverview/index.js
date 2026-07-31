@@ -13,7 +13,7 @@ export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {
 				</div>
 				<div className="card-body pb-0">
 					{!hasSuggestions ? (
-						<p className="text-light">No suggestions available right now.</p>
+						<p className="text-light" role="status">No suggestions available right now.</p>
 					) : (
 						<div className="row">
 							{
