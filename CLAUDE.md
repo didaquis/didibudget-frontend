@@ -26,6 +26,9 @@ majority to weigh against a desktop minority — it is where the app is used.
 The page is dark but form controls are **not**: the app uses default Bootstrap `form-control` /
 `form-select` with no colour overrides. Match that in new forms.
 
+`ErrorAlert` (red, `role="alert"`) is only for failures: network, GraphQL, form validation. For "no data
+yet" or "no results" use `EmptyState` (`role="status"`). Never use `ErrorAlert` for an empty list.
+
 ## Commands
 
 ```bash
@@ -54,7 +57,7 @@ Requires Node 24.14 (see `.nvmrc`). Copy `_env` to `.env` and set `VITE_PROTOCOL
 - **Apollo** (`src/apollo/config.js`): a link chain — `authMiddleware` (attaches `Bearer <token>` from session) → `errorLink` (on `UNAUTHENTICATED`/`FORBIDDEN` graphQL errors or `invalid_token` network errors, clears session and hard-redirects to `/`; rewrites `INTERNAL_SERVER_ERROR` messages) → `httpLink`. Changing this affects every API call.
 - **Routing** (`src/App.js`): React Router 7. There is no outer `<Suspense>` — every lazily-loaded screen must be wrapped in `<LazyRoute>` (`src/components/LazyRoute/index.js`), inside its guard. Routes are guarded by wrapper components `RequireAuth`, `RequireUnauthenticated`, and `RequireAdminRole` (admin routes nest `RequireAdminRole` inside `RequireAuth`). Paths are `/<resource-singular>/<action-or-view>` and must reuse the wording of the page title and NavBar label — the UI says *spending*, so URLs say `spending`, never `expense`.
 - **GraphQL** (`src/gql/`): `queries/` and `mutations/` split by entity (expenses, users, monthlyBalances, expenseCategories, auth). Operations are named exports (e.g. `LIST_ALL_EXPENSES`).
-- **Data-fetching components**: under `src/components/<Entity>/`, files named `Get*.js` (e.g. `GetListOfExpensesWithPagination.js`) wrap a `useQuery`/`useMutation` and handle loading/error, keeping fetching separate from presentation. Standard pattern: `if (loading) return <Spinner />; if (error) return <ErrorAlert error={error} />`.
+- **Data-fetching components**: under `src/components/<Entity>/`, files named `Get*.js` (e.g. `GetListOfExpensesWithPagination.js`) wrap a `useQuery`/`useMutation` and handle loading/error, keeping fetching separate from presentation. Standard pattern: `if (loading) return <Spinner />; if (error) return <ErrorAlert errorMessage={error.message} />`.
 - **pages/** are route-level screens; **components/** are reusable UI (each usually an `index.js`, often with a colocated `index.test.js`).
 
 ## Testing notes
