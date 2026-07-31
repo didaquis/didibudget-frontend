@@ -40,7 +40,8 @@ describe('App routing', () => {
 	it('shows the not found screen for an unknown url', () => {
 		renderAppAt('/this-route-does-not-exist')
 
-		expect(screen.getByRole('alert')).toHaveTextContent('404')
+		expect(screen.getByRole('heading', { name: 'Page not found' })).toBeVisible()
+		expect(screen.getByRole('link', { name: 'Go to the home page' })).toBeVisible()
 	})
 
 	it('shows the login screen to a visitor without a session', () => {

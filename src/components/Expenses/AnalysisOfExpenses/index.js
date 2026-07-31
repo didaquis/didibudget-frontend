@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import { getDetailedExpensesPerMonth } from '../utils'
 
-import { ErrorAlert } from '../../ErrorAlert'
+import { EmptyState } from '../../EmptyState'
 import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
 export const AnalysisOfExpenses = ( { expenses, categories } ) => {
@@ -22,8 +22,8 @@ export const AnalysisOfExpenses = ( { expenses, categories } ) => {
 			</section>
 		)
 	} else {
-		const errorMessage = 'Not enough data'
-		return <ErrorAlert errorMessage={errorMessage} />
+		const message = 'No expenses recorded in this period'
+		return <EmptyState message={message} />
 	}
 }
 

@@ -79,9 +79,12 @@ GraphQL queries return `{ data, loading, error }`. Example pattern:
 ```javascript
 const { data, loading, error } = useQuery(QUERY_NAME)
 if (loading) return <Spinner />
-if (error) return <ErrorAlert error={error} />
+if (error) return <ErrorAlert errorMessage={error.message} />
 // Use data...
 ```
+
+`ErrorAlert` (red, `role="alert"`) is only for failures: network, GraphQL, form validation. For "no data
+yet" or "no results" use `EmptyState` (`role="status"`). Never use `ErrorAlert` for an empty list.
 
 ### Mutations
 Mutations typically use `useMutation` hook with error/success handling.

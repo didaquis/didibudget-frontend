@@ -2,15 +2,15 @@ import PropTypes from 'prop-types'
 
 import { getDetailedExpensesGroupedFromRange } from '../utils'
 
-import { ErrorAlert } from '../../ErrorAlert'
+import { EmptyState } from '../../EmptyState'
 import { DetailedExpensesGroup } from '../DetailedExpensesGroup'
 
 export const DateRangeExpenseOverview = ({ startDate, endDate, expenses, categories }) => {
 	const expensesGroupedData = getDetailedExpensesGroupedFromRange(expenses, startDate, endDate)
 
 	if (!expensesGroupedData) {
-		const errorMessage = 'Not enough data'
-		return <ErrorAlert errorMessage={errorMessage} />
+		const message = 'No expenses recorded in this date range'
+		return <EmptyState message={message} />
 	}
 
 	return (

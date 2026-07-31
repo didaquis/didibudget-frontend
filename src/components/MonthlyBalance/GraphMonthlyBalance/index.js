@@ -4,7 +4,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tool
 
 import { parseUnixTimestamp } from '../../../utils/utils'
 
-import { ErrorAlert } from '../../ErrorAlert'
+import { EmptyState } from '../../EmptyState'
 import { PageSubTitle } from '../../PageSubTitle'
 import { InformativeBadge } from '../../InformativeBadge'
 
@@ -103,8 +103,8 @@ export const GraphMonthlyBalance = ({ data }) => {
 			</div>
 		)
 	} else {
-		const errorMessage = 'Not enough data to generate statistics'
-		return <ErrorAlert errorMessage={errorMessage} />
+		const message = 'Not enough data yet to show the balance chart'
+		return <EmptyState message={message} />
 	}
 }
 

@@ -118,7 +118,7 @@ describe('SearchExpensesResults', () => {
 		expect(screen.queryByText('Delete')).not.toBeInTheDocument()
 	})
 
-	it('should display an alert when the search returns no expenses', () => {
+	it('should tell the user nothing matched when the search returns no expenses', () => {
 		const emptyResult = {
 			...searchResult,
 			expenses: [],
@@ -129,6 +129,6 @@ describe('SearchExpensesResults', () => {
 
 		render(<SearchExpensesResults searchResult={emptyResult} categories={categories} onChangePage={vi.fn()} />)
 
-		expect(screen.getByText('No expenses found')).toBeVisible()
+		expect(screen.getByRole('status')).toHaveTextContent('No expenses match this search')
 	})
 })
