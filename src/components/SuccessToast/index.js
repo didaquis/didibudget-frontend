@@ -35,7 +35,7 @@ export const SuccessToast = ({ notice }) => {
 	const toastClassName = isLeaving ? 'toast show success-toast success-toast--leaving' : 'toast show success-toast'
 
 	return (
-		<div className="toast-container success-toast-container position-fixed top-0 start-50 translate-middle-x p-3" role="status" aria-live="polite" aria-atomic="true">
+		<div className="toast-container success-toast-container position-fixed start-50 translate-middle-x p-3" role="status" aria-live="polite" aria-atomic="true">
 			{
 				// La región viva se queda montada siempre: un lector de pantalla sólo anuncia
 				// cambios dentro de una región que ya existía en el DOM.
