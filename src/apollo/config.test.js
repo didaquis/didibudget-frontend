@@ -113,6 +113,13 @@ describe('apollo links', () => {
 			expect(forceSessionExpiry).not.toHaveBeenCalled()
 		})
 
+		it('survives an error that carries no extensions', async () => {
+			const { results } = await runThrough(errorLink, respondWith({ errors: [{ message: 'Original message' }] }))
+
+			expect(results[0].errors[0].message).toBe('Original message')
+			expect(forceSessionExpiry).not.toHaveBeenCalled()
+		})
+
 		it('expires the session when the transport reports an invalid token', async () => {
 			await runThrough(errorLink, failWith(Object.assign(new Error('Failed to fetch'), { response: 'invalid_token' })))
 

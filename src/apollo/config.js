@@ -31,11 +31,11 @@ export const errorLink = onError(({ operation, graphQLErrors, networkError, resp
 	if (graphQLErrors) {
 		graphQLErrors.forEach(err => {
 			// err.message, err.locations, err.path, err.extensions
-			if (err.extensions.code === 'UNAUTHENTICATED' || err.extensions.code === 'FORBIDDEN') {
+			if (err.extensions?.code === 'UNAUTHENTICATED' || err.extensions?.code === 'FORBIDDEN') {
 				forceSessionExpiry()
 			}
 
-			if (err.extensions.code === 'INTERNAL_SERVER_ERROR') {
+			if (err.extensions?.code === 'INTERNAL_SERVER_ERROR') {
 				err.message = 'An error has occurred'
 			}
 		})
