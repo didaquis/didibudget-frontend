@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
 import { CategoryType } from '../utils/index'
 
 import { ViewGetSavingsAndInvestments } from './'

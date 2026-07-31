@@ -99,6 +99,8 @@ Mutations typically use `useMutation` hook with error/success handling.
 - Test files colocated with components/modules (`.test.js` suffix)
 - Uses React Testing Library (component testing, NOT enzyme)
 - Tests typically verify rendering and user interactions
+- `vitest.setup.js` already loads the `@testing-library/jest-dom` matchers. Never import `@testing-library/jest-dom/extend-expect` in a test file
+- Query through `screen`, never through the object destructured from `render()`. Only `rerender` comes from that object
 - There is a [react-testing-library skill](.agents/skills/react-testing-library/SKILL.md) with 43 rules (query selection, async handling, anti-patterns, etc.). Reference it when writing or reviewing tests.
 
 Run tests:

@@ -1,17 +1,16 @@
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
 
 import { Footer } from './'
 
 describe('Footer', () => {
 	it('renders a link with correct attributes', () => {
-		const { getByText } = render(<Footer />)
+		render(<Footer />)
 
-		expect(getByText('didaquis').href).toBe('https://didaquis.github.io/')
-		expect(getByText('didaquis').closest('a')).toHaveAttribute('href', 'https://didaquis.github.io/') /* Alternative way */
+		expect(screen.getByText('didaquis').href).toBe('https://didaquis.github.io/')
+		expect(screen.getByText('didaquis').closest('a')).toHaveAttribute('href', 'https://didaquis.github.io/') /* Alternative way */
 
-		expect(getByText('didaquis').target).toBe('_blank')
-		expect(getByText('didaquis').rel).toBe('noreferrer noopener')
+		expect(screen.getByText('didaquis').target).toBe('_blank')
+		expect(screen.getByText('didaquis').rel).toBe('noreferrer noopener')
 	})
 
 	it('contains an expected text', () => {

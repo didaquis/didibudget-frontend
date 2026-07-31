@@ -1,5 +1,4 @@
-import { render } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
+import { render, screen } from '@testing-library/react'
 
 import { UserCard } from './'
 
@@ -9,9 +8,9 @@ describe('UserCard', () => {
 			email: 'foo@mail.com',
 			isAdmin: false
 		}
-		const { getByText } = render(<UserCard userData={data} />)
+		render(<UserCard userData={data} />)
 
-		expect(getByText('foo@mail.com')).toBeVisible()
+		expect(screen.getByText('foo@mail.com')).toBeVisible()
 	})
 
 	it('should show if user is an administrator user', () => {
@@ -19,15 +18,15 @@ describe('UserCard', () => {
 			email: 'foo@mail.com',
 			isAdmin: false
 		}
-		const { queryByText, rerender } = render(<UserCard userData={props} />)
+		const { rerender } = render(<UserCard userData={props} />)
 
-		expect(queryByText('You are an administrator user!')).not.toBeInTheDocument()
+		expect(screen.queryByText('You are an administrator user!')).not.toBeInTheDocument()
 
 		const newProps = {
 			email: 'foo@mail.com',
 			isAdmin: true
 		}
 		rerender(<UserCard userData={newProps} />)
-		expect(queryByText('You are an administrator user!')).toBeVisible()
+		expect(screen.queryByText('You are an administrator user!')).toBeVisible()
 	})
 })

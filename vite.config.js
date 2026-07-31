@@ -1,4 +1,5 @@
 import { defineConfig, transformWithOxc } from 'vite'
+import { configDefaults } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 
 // Vite 8 bundles with Rolldown/Oxc, which infers the loader from the file
@@ -50,6 +51,9 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './vitest.setup.js',
+    // Agent worktrees live inside the repo under `.claude/worktrees/`. Without this
+    // exclusion their test files run as part of this project's suite.
+    exclude: [...configDefaults.exclude, '**/.claude/**'],
     env: {
       TZ: 'Europe/Madrid',
     },
