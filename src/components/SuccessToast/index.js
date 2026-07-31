@@ -11,8 +11,12 @@ export const SuccessToast = ({ notice }) => {
 	const [isVisible, setIsVisible] = useState(false)
 	const [isLeaving, setIsLeaving] = useState(false)
 
+	/* The id, not the object, is the identity: a caller passing an inline object
+	   would otherwise restart the timers on every parent render */
+	const noticeId = notice?.id
+
 	useEffect(() => {
-		if (!notice) {
+		if (noticeId === undefined) {
 			return
 		}
 
@@ -26,7 +30,7 @@ export const SuccessToast = ({ notice }) => {
 			clearTimeout(leaveTimer)
 			clearTimeout(hideTimer)
 		}
-	}, [notice?.id])
+	}, [noticeId])
 
 	const toastClassName = isLeaving ? 'toast show success-toast success-toast--leaving' : 'toast show success-toast'
 
