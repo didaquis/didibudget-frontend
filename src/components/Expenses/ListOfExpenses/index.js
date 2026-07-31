@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { parseUnixTimestamp } from '../../../utils/utils'
 import { getNameOfCategoryOrSubcategory } from '../utils'
 
-import { ErrorAlert } from '../../ErrorAlert'
+import { EmptyState } from '../../EmptyState'
 import { ButtonDelete } from '../../ButtonDelete'
 import { PaginateNavbar } from '../../PaginateNavbar'
 
@@ -65,8 +65,8 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 			</section>
 		)
 	} else {
-		const errorMessage = 'Not enough data to generate list'
-		return <ErrorAlert errorMessage={errorMessage} />
+		const message = 'No expenses recorded yet — add your first one to see the list'
+		return <EmptyState message={message} />
 	}
 }
 

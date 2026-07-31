@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { parseUnixTimestamp } from '../../../utils/utils'
 
-import { ErrorAlert } from '../../ErrorAlert'
+import { EmptyState } from '../../EmptyState'
 import { ButtonDelete } from '../../ButtonDelete'
 import { PaginateNavbar } from '../../PaginateNavbar'
 
@@ -60,8 +60,8 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 			</section>
 		)
 	} else {
-		const errorMessage = 'Not enough data to generate list'
-		return <ErrorAlert errorMessage={errorMessage} />
+		const message = 'No monthly balances recorded yet — add your first one to see the list'
+		return <EmptyState message={message} />
 	}
 }
 

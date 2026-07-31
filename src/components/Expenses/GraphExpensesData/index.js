@@ -5,7 +5,7 @@ import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Ba
 import { parseUnixTimestamp } from '../../../utils/utils'
 import { getSumPerMonth, getLastNValuesFromArrayIfTheyExist } from '../utils'
 
-import { ErrorAlert } from '../../ErrorAlert'
+import { EmptyState } from '../../EmptyState'
 import { PageSubTitle } from '../../PageSubTitle'
 import { AveragePerMonth } from '../AveragePerMonth'
 
@@ -71,8 +71,8 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 			</Fragment>
 		)
 	} else {
-		const errorMessage = 'Not enough data to generate statistics'
-		return <ErrorAlert errorMessage={errorMessage} />
+		const message = 'Not enough data yet to show spending statistics'
+		return <EmptyState message={message} />
 	}
 }
 
