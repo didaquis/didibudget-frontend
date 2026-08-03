@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './styles.css'
 
 const AUTO_HIDE_DELAY = 4000
-/* Tiene que coincidir con la duración de las animaciones de styles.css */
+/* Must match the animation duration in styles.css */
 const LEAVE_DURATION = 150
 
 export const SuccessToast = ({ notice }) => {
@@ -37,10 +37,10 @@ export const SuccessToast = ({ notice }) => {
 	return (
 		<div className="toast-container success-toast-container position-fixed start-50 translate-middle-x p-3" role="status" aria-live="polite" aria-atomic="true">
 			{
-				// La región viva se queda montada siempre: un lector de pantalla sólo anuncia
-				// cambios dentro de una región que ya existía en el DOM.
-				// La `key` fuerza el reemplazo del nodo, para que dos mensajes idénticos
-				// seguidos se vuelvan a anunciar y se rebobine la animación de entrada.
+				// The live region stays mounted at all times: a screen reader only announces
+				// changes inside a region that already existed in the DOM.
+				// The `key` forces the node to be replaced, so two identical consecutive
+				// messages get announced again and the entry animation rewinds.
 			}
 			{
 				isVisible && notice && (
