@@ -28,6 +28,8 @@ The page is dark but form controls are **not**: the app uses default Bootstrap `
 
 `ErrorAlert` (red, `role="alert"`) is only for failures: network, GraphQL, form validation. For "no data
 yet" or "no results" use `EmptyState` (`role="status"`). Never use `ErrorAlert` for an empty list.
+For a confirmation after a successful write use `SuccessToast` (`role="status"`, auto-hides): pass it a
+`{ id, message }` object with a fresh `id` per save, never a bare string.
 
 ## Commands
 

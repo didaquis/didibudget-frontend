@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useMutation } from '@apollo/client'
 
 import { ErrorAlert } from '../../ErrorAlert'
+import { SuccessToast } from '../../SuccessToast'
 import { SubmitButton } from '../../SubmitButton'
 import { SubmitButtonHelper } from '../../SubmitButtonHelper'
 import { DateQuickSelector } from '../../DateQuickSelector'
@@ -18,7 +19,8 @@ const startOfToday = () => startOfDay(new Date())
 export const AddExpenseForm = ({ categories, frequentCategories }) => {
 	const [isDisabled, setIsDisabled] = useState(false)
 	const [error, setError] = useState(null)
-	const [savedMessage, setSavedMessage] = useState(null)
+	const [notice, setNotice] = useState(null)
+	const noticeIdRef = useRef(0)
 	const [amount, setAmount] = useState('')
 	const [date, setDate] = useState(startOfToday)
 	const [selected, setSelected] = useState(null)
@@ -29,10 +31,10 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 	const isValid = validateAddExpenseForm(amount, date, selected)
 
 	useEffect(() => {
-		if (savedMessage) {
+		if (notice) {
 			amountInputRef.current?.focus()
 		}
-	}, [savedMessage])
+	}, [notice])
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
@@ -41,7 +43,7 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 		}
 		setIsDisabled(true)
 		setError(null)
-		setSavedMessage(null)
+		setNotice(null)
 
 		const quantity = parseFloat(amount)
 		const label = selected.label
@@ -54,7 +56,8 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 		}
 
 		registerExpense({ variables }).then(() => {
-			setSavedMessage(`Saved: ${quantity.toFixed(2)} EUR · ${label}`)
+			noticeIdRef.current += 1
+			setNotice({ id: noticeIdRef.current, message: `${quantity.toFixed(2)} EUR · ${label}` })
 			setAmount('')
 			setDate(startOfToday())
 			setSelected(null)
@@ -70,12 +73,11 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 			<div className="row justify-content-center">
 				<form className="col-md-8" onSubmit={handleSubmit}>
 
+					<SuccessToast notice={notice} />
+
 					{
-						// Feedback sits above every field on purpose: saving reopens the category picker,
+						// The error sits above every field on purpose: saving reopens the category picker,
 						// so anything below it gets pushed off a 390px screen.
-					}
-					{
-						savedMessage && <p className="alert alert-success py-3 text-center mb-4" role="status">{savedMessage}</p>
 					}
 					{
 						error && <ErrorAlert errorMessage={error} />

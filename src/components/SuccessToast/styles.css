@@ -1,0 +1,38 @@
+/* The duration is duplicated in index.js (LEAVE_DURATION). Change one, change the other. */
+.success-toast {
+	animation: success-toast-in 150ms ease-out;
+}
+
+/* Bootstrap's toast is 85% opaque; over the dark page whatever sits behind it
+   bleeds through the text */
+.toast.success-toast {
+	background-color: #fff;
+}
+
+/* Clears the navbar so the toast never covers it. Bootstrap 5.1.3 gives
+   .toast-container no z-index of its own */
+.success-toast-container {
+	top: 64px;
+	z-index: 1090;
+}
+
+.success-toast--leaving {
+	animation: success-toast-out 150ms ease-in forwards;
+}
+
+@keyframes success-toast-in {
+	from { opacity: 0; transform: translateY(-8px); }
+	to { opacity: 1; transform: none; }
+}
+
+@keyframes success-toast-out {
+	from { opacity: 1; transform: none; }
+	to { opacity: 0; transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.success-toast,
+	.success-toast--leaving {
+		animation: none;
+	}
+}
