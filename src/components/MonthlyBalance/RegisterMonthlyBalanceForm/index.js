@@ -1,8 +1,8 @@
-import { useState, Fragment } from 'react'
+import { useEffect, useRef, useState, Fragment } from 'react'
 import { useMutation } from '@apollo/client'
-import { useNavigate } from 'react-router'
 
 import { ErrorAlert } from '../../ErrorAlert'
+import { SuccessToast } from '../../SuccessToast'
 import { SubmitButton } from '../../SubmitButton'
 import { SubmitButtonHelper } from '../../SubmitButtonHelper'
 
@@ -18,28 +18,46 @@ export const RegisterMonthlyBalanceForm = () => {
 	const availableYears = getLastFiveYearsFrom(currentYear)
 	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-	const navigate = useNavigate()
 	const [isDisabled, setIsDisabled] = useState(false)
 	const [error, setError] = useState(null)
+	const [notice, setNotice] = useState(null)
+	const noticeIdRef = useRef(0)
+	const balanceInputRef = useRef(null)
 
 	const [registerMonthlyBalance] = useMutation(REGISTER_MONTHLY_BALANCE)
 
-	const balance = useInputValue('')
+	/* Plain state instead of useInputValue: this is the only field that gets cleared on save */
+	const [balance, setBalance] = useState('')
 	const year = useInputValue(currentYear)
 	const month = useInputValue(monthNames[currentMonth])
 
+	const isValid = validateRegisterMonthlyBalanceForm(balance, year.value, month.value)
+
+	useEffect(() => {
+		if (notice) {
+			balanceInputRef.current?.focus()
+		}
+	}, [notice])
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
 		setIsDisabled(true)
 		setError(null)
+		setNotice(null)
 
-		const dateToRegister = new Date(year.value, monthNames.indexOf(month.value), 1, 3)
+		const savedYear = year.value
+		const savedMonth = month.value
+		const savedBalance = parseFloat(balance)
 
-		const variables = { balance: parseFloat(balance.value), date: dateToRegister }
+		const dateToRegister = new Date(savedYear, monthNames.indexOf(savedMonth), 1, 3)
+
+		const variables = { balance: savedBalance, date: dateToRegister }
 
 		registerMonthlyBalance({ variables }).then(() => {
-			navigate('/monthly-balance/overview')
+			noticeIdRef.current += 1
+			setNotice({ id: noticeIdRef.current, message: `${savedBalance.toFixed(2)} EUR · ${savedMonth} ${savedYear}` })
+			setBalance('')
+			setIsDisabled(false)
 		}).catch(e => {
 			setError(e.message)
 			setIsDisabled(false)
@@ -50,9 +68,13 @@ export const RegisterMonthlyBalanceForm = () => {
 		<Fragment>
 			<div className="row justify-content-center mt-4">
 				<form className="col-md-8" disabled={isDisabled} onSubmit={handleSubmit}>
+
+					<SuccessToast notice={notice} />
+
 					<div className="col mb-3">
 						<label htmlFor="inputbalanceRegisterMonthlyBalanceForm" className="text-light">Balance <span className="text-danger">*</span></label>
 						<input
+							ref={balanceInputRef}
 							disabled={isDisabled}
 							inputMode="decimal"
 							className="form-control"
@@ -60,7 +82,8 @@ export const RegisterMonthlyBalanceForm = () => {
 							placeholder='1234.99'
 							type='number'
 							step='0.01'
-							{...balance}
+							value={balance}
+							onChange={(event) => setBalance(event.target.value)}
 							required
 							autoFocus
 						/>
@@ -93,8 +116,8 @@ export const RegisterMonthlyBalanceForm = () => {
 					</div>
 
 					<div className="mt-2">
-						<SubmitButton disabled={isDisabled || !validateRegisterMonthlyBalanceForm(balance.value, year.value, month.value)}>Save monthly balance</SubmitButton>
-						<SubmitButtonHelper mustShowHelper={!validateRegisterMonthlyBalanceForm(balance.value, year.value, month.value)}></SubmitButtonHelper>
+						<SubmitButton disabled={isDisabled || !isValid}>Save monthly balance</SubmitButton>
+						<SubmitButtonHelper mustShowHelper={!isValid}></SubmitButtonHelper>
 					</div>
 				</form>
 				<div className="col-md-8">
