@@ -41,6 +41,9 @@ export const RegisterMonthlyBalanceForm = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
+		if (!isValid) {
+			return
+		}
 		setIsDisabled(true)
 		setError(null)
 		setNotice(null)
