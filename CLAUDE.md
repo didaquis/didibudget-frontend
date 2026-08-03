@@ -33,22 +33,10 @@ For a confirmation after a successful write use `SuccessToast` (`role="status"`,
 
 ## Commands
 
-```bash
-npm run dev                  # Vite dev server (http://localhost:5173)
-npm run build                # Production bundle → ./dist/
-npm run lint                 # ESLint over ./src
-npm run lint -- --fix        # Auto-fix lint violations
-npm run test                 # Run all tests once
-npm run test:watch           # Tests in watch mode
-npm run test -- utils        # Run tests matching a pattern (e.g. filename substring)
-npm run test -- --coverage   # With coverage report
-```
-
 Requires Node 24.14 (see `.nvmrc`). Copy `_env` to `.env` and set `VITE_PROTOCOL`, `VITE_HOST`, `VITE_PORT`, `VITE_GRAPHQL` before running.
 
-## Conventions (enforced by ESLint)
+## Conventions
 
-- **No semicolons**, **single quotes**, `curly` required, `no-return-await`.
 - Indentation is **tabs**.
 - Source files are `.js` but **contain JSX**; Vite's esbuild is configured to load `src/**/*.js` as JSX (`vite.config.js`). Do not rename to `.jsx`.
 
