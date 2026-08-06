@@ -15,7 +15,7 @@ export const HomeHero = () => (
 			</div>
 			<p className="mt-4 mb-3 fs-2 fw-light fst-italic text-light" data-easteregg="The cake is a lie">Your money, month by month.</p>
 			<p className="lead fw-light text-white-50">Track your savings and see where the spending goes.</p>
-			<div className="mt-5 pt-3">
+			<div className="mt-5 pt-5">
 				<Link className="btn btn-outline-info btn-lg w-100" to='/login'>Log in</Link>
 			</div>
 			<div className="mt-3 text-center">
