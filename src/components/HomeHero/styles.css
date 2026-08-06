@@ -1,0 +1,26 @@
+/* The light the didibudget sign casts. Sits behind the wordmark, which already
+   carries its own extrude and drop shadow. The colour is the logo fill
+   (#eb6c6c) and Bootstrap has no token for it, so this is the one thing on the
+   logged-out home screen that is not a Bootstrap utility. */
+.home-hero__glow {
+	position: absolute;
+	left: 50%;
+	top: .7rem;
+	width: 88%;
+	aspect-ratio: 5 / 2;
+	transform: translateX(-50%);
+	background: radial-gradient(ellipse at center, rgba(235, 108, 108, .34), rgba(235, 108, 108, .13) 42%, rgba(235, 108, 108, 0) 72%);
+	pointer-events: none;
+	animation: home-hero-glow 700ms ease-out both 250ms;
+}
+
+@keyframes home-hero-glow {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.home-hero__glow {
+		animation: none;
+	}
+}

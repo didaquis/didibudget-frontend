@@ -72,7 +72,7 @@ describe('App routing', () => {
 
 		expect(screen.getByText('Loading...')).toBeVisible()
 
-		expect(await screen.findByText('Welcome to didibudget!')).toBeVisible()
+		expect(await screen.findByRole('heading', { name: 'didibudget' })).toBeVisible()
 	})
 
 	describe('browser tab title', () => {
@@ -87,7 +87,7 @@ describe('App routing', () => {
 			renderAppAt('/register')
 
 			await user.click(screen.getByRole('link', { name: 'Home' }))
-			await screen.findByText('Welcome to didibudget!')
+			await screen.findByRole('heading', { name: 'didibudget' })
 
 			expect(document.title).toBe('didibudget')
 		})
