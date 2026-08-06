@@ -42,12 +42,14 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 					<tbody>
 						{
 							monthlyBalances.map(monthlyBalance => {
+								const date = parseUnixTimestamp(monthlyBalance.date).substring(0, 10)
+								const details = [date, `${monthlyBalance.balance} ${monthlyBalance.currencyISO}`]
 								return (
 									<tr key={monthlyBalance.uuid}>
-										<td>{parseUnixTimestamp(monthlyBalance.date).substring(0, 10)}</td>
+										<td>{date}</td>
 										<td>{monthlyBalance.balance} {monthlyBalance.currencyISO}</td>
 										<td>
-											<ButtonDelete uuid={monthlyBalance.uuid} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
+											<ButtonDelete uuid={monthlyBalance.uuid} details={details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
 										</td>
 									</tr>
 								)

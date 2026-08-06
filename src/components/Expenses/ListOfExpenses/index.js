@@ -46,13 +46,16 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 							expenses.map(expense => {
 								const nameOfCategory = getNameOfCategoryOrSubcategory(expense.category, categories)
 								const nameOfSubcategory = getNameOfCategoryOrSubcategory(expense.subcategory, categories)
+								const date = parseUnixTimestamp(expense.date).substring(0, 10)
+								const fullNameOfCategory = `${nameOfCategory}${(nameOfSubcategory) ? ` - ${nameOfSubcategory}` : ''}`
+								const details = [date, fullNameOfCategory, `${expense.quantity} ${expense.currencyISO}`]
 								return (
 									<tr key={expense.uuid}>
-										<td>{parseUnixTimestamp(expense.date).substring(0, 10)}</td>
-										<td>{nameOfCategory}{(nameOfSubcategory) ? ` - ${nameOfSubcategory}` : ''}</td>
+										<td>{date}</td>
+										<td>{fullNameOfCategory}</td>
 										<td>{expense.quantity} {expense.currencyISO}</td>
 										<td>
-											<ButtonDelete uuid={expense.uuid} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
+											<ButtonDelete uuid={expense.uuid} details={details} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
 										</td>
 									</tr>
 								)
