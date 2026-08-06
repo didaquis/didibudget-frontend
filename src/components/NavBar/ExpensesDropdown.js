@@ -6,8 +6,8 @@ import { BsCreditCard2Back, BsCartPlus, BsBarChart, BsListUl, BsCalendarCheck, B
 export const ExpensesDropdown = () => {
 	return (
 		<div className="nav-item dropdown">
-			<button className="nav-link dropdown-toggle text-light border-0 bg-dark" id="expenses-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-				<BsCreditCard2Back size='32px' title='Spending' />
+			<button className="nav-link dropdown-toggle text-light border-0 bg-dark" id="expenses-dropdown" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Spending">
+				<BsCreditCard2Back size='32px' aria-hidden='true' />
 			</button>
 			<ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="expenses-dropdown">
 				<li><span className="dropdown-item-text text-light">Spending</span></li>

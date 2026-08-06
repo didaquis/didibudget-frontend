@@ -16,8 +16,8 @@ export const NavBar = () => {
 	return (
 		<nav className="nav navbar-dark justify-content-between flex-nowrap border-bottom border-info mt-2 mb-5">
 			<div className="nav-item">
-				<Link className="nav-link text-light" to='/'>
-					<BsHouse size={SIZE_OF_PRIMARY_ICONS} title='Home' />
+				<Link className="nav-link text-light" to='/' aria-label='Home'>
+					<BsHouse size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />
 				</Link>
 			</div>
 
@@ -31,16 +31,16 @@ export const NavBar = () => {
 
 			{isAuth && userData.isAdmin && (
 				<div className="nav-item">
-					<Link className="nav-link text-light" to='/users'>
-						<BsPeople size={SIZE_OF_PRIMARY_ICONS} title='User administration' />
+					<Link className="nav-link text-light" to='/users' aria-label='User administration'>
+						<BsPeople size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />
 					</Link>
 				</div>
 			)}
 
 			<div className="nav-item">
-				<Link className="nav-link text-light" to={isAuth ? '/logout' : '/login'}>
-					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} title='Log in' />}
-					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} title='Log out' />}
+				<Link className="nav-link text-light" to={isAuth ? '/logout' : '/login'} aria-label={isAuth ? 'Log out' : 'Log in'}>
+					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />}
+					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />}
 				</Link>
 			</div>
 		</nav>
