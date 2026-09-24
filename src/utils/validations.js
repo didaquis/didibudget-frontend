@@ -1,3 +1,5 @@
+import { MONTHS } from './months'
+
 /**
  * Regular expression for email
  * @type {RegExp}
@@ -73,12 +75,10 @@ const validateRegisterForm = (email, password, repeatPassword) => {
  * Validate the registration of monthly balance
  * @param {Integer|Float} balance
  * @param {Integer} year
- * @param {string} month
+ * @param {string} month - A Month enum value, e.g. 'JANUARY'
  * @returns {boolean}         		- True means data is valid
  */
 const validateRegisterMonthlyBalanceForm = (balance, year, month) => {
-	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-
 	let dataIsValid = true
 
 	if (!year || !month) {
@@ -101,7 +101,7 @@ const validateRegisterMonthlyBalanceForm = (balance, year, month) => {
 		dataIsValid = false
 	}
 
-	if (!monthNames.includes(month)) {
+	if (!MONTHS.some(({ value }) => value === month)) {
 		dataIsValid = false
 	}
 

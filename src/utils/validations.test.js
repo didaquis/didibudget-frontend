@@ -157,7 +157,7 @@ describe('validateRegisterMonthlyBalanceForm', () => {
 	test('should return false if balance is not valid', () => {
 		const listOfNotValidBalances = [null, undefined, 'foo', 56.0007777]
 		const year = 2020
-		const month = 'March'
+		const month = 'MARCH'
 
 		listOfNotValidBalances.forEach(balance => {
 			const result = validateRegisterMonthlyBalanceForm(balance, year, month)
@@ -169,7 +169,7 @@ describe('validateRegisterMonthlyBalanceForm', () => {
 	test('should return false if year is not valid', () => {
 		const balance = 42.42
 		const listOfNotValidYears = ['patata', 3, 0, NaN]
-		const month = 'March'
+		const month = 'MARCH'
 
 		listOfNotValidYears.forEach(year => {
 			const result = validateRegisterMonthlyBalanceForm(balance, year, month)
@@ -181,7 +181,7 @@ describe('validateRegisterMonthlyBalanceForm', () => {
 	test('should return false if month is not valid', () => {
 		const balance = 42.42
 		const year = 2020
-		const listOfNotValidMonths = ['patata', '02', 2, '2', 'march']
+		const listOfNotValidMonths = ['patata', '02', 2, '2', 'march', 'March']
 
 		listOfNotValidMonths.forEach(month => {
 			const result = validateRegisterMonthlyBalanceForm(balance, year, month)
@@ -195,37 +195,37 @@ describe('validateRegisterMonthlyBalanceForm', () => {
 			{
 				balance: -12345.87,
 				year: 2020,
-				month: 'March'
+				month: 'MARCH'
 			},
 			{
 				balance: 0,
 				year: 2037,
-				month: 'July'
+				month: 'JULY'
 			},
 			{
 				balance: 0.00,
 				year: 2037,
-				month: 'July'
+				month: 'JULY'
 			},
 			{
 				balance: -0.00,
 				year: 2037,
-				month: 'July'
+				month: 'JULY'
 			},
 			{
 				balance: 0.12,
 				year: 1978,
-				month: 'November'
+				month: 'NOVEMBER'
 			},
 			{
 				balance: 234867.88,
 				year: 2021,
-				month: 'September'
+				month: 'SEPTEMBER'
 			},
 			{
 				balance: 25000.00,
 				year: 2003,
-				month: 'April'
+				month: 'APRIL'
 			}
 		]
 
