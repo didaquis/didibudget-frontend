@@ -35,7 +35,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 				<ResponsiveContainer width="100%" height={460}>
 					<LineChart
 						data={allDataParsed}
-						margin={{ top: 5, right: 20, left: 20, bottom: 100 }}
+						margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
 					>
 						<CartesianGrid strokeDasharray="3 3" />
 						<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
@@ -57,7 +57,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastYearDataParsed}
-								margin={{ top: 5, right: 20, left: 20, bottom: 100 }}
+								margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" />
 								<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
@@ -79,7 +79,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastTwoYearsDataParsed}
-								margin={{ top: 5, right: 20, left: 20, bottom: 100 }}
+								margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" />
 								<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
