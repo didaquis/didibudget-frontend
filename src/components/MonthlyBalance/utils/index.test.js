@@ -8,9 +8,14 @@ describe('parseDataForGraph', () => {
 		expect(result).toEqual([])
 	})
 
-	test('should returns an array of valid data for the graph. Refill the empty data of every month (without balance) and do an average of repeated months. It must respect the balance with value 0', () => {
+	test('should return one point per month with key and label, refilling months without balance, rounding to 2 decimals and respecting a balance of 0', () => {
 		const result = parseDataForGraph(rawData)
 		expect(result).toEqual(allDataParsed)
+	})
+
+	test('should return a single point for a single balance', () => {
+		const result = parseDataForGraph([{ balance: 42, year: 2021, month: 'AUGUST' }])
+		expect(result).toEqual([{ key: '2021-08', label: 'August 2021', balance: 42 }])
 	})
 })
 
@@ -58,78 +63,78 @@ describe('computeDifferential', () => {
 	})
 
 	test('should return null for array with single entry', () => {
-		expect(computeDifferential([{ date: '2015-01-01', balance: 100 }])).toBeNull()
+		expect(computeDifferential([{ key: '2015-01', balance: 100 }])).toBeNull()
 	})
 
 	test('should compute positive differential (last - first)', () => {
 		const data = [
-			{ date: '2015-01-01', balance: 100 },
-			{ date: '2015-02-01', balance: 200 },
-			{ date: '2015-03-01', balance: 350 },
+			{ key: '2015-01', balance: 100 },
+			{ key: '2015-02', balance: 200 },
+			{ key: '2015-03', balance: 350 },
 		]
 		expect(computeDifferential(data)).toBe(250)
 	})
 
 	test('should compute negative differential', () => {
 		const data = [
-			{ date: '2015-01-01', balance: 500 },
-			{ date: '2015-02-01', balance: 300 },
-			{ date: '2015-03-01', balance: 200 },
+			{ key: '2015-01', balance: 500 },
+			{ key: '2015-02', balance: 300 },
+			{ key: '2015-03', balance: 200 },
 		]
 		expect(computeDifferential(data)).toBe(-300)
 	})
 
 	test('should skip entries without balance property', () => {
 		const data = [
-			{ date: '2015-01-01' },
-			{ date: '2015-02-01', balance: 100 },
-			{ date: '2015-03-01', balance: 500 },
+			{ key: '2015-01' },
+			{ key: '2015-02', balance: 100 },
+			{ key: '2015-03', balance: 500 },
 		]
 		expect(computeDifferential(data)).toBe(400)
 	})
 
 	test('should return null if fewer than 2 entries with balance', () => {
 		const data = [
-			{ date: '2015-01-01' },
-			{ date: '2015-02-01', balance: 100 },
-			{ date: '2015-03-01' },
+			{ key: '2015-01' },
+			{ key: '2015-02', balance: 100 },
+			{ key: '2015-03' },
 		]
 		expect(computeDifferential(data)).toBeNull()
 	})
 
 	test('should return null if no entries have balance', () => {
 		const data = [
-			{ date: '2015-01-01' },
-			{ date: '2015-02-01' },
+			{ key: '2015-01' },
+			{ key: '2015-02' },
 		]
 		expect(computeDifferential(data)).toBeNull()
 	})
 
 	test('should return zero differential when first and last balance are equal', () => {
 		const data = [
-			{ date: '2015-01-01', balance: 300 },
-			{ date: '2015-02-01', balance: 150 },
-			{ date: '2015-03-01', balance: 300 },
+			{ key: '2015-01', balance: 300 },
+			{ key: '2015-02', balance: 150 },
+			{ key: '2015-03', balance: 300 },
 		]
 		expect(computeDifferential(data)).toBe(0)
 	})
 
 	test('should return value rounded to 2 decimal places', () => {
 		const data = [
-			{ date: '2015-01-01', balance: 100.1234 },
-			{ date: '2015-02-01', balance: 200.4567 },
-			{ date: '2015-03-01', balance: 350.789 },
+			{ key: '2015-01', balance: 100.1234 },
+			{ key: '2015-02', balance: 200.4567 },
+			{ key: '2015-03', balance: 350.789 },
 		]
 		expect(computeDifferential(data)).toBe(250.67)
 	})
 
 	test('should work with real parsed data shape', () => {
 		const data = [
-			{ date: '2014-11-01', balance: 0 },
-			{ date: '2014-12-01', balance: 678.74 },
-			{ date: '2015-01-01', balance: 995.32 },
-			{ date: '2015-02-01' },
-			{ date: '2015-03-01', balance: 8110.37 },
+			{ key: '2014-11', balance: 0 },
+			{ key: '2014-12', balance: 678.74 },
+			{ key: '2015-01', balance: 995.32 },
+			{ key: '2015-02' },
+			{ key: '2015-03', balance: 8110.37 },
 		]
 		expect(computeDifferential(data)).toBe(8110.37)
 	})
