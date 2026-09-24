@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import PropTypes from 'prop-types'
 
-import { parseUnixTimestamp } from '../../../utils/utils'
+import { formatMonth } from '../../../utils/months'
 
 import { EmptyState } from '../../EmptyState'
 import { ButtonDelete } from '../../ButtonDelete'
@@ -34,7 +34,7 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 				<table className="table table-dark table-hover">
 					<thead>
 						<tr className="table-info text-dark">
-							<th scope="col">Date</th>
+							<th scope="col">Month</th>
 							<th scope="col">Balance</th>
 							<th scope="col">Actions</th>
 						</tr>
@@ -42,11 +42,11 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 					<tbody>
 						{
 							monthlyBalances.map(monthlyBalance => {
-								const date = parseUnixTimestamp(monthlyBalance.date).substring(0, 10)
-								const details = [date, `${monthlyBalance.balance} ${monthlyBalance.currencyISO}`]
+								const monthLabel = formatMonth(monthlyBalance)
+								const details = [monthLabel, `${monthlyBalance.balance} ${monthlyBalance.currencyISO}`]
 								return (
 									<tr key={monthlyBalance.uuid}>
-										<td>{date}</td>
+										<td>{monthLabel}</td>
 										<td>{monthlyBalance.balance} {monthlyBalance.currencyISO}</td>
 										<td>
 											<ButtonDelete uuid={monthlyBalance.uuid} details={details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
@@ -71,7 +71,8 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 ListOfMonthlyBalances.propTypes = {
 	monthlyBalances: PropTypes.arrayOf(
 		PropTypes.shape({
-			date: PropTypes.string.isRequired,
+			year: PropTypes.number.isRequired,
+			month: PropTypes.string.isRequired,
 			uuid: PropTypes.string.isRequired,
 			balance: PropTypes.number.isRequired,
 			currencyISO: PropTypes.string.isRequired
