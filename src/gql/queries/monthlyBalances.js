@@ -4,7 +4,8 @@ export const LIST_ALL_MONTHLY_BALANCES = gql`
 query getMonthlyBalances {
 	getMonthlyBalances {
 		balance,
-		date,
+		year,
+		month,
 		currencyISO,
 		uuid
 	}
@@ -16,9 +17,10 @@ query getMonthlyBalancesWithPagination ($page: Int!, $pageSize: Int!) {
 	getMonthlyBalancesWithPagination (page: $page, pageSize: $pageSize) {
 		monthlyBalances {
 			balance,
-			date,
+			year,
+			month,
 			currencyISO,
-			uuid 
+			uuid
 		}
 		pagination {
 			currentPage

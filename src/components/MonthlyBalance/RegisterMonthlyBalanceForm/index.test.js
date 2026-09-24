@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MockedProvider } from '@apollo/client/testing'
+import { GraphQLError } from 'graphql'
 
 import { RegisterMonthlyBalanceForm } from './index'
 import { REGISTER_MONTHLY_BALANCE } from '../../../gql/mutations/monthlyBalances'
@@ -10,21 +11,20 @@ const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'Jul
 const currentYear = new Date().getFullYear()
 const currentMonth = new Date().getMonth()
 const currentMonthName = monthNames[currentMonth]
-
-/* The component builds the date as the 1st of the selected month at 03:00 */
-const firstOfCurrentMonth = new Date(currentYear, currentMonth, 1, 3)
+const currentMonthValue = currentMonthName.toUpperCase()
 
 const successfulMutation = {
 	request: {
 		query: REGISTER_MONTHLY_BALANCE,
-		variables: { balance: 1234.99, date: firstOfCurrentMonth }
+		variables: { balance: 1234.99, year: currentYear, month: currentMonthValue }
 	},
 	result: {
 		data: {
 			registerMonthlyBalance: {
 				__typename: 'MonthlyBalance',
 				balance: 1234.99,
-				date: String(firstOfCurrentMonth.getTime()),
+				year: currentYear,
+				month: currentMonthValue,
 				currencyISO: 'EUR',
 				uuid: 'monthly-balance-uuid-1'
 			}
@@ -38,22 +38,29 @@ const failingMutation = {
 	error: new Error('Something went wrong')
 }
 
+const duplicateMonthMutation = {
+	request: successfulMutation.request,
+	result: {
+		errors: [new GraphQLError('A monthly balance already exists for January 2026', { extensions: { code: 'BAD_USER_INPUT' } })]
+	}
+}
+
 /* Chosen so both the year and the month differ from today's, on purpose */
 const chosenYear = 2022
 const chosenMonth = 'March'
-const firstOfChosenMonth = new Date(chosenYear, monthNames.indexOf(chosenMonth), 1, 3)
 
 const chosenMonthMutation = {
 	request: {
 		query: REGISTER_MONTHLY_BALANCE,
-		variables: { balance: 1234.99, date: firstOfChosenMonth }
+		variables: { balance: 1234.99, year: chosenYear, month: 'MARCH' }
 	},
 	result: {
 		data: {
 			registerMonthlyBalance: {
 				__typename: 'MonthlyBalance',
 				balance: 1234.99,
-				date: String(firstOfChosenMonth.getTime()),
+				year: chosenYear,
+				month: 'MARCH',
 				currencyISO: 'EUR',
 				uuid: 'monthly-balance-uuid-2'
 			}
@@ -129,6 +136,19 @@ describe('RegisterMonthlyBalanceForm', () => {
 		await user.click(screen.getByRole('button', { name: 'Save monthly balance' }))
 
 		expect(await screen.findByRole('alert')).toBeVisible()
+		expect(screen.getByRole('status')).toBeEmptyDOMElement()
+		expect(screen.getByLabelText(/Balance/)).toHaveValue(1234.99)
+		expect(screen.getByRole('button', { name: 'Save monthly balance' })).toBeEnabled()
+	})
+
+	it('shows the backend message and keeps the value when the month already has a balance', async () => {
+		const user = userEvent.setup()
+		renderForm([duplicateMonthMutation])
+
+		await user.type(screen.getByLabelText(/Balance/), '1234.99')
+		await user.click(screen.getByRole('button', { name: 'Save monthly balance' }))
+
+		expect(await screen.findByRole('alert')).toHaveTextContent(/^A monthly balance already exists for January 2026$/)
 		expect(screen.getByRole('status')).toBeEmptyDOMElement()
 		expect(screen.getByLabelText(/Balance/)).toHaveValue(1234.99)
 		expect(screen.getByRole('button', { name: 'Save monthly balance' })).toBeEnabled()

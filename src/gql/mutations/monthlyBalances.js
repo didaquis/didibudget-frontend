@@ -2,10 +2,11 @@ import gql from 'graphql-tag'
 
 
 export const REGISTER_MONTHLY_BALANCE = gql`
-mutation registerMonthlyBalance($balance: Float!, $date: String!) {
-	registerMonthlyBalance(balance: $balance, date: $date) {
+mutation registerMonthlyBalance($balance: Float!, $year: Int!, $month: Month!) {
+	registerMonthlyBalance(balance: $balance, year: $year, month: $month) {
 		balance
-		date
+		year
+		month
 		currencyISO
 		uuid
 	}
@@ -16,7 +17,8 @@ export const DELETE_MONTHLY_BALANCE = gql`
 mutation deleteMonthlyBalance($uuid: String!) {
 	deleteMonthlyBalance(uuid: $uuid) {
 		balance
-		date
+		year
+		month
 		currencyISO
 		uuid
 	}

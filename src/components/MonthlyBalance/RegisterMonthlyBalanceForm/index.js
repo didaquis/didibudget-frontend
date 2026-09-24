@@ -8,6 +8,7 @@ import { SubmitButtonHelper } from '../../SubmitButtonHelper'
 
 import { useInputValue } from '../../../hooks/useInputValue'
 import { validateRegisterMonthlyBalanceForm } from '../../../utils/validations'
+import { MONTHS, formatMonth } from '../../../utils/months'
 import { getLastFiveYearsFrom } from '../utils'
 
 import { REGISTER_MONTHLY_BALANCE } from '../../../gql/mutations/monthlyBalances'
@@ -16,7 +17,6 @@ export const RegisterMonthlyBalanceForm = () => {
 	const currentYear = new Date().getFullYear()
 	const currentMonth = new Date().getMonth()
 	const availableYears = getLastFiveYearsFrom(currentYear)
-	const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 	const [isDisabled, setIsDisabled] = useState(false)
 	const [error, setError] = useState(null)
@@ -29,7 +29,7 @@ export const RegisterMonthlyBalanceForm = () => {
 	/* Plain state instead of useInputValue: this is the only field that gets cleared on save */
 	const [balance, setBalance] = useState('')
 	const year = useInputValue(currentYear)
-	const month = useInputValue(monthNames[currentMonth])
+	const month = useInputValue(MONTHS[currentMonth].value)
 
 	const isValid = validateRegisterMonthlyBalanceForm(balance, year.value, month.value)
 
@@ -48,17 +48,15 @@ export const RegisterMonthlyBalanceForm = () => {
 		setError(null)
 		setNotice(null)
 
-		const savedYear = year.value
+		const savedYear = parseInt(year.value, 10)
 		const savedMonth = month.value
 		const savedBalance = parseFloat(balance)
 
-		const dateToRegister = new Date(savedYear, monthNames.indexOf(savedMonth), 1, 3)
-
-		const variables = { balance: savedBalance, date: dateToRegister }
+		const variables = { balance: savedBalance, year: savedYear, month: savedMonth }
 
 		registerMonthlyBalance({ variables }).then(() => {
 			noticeIdRef.current += 1
-			setNotice({ id: noticeIdRef.current, message: `${savedBalance.toFixed(2)} EUR · ${savedMonth} ${savedYear}` })
+			setNotice({ id: noticeIdRef.current, message: `${savedBalance.toFixed(2)} EUR · ${formatMonth({ year: savedYear, month: savedMonth })}` })
 			setBalance('')
 			setIsDisabled(false)
 		}).catch(e => {
@@ -110,8 +108,8 @@ export const RegisterMonthlyBalanceForm = () => {
 							<label htmlFor="selectMonth" className="text-light">Month <span className="text-danger">*</span></label>
 							<select className="form-control" id="selectMonth" {...month}>
 								{
-									monthNames.map((month) => {
-										return <option key={month}>{month}</option>
+									MONTHS.map(({ value, label }) => {
+										return <option key={value} value={value}>{label}</option>
 									})
 								}
 							</select>
