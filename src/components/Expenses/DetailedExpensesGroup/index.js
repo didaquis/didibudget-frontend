@@ -5,6 +5,7 @@ import { getNameOfCategoryOrSubcategory } from '../utils'
 
 import { DetailedCategoryInExpensesGroup } from '../DetailedCategoryInExpensesGroup'
 import { ToggleButton } from '../../ToggleButton'
+import { formatAmount } from '../../../utils/currency'
 
 export const DetailedExpensesGroup = ({ expensesGroupData, categories }) => {
 
@@ -22,7 +23,7 @@ export const DetailedExpensesGroup = ({ expensesGroupData, categories }) => {
 				<thead>
 					<tr className="table-info text-dark">
 						<th scope="col" className="text-nowrap">{expensesGroupData.groupTitle}</th>
-						<th scope="col" className="text-nowrap text-end">{expensesGroupData.groupTotal} EUR</th>
+						<th scope="col" className="text-nowrap text-end">{formatAmount(expensesGroupData.groupTotal)}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,7 +35,7 @@ export const DetailedExpensesGroup = ({ expensesGroupData, categories }) => {
 								<Fragment key={category.idCategory}>
 									<tr key={category.idCategory}>
 										<td>{nameOfCategory}</td>
-										<td className="text-nowrap text-end">{category.totalInCategory} EUR</td>
+										<td className="text-nowrap text-end">{formatAmount(category.totalInCategory)}</td>
 									</tr>
 									<DetailedCategoryInExpensesGroup
 										displaySubcategories={toggleShowDetailedInformation}

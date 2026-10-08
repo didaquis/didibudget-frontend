@@ -8,6 +8,7 @@ import { ButtonDelete } from '../../ButtonDelete'
 import { PaginateNavbar } from '../../PaginateNavbar'
 
 import { DELETE_MONTHLY_BALANCE } from '../../../gql/mutations/monthlyBalances'
+import { formatAmount } from '../../../utils/currency'
 
 export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch, onChangePage }) => {
 
@@ -43,11 +44,11 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 						{
 							monthlyBalances.map(monthlyBalance => {
 								const monthLabel = formatMonth(monthlyBalance)
-								const details = [monthLabel, `${monthlyBalance.balance} ${monthlyBalance.currencyISO}`]
+								const details = [monthLabel, formatAmount(monthlyBalance.balance, monthlyBalance.currencyISO)]
 								return (
 									<tr key={monthlyBalance.uuid}>
 										<td>{monthLabel}</td>
-										<td>{monthlyBalance.balance} {monthlyBalance.currencyISO}</td>
+										<td>{formatAmount(monthlyBalance.balance, monthlyBalance.currencyISO)}</td>
 										<td>
 											<ButtonDelete uuid={monthlyBalance.uuid} details={details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
 										</td>

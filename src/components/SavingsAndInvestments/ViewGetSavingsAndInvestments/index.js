@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 
 import { getCategoryTypeText } from '../utils'
+import { formatAmount } from '../../../utils/currency'
 
 const getCurrency = (data) => {
 	if (!data || data.length === 0) {
@@ -35,7 +36,7 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 						return (
 							<tr key={expenseSum.categoryType}>
 								<td>{ getCategoryTypeText(expenseSum.categoryType) }</td>
-								<td>{expenseSum.sum} {expenseSum.currencyISO}</td>
+								<td>{formatAmount(expenseSum.sum, expenseSum.currencyISO)}</td>
 							</tr>
 						)
 					})
@@ -45,7 +46,7 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 				<tfoot>
 					<tr className="table-info text-dark">
 						<td>Total</td>
-						<td>{totalInvested} {currency}</td>
+						<td>{formatAmount(totalInvested, currency)}</td>
 					</tr>
 				</tfoot>
 			)}

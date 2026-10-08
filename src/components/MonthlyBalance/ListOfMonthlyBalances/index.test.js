@@ -36,6 +36,6 @@ describe('ListOfMonthlyBalances', () => {
 	it('names the delete button after the month and the amount', () => {
 		renderList()
 
-		expect(screen.getByRole('button', { name: 'Delete January 2026, 1234.5 EUR' })).toBeVisible()
+		expect(screen.getByRole('button', { name: 'Delete January 2026, 1234.5\u00a0€' })).toBeVisible()
 	})
 })

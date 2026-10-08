@@ -12,6 +12,7 @@ import { MONTHS, formatMonth } from '../../../utils/months'
 import { getLastFiveYearsFrom } from '../utils'
 
 import { REGISTER_MONTHLY_BALANCE } from '../../../gql/mutations/monthlyBalances'
+import { formatAmount } from '../../../utils/currency'
 
 export const RegisterMonthlyBalanceForm = () => {
 	const currentYear = new Date().getFullYear()
@@ -56,7 +57,7 @@ export const RegisterMonthlyBalanceForm = () => {
 
 		registerMonthlyBalance({ variables }).then(() => {
 			noticeIdRef.current += 1
-			setNotice({ id: noticeIdRef.current, message: `${savedBalance.toFixed(2)} EUR · ${formatMonth({ year: savedYear, month: savedMonth })}` })
+			setNotice({ id: noticeIdRef.current, message: `${formatAmount(savedBalance.toFixed(2))} · ${formatMonth({ year: savedYear, month: savedMonth })}` })
 			setBalance('')
 			setIsDisabled(false)
 		}).catch(e => {

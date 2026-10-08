@@ -13,6 +13,7 @@ import { validateAddExpenseForm } from '../../../utils/validations'
 import { startOfDay } from '../../../utils/utils'
 
 import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
+import { formatAmount } from '../../../utils/currency'
 
 const startOfToday = () => startOfDay(new Date())
 
@@ -57,7 +58,7 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 
 		registerExpense({ variables }).then(() => {
 			noticeIdRef.current += 1
-			setNotice({ id: noticeIdRef.current, message: `${quantity.toFixed(2)} EUR · ${label}` })
+			setNotice({ id: noticeIdRef.current, message: `${formatAmount(quantity.toFixed(2))} · ${label}` })
 			setAmount('')
 			setDate(startOfToday())
 			setSelected(null)
