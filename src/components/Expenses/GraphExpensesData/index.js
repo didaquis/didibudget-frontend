@@ -27,7 +27,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 	if (dataGroupedPerMonth.length) {
 		return (
 			<Fragment>
-				<SectionTitle text="Total spending per month:" />
+				<SectionTitle text={`Since ${dataGroupedPerMonth[0].label}`} />
 				<ResponsiveContainer width="100%" height={460}>
 					<BarChart
 						data={dataGroupedPerMonth}
@@ -44,7 +44,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 				{
 					dataGroupedPerMonthSubset.length > 0 &&
 					<Fragment>
-						<SectionTitle text={`Total spending for the last ${numberOfMonthsToDisplay} months:`} />
+						<SectionTitle text={`Last ${numberOfMonthsToDisplay} months`} />
 						<ResponsiveContainer width="100%" height={460}>
 							<BarChart
 								data={dataGroupedPerMonthSubset}
@@ -61,9 +61,9 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 				}
 
 				<div className="row">
-					<AveragePerMonth averageData={averageData} title="Average spending:" />
+					<AveragePerMonth averageData={averageData} title="Average spending" />
 
-					<AveragePerMonth averageData={averageDataExcludingSavings} title="Average spending (excluding savings):" />
+					<AveragePerMonth averageData={averageDataExcludingSavings} title="Average spending, excluding savings & investments" />
 				</div>
 
 			</Fragment>
