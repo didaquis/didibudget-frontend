@@ -61,13 +61,13 @@ describe('GetMonthToDateSpending', () => {
 
 	it('asks for the spending of the month only once', async () => {
 		vi.useRealTimers()
-		const newData = vi.fn(() => monthMock.result)
-		renderWithMocks([{ ...monthMock, newData, maxUsageCount: Number.POSITIVE_INFINITY }])
+		const result = vi.fn(() => monthMock.result)
+		renderWithMocks([{ ...monthMock, result, maxUsageCount: Number.POSITIVE_INFINITY }])
 
 		await screen.findByText('42.3 €')
 		await new Promise(resolve => setTimeout(resolve, 50))
 
-		expect(newData).toHaveBeenCalledTimes(1)
+		expect(result).toHaveBeenCalledTimes(1)
 	})
 
 	it('tells that the spending of the month is loading', () => {
