@@ -79,7 +79,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 								aria-controls={BREAKDOWN_LIST_ID}
 								onClick={() => setIsBreakdownExpanded(!isBreakdownExpanded)}
 							>
-								{isBreakdownExpanded ? `Show top ${TOP_BREAKDOWN_ROWS}` : `Show all ${breakdown.length} categories`}
+								{isBreakdownExpanded ? 'Show less' : 'Show more'}
 							</button>
 						)
 					}

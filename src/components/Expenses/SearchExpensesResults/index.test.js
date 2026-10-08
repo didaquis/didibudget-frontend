@@ -168,15 +168,15 @@ describe('SearchExpensesResults', () => {
 
 		render(<SearchExpensesResults searchResult={getResultWithBreakdownOf(7)} categories={manyCategories} onChangePage={vi.fn()} />)
 
-		await user.click(screen.getByRole('button', { name: 'Show all 7 categories' }))
+		await user.click(screen.getByRole('button', { name: 'Show more' }))
 
 		expect(getBreakdownRows()).toHaveLength(7)
-		expect(screen.getByRole('button', { name: 'Show top 5' })).toHaveAttribute('aria-expanded', 'true')
+		expect(screen.getByRole('button', { name: 'Show less' })).toHaveAttribute('aria-expanded', 'true')
 
-		await user.click(screen.getByRole('button', { name: 'Show top 5' }))
+		await user.click(screen.getByRole('button', { name: 'Show less' }))
 
 		expect(getBreakdownRows()).toHaveLength(5)
-		expect(screen.getByRole('button', { name: 'Show all 7 categories' })).toHaveAttribute('aria-expanded', 'false')
+		expect(screen.getByRole('button', { name: 'Show more' })).toHaveAttribute('aria-expanded', 'false')
 	})
 
 	it('should show the whole breakdown without any button when it has five rows or fewer', () => {
