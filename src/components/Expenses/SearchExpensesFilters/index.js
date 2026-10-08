@@ -112,7 +112,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 
 	const amountError = getAmountError(filters.minQuantity, filters.maxQuantity)
 	const hasPendingChanges = appliedFilters !== null && !areSameFilters(filters, appliedFilters)
-	const canReset = !areSameFilters(filters, INITIAL_FILTERS)
+	const canClear = !areSameFilters(filters, INITIAL_FILTERS)
 	const ToggleIcon = isOpen ? BsChevronUp : BsChevronDown
 
 	return (
@@ -131,7 +131,10 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 			<Collapse id={FILTERS_PANEL_ID} isOpen={isOpen}>
 				<form onSubmit={onSubmit} className="card bg-dark border-secondary p-3 search-expenses-filters">
 					<div className="mb-3">
-						<label className="form-label text-light" htmlFor="category">Category</label>
+						<div className="d-flex justify-content-between align-items-center mb-2">
+							<label className="text-light" htmlFor="category">Category</label>
+							<button type="button" className="btn btn-link filters-clear-all" disabled={!canClear} onClick={() => setFilters(INITIAL_FILTERS)}>Clear all</button>
+						</div>
 						<select id="category" className={SELECT_CLASS_NAME} value={filters.category} onChange={onChangeCategory}>
 							<option value="">All categories</option>
 							{
@@ -206,11 +209,6 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 						)
 					}
 					<SubmitButton disabled={Boolean(amountError)}>Search</SubmitButton>
-					{
-						canReset && (
-							<button type="button" className="btn btn-link text-info w-100 mt-2" onClick={() => setFilters(INITIAL_FILTERS)}>Reset filters</button>
-						)
-					}
 				</form>
 			</Collapse>
 		</section>

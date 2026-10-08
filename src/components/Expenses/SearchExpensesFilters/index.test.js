@@ -334,19 +334,19 @@ describe('SearchExpensesFilters', () => {
 		expect(screen.queryByRole('button', { name: 'Clear From date' })).not.toBeInTheDocument()
 	})
 
-	it('should offer to reset the filters only once one has changed', async () => {
+	it('should keep clearing the filters disabled until one has changed', async () => {
 		const user = userEvent.setup()
 
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		expect(screen.queryByRole('button', { name: 'Reset filters' })).not.toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Clear all' })).toBeDisabled()
 
 		await user.selectOptions(screen.getByLabelText('Sort by'), 'quantity')
 
-		expect(screen.getByRole('button', { name: 'Reset filters' })).toBeVisible()
+		expect(screen.getByRole('button', { name: 'Clear all' })).toBeEnabled()
 	})
 
-	it('should put every filter back to its initial value on reset', async () => {
+	it('should put every filter back to its initial value when cleared', async () => {
 		const user = userEvent.setup()
 
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
@@ -354,11 +354,12 @@ describe('SearchExpensesFilters', () => {
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
 		await user.type(screen.getByLabelText('Max amount'), '50')
 		await user.selectOptions(screen.getByLabelText('Order'), 'asc')
-		await user.click(screen.getByRole('button', { name: 'Reset filters' }))
+		await user.click(screen.getByRole('button', { name: 'Clear all' }))
 
 		expect(screen.getByLabelText('Category')).toHaveValue('')
 		expect(screen.getByLabelText('Max amount')).toHaveValue('')
 		expect(screen.getByLabelText('Order')).toHaveValue('desc')
+		expect(screen.getByRole('button', { name: 'Clear all' })).toBeDisabled()
 	})
 
 	it('should keep the Search button enabled when the amount is a valid number', async () => {
