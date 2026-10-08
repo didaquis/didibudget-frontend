@@ -133,10 +133,10 @@ describe('SearchExpensesFilters', () => {
 		expect(toggle).toHaveAttribute('aria-expanded', 'true')
 
 		await user.click(screen.getByRole('button', { name: 'Search' }))
-		expect(screen.getByRole('button', { name: 'All categories' })).toHaveAttribute('aria-expanded', 'false')
+		expect(screen.getByRole('button', { name: 'Filters All spending' })).toHaveAttribute('aria-expanded', 'false')
 
-		await user.click(screen.getByRole('button', { name: 'All categories' }))
-		expect(screen.getByRole('button', { name: 'All categories' })).toHaveAttribute('aria-expanded', 'true')
+		await user.click(screen.getByRole('button', { name: 'Filters All spending' }))
+		expect(screen.getByRole('button', { name: 'Filters All spending' })).toHaveAttribute('aria-expanded', 'true')
 	})
 
 	it('should point the toggle button at the collapsed region via aria-controls', () => {
@@ -161,7 +161,7 @@ describe('SearchExpensesFilters', () => {
 
 		await user.click(screen.getByRole('button', { name: 'Search' }))
 
-		expect(screen.getByRole('button', { name: 'Private vehicles · from 10\u00a0€' })).toHaveAttribute('aria-expanded', 'false')
+		expect(screen.getByRole('button', { name: 'Filters · 2 Private vehicles · from 10\u00a0€' })).toHaveAttribute('aria-expanded', 'false')
 	})
 
 	it('should keep summarizing the last search while its filters are being changed', async () => {
@@ -171,11 +171,11 @@ describe('SearchExpensesFilters', () => {
 
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
 		await user.click(screen.getByRole('button', { name: 'Search' }))
-		await user.click(screen.getByRole('button', { name: 'Private vehicles' }))
+		await user.click(screen.getByRole('button', { name: 'Filters · 1 Private vehicles' }))
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-2')
 
-		expect(screen.getByRole('button', { name: 'Private vehicles' })).toBeVisible()
-		expect(screen.queryByRole('button', { name: 'Home' })).not.toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Filters · 1 Private vehicles' })).toBeVisible()
+		expect(screen.queryByRole('button', { name: 'Filters · 1 Home' })).not.toBeInTheDocument()
 	})
 
 	it('should say the results are from the previous search while the filters have unsearched changes', async () => {
@@ -184,7 +184,7 @@ describe('SearchExpensesFilters', () => {
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
 		await user.click(screen.getByRole('button', { name: 'Search' }))
-		await user.click(screen.getByRole('button', { name: 'All categories' }))
+		await user.click(screen.getByRole('button', { name: 'Filters All spending' }))
 
 		expect(screen.queryByText('The results below are still from the previous search')).not.toBeInTheDocument()
 

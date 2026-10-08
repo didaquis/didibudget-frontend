@@ -103,12 +103,20 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	})
 
 	// Each part stays on one line, so a date never wraps at its hyphens
-	const renderSummary = (summaryFilters) => getFiltersSummaryParts(summaryFilters, categories).map((part, index) => (
-		<Fragment key={part}>
-			{index > 0 && ' · '}
-			<span className="text-nowrap">{part}</span>
-		</Fragment>
-	))
+	const renderSummary = (summaryParts) => {
+		if (!summaryParts.length) {
+			return 'All spending'
+		}
+
+		return summaryParts.map((part, index) => (
+			<Fragment key={part}>
+				{index > 0 && ' · '}
+				<span className="text-nowrap">{part}</span>
+			</Fragment>
+		))
+	}
+
+	const appliedParts = appliedFilters ? getFiltersSummaryParts(appliedFilters, categories) : []
 
 	const amountError = getAmountError(filters.minQuantity, filters.maxQuantity)
 	const hasPendingChanges = appliedFilters !== null && !areSameFilters(filters, appliedFilters)
@@ -124,7 +132,11 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 				aria-expanded={isOpen}
 				aria-controls={FILTERS_PANEL_ID}
 			>
-				<span>{appliedFilters ? renderSummary(appliedFilters) : 'Filters'}</span>
+				<span>
+					<span className="d-block">Filters{appliedParts.length > 0 && ` · ${appliedParts.length}`}</span>
+					{' '}
+					{appliedFilters && <span className="d-block small">{renderSummary(appliedParts)}</span>}
+				</span>
 				<ToggleIcon size={'16px'} className="flex-shrink-0" aria-hidden="true" />
 			</button>
 

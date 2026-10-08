@@ -153,8 +153,8 @@ const formatDateAsLocalISO = (date) => {
 }
 
 /**
- * Build the parts of a human readable summary of the filters, meant to be shown as the
- * label of the collapsed filters header: category, dates and amounts, each one only when it applies.
+ * Build one human readable part per active filter (category, dates, amounts), meant to be
+ * shown in the collapsed filters header. Sorting is not a filter, so it never has a part.
  * @param {Object} filters
  * @param {Array} categories
  * @returns {string[]}
@@ -168,8 +168,6 @@ const getFiltersSummaryParts = (filters, categories) => {
 		parts.push(`${categoryName} - ${subcategoryName}`)
 	} else if (isFilled(filters.category)) {
 		parts.push(getNameOfCategoryOrSubcategory(filters.category, categories))
-	} else {
-		parts.push('All categories')
 	}
 
 	if (isFilled(filters.startDate) && isFilled(filters.endDate)) {

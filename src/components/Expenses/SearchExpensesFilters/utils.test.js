@@ -205,8 +205,8 @@ describe('areSameFilters', () => {
 })
 
 describe('getFiltersSummaryParts', () => {
-	it('should say "All categories" when no category is selected', () => {
-		expect(getFiltersSummaryParts(emptyFilters, categories)).toEqual(['All categories'])
+	it('should have no part when no filter is set, not even for the sorting', () => {
+		expect(getFiltersSummaryParts({ ...emptyFilters, sortBy: 'quantity', sortDirection: 'asc' }, categories)).toEqual([])
 	})
 
 	it('should include the category name when a category is selected', () => {
@@ -222,47 +222,51 @@ describe('getFiltersSummaryParts', () => {
 	})
 
 	it('should omit the date part when neither date is set', () => {
-		expect(getFiltersSummaryParts(emptyFilters, categories)).toEqual(['All categories'])
+		const filters = { ...emptyFilters, minQuantity: '10' }
+
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['from 10\u00a0€'])
 	})
 
 	it('should describe a date range when both dates are set', () => {
 		const filters = { ...emptyFilters, startDate: new Date(2026, 0, 1), endDate: new Date(2026, 5, 30) }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', '2026-01-01 to 2026-06-30'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['2026-01-01 to 2026-06-30'])
 	})
 
 	it('should describe an open-ended start date', () => {
 		const filters = { ...emptyFilters, startDate: new Date(2026, 0, 1) }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'from 2026-01-01'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['from 2026-01-01'])
 	})
 
 	it('should describe an open-ended end date', () => {
 		const filters = { ...emptyFilters, endDate: new Date(2026, 5, 30) }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'until 2026-06-30'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['until 2026-06-30'])
 	})
 
 	it('should omit the amount part when neither amount is set', () => {
-		expect(getFiltersSummaryParts(emptyFilters, categories)).toEqual(['All categories'])
+		const filters = { ...emptyFilters, category: 'category-id-2' }
+
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Home'])
 	})
 
 	it('should describe an amount range when both amounts are set, using the raw strings typed and the currency', () => {
 		const filters = { ...emptyFilters, minQuantity: '10', maxQuantity: '20,50' }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', '10\u00a0€ to 20,50\u00a0€'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['10\u00a0€ to 20,50\u00a0€'])
 	})
 
 	it('should describe an open-ended minimum amount', () => {
 		const filters = { ...emptyFilters, minQuantity: '10' }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'from 10\u00a0€'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['from 10\u00a0€'])
 	})
 
 	it('should describe an open-ended maximum amount', () => {
 		const filters = { ...emptyFilters, maxQuantity: '20,50' }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'up to 20,50\u00a0€'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['up to 20,50\u00a0€'])
 	})
 
 	it('should list the category, date and amount parts in that order', () => {
