@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-import { BsCreditCard2Back, BsCartPlus, BsBarChart, BsListUl, BsCalendarMonth, BsCalendarRange, BsCalendar3, BsSearch } from 'react-icons/bs'
+import { BsCreditCard2Back, BsCartPlus, BsBarChart, BsListUl, BsCalendarEvent, BsCalendarRange, BsCalendar3, BsSearch } from 'react-icons/bs'
 
 
 export const ExpensesDropdown = () => {
@@ -29,7 +29,7 @@ export const ExpensesDropdown = () => {
 				</li>
 				<li>
 					<Link className="dropdown-item py-3" to='/spending/this-month'>
-						<BsCalendarMonth size='24px' aria-hidden='true' /><span className="ms-3">This month</span>
+						<BsCalendarEvent size='24px' aria-hidden='true' /><span className="ms-3">This month</span>
 					</Link>
 				</li>
 				<li>
