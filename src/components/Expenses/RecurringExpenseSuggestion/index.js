@@ -3,7 +3,6 @@ import { useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router'
 import PropTypes from 'prop-types'
 
-import { SubmitButton } from '../../SubmitButton'
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 
 import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
@@ -39,20 +38,23 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	}
 
 	const emojis = [...new Set([...suggestion.suggestedExpense.categoryEmojis, ...suggestion.suggestedExpense.subcategoryEmojis])]
+	const { categoryName, subcategoryName, quantity } = suggestion.suggestedExpense
+	const name = subcategoryName ? `${categoryName} - ${subcategoryName}` : categoryName
+	const amount = formatAmount(quantity)
 
 	return (
-		<div className="col-sm-6 col-md-4">
-			<div className="card bg-dark border-info text-light mb-3">
-				<div className="card-body">
-					<h5 className="fw-light card-title">{suggestion.suggestedExpense.categoryName} {(suggestion.suggestedExpense.subcategoryName) ? ` - ${suggestion.suggestedExpense.subcategoryName}` : ''} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></h5>
-					<p className="card-text"><span className="text-nowrap">{formatAmount(suggestion.suggestedExpense.quantity)}</span></p>
-					<SubmitButton disabled={isDisabled} onClick={onSubmit}>Save spending</SubmitButton>
-					{
-						error && <p className="alert alert-danger py-3 text-center m-3" role="alert">{error}</p>
-					}
+		<li className="list-group-item bg-dark text-light border-secondary px-0 py-3">
+			<div className="d-flex align-items-center gap-3">
+				<div className="flex-grow-1">
+					<p className="mb-0">{name} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></p>
+					<p className="mb-0 fs-5 text-nowrap">{amount}</p>
 				</div>
+				<button className="btn btn-lg btn-outline-info" disabled={isDisabled} onClick={onSubmit} aria-label={`Save ${name}, ${amount}`}>Save</button>
 			</div>
-		</div>
+			{
+				error && <p className="alert alert-danger py-3 text-center mt-2 mb-0" role="alert">{error}</p>
+			}
+		</li>
 	)
 }
 

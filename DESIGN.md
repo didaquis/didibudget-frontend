@@ -162,7 +162,7 @@ Charts still use Recharts' default colours (`#8884d8` for monthly-balance lines,
 Flat. Surfaces share the page colour and are separated by 1px cyan or secondary borders. The only exceptions are temporary overlays: the success toast (solid white, Bootstrap toast shadow) and dropdown menus. The wordmark has its own SVG extrude and drop shadow, which belong to the logo, not the UI.
 
 ### Named Rules
-**The Hairline Rule.** Group content with a 1px `border-info` line, not with a shadow or a lighter panel.
+**The Hairline Rule.** Group content with a 1px line, not with a shadow or a lighter panel: `border-info` around a block, `border-secondary` between the rows of a list that has its own buttons, so cyan stays on what you can tap.
 
 ## Shapes
 
@@ -195,7 +195,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Date pickers:** react-widgets; read-only inputs that open a calendar keep a pointer cursor.
 
 ### Lists & Tables
-- **List groups:** `list-group-flush`, items `bg-dark border-info px-0 py-1`, horizontal padding removed so rows align with the page edge.
+- **List groups:** `list-group-flush`, items `bg-dark border-info px-0 py-1`, horizontal padding removed so rows align with the page edge. When every row carries its own button, rows use `border-secondary` and `py-3` instead.
 - **Tables:** `table-dark table-hover`, with a `table-info` header row. Always wrapped in `table-responsive`.
 
 ### Feedback
@@ -225,7 +225,7 @@ The coral SVG wordmark over a soft coral radial glow that fades in over 700ms (s
 
 ### Don't:
 - **Don't** introduce a second interaction colour. Coral is a brand mark, not a button.
-- **Don't** use shadows or lighter panels to separate content; use a cyan hairline.
+- **Don't** use shadows or lighter panels to separate content; use a hairline (cyan, or gray between rows that have their own buttons).
 - **Don't** use danger red for "no data".
 - **Don't** add custom CSS where a Bootstrap utility already does the job.
 - **Don't** let a value wrap mid-number or force a table to scroll sideways at 390px when stacking would work.

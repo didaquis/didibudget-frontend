@@ -14,4 +14,16 @@ describe('SectionTitle', () => {
 
 		expect(screen.getByRole('heading', { name: 'Hello world' })).toBeVisible()
 	})
+
+	it('renders at the third level unless told otherwise', () => {
+		render(<SectionTitle text='biz' />)
+
+		expect(screen.getByRole('heading', { name: 'biz', level: 3 })).toBeVisible()
+	})
+
+	it('renders at the second level when a page has no subtitles', () => {
+		render(<SectionTitle text='biz' level={2} />)
+
+		expect(screen.getByRole('heading', { name: 'biz', level: 2 })).toBeVisible()
+	})
 })

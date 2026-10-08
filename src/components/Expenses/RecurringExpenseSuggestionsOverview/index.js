@@ -1,34 +1,24 @@
 import PropTypes from 'prop-types'
 
+import { SectionTitle } from '../../SectionTitle'
 import { RecurringExpenseSuggestion } from '../RecurringExpenseSuggestion'
 
 export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {
-	const hasSuggestions = !!suggestions.length
+	if (!suggestions.length) { return null }
 
 	return (
-		<section className="mt-4">
-			<div className="card bg-dark border-info">
-				<div className="card-header">
-					<h4 className="mb-0 fw-light text-light">Suggestions</h4>
-				</div>
-				<div className="card-body pb-0">
-					{!hasSuggestions ? (
-						<p className="text-light" role="status">No suggestions available right now.</p>
-					) : (
-						<div className="row">
-							{
-								suggestions.map(suggestion => (
-									<RecurringExpenseSuggestion key={suggestion.uuid} suggestion={suggestion} />
-								))
-							}
-						</div>
-					)}
-				</div>
-			</div>
+		<section className="mt-5">
+			<SectionTitle text='Suggestions' level={2} />
+			<ul className="list-group list-group-flush">
+				{
+					suggestions.map(suggestion => (
+						<RecurringExpenseSuggestion key={suggestion.uuid} suggestion={suggestion} />
+					))
+				}
+			</ul>
 		</section>
 	)
 }
-
 
 RecurringExpenseSuggestionsOverview.propTypes = {
 	suggestions: PropTypes.arrayOf(

@@ -84,6 +84,21 @@ ${EXPENSE_FIELDS}
 ${EXPENSE_CATEGORY_FIELDS}
 `
 
+export const GET_MONTH_TO_DATE_SPENDING = gql`
+query GetMonthToDateSpending($startDate: String!, $endDate: String!) {
+	getExpensesBetweenDates(startDate: $startDate, endDate: $endDate) {
+		category
+		quantity
+		currencyISO
+		uuid
+	}
+	getExpenseCategory {
+		_id
+		categoryType
+	}
+}
+`
+
 export const GET_EXPENSES_SUM_BY_TYPE = gql`
 query GetExpensesSumByType($categoryType: CategoryType!) {
 	getExpensesSumByType(categoryType: $categoryType) {
