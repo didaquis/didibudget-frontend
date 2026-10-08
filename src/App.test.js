@@ -64,13 +64,13 @@ describe('App routing', () => {
 
 		await user.click(screen.getByRole('link', { name: 'Home' }))
 
-		expect(await screen.findByText('Loading...')).toBeVisible()
+		expect(await screen.findByText('Loading…')).toBeVisible()
 	})
 
 	it('shows the spinner while a lazy screen is loading', async () => {
 		renderAppAt('/')
 
-		expect(screen.getByText('Loading...')).toBeVisible()
+		expect(screen.getByText('Loading…')).toBeVisible()
 
 		expect(await screen.findByRole('heading', { name: 'didibudget' })).toBeVisible()
 	})
@@ -97,7 +97,7 @@ describe('App routing', () => {
 		it('shows the spinner while the screen is loading', () => {
 			renderAppAt(path, { isAuth: true, userData: { isAdmin: true } })
 
-			expect(screen.getByText('Loading...')).toBeVisible()
+			expect(screen.getByText('Loading…')).toBeVisible()
 		})
 	})
 })

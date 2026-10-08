@@ -42,7 +42,7 @@ describe('Home', () => {
 		renderHome(true)
 		await waitForElementToBeRemoved(() => [
 			screen.queryByRole('status'),
-			screen.queryByText('Loading...')
+			screen.queryByText('Loading…')
 		].filter(Boolean))
 
 		expect(screen.getByRole('heading', { name: 'Dashboard' })).toBeVisible()
