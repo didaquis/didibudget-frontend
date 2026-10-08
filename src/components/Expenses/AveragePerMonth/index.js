@@ -28,31 +28,31 @@ export const AveragePerMonth = ({ averageData, title }) => {
 				<table className="table table-dark table-hover">
 					<thead>
 						<tr className="table-info text-dark">
-							<th scope="col">Period (months)</th>
-							<th scope="col">Average monthly spending</th>
+							<th scope="col">Period</th>
+							<th scope="col">Per month</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>3</td>
+							<td>Last 3 months</td>
 							<td className="text-nowrap">{averageData.lastThreeMonthsAverage.average} €</td>
 						</tr>
 						{
 							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplaySix) && <tr>
-								<td>6</td>
+								<td>Last 6 months</td>
 								<td className="text-nowrap">{averageData.lastSixMonthsAverage.average} €</td>
 							</tr>
 						}
 						{
 							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwelve) && <tr>
-								<td>12</td>
+								<td>Last 12 months</td>
 								<td className="text-nowrap">{averageData.lastTwelveMonthsAverage.average} €</td>
 							</tr>
 						}
 
 						{
 							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwentyFour) && <tr>
-								<td>24</td>
+								<td>Last 24 months</td>
 								<td className="text-nowrap">{averageData.lastTwentyFourMonthsAverage.average} €</td>
 							</tr>
 						}

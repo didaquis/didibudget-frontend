@@ -59,9 +59,9 @@ describe('AveragePerMonth', () => {
 		)
 
 		expect(screen.getByRole('heading', { name: 'Average Spending' })).toBeVisible()
-		expect(screen.getByText('Period (months)')).toBeVisible()
-		expect(screen.getByText('Average monthly spending')).toBeVisible()
-		expect(screen.getByRole('cell', { name: /3/ })).toBeVisible()
+		expect(screen.getByRole('columnheader', { name: 'Period' })).toBeVisible()
+		expect(screen.getByRole('columnheader', { name: 'Per month' })).toBeVisible()
+		expect(screen.getByRole('cell', { name: 'Last 3 months' })).toBeVisible()
 		expect(screen.getByText(/150/)).toBeVisible()
 	})
 
@@ -81,7 +81,7 @@ describe('AveragePerMonth', () => {
 			</AuthContext.Provider>
 		)
 
-		expect(screen.queryByRole('cell', { name: /6/ })).toBeNull()
+		expect(screen.queryByRole('cell', { name: 'Last 6 months' })).toBeNull()
 	})
 
 	it('should not render 12-month average row when user has been registered for less than 13 months', () => {
@@ -100,7 +100,7 @@ describe('AveragePerMonth', () => {
 			</AuthContext.Provider>
 		)
 
-		expect(screen.queryByRole('cell', { name: /12/ })).toBeNull()
+		expect(screen.queryByRole('cell', { name: 'Last 12 months' })).toBeNull()
 	})
 
 	it('should not render 24-month average row when user has been registered for less than 25 months', () => {
@@ -119,7 +119,22 @@ describe('AveragePerMonth', () => {
 			</AuthContext.Provider>
 		)
 
-		expect(screen.queryByRole('cell', { name: /24/ })).toBeNull()
+		expect(screen.queryByRole('cell', { name: 'Last 24 months' })).toBeNull()
+	})
+
+	it('labels every period once the user has been registered for more than 25 months', () => {
+		mockMonthsBetweenDates.mockReturnValue(26)
+
+		render(
+			<AuthContext.Provider value={{ userData: mockUserData }}>
+				<AveragePerMonth averageData={mockAverageData} title="Average Spending" />
+			</AuthContext.Provider>
+		)
+
+		expect(screen.getByRole('cell', { name: 'Last 3 months' })).toBeVisible()
+		expect(screen.getByRole('cell', { name: 'Last 6 months' })).toBeVisible()
+		expect(screen.getByRole('cell', { name: 'Last 12 months' })).toBeVisible()
+		expect(screen.getByRole('cell', { name: 'Last 24 months' })).toBeVisible()
 	})
 
 	it('should render the section title', () => {
