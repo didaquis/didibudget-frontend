@@ -116,7 +116,7 @@
       { "name": "The One Ink Rule", "body": "Cyan is the only interaction colour. A new clickable thing is cyan (outline at rest, filled when selected); it is never coral, green or a new hue.", "section": "colors" },
       { "name": "The Red Means Broken Rule", "body": "Danger red appears only for failures and destructive actions. \"No data yet\" is `EmptyState` (info tint), never an error.", "section": "colors" },
       { "name": "The Light Heading Rule", "body": "Headings use weight 300 (`fw-light`). Hierarchy comes from size and space, never from bold.", "section": "typography" },
-      { "name": "The Hairline Rule", "body": "Group content with a 1px `border-info` line, not with a shadow or a lighter panel.", "section": "elevation" }
+      { "name": "The Hairline Rule", "body": "Group content with a 1px line, not with a shadow or a lighter panel: `border-info` around a block, `border-secondary` between the rows of a list that has its own buttons, so cyan stays on what you can tap.", "section": "elevation" }
     ],
     "dos": [
       "**Do** design and check every screen at 390px first.",
@@ -129,7 +129,7 @@
     ],
     "donts": [
       "**Don't** introduce a second interaction colour. Coral is a brand mark, not a button.",
-      "**Don't** use shadows or lighter panels to separate content; use a cyan hairline.",
+      "**Don't** use shadows or lighter panels to separate content; use a hairline (cyan, or gray between rows that have their own buttons).",
       "**Don't** use danger red for \"no data\".",
       "**Don't** add custom CSS where a Bootstrap utility already does the job.",
       "**Don't** let a value wrap mid-number or force a table to scroll sideways at 390px when stacking would work."

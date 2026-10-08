@@ -43,7 +43,7 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	const amount = formatAmount(quantity)
 
 	return (
-		<li className="list-group-item bg-dark text-light border-info px-0 py-2">
+		<li className="list-group-item bg-dark text-light border-secondary px-0 py-3">
 			<div className="d-flex align-items-center gap-3">
 				<div className="flex-grow-1">
 					<p className="mb-0">{name} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></p>
