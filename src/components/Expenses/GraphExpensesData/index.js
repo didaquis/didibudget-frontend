@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts'
 
 import { parseUnixTimestamp } from '../../../utils/utils'
-import { AXIS_TICK, CHART_LINE_STROKE, shortMonthLabel } from '../../../utils/charts'
+import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, shortMonthLabel } from '../../../utils/charts'
 import { getSumPerMonth, getLastNValuesFromArrayIfTheyExist } from '../utils'
 
 import { EmptyState } from '../../EmptyState'
@@ -41,7 +41,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 						<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 						<Tooltip />
-						<Bar dataKey="sum" fill="#3182BD" />
+						<Bar dataKey="sum" fill={SERIES_COLOR} />
 					</BarChart>
 				</ResponsiveContainer>
 
@@ -61,7 +61,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 								<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<Tooltip />
-								<Bar dataKey="sum" fill="#3182BD" />
+								<Bar dataKey="sum" fill={SERIES_COLOR} />
 							</BarChart>
 						</ResponsiveContainer>
 					</Fragment>

@@ -6,7 +6,7 @@ import { EmptyState } from '../../EmptyState'
 import { SectionTitle } from '../../SectionTitle'
 import { InformativeBadge } from '../../InformativeBadge'
 
-import { AXIS_TICK, CHART_LINE_STROKE, shortMonthLabel } from '../../../utils/charts'
+import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, shortMonthLabel } from '../../../utils/charts'
 
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
@@ -46,7 +46,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<Tooltip />
-								<Line dataKey="balance" fill="#8884d8" />
+								<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 							</LineChart>
 						</ResponsiveContainer>
 					</Fragment>
@@ -75,7 +75,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<Tooltip />
-								<Line dataKey="balance" fill="#8884d8" />
+								<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 							</LineChart>
 						</ResponsiveContainer>
 					</Fragment>
@@ -93,7 +93,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 						<Tooltip />
-						<Line dataKey="balance" fill="#8884d8" />
+						<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 					</LineChart>
 				</ResponsiveContainer>
 			</div>

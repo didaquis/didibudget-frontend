@@ -12,3 +12,6 @@ export const CHART_LINE_STROKE = 'rgba(255, 255, 255, 0.15)'
  * @returns {string}
  */
 export const shortMonthLabel = (label) => label.replace(/^(\p{L}{3})\p{L}*/u, '$1')
+
+// Neutral, so cyan stays for what you can tap
+export const SERIES_COLOR = 'rgba(255, 255, 255, 0.7)'
