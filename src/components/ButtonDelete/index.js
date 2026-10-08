@@ -2,6 +2,9 @@ import { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { BsTrash3 } from 'react-icons/bs'
+
+import './styles.css'
 
 export const ButtonDelete = ({ uuid, details, deleteMutation, onDelete }) => {
 	const description = details.join(', ')
@@ -29,7 +32,9 @@ export const ButtonDelete = ({ uuid, details, deleteMutation, onDelete }) => {
 
 	return (
 		<div>
-			<Button color="danger" outline={true} disabled={isDisabled} onClick={toggle} className="d-block d-md-inline-block me-md-2" aria-label={`Delete ${description}`}>Delete</Button>
+			<Button color="link" disabled={isDisabled} onClick={toggle} className="button-delete p-0 text-white-50" aria-label={`Delete ${description}`}>
+				<BsTrash3 size={20} aria-hidden="true" />
+			</Button>
 			<Modal isOpen={modal} toggle={toggle}>
 				<ModalHeader toggle={toggle}>Delete this record?</ModalHeader>
 				<ModalBody>
