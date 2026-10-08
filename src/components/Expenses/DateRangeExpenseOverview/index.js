@@ -9,7 +9,7 @@ export const DateRangeExpenseOverview = ({ startDate, endDate, expenses, categor
 	const expensesGroupedData = getDetailedExpensesGroupedFromRange(expenses, startDate, endDate)
 
 	if (!expensesGroupedData) {
-		const message = 'No expenses recorded in this date range'
+		const message = 'No spending recorded in this date range'
 		return <EmptyState message={message} />
 	}
 
