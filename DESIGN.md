@@ -150,7 +150,7 @@ Charts still use Recharts' default colours (`#8884d8` for monthly-balance lines,
 
 ## Layout
 
-- **Shell:** `container-fluid bg-dark` wrapping a Bootstrap `container`, which gives about 24px side gutters at 390px. The navbar sits on top with 3rem below it; `main` has 1.5rem bottom padding.
+- **Shell:** `container-fluid bg-dark` wrapping a Bootstrap `container`, which gives about 24px side gutters at 390px. The navbar sits on top with 1.5rem below it; `main` has 3rem bottom padding. The footer is static: it sits at the bottom of short screens and after the content on long ones, never fixed over it.
 - **Target width:** 390px. Every screen is designed and checked there first.
 - **Forms:** a single column at full width on phones (`col-md-8` centred from 768px). Fields are separated by 1.5rem (`mb-4`).
 - **Grids:** cards stack in one column on phones (`col-sm-6 col-md-4`).

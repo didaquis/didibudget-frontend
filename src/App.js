@@ -36,9 +36,9 @@ export const App = () => {
 		<Localization date={dateLocalizer}>
 		<StrictMode>
 			<div className="container-fluid bg-dark">
-				<div className="container">
+				<div className="container d-flex flex-column min-vh-100">
 					<NavBar />
-						<main className="pb-4">
+						<main className="flex-grow-1 pb-5">
 							<Routes>
 								<Route path='/' element={
 									<LazyRoute>
@@ -161,7 +161,6 @@ export const App = () => {
 								} />
 							</Routes>
 						</main>
-					<div className="row pb-5"></div>
 					<Footer />
 				</div>
 			</div>

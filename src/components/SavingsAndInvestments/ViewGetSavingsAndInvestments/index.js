@@ -27,7 +27,7 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 				<thead>
 					<tr className="table-info text-dark">
 						<th scope="col">Product</th>
-						<th scope="col">Total invested</th>
+						<th scope="col" className="text-end">Total invested</th>
 					</tr>
 				</thead>
 			<tbody>
@@ -36,7 +36,7 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 						return (
 							<tr key={expenseSum.categoryType}>
 								<td>{ getCategoryTypeText(expenseSum.categoryType) }</td>
-								<td>{formatAmount(expenseSum.sum, expenseSum.currencyISO)}</td>
+								<td className="text-nowrap text-end">{formatAmount(expenseSum.sum, expenseSum.currencyISO)}</td>
 							</tr>
 						)
 					})
@@ -46,7 +46,7 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 				<tfoot>
 					<tr className="table-info text-dark">
 						<td>Total</td>
-						<td>{formatAmount(totalInvested, currency)}</td>
+						<td className="text-nowrap text-end">{formatAmount(totalInvested, currency)}</td>
 					</tr>
 				</tfoot>
 			)}
