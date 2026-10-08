@@ -174,7 +174,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Shape:** gently rounded (0.25rem; 0.2rem for `btn-sm`).
 - **Primary action:** `SubmitButton`, a large `btn-lg btn-outline-info` (48px tall): cyan text and border on the dark page. On hover it fills cyan with dark text. Below 768px it spans the full width of its form (`d-grid d-md-block`); from 768px it keeps its natural width, left-aligned. Every form's main action uses this component, never a hand-rolled button.
 - **Selected / filled:** `btn-info` marks the chosen option in a set, such as the selected category chip in "Most used".
-- **Link style:** `btn-link text-info p-0 text-start` for rows in long pick-lists like the category tree.
+- **Link style:** `btn-link` rows in long pick-lists like the category tree. The whole row is the button (`w-100 text-start px-0`, about 47px tall with its list item), emoji included. Rows that **choose** are cyan with the label underlined; rows that only **expand** are `text-light`, not underlined, with a white caret. Tapping a row must not leave Bootstrap's focus ring around it: hide it on `:focus:not(:focus-visible)` and keep it for keyboard focus.
 - **Light:** `btn-light` only when attached to a white input (input-group addon).
 - **Large:** `btn-lg` in a `d-grid` column for the single home-screen call to action.
 
@@ -195,7 +195,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Date pickers:** react-widgets; read-only inputs that open a calendar keep a pointer cursor.
 
 ### Lists & Tables
-- **List groups:** `list-group-flush`, items `bg-dark border-info`, horizontal padding removed so rows align with the page edge.
+- **List groups:** `list-group-flush`, items `bg-dark border-info px-0 py-1`, horizontal padding removed so rows align with the page edge.
 - **Tables:** `table-dark table-hover`, with a `table-info` header row. Always wrapped in `table-responsive`.
 
 ### Feedback

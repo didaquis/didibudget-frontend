@@ -301,6 +301,19 @@ describe('CategoryPicker', () => {
 		}))
 	})
 
+	it('reports the leaf when its emoji is pressed instead of its name', async () => {
+		const user = userEvent.setup()
+		const { onSelect } = renderPicker({ frequentCategories: [] })
+
+		await user.click(screen.getByRole('button', { name: /Private vehicles/ }))
+		await user.click(within(screen.getByRole('list', { name: 'Subcategories of Private vehicles' })).getByText('⛽️'))
+
+		expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({
+			categoryID: 'category-id-1',
+			subcategoryID: 'subcategory-id-1'
+		}))
+	})
+
 	it('reports the leaf when a result is chosen from the filtered flat list', async () => {
 		const user = userEvent.setup()
 		const { onSelect } = renderPicker({ frequentCategories: [] })

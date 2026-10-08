@@ -1,0 +1,5 @@
+/* Bootstrap 5.1 rings .btn on any :focus, so a tapped row that stays open keeps a box around it.
+   Keyboard focus (:focus-visible) keeps the ring */
+.category-picker .btn:focus:not(:focus-visible) {
+	box-shadow: none;
+}
