@@ -31,39 +31,64 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 	}
 
 	if (expenses.length) {
+		const rows = expenses.map(expense => {
+			const nameOfCategory = getNameOfCategoryOrSubcategory(expense.category, categories)
+			const nameOfSubcategory = getNameOfCategoryOrSubcategory(expense.subcategory, categories)
+			const date = parseUnixTimestamp(expense.date).substring(0, 10)
+			const fullNameOfCategory = `${nameOfCategory}${(nameOfSubcategory) ? ` › ${nameOfSubcategory}` : ''}`
+			const amount = formatAmount(expense.quantity, expense.currencyISO)
+			return { uuid: expense.uuid, date, fullNameOfCategory, amount, details: [date, fullNameOfCategory, amount] }
+		})
+
 		return (
-			<section className="table-responsive">
-				<table className="table table-dark table-hover">
-					<thead>
-						<tr className="table-info text-dark">
-							<th scope="col">Date</th>
-							<th scope="col">Category & subcategory</th>
-							<th scope="col">Amount</th>
-							<th scope="col">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{
-							expenses.map(expense => {
-								const nameOfCategory = getNameOfCategoryOrSubcategory(expense.category, categories)
-								const nameOfSubcategory = getNameOfCategoryOrSubcategory(expense.subcategory, categories)
-								const date = parseUnixTimestamp(expense.date).substring(0, 10)
-								const fullNameOfCategory = `${nameOfCategory}${(nameOfSubcategory) ? ` › ${nameOfSubcategory}` : ''}`
-								const details = [date, fullNameOfCategory, formatAmount(expense.quantity, expense.currencyISO)]
-								return (
-									<tr key={expense.uuid}>
-										<td>{date}</td>
-										<td>{fullNameOfCategory}</td>
-										<td>{formatAmount(expense.quantity, expense.currencyISO)}</td>
+			<section>
+				<div className="d-none d-md-block table-responsive">
+					<table className="table table-dark table-hover">
+						<thead>
+							<tr className="table-info text-dark">
+								<th scope="col">Date</th>
+								<th scope="col">Category & subcategory</th>
+								<th scope="col">Amount</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								rows.map(row => (
+									<tr key={row.uuid}>
+										<td className="text-nowrap">{row.date}</td>
+										<td>{row.fullNameOfCategory}</td>
+										<td className="text-nowrap">{row.amount}</td>
 										<td>
-											<ButtonDelete uuid={expense.uuid} details={details} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
+											<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
 										</td>
 									</tr>
-								)
-							})
-						}
-					</tbody>
-				</table>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+
+				{
+					// Below 768px a four-column table can't fit a whole date, so each spend stacks instead
+				}
+				<ul className="d-md-none list-group list-group-flush">
+					{
+						rows.map(row => (
+							<li className="list-group-item bg-dark text-light border-secondary px-0 py-3" key={row.uuid}>
+								<div className="d-flex align-items-center gap-3">
+									<div className="flex-grow-1">
+										<p className="mb-0">{row.fullNameOfCategory}</p>
+										<p className="mb-0 small text-white-50">
+											<span className="text-nowrap">{row.date}</span> · <span className="text-nowrap text-light">{row.amount}</span>
+										</p>
+									</div>
+									<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
+								</div>
+							</li>
+						))
+					}
+				</ul>
 
 				<PaginateNavbar currentPage={paginationData.currentPage} totalPages={paginationData.totalPages} onChangePage={onChangePage} />
 			</section>

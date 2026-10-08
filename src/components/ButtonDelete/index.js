@@ -29,7 +29,7 @@ export const ButtonDelete = ({ uuid, details, deleteMutation, onDelete }) => {
 
 	return (
 		<div>
-			<Button color="danger" outline={true} disabled={isDisabled} onClick={toggle} className="d-block d-md-inline-block me-2" aria-label={`Delete ${description}`}>Delete</Button>
+			<Button color="danger" outline={true} disabled={isDisabled} onClick={toggle} className="d-block d-md-inline-block me-md-2" aria-label={`Delete ${description}`}>Delete</Button>
 			<Modal isOpen={modal} toggle={toggle}>
 				<ModalHeader toggle={toggle}>Delete this record?</ModalHeader>
 				<ModalBody>
