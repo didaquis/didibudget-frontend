@@ -54,7 +54,6 @@ export const RegisterForm = ({ activateAuth }) => {
 							autoComplete="username"
 							className="form-control"
 							id="inputEmailRegisterForm"
-							placeholder='email'
 							{...email}
 							required
 							autoFocus
@@ -67,7 +66,6 @@ export const RegisterForm = ({ activateAuth }) => {
 							disabled={isDisabled}
 							className="form-control"
 							id="inputPasswordRegisterForm"
-							placeholder='password'
 							type='password'
 							name="password"
 							autoComplete="new-password"
@@ -83,7 +81,6 @@ export const RegisterForm = ({ activateAuth }) => {
 							disabled={isDisabled}
 							className="form-control"
 							id="inputRepeatPasswordRegisterForm"
-							placeholder='repeat password'
 							type='password'
 							name="repeatPassword"
 							autoComplete="new-password"
