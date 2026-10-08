@@ -31,19 +31,6 @@ export const GraphMonthlyBalance = ({ data }) => {
 	if (allDataParsed.length) {
 		return (
 			<div>
-				<SectionTitle text={`Since ${allDataParsed[0].label}`} />
-				<ResponsiveContainer width="100%" height={460}>
-					<LineChart
-						data={allDataParsed}
-						margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
-					>
-						<CartesianGrid strokeDasharray="3 3" />
-						<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
-						<YAxis />
-						<Tooltip />
-						<Line dataKey="balance" fill="#8884d8" />
-					</LineChart>
-				</ResponsiveContainer>
 				{
 					lastYearDataParsed.length > 0 &&
 					<Fragment>
@@ -97,6 +84,19 @@ export const GraphMonthlyBalance = ({ data }) => {
 						</ResponsiveContainer>
 					</Fragment>
 				}
+				<SectionTitle text={`Since ${allDataParsed[0].label}`} />
+				<ResponsiveContainer width="100%" height={460}>
+					<LineChart
+						data={allDataParsed}
+						margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
+					>
+						<CartesianGrid strokeDasharray="3 3" />
+						<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
+						<YAxis />
+						<Tooltip />
+						<Line dataKey="balance" fill="#8884d8" />
+					</LineChart>
+				</ResponsiveContainer>
 			</div>
 		)
 	} else {
