@@ -1,0 +1,13 @@
+/* 44px tap target for one-handed use; the icon sits flush with the row's right edge */
+.button-delete {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-end;
+	min-width: 44px;
+	min-height: 44px;
+}
+
+.button-delete:hover,
+.button-delete:focus-visible {
+	color: var(--bs-danger) !important;
+}

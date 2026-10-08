@@ -130,7 +130,7 @@ Charts still use Recharts' default colours (`#8884d8` for monthly-balance lines,
 ### Named Rules
 **The One Ink Rule.** Cyan is the only interaction colour. A new clickable thing is cyan (outline at rest, filled when selected); it is never coral, green or a new hue.
 
-**The Red Means Broken Rule.** Danger red appears only for failures and destructive actions. "No data yet" is `EmptyState` (info tint), never an error.
+**The Red Means Broken Rule.** Danger red appears only for failures and destructive actions. "No data yet" is `EmptyState` (info tint), never an error. A control that only opens a delete confirmation is not the destructive action: the per-row delete is a muted trash icon, and red waits for the confirm button in the modal.
 
 ## Typography
 
@@ -177,6 +177,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Selected / filled:** `btn-info` marks the chosen option in a set, such as the selected category chip in "Most used".
 - **Link style:** `btn-link` rows in long pick-lists like the category tree. The whole row is the button (`w-100 text-start px-0`, about 47px tall with its list item), emoji included. Rows that **choose** are cyan with the label underlined; rows that only **expand** are `text-light`, not underlined, with a white caret. Tapping a row must not leave Bootstrap's focus ring around it: hide it on `:focus:not(:focus-visible)` and keep it for keyboard focus.
 - **Light:** `btn-light` only when attached to a white input (input-group addon).
+- **Row delete:** `ButtonDelete`, a `btn-link` trash icon (`BsTrash3`, 20px) in `text-white-50`, 44px tap target with the icon flush right. It turns danger red on hover and keyboard focus. The confirmation modal's Delete is the only red button.
 - **Large:** `btn-lg` in a `d-grid` column for the single home-screen call to action.
 
 ### Chips
