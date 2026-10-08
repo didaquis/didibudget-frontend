@@ -50,6 +50,12 @@ describe('App routing', () => {
 		expect(screen.getByRole('button', { name: 'Log in' })).toBeVisible()
 	})
 
+	it('offers to create an account from the login screen', () => {
+		renderAppAt('/login')
+
+		expect(screen.getByRole('link', { name: 'Create an account' })).toHaveAttribute('href', '/register')
+	})
+
 	it('sends a visitor without a session away from a protected screen', () => {
 		renderAppAt('/spending/add')
 
