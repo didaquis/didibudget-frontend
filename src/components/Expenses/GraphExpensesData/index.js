@@ -32,6 +32,9 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 				<ResponsiveContainer width="100%" height={460}>
 					<BarChart
 						data={dataGroupedPerMonth}
+						accessibilityLayer={false}
+						role="img"
+						title={`Bar chart of spending per month since ${dataGroupedPerMonth[0].label}`}
 						margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
 					>
 						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
@@ -49,6 +52,9 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 						<ResponsiveContainer width="100%" height={460}>
 							<BarChart
 								data={dataGroupedPerMonthSubset}
+								accessibilityLayer={false}
+								role="img"
+								title={`Bar chart of spending per month over the last ${numberOfMonthsToDisplay} months`}
 								margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />

@@ -37,6 +37,9 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastYearDataParsed}
+								accessibilityLayer={false}
+								role="img"
+								title="Line chart of the monthly balance over the last 12 months"
 								margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
@@ -63,6 +66,9 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastTwoYearsDataParsed}
+								accessibilityLayer={false}
+								role="img"
+								title="Line chart of the monthly balance over the last 24 months"
 								margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
@@ -78,6 +84,9 @@ export const GraphMonthlyBalance = ({ data }) => {
 				<ResponsiveContainer width="100%" height={460}>
 					<LineChart
 						data={allDataParsed}
+						accessibilityLayer={false}
+						role="img"
+						title={`Line chart of the monthly balance since ${allDataParsed[0].label}`}
 						margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 					>
 						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
