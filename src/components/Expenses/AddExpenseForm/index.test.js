@@ -103,7 +103,7 @@ describe('AddExpenseForm', () => {
 		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('12.40 € · Taxes'))
 
 		expect(screen.getByLabelText(/Amount/)).toHaveValue(null)
-		expect(screen.getByLabelText('Filter categories')).toBeVisible()
+		expect(screen.getByLabelText('Search categories')).toBeVisible()
 		expect(screen.getByRole('button', { name: 'Save spending' })).toBeDisabled()
 		expect(screen.getByLabelText(/Amount/)).toHaveFocus()
 	})
