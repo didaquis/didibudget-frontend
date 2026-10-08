@@ -6,6 +6,9 @@
 .superset/
 .superpowers/
 .claude/launch.json
+.impeccable/critique/
+.impeccable/live/
+.impeccable/config.local.json
 
 # Webstorm
 .idea

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T00:00:00Z",
+  "title": "Design System: didibudget",
+  "extensions": {
+    "colorMeta": {
+      "page-dark": { "role": "neutral", "displayName": "Page Dark", "tonalRamp": ["#0b0d0e", "#16191b", "#212529", "#343a40", "#495057", "#6c757d", "#adb5bd", "#e9ecef"] },
+      "info": { "role": "primary", "displayName": "info", "tonalRamp": ["#032830", "#055160", "#087990", "#0aa2c0", "#0dcaf0", "#3dd5f3", "#9eeaf9", "#cff4fc"] },
+      "coral": { "role": "secondary", "displayName": "Coral", "tonalRamp": ["#3d1414", "#6b2424", "#9e3a3a", "#cc5252", "#eb6c6c", "#f09191", "#f6baba", "#fbe1e1"] },
+      "text-light": { "role": "neutral", "displayName": "Text Light" },
+      "text-muted": { "role": "neutral", "displayName": "Muted White" },
+      "field-white": { "role": "neutral", "displayName": "Field White" },
+      "ink-dark": { "role": "neutral", "displayName": "Ink Dark" },
+      "danger": { "role": "status", "displayName": "Danger" },
+      "success": { "role": "status", "displayName": "Success" },
+      "info-tint": { "role": "status", "displayName": "Info Tint" }
+    },
+    "typographyMeta": {
+      "page-title": { "displayName": "Page Title", "purpose": "PageTitle, one per screen, fw-light." },
+      "section-title": { "displayName": "Section Title", "purpose": "SectionTitle and PageSubTitle (h3 at .h5 size)." },
+      "body": { "displayName": "Body", "purpose": "List rows, card text, field values." },
+      "label": { "displayName": "Label", "purpose": "Small labels and help text under fields." }
+    },
+    "shadows": [
+      { "name": "toast", "value": "0 0.5rem 1rem rgba(0, 0, 0, 0.15)", "purpose": "Bootstrap toast shadow; only temporary overlays are lifted." },
+      { "name": "focus-ring", "value": "0 0 0 0.25rem rgba(13, 110, 253, 0.25)", "purpose": "Bootstrap default focus ring on form controls." }
+    ],
+    "motion": [
+      { "name": "toast-in-out", "value": "150ms ease-out / ease-in, translateY(-8px)", "purpose": "SuccessToast enter and leave." },
+      { "name": "hero-glow", "value": "700ms ease-out 250ms delay, opacity", "purpose": "Home hero coral glow fade-in." },
+      { "name": "reduced-motion", "value": "animation: none", "purpose": "Every animation is disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "target", "value": "390px" },
+      { "name": "sm", "value": "576px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "992px" },
+      { "name": "xl", "value": "1200px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (outline info)",
+      "kind": "button",
+      "refersTo": "button-outline-info",
+      "description": "SubmitButton and main actions: cyan outline at rest, filled on hover.",
+      "html": "<button class=\"ds-btn-outline-info\">Save</button>",
+      "css": ".ds-btn-outline-info { background: transparent; color: #0dcaf0; border: 1px solid #0dcaf0; border-radius: 0.25rem; padding: 0.375rem 0.75rem; font: 400 1rem/1.5 system-ui, -apple-system, sans-serif; cursor: pointer; transition: color .15s ease-in-out, background-color .15s ease-in-out, box-shadow .15s ease-in-out; } .ds-btn-outline-info:hover { background: #0dcaf0; color: #000; } .ds-btn-outline-info:focus-visible { outline: 0; box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.5); }"
+    },
+    {
+      "name": "Selected Button (info)",
+      "kind": "button",
+      "refersTo": "button-info",
+      "description": "Filled cyan marks the selected option in a set.",
+      "html": "<button class=\"ds-btn-info\">🛒 Groceries</button>",
+      "css": ".ds-btn-info { background: #0dcaf0; color: #000; border: 1px solid #0dcaf0; border-radius: 0.25rem; padding: 0.375rem 0.75rem; font: 400 1rem/1.5 system-ui, -apple-system, sans-serif; cursor: pointer; } .ds-btn-info:hover { background: #31d2f2; border-color: #25cff2; } .ds-btn-info:focus-visible { outline: 0; box-shadow: 0 0 0 0.25rem rgba(11, 172, 204, 0.5); }"
+    },
+    {
+      "name": "Category Chips",
+      "kind": "chip",
+      "refersTo": "button-sm",
+      "description": "Most-used categories: small outline chips in a wrapping row, the selected one filled.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip ds-chip--on\">🛒 Groceries</button><button class=\"ds-chip\">⛽ Fuel</button><button class=\"ds-chip\">🍽️ Restaurants</button></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; background: #212529; padding: 1rem; } .ds-chip { background: transparent; color: #0dcaf0; border: 1px solid #0dcaf0; border-radius: 0.2rem; padding: 0.25rem 0.5rem; font: 400 0.875rem/1.5 system-ui, -apple-system, sans-serif; cursor: pointer; } .ds-chip:hover { background: #0dcaf0; color: #000; } .ds-chip--on { background: #0dcaf0; color: #000; } .ds-chip:focus-visible { outline: 0; box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.5); }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Default Bootstrap white field on the dark page, light label above, muted help below.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-field__label\" for=\"ds-amount\">Amount <span class=\"ds-req\">*</span></label><input id=\"ds-amount\" class=\"ds-input\" inputmode=\"decimal\" placeholder=\"0.00\"><small class=\"ds-field__help\">Use decimal point as decimal separator.</small></div>",
+      "css": ".ds-field { background: #212529; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; } .ds-field__label { display: block; color: #f8f9fa; margin-bottom: 0.25rem; } .ds-req { color: #dc3545; } .ds-input { display: block; width: 100%; box-sizing: border-box; background: #fff; color: #212529; border: 1px solid #ced4da; border-radius: 0.25rem; padding: 0.375rem 0.75rem; font-size: 1rem; line-height: 1.5; transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; } .ds-input:focus { outline: 0; border-color: #86b7fe; box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); } .ds-field__help { display: block; color: rgba(255, 255, 255, 0.5); font-size: 0.875em; margin-top: 0.25rem; }"
+    },
+    {
+      "name": "Outlined Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Same colour as the page, separated by a cyan hairline.",
+      "html": "<div class=\"ds-card\"><h5 class=\"ds-card__title\">Home - Rent 🏠</h5><p class=\"ds-card__text\">750 EUR</p></div>",
+      "css": ".ds-card { background: #212529; color: #f8f9fa; border: 1px solid #0dcaf0; border-radius: 0.25rem; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; } .ds-card__title { font-weight: 300; font-size: 1.25rem; line-height: 1.2; margin: 0 0 0.5rem; } .ds-card__text { margin: 0; white-space: nowrap; }"
+    },
+    {
+      "name": "NavBar",
+      "kind": "nav",
+      "description": "A row of 32px light icons spread across the width with a cyan underline.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><a href=\"#\" aria-label=\"Home\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 16 16\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z\"/></svg></a><a href=\"#\" aria-label=\"Savings\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 16 16\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M0 0h1v15h15v1H0V0Zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5Z\"/></svg></a><a href=\"#\" aria-label=\"Log out\"><svg width=\"32\" height=\"32\" viewBox=\"0 0 16 16\" fill=\"currentColor\" aria-hidden=\"true\"><path fill-rule=\"evenodd\" d=\"M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z\"/><path fill-rule=\"evenodd\" d=\"M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z\"/></svg></a></nav>",
+      "css": ".ds-nav { display: flex; justify-content: space-between; background: #212529; border-bottom: 1px solid #0dcaf0; padding: 0.5rem 0; } .ds-nav a { color: #f8f9fa; padding: 0.5rem 1rem; display: inline-flex; transition: color .15s ease-in-out; } .ds-nav a:hover { color: rgba(255, 255, 255, 0.75); } .ds-nav a:focus-visible { outline: 2px solid #0dcaf0; outline-offset: 2px; }"
+    },
+    {
+      "name": "Feedback: Empty and Error",
+      "kind": "custom",
+      "description": "EmptyState (info tint, role=status) for nothing-yet; ErrorAlert (danger, role=alert) only for failures.",
+      "html": "<div class=\"ds-feedback\"><p class=\"ds-alert ds-alert--info\" role=\"status\">No spending recorded this month yet.</p><p class=\"ds-alert ds-alert--danger\" role=\"alert\">Could not reach the server.</p></div>",
+      "css": ".ds-feedback { background: #212529; padding: 1rem; font-family: system-ui, -apple-system, sans-serif; } .ds-alert { margin: 0 0 1rem; padding: 1rem; text-align: center; border: 1px solid transparent; border-radius: 0.25rem; } .ds-alert--info { color: #055160; background: #cff4fc; border-color: #b6effb; } .ds-alert--danger { color: #842029; background: #f8d7da; border-color: #f5c2c7; }"
+    },
+    {
+      "name": "Success Toast",
+      "kind": "custom",
+      "refersTo": "toast-success",
+      "description": "Solid white toast below the navbar; slides in over 150ms and auto-hides.",
+      "html": "<div class=\"ds-toast\" role=\"status\">Spending saved ✅</div>",
+      "css": ".ds-toast { background: #fff; color: #212529; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 0.25rem; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); padding: 0.75rem; max-width: 350px; font: 400 0.875rem/1.5 system-ui, -apple-system, sans-serif; animation: ds-toast-in 150ms ease-out; } @keyframes ds-toast-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } } @media (prefers-reduced-motion: reduce) { .ds-toast { animation: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pocket Ledger",
+    "overview": "A notebook you keep on you: you open it, write the line, and close it. The page is near-black, the ink is one colour (Bootstrap's `info` cyan), and every entry is plain text with no ornament. Nothing on a screen should slow down writing the next line or reading the last one.\n\nThe system is stock Bootstrap 5.1.3 used almost entirely through utility classes, with no theme layer and no custom tokens. That restraint is part of the identity: the app looks like a well-kept tool, not a product that sells itself. Character comes from a few deliberate choices: light-weight (300) headings, cyan hairlines instead of filled surfaces, emoji on categories, and the coral wordmark glowing on the logged-out home.\n\nDensity is set for a 390px phone held in one hand. Controls are full-width, lists are long and scroll vertically, and nothing needs sideways dragging.",
+    "keyCharacteristics": [
+      "Dark page, light text, one cyan accent for anything you can act on.",
+      "Flat: structure comes from 1px cyan borders, not shadows or tonal layers.",
+      "White form controls on the dark page (default Bootstrap, no overrides).",
+      "Light (300) headings; body text at the system default weight.",
+      "Emoji carry the category personality; the UI chrome stays plain."
+    ],
+    "rules": [
+      { "name": "The One Ink Rule", "body": "Cyan is the only interaction colour. A new clickable thing is cyan (outline at rest, filled when selected); it is never coral, green or a new hue.", "section": "colors" },
+      { "name": "The Red Means Broken Rule", "body": "Danger red appears only for failures and destructive actions. \"No data yet\" is `EmptyState` (info tint), never an error.", "section": "colors" },
+      { "name": "The Light Heading Rule", "body": "Headings use weight 300 (`fw-light`). Hierarchy comes from size and space, never from bold.", "section": "typography" },
+      { "name": "The Hairline Rule", "body": "Group content with a 1px `border-info` line, not with a shadow or a lighter panel.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** design and check every screen at 390px first.",
+      "**Do** use `btn-outline-info` for the main action and `btn-info` for the selected state.",
+      "**Do** keep form controls default Bootstrap white; don't theme them dark.",
+      "**Do** use `fw-light` for page and section titles.",
+      "**Do** wrap tables in `table-responsive` and mark amounts and dates `text-nowrap`.",
+      "**Do** use `EmptyState` for empty lists, `ErrorAlert` for failures and `SuccessToast` for confirmed writes.",
+      "**Do** honour `prefers-reduced-motion` on every animation."
+    ],
+    "donts": [
+      "**Don't** introduce a second interaction colour. Coral is a brand mark, not a button.",
+      "**Don't** use shadows or lighter panels to separate content; use a cyan hairline.",
+      "**Don't** use danger red for \"no data\".",
+      "**Don't** add custom CSS where a Bootstrap utility already does the job.",
+      "**Don't** let a value wrap mid-number or force a table to scroll sideways at 390px when stacking would work."
+    ]
+  }
+}
