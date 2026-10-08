@@ -207,7 +207,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Filter with no matches:** inline muted text (`text-white-50`, `role="status"`, "No … found") where the list would be. Used when a live filter empties a list already on screen (users, category picker); an `EmptyState` box there would shove the form around for a passing state.
 - **SuccessToast:** solid white toast placed below the navbar (top 64px). It fades and slides in over 150ms, then auto-hides. Each save passes `{ id, message }` with a fresh id. Motion is disabled under `prefers-reduced-motion`.
 - **InformativeBadge:** `badge bg-info text-dark`, inline beside section titles (for example, "Net change").
-- **Spinner:** three bouncing dots (muted mauve `#AC9FAA`), centred 100px below the top.
+- **Spinner:** three bouncing dots (muted mauve `#AC9FAA`), centred 100px below the top, with a visually hidden "Loading…" in `role="status"`. Under `prefers-reduced-motion` the dots fade in place instead of scaling.
 
 ### Navigation
 - **NavBar:** a single row of 32px Bootstrap Icons in `text-light`, spread across the width (`justify-content-between`) with a 1px `border-info` underline. Spending and savings sections open as dropdowns. Icon-only links carry `aria-label`.
