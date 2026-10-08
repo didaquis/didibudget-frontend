@@ -42,34 +42,38 @@ export const LoginForm = ({ activateAuth }) => {
 
 	return (
 		<Fragment>
-			<form className="row" onSubmit={handleSubmit}>
-				<div className="col-md-6">
-					<label htmlFor="inputEmailLoginForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
-					<input disabled={isDisabled} type='email' name="email" autoComplete="username" className="form-control" id="inputEmailLoginForm" {...email} required autoFocus />
+			<div className="row justify-content-center">
+				<form className="col-md-8" onSubmit={handleSubmit}>
+					<div className="mb-4">
+						<label htmlFor="inputEmailLoginForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
+						<input disabled={isDisabled} type='email' name="email" autoComplete="username" className="form-control" id="inputEmailLoginForm" {...email} required autoFocus />
+					</div>
+					<div className="mb-4">
+						<label htmlFor="inputPasswordLoginForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
+						<input disabled={isDisabled} type='password' name="password" autoComplete="current-password" className="form-control" id="inputPasswordLoginForm" {...password} required />
+					</div>
+					<div className="my-4">
+						<SubmitButton disabled={isDisabled || !validateLoginForm(email.value, password.value)}>
+							{
+								(!isLoading)
+									?
+									'Log in'
+									:
+									<Fragment>
+										<span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+										<span>Loading</span>
+									</Fragment>
+							}
+						</SubmitButton>
+						<SubmitButtonHelper mustShowHelper={!validateLoginForm(email.value, password.value)}></SubmitButtonHelper>
+					</div>
+				</form>
+				<div className="col-md-8">
+					{
+						error && <ErrorAlert errorMessage={error} />
+					}
 				</div>
-				<div className="col-md-6">
-					<label htmlFor="inputPasswordLoginForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
-					<input disabled={isDisabled} type='password' name="password" autoComplete="current-password" className="form-control" id="inputPasswordLoginForm" {...password} required />
-				</div>
-				<div className="my-4">
-					<SubmitButton disabled={isDisabled || !validateLoginForm(email.value, password.value)}>
-						{
-							(!isLoading)
-								?
-								'Log in'
-								:
-								<Fragment>
-									<span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-									<span>Loading</span>
-								</Fragment>
-						}
-					</SubmitButton>
-					<SubmitButtonHelper mustShowHelper={!validateLoginForm(email.value, password.value)}></SubmitButtonHelper>
-				</div>
-			</form>
-			{
-				error && <ErrorAlert errorMessage={error} />
-			}
+			</div>
 		</Fragment>
 	)
 }

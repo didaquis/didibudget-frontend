@@ -45,8 +45,8 @@ export const RegisterForm = ({ activateAuth }) => {
 		<Fragment>
 			<div className="row justify-content-center mt-4">
 				<form className="col-md-8" onSubmit={handleSubmit}>
-					<div className="col mb-3">
-						<label htmlFor="inputEmailRegisterForm" className="text-light">Email <span className="text-danger">*</span></label>
+					<div className="col mb-4">
+						<label htmlFor="inputEmailRegisterForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
 							type='email'
@@ -60,8 +60,8 @@ export const RegisterForm = ({ activateAuth }) => {
 						/>
 						<small id="emailHelp" className="form-text text-white-50 d-block">Make sure it's a valid email address</small>
 					</div>
-					<div className="col mb-3">
-						<label htmlFor="inputPasswordRegisterForm" className="text-light">Password <span className="text-danger">*</span></label>
+					<div className="col mb-4">
+						<label htmlFor="inputPasswordRegisterForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
 							className="form-control"
@@ -76,7 +76,7 @@ export const RegisterForm = ({ activateAuth }) => {
 						<small id="passwordHelp" className="form-text text-white-50 d-block">At least 8 characters, including a number, a lowercase letter and an uppercase letter. No spaces.</small>
 					</div>
 					<div className="col mb-4">
-						<label htmlFor="inputRepeatPasswordRegisterForm" className="text-light">Repeat password <span className="text-danger">*</span></label>
+						<label htmlFor="inputRepeatPasswordRegisterForm" className="form-label text-light">Repeat password <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
 							className="form-control"
