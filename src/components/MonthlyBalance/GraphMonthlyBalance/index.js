@@ -31,7 +31,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 	if (allDataParsed.length) {
 		return (
 			<div>
-				<SectionTitle text="All available data:" />
+				<SectionTitle text={`Since ${allDataParsed[0].label}`} />
 				<ResponsiveContainer width="100%" height={460}>
 					<LineChart
 						data={allDataParsed}
@@ -49,7 +49,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 					<Fragment>
 						<SectionTitle>
 							<span className="d-flex flex-wrap align-items-center gap-2">
-								Data from the last 12 entries is shown:{' '}
+								Last 12 months{' '}
 								{
 									lastYearDifferential !== null &&
 									<InformativeBadge>Net change: {formatDifferential(lastYearDifferential)}</InformativeBadge>
@@ -76,7 +76,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 					<Fragment>
 						<SectionTitle>
 							<span className="d-flex flex-wrap align-items-center gap-2">
-								Data from the last 24 entries is shown:{' '}
+								Last 24 months{' '}
 								{
 									lastTwoYearsDifferential !== null &&
 									<InformativeBadge>Net change: {formatDifferential(lastTwoYearsDifferential)}</InformativeBadge>
