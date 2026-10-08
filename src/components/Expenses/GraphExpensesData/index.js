@@ -8,6 +8,7 @@ import { getSumPerMonth, getLastNValuesFromArrayIfTheyExist } from '../utils'
 
 import { EmptyState } from '../../EmptyState'
 import { SectionTitle } from '../../SectionTitle'
+import { formatAmount } from '../../../utils/currency'
 import { AveragePerMonth } from '../AveragePerMonth'
 
 
@@ -21,6 +22,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 	})
 
 	const dataGroupedPerMonth = getSumPerMonth(dataParsed)
+	const currencyISO = graphData[0]?.currencyISO
 
 	const numberOfMonthsToDisplay = 24
 	const dataGroupedPerMonthSubset = getLastNValuesFromArrayIfTheyExist(dataGroupedPerMonth, numberOfMonthsToDisplay)
@@ -40,7 +42,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 						<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-						<Tooltip />
+						<Tooltip separator=': ' formatter={value => formatAmount(value, currencyISO)} />
 						<Bar dataKey="sum" fill={SERIES_COLOR} />
 					</BarChart>
 				</ResponsiveContainer>
@@ -60,7 +62,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 								<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-								<Tooltip />
+								<Tooltip separator=': ' formatter={value => formatAmount(value, currencyISO)} />
 								<Bar dataKey="sum" fill={SERIES_COLOR} />
 							</BarChart>
 						</ResponsiveContainer>
