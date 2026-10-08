@@ -5,6 +5,7 @@ import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tool
 import { EmptyState } from '../../EmptyState'
 import { SectionTitle } from '../../SectionTitle'
 import { InformativeBadge } from '../../InformativeBadge'
+import { formatAmount } from '../../../utils/currency'
 
 import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, TOOLTIP_ITEM_STYLE, shortMonthLabel } from '../../../utils/charts'
 
@@ -17,6 +18,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 	const lastTwoYearsDataParsed = getLastMonthsData(allDataParsed, 24)
 	const lastYearDifferential = computeDifferential(lastYearDataParsed)
 	const lastTwoYearsDifferential = computeDifferential(lastTwoYearsDataParsed)
+	const currencyISO = data[0]?.currencyISO
 
 	if (allDataParsed.length) {
 		return (
@@ -45,7 +47,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} />
+								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
 								<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 							</LineChart>
 						</ResponsiveContainer>
@@ -74,7 +76,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} />
+								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
 								<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 							</LineChart>
 						</ResponsiveContainer>
@@ -92,7 +94,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 						<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-						<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} />
+						<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
 						<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 					</LineChart>
 				</ResponsiveContainer>
