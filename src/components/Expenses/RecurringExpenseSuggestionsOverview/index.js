@@ -12,7 +12,7 @@ export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {
 			{!hasSuggestions ? (
 				<p className="text-light" role="status">No suggestions available right now.</p>
 			) : (
-				<ul className="list-group list-group-flush border-top border-info">
+				<ul className="list-group list-group-flush">
 					{
 						suggestions.map(suggestion => (
 							<RecurringExpenseSuggestion key={suggestion.uuid} suggestion={suggestion} />
