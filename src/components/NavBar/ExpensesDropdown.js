@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-import { BsCreditCard2Back, BsCartPlus, BsBarChart, BsListUl, BsCalendarCheck, BsCalendar3, BsSearch } from 'react-icons/bs'
+import { BsCreditCard2Back, BsCartPlus, BsBarChart, BsListUl, BsCalendarMonth, BsCalendarRange, BsCalendar3, BsSearch } from 'react-icons/bs'
 
 
 export const ExpensesDropdown = () => {
@@ -29,17 +29,17 @@ export const ExpensesDropdown = () => {
 				</li>
 				<li>
 					<Link className="dropdown-item py-3" to='/spending/this-month'>
-						<BsCalendar3 size='24px' aria-hidden='true' /><span className="ms-3">This month</span>
+						<BsCalendarMonth size='24px' aria-hidden='true' /><span className="ms-3">This month</span>
 					</Link>
 				</li>
 				<li>
 					<Link className="dropdown-item py-3" to='/spending/last-12-months'>
-						<BsCalendar3 size='24px' aria-hidden='true' /><span className="ms-3">Last 12 months</span>
+						<BsCalendarRange size='24px' aria-hidden='true' /><span className="ms-3">Last 12 months</span>
 					</Link>
 				</li>
 				<li>
 					<Link className="dropdown-item py-3" to='/spending/month-by-month'>
-						<BsCalendarCheck size='24px' aria-hidden='true' /><span className="ms-3">Month by month</span>
+						<BsCalendar3 size='24px' aria-hidden='true' /><span className="ms-3">Month by month</span>
 					</Link>
 				</li>
 				<li>
