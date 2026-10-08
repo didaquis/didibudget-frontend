@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { SearchExpensesResults } from './'
 
@@ -48,6 +49,25 @@ const searchResult = {
 		{ category: 'category-id-2', subcategory: null, sum: 672.2, count: 19 }
 	]
 }
+
+const manyCategories = Array.from({ length: 7 }, (_, index) => ({
+	_id: `many-category-id-${index + 1}`,
+	name: `Category ${index + 1}`,
+	uuid: `many-category-uuid-${index + 1}`,
+	subcategories: []
+}))
+
+const getResultWithBreakdownOf = (numberOfRows) => ({
+	...searchResult,
+	breakdown: manyCategories.slice(0, numberOfRows).map((category, index) => ({
+		category: category._id,
+		subcategory: null,
+		sum: 100 - index,
+		count: 1
+	}))
+})
+
+const getBreakdownRows = () => within(screen.getByRole('region', { name: 'Search summary' })).getAllByRole('listitem')
 
 describe('SearchExpensesResults', () => {
 	it('should display the total amount and the number of spends', () => {
@@ -130,5 +150,39 @@ describe('SearchExpensesResults', () => {
 		render(<SearchExpensesResults searchResult={emptyResult} categories={categories} onChangePage={vi.fn()} />)
 
 		expect(screen.getByRole('status')).toHaveTextContent('No spending matches this search')
+	})
+
+	it('should show only the first five breakdown rows when there are more', () => {
+		render(<SearchExpensesResults searchResult={getResultWithBreakdownOf(7)} categories={manyCategories} onChangePage={vi.fn()} />)
+
+		const rows = getBreakdownRows()
+
+		expect(rows).toHaveLength(5)
+		expect(rows[0]).toHaveTextContent('Category 1')
+		expect(rows[4]).toHaveTextContent('Category 5')
+		expect(screen.queryByText('Category 6')).not.toBeInTheDocument()
+	})
+
+	it('should show every breakdown row on demand, and go back to the first five', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesResults searchResult={getResultWithBreakdownOf(7)} categories={manyCategories} onChangePage={vi.fn()} />)
+
+		await user.click(screen.getByRole('button', { name: 'Show all 7 categories' }))
+
+		expect(getBreakdownRows()).toHaveLength(7)
+		expect(screen.getByRole('button', { name: 'Show top 5' })).toHaveAttribute('aria-expanded', 'true')
+
+		await user.click(screen.getByRole('button', { name: 'Show top 5' }))
+
+		expect(getBreakdownRows()).toHaveLength(5)
+		expect(screen.getByRole('button', { name: 'Show all 7 categories' })).toHaveAttribute('aria-expanded', 'false')
+	})
+
+	it('should show the whole breakdown without any button when it has five rows or fewer', () => {
+		render(<SearchExpensesResults searchResult={getResultWithBreakdownOf(5)} categories={manyCategories} onChangePage={vi.fn()} />)
+
+		expect(getBreakdownRows()).toHaveLength(5)
+		expect(screen.queryByRole('button', { name: /^Show/ })).not.toBeInTheDocument()
 	})
 })
