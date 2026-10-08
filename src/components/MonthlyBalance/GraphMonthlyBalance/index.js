@@ -47,11 +47,14 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastYearDataParsed.length > 0 &&
 					<Fragment>
-						<SectionTitle text={'Data from the last 12 entries is shown:'}>
-							{
-								lastYearDifferential !== null &&
-								<InformativeBadge className="ms-2">Net change: {formatDifferential(lastYearDifferential)}</InformativeBadge>
-							}
+						<SectionTitle>
+							<span className="d-flex flex-wrap align-items-center gap-2">
+								Data from the last 12 entries is shown:{' '}
+								{
+									lastYearDifferential !== null &&
+									<InformativeBadge>Net change: {formatDifferential(lastYearDifferential)}</InformativeBadge>
+								}
+							</span>
 						</SectionTitle>
 
 						<ResponsiveContainer width="100%" height={460}>
@@ -71,10 +74,14 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastTwoYearsDataParsed.length > 0 &&
 					<Fragment>
-						<SectionTitle text={'Data from the last 24 entries is shown:'}>
-							{
-								lastTwoYearsDifferential !== null && <InformativeBadge className="ms-2">Net change: {formatDifferential(lastTwoYearsDifferential)}</InformativeBadge>
-							}
+						<SectionTitle>
+							<span className="d-flex flex-wrap align-items-center gap-2">
+								Data from the last 24 entries is shown:{' '}
+								{
+									lastTwoYearsDifferential !== null &&
+									<InformativeBadge>Net change: {formatDifferential(lastTwoYearsDifferential)}</InformativeBadge>
+								}
+							</span>
 						</SectionTitle>
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
