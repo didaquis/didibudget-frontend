@@ -32,7 +32,7 @@ export const ButtonDelete = ({ uuid, details, deleteMutation, onDelete }) => {
 
 	return (
 		<div>
-			<Button color="link" disabled={isDisabled} onClick={toggle} className="button-delete p-0 text-white-50" aria-label={`Delete ${description}`}>
+			<Button color="link" disabled={isDisabled} onClick={toggle} className="button-delete p-0" aria-label={`Delete ${description}`}>
 				<BsTrash3 size={20} aria-hidden="true" />
 			</Button>
 			<Modal isOpen={modal} toggle={toggle}>
