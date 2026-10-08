@@ -70,60 +70,58 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 	}
 
 	return (
-		<div className="container my-4 mx-0">
-			<div className="row justify-content-center">
-				<form className="col-md-8" onSubmit={handleSubmit}>
+		<div className="row justify-content-center">
+			<form className="col-md-8" onSubmit={handleSubmit}>
 
-					<SuccessToast notice={notice} />
+				<SuccessToast notice={notice} />
 
-					{
-						// The error sits above every field on purpose: saving reopens the category picker,
-						// so anything below it gets pushed off a 390px screen.
-					}
-					{
-						error && <ErrorAlert errorMessage={error} />
-					}
+				{
+					// The error sits above every field on purpose: saving reopens the category picker,
+					// so anything below it gets pushed off a 390px screen.
+				}
+				{
+					error && <ErrorAlert errorMessage={error} />
+				}
 
-					<div className="mb-4">
-						<label htmlFor="inputAmountAddExpenseForm" className="text-light">Amount <span className="text-danger">*</span></label>
-						<input
-							ref={amountInputRef}
-							disabled={isDisabled}
-							inputMode="decimal"
-							className="form-control"
-							id="inputAmountAddExpenseForm"
-							placeholder="12.50"
-							type="number"
-							step="0.01"
-							value={amount}
-							onChange={(event) => setAmount(event.target.value)}
-							required
-							autoFocus
-						/>
-						<small className="form-text text-white-50 d-block">Use decimal point as decimal separator. Negative numbers are not valid</small>
-					</div>
+				<div className="mb-4">
+					<label htmlFor="inputAmountAddExpenseForm" className="text-light">Amount <span className="text-danger">*</span></label>
+					<input
+						ref={amountInputRef}
+						disabled={isDisabled}
+						inputMode="decimal"
+						className="form-control"
+						id="inputAmountAddExpenseForm"
+						placeholder="12.50"
+						type="number"
+						step="0.01"
+						value={amount}
+						onChange={(event) => setAmount(event.target.value)}
+						required
+						autoFocus
+					/>
+					<small className="form-text text-white-50 d-block">Use decimal point as decimal separator. Negative numbers are not valid</small>
+				</div>
 
-					<div className="mb-4" role="group" aria-labelledby="addExpenseFormDateLabel">
-						<p id="addExpenseFormDateLabel" className="text-light mb-1">Date <span className="text-danger">*</span></p>
-						<DateQuickSelector value={date} onChange={setDate} />
-					</div>
+				<div className="mb-4" role="group" aria-labelledby="addExpenseFormDateLabel">
+					<p id="addExpenseFormDateLabel" className="text-light mb-1">Date <span className="text-danger">*</span></p>
+					<DateQuickSelector value={date} onChange={setDate} />
+				</div>
 
-					<div className="mb-4" role="group" aria-labelledby="addExpenseFormCategoryLabel">
-						<p id="addExpenseFormCategoryLabel" className="text-light mb-1">Category <span className="text-danger">*</span></p>
-						<CategoryPicker
-							categories={categories}
-							frequentCategories={frequentCategories}
-							selected={selected}
-							onSelect={setSelected}
-						/>
-					</div>
+				<div className="mb-4" role="group" aria-labelledby="addExpenseFormCategoryLabel">
+					<p id="addExpenseFormCategoryLabel" className="text-light mb-1">Category <span className="text-danger">*</span></p>
+					<CategoryPicker
+						categories={categories}
+						frequentCategories={frequentCategories}
+						selected={selected}
+						onSelect={setSelected}
+					/>
+				</div>
 
-					<div>
-						<SubmitButton disabled={isDisabled || !isValid}>Save spending</SubmitButton>
-						<SubmitButtonHelper mustShowHelper={!isValid} />
-					</div>
-				</form>
-			</div>
+				<div>
+					<SubmitButton disabled={isDisabled || !isValid}>Save spending</SubmitButton>
+					<SubmitButtonHelper mustShowHelper={!isValid} />
+				</div>
+			</form>
 		</div>
 	)
 }
