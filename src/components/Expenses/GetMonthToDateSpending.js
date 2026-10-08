@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 
 import { ErrorAlert } from '../ErrorAlert'
-import { MonthToDateSpending } from './MonthToDateSpending'
+import { MonthToDateSpending, MonthToDateSpendingLoading } from './MonthToDateSpending'
 import { CategoryType } from '../SavingsAndInvestments/utils'
 import { trimDecimalPoints } from '../../utils/utils'
 
@@ -29,7 +29,9 @@ export const GetMonthToDateSpending = () => {
 
 	const { loading, error, data } = useQuery(GET_MONTH_TO_DATE_SPENDING, { variables: { startDate, endDate: now }, fetchPolicy: 'no-cache' })
 
-	if (loading) { return <p className="small text-white-50" role="status">Loading this month…</p> }
+	const monthName = now.toLocaleString('en', { month: 'long' })
+
+	if (loading) { return <MonthToDateSpendingLoading monthName={monthName} /> }
 	if (error) { return <ErrorAlert errorMessage={error.message} /> }
 
 	const expenses = data.getExpensesBetweenDates
@@ -37,7 +39,7 @@ export const GetMonthToDateSpending = () => {
 
 	return (
 		<MonthToDateSpending
-			monthName={now.toLocaleString('en', { month: 'long' })}
+			monthName={monthName}
 			spent={trimDecimalPoints(spent)}
 			savingsAndInvestments={trimDecimalPoints(savingsAndInvestments)}
 			currencyISO={expenses[0]?.currencyISO ?? 'EUR'}

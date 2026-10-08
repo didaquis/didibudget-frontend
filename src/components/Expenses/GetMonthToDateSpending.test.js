@@ -76,6 +76,12 @@ describe('GetMonthToDateSpending', () => {
 		expect(screen.getByRole('status')).toHaveTextContent('Loading this month…')
 	})
 
+	it('names the month while its figures are still loading', () => {
+		renderWithMocks([monthMock])
+
+		expect(screen.getByText('Spent in October')).toBeVisible()
+	})
+
 	it('shows the error when the spending of the month cannot be loaded', async () => {
 		renderWithMocks([failingMock])
 
