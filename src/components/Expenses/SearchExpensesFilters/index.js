@@ -64,12 +64,12 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	})
 
 	const renderDateField = (field, label, limits) => (
-		<div className="d-flex gap-2">
+		<div className={`d-flex${filters[field] ? ' date-field-clearable' : ''}`}>
 			<DatePicker {...getDatePickerProps(field, label)} {...limits} />
 			{
 				filters[field] && (
-					<button type="button" className="btn btn-light" aria-label={`Clear ${label} date`} onClick={() => onChangeDate(field)(null)}>
-						<BsX size={'24px'} />
+					<button type="button" className="btn date-field-clear" aria-label={`Clear ${label} date`} onClick={() => onChangeDate(field)(null)}>
+						<BsX size={'20px'} aria-hidden="true" />
 					</button>
 				)
 			}
