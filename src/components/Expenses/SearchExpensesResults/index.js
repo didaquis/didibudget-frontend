@@ -24,19 +24,19 @@ const getFullName = (category, subcategory, categories) => {
 }
 
 /**
- * Get a number of expenses with its noun, so the figure is never displayed unlabelled
+ * Get a number of spends with its noun, so the figure is never displayed unlabelled
  * @example
- * 	getExpensesLabel(1) // '1 expense'
+ * 	getSpendsLabel(1) // '1 spend'
  * @param {number} count
  * @returns {string}
  */
-const getExpensesLabel = (count) => `${count} ${(count === 1) ? 'expense' : 'expenses'}`
+const getSpendsLabel = (count) => `${count} ${(count === 1) ? 'spend' : 'spends'}`
 
 export const SearchExpensesResults = ({ searchResult, categories, onChangePage }) => {
 	const { expenses, pagination, totalSum, currencyISO, breakdown } = searchResult
 
 	if (!expenses.length) {
-		return <EmptyState message='No expenses match this search. Try adjusting the filters' />
+		return <EmptyState message='No spending matches this search. Try adjusting the filters' />
 	}
 
 	return (
@@ -45,7 +45,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 				<div className="card-body">
 					<p className="text-light mb-1">Total spent</p>
 					<p className="h3 text-info">{formatAmount(totalSum, currencyISO)}</p>
-					<p className="text-white-50">{getExpensesLabel(pagination.totalCount)}</p>
+					<p className="text-white-50">{getSpendsLabel(pagination.totalCount)}</p>
 
 					<ul className="list-unstyled mb-0">
 						{
@@ -53,7 +53,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 								<li key={`${entry.category}-${entry.subcategory}`} className="text-light border-top border-secondary py-2">
 									<p className="mb-1">{getFullName(entry.category, entry.subcategory, categories)}</p>
 									<div className="d-flex justify-content-between small">
-										<span className="text-white-50">{getExpensesLabel(entry.count)}</span>
+										<span className="text-white-50">{getSpendsLabel(entry.count)}</span>
 										<span>{formatAmount(entry.sum, currencyISO)}</span>
 									</div>
 								</li>
