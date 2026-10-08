@@ -7,7 +7,13 @@ describe('PaginateNavbar', () => {
 	it('should render nothing when there is a single page', () => {
 		render(<PaginateNavbar currentPage={1} totalPages={1} onChangePage={vi.fn()} />)
 
-		expect(screen.queryByRole('navigation', { name: 'Paginate the results' })).not.toBeInTheDocument()
+		expect(screen.queryByRole('navigation', { name: 'Pages' })).not.toBeInTheDocument()
+	})
+
+	it('should name the navigation Pages when there are several pages', () => {
+		render(<PaginateNavbar currentPage={1} totalPages={3} onChangePage={vi.fn()} />)
+
+		expect(screen.getByRole('navigation', { name: 'Pages' })).toBeVisible()
 	})
 
 	it('should mark only the current page as current', () => {
