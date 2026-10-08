@@ -4,6 +4,7 @@ import Calendar from 'react-widgets/Calendar'
 import { BsCalendar3 } from 'react-icons/bs'
 import 'react-widgets/styles.css'
 import { startOfDay } from '../../utils/utils'
+import './styles.css'
 
 const isSameDay = (one, other) => {
 	return startOfDay(one).getTime() === startOfDay(other).getTime()
@@ -33,7 +34,7 @@ export const DateQuickSelector = ({ value, onChange }) => {
 
 	return (
 		<div>
-			<div className="d-flex flex-wrap gap-2 mb-2">
+			<div className="date-quick-selector-chips d-flex flex-wrap gap-2 mb-2">
 				<button
 					type="button"
 					className={`btn btn-sm ${isSameDay(value, today) ? 'btn-info' : 'btn-outline-info'}`}

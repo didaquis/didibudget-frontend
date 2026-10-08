@@ -181,7 +181,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Large:** `btn-lg` in a `d-grid` column for the single home-screen call to action.
 
 ### Chips
-- **Style:** `btn-sm` in a `d-flex flex-wrap gap-2` row. Outline cyan at rest, filled cyan when selected.
+- **Style:** `btn-sm` in a `d-flex flex-wrap` row, 12px apart horizontally. Outline cyan at rest, filled cyan when selected. Wider and the Date row (Today, Yesterday, Pick another date) wraps on a 375px phone.
 - **Most used:** the labels are long enough that each chip takes its own row, so rows are 1rem apart (`most-used-chips`) to keep a thumb off the neighbouring chip.
 
 ### Switches

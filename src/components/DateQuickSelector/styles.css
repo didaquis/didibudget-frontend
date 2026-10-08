@@ -1,0 +1,4 @@
+/* Same spacing as the Most used chips. Wider and Pick another date wraps on a 375px phone */
+.date-quick-selector-chips {
+	column-gap: 0.75rem !important;
+}
