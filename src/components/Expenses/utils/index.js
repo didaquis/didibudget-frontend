@@ -12,6 +12,17 @@ const getLocaleDateString = (date) => {
 }
 
 /**
+ * Get the abbreviated name of month and year from a date
+ * @example
+ * 	getShortLocaleDateString('2020-09-01'); // Sep 2020
+ * @param {string|Date} date
+ * @returns {string}
+ */
+const getShortLocaleDateString = (date) => {
+	return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+}
+
+/**
  * Get an array with a date of the first day of the month for all months in "data" (included gaps)
  * @requires firstDayOfNextMonth
  * @requires firstDayOfTheMonth
@@ -390,6 +401,7 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
  * This function performs a summation grouping the expenses by category and subcategory for a range of months.
  * @requires getDataPerCategory
  * @requires getLocaleDateString
+ * @requires getShortLocaleDateString
  * @requires getExpenseGroupTotal
  * @requires expenseGroupDTO
  * @param {Array.<Object>} expensesInThisGroup - An array of objects (the object must contain a date property)
@@ -416,7 +428,7 @@ const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate
 	const startMonth = getLocaleDateString(startDate)
 	const endMonth = getLocaleDateString(endDate)
 
-	let title = `From ${startMonth} to ${endMonth}`
+	let title = `${getShortLocaleDateString(startDate)} – ${getShortLocaleDateString(endDate)}`
 	if (startMonth === endMonth) {
 		title = startMonth
 	}
