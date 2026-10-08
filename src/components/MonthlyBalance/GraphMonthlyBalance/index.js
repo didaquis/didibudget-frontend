@@ -6,7 +6,7 @@ import { EmptyState } from '../../EmptyState'
 import { SectionTitle } from '../../SectionTitle'
 import { InformativeBadge } from '../../InformativeBadge'
 
-import { AXIS_TICK, CHART_LINE_STROKE } from '../../../utils/charts'
+import { AXIS_TICK, CHART_LINE_STROKE, shortMonthLabel } from '../../../utils/charts'
 
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
@@ -40,7 +40,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 								margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
-								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<Tooltip />
 								<Line dataKey="balance" fill="#8884d8" />
@@ -66,7 +66,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 								margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
-								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<Tooltip />
 								<Line dataKey="balance" fill="#8884d8" />
@@ -81,7 +81,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 						margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 					>
 						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
-						<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+						<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 						<Tooltip />
 						<Line dataKey="balance" fill="#8884d8" />
