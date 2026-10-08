@@ -43,7 +43,7 @@ export const RegisterForm = ({ activateAuth }) => {
 
 	return (
 		<Fragment>
-			<div className="row justify-content-center mt-4">
+			<div className="row justify-content-center">
 				<form className="col-md-8" onSubmit={handleSubmit}>
 					<div className="col mb-4">
 						<label htmlFor="inputEmailRegisterForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
