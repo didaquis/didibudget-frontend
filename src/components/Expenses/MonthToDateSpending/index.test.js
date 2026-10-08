@@ -1,12 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
 
 import { MonthToDateSpending } from './'
 
 const renderMonthToDateSpending = (props) => render(
-	<MemoryRouter>
-		<MonthToDateSpending monthName='October' currencyISO='EUR' {...props} />
-	</MemoryRouter>
+	<MonthToDateSpending monthName='October' currencyISO='EUR' {...props} />
 )
 
 describe('MonthToDateSpending', () => {
@@ -24,9 +21,9 @@ describe('MonthToDateSpending', () => {
 		expect(screen.getByText('Savings & investments in October: 0 €')).toBeVisible()
 	})
 
-	it('links to the monthly spending overview', () => {
+	it('only shows the figures, without leading anywhere', () => {
 		renderMonthToDateSpending({ spent: 412.3, savingsAndInvestments: 300 })
 
-		expect(screen.getByRole('link', { name: /spent in october/i })).toHaveAttribute('href', '/spending/monthly')
+		expect(screen.queryByRole('link')).not.toBeInTheDocument()
 	})
 })
