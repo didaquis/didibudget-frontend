@@ -1,5 +1,6 @@
 import { getNameOfCategoryOrSubcategory } from '../utils'
 import { startOfDay, endOfDay } from '../../../utils/utils'
+import { formatAmount } from '../../../utils/currency'
 
 /**
  * Check if a filter value has been filled in by the user.
@@ -180,11 +181,11 @@ const getFiltersSummaryParts = (filters, categories) => {
 	}
 
 	if (isFilled(filters.minQuantity) && isFilled(filters.maxQuantity)) {
-		parts.push(`${filters.minQuantity} to ${filters.maxQuantity}`)
+		parts.push(`${formatAmount(filters.minQuantity)} to ${formatAmount(filters.maxQuantity)}`)
 	} else if (isFilled(filters.minQuantity)) {
-		parts.push(`from ${filters.minQuantity}`)
+		parts.push(`from ${formatAmount(filters.minQuantity)}`)
 	} else if (isFilled(filters.maxQuantity)) {
-		parts.push(`up to ${filters.maxQuantity}`)
+		parts.push(`up to ${formatAmount(filters.maxQuantity)}`)
 	}
 
 	return parts

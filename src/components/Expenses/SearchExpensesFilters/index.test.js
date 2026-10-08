@@ -161,7 +161,7 @@ describe('SearchExpensesFilters', () => {
 
 		await user.click(screen.getByRole('button', { name: 'Search' }))
 
-		expect(screen.getByRole('button', { name: 'Private vehicles · from 10' })).toHaveAttribute('aria-expanded', 'false')
+		expect(screen.getByRole('button', { name: 'Private vehicles · from 10\u00a0€' })).toHaveAttribute('aria-expanded', 'false')
 	})
 
 	it('should keep summarizing the last search while its filters are being changed', async () => {

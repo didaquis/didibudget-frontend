@@ -247,22 +247,22 @@ describe('getFiltersSummaryParts', () => {
 		expect(getFiltersSummaryParts(emptyFilters, categories)).toEqual(['All categories'])
 	})
 
-	it('should describe an amount range when both amounts are set, using the raw strings typed', () => {
+	it('should describe an amount range when both amounts are set, using the raw strings typed and the currency', () => {
 		const filters = { ...emptyFilters, minQuantity: '10', maxQuantity: '20,50' }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', '10 to 20,50'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', '10\u00a0€ to 20,50\u00a0€'])
 	})
 
 	it('should describe an open-ended minimum amount', () => {
 		const filters = { ...emptyFilters, minQuantity: '10' }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'from 10'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'from 10\u00a0€'])
 	})
 
 	it('should describe an open-ended maximum amount', () => {
 		const filters = { ...emptyFilters, maxQuantity: '20,50' }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'up to 20,50'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'up to 20,50\u00a0€'])
 	})
 
 	it('should list the category, date and amount parts in that order', () => {
@@ -275,6 +275,6 @@ describe('getFiltersSummaryParts', () => {
 			maxQuantity: '20,50'
 		}
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles', '2026-01-01 to 2026-06-30', '10 to 20,50'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles', '2026-01-01 to 2026-06-30', '10\u00a0€ to 20,50\u00a0€'])
 	})
 })
