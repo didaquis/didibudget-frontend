@@ -17,7 +17,7 @@ export const Login = () => {
 				<Link className="text-info fw-light me-2 small" to='/register'>
 					Don't have an account?
 				</Link>
-				<span role="img" aria-label="Winking Face" aria-hidden="true">😉</span>
+				<span aria-hidden="true">😉</span>
 			</div>
 		</Fragment>
 	)
