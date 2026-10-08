@@ -11,7 +11,7 @@ export const AnalysisOfExpenses = ( { expenses, categories } ) => {
 		const reversedData = expensesData.slice(0).reverse()
 
 		return (
-			<section className="pt-4">
+			<section>
 				{
 					reversedData.map(monthData => {
 						return (

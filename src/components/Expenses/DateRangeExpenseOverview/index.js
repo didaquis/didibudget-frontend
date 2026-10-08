@@ -14,7 +14,7 @@ export const DateRangeExpenseOverview = ({ startDate, endDate, expenses, categor
 	}
 
 	return (
-		<section className="pt-4">
+		<section>
 			<DetailedExpensesGroup expensesGroupData={expensesGroupedData} categories={categories} />
 		</section>
 	)

@@ -140,7 +140,7 @@ Charts still use Recharts' default colours (`#8884d8` for monthly-balance lines,
 
 ### Hierarchy
 - **Page Title** (300, `.h2` fluid size, about 1.55rem at 390px, 1.2): `PageTitle`, one per screen, `text-light`, followed by 1rem space. Also sets the document title.
-- **Section Title** (300, 1.25rem, 1.2): `SectionTitle` and `PageSubTitle` (the latter is indented 1.5rem). Rendered as `h3` with `.h5` sizing.
+- **Section Title** (300, 1.25rem, 1.2): `SectionTitle`. Rendered as `h3` with `.h5` sizing.
 - **Body** (400, 1rem, 1.5): list rows, card text, field values.
 - **Label** (400, 0.875rem): `small` labels like "Most used" and "All categories", and help text under fields (`form-text`, muted).
 - **Hero tagline** (300 italic, `fs-2`): only on the logged-out home.
