@@ -43,10 +43,10 @@ export const RegisterForm = ({ activateAuth }) => {
 
 	return (
 		<Fragment>
-			<div className="row justify-content-center mt-4">
+			<div className="row justify-content-center">
 				<form className="col-md-8" onSubmit={handleSubmit}>
-					<div className="col mb-3">
-						<label htmlFor="inputEmailRegisterForm" className="text-light">Email <span className="text-danger">*</span></label>
+					<div className="col mb-4">
+						<label htmlFor="inputEmailRegisterForm" className="form-label text-light">Email <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
 							type='email'
@@ -54,20 +54,18 @@ export const RegisterForm = ({ activateAuth }) => {
 							autoComplete="username"
 							className="form-control"
 							id="inputEmailRegisterForm"
-							placeholder='email'
 							{...email}
 							required
 							autoFocus
 						/>
 						<small id="emailHelp" className="form-text text-white-50 d-block">Make sure it's a valid email address</small>
 					</div>
-					<div className="col mb-3">
-						<label htmlFor="inputPasswordRegisterForm" className="text-light">Password <span className="text-danger">*</span></label>
+					<div className="col mb-4">
+						<label htmlFor="inputPasswordRegisterForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
 							className="form-control"
 							id="inputPasswordRegisterForm"
-							placeholder='password'
 							type='password'
 							name="password"
 							autoComplete="new-password"
@@ -75,15 +73,14 @@ export const RegisterForm = ({ activateAuth }) => {
 							required
 							pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!*^?+-_@#$%&]{8,}$"
 						/>
-						<small id="passwordHelp" className="form-text text-white-50 d-block">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
+						<small id="passwordHelp" className="form-text text-white-50 d-block">At least 8 characters, including a number, a lowercase letter and an uppercase letter. No spaces.</small>
 					</div>
 					<div className="col mb-4">
-						<label htmlFor="inputRepeatPasswordRegisterForm" className="text-light">Repeat password <span className="text-danger">*</span></label>
+						<label htmlFor="inputRepeatPasswordRegisterForm" className="form-label text-light">Repeat password <span className="text-danger">*</span></label>
 						<input
 							disabled={isDisabled}
 							className="form-control"
 							id="inputRepeatPasswordRegisterForm"
-							placeholder='repeat password'
 							type='password'
 							name="repeatPassword"
 							autoComplete="new-password"
@@ -91,7 +88,6 @@ export const RegisterForm = ({ activateAuth }) => {
 							required
 							pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!*^?+-_@#$%&]{8,}$"
 						/>
-						<small id="repeatPasswordHelp" className="form-text text-white-50 d-block">At least 8 characters. It must contain numbers, lowercase letters and uppercase letters. The spaces are not allowed</small>
 					</div>
 
 					<SubmitButton disabled={isDisabled || !validateRegisterForm(email.value, password.value, repeatPassword.value)}>
@@ -101,7 +97,7 @@ export const RegisterForm = ({ activateAuth }) => {
 								'Create account'
 								:
 								<Fragment>
-									<span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" aria-label="Loading"></span>
+									<span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
 									<span>Loading</span>
 								</Fragment>
 						}
