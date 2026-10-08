@@ -218,7 +218,7 @@ describe('getFiltersSummaryParts', () => {
 	it('should include the category and subcategory names when a subcategory is selected', () => {
 		const filters = { ...emptyFilters, category: 'category-id-1', subcategory: 'subcategory-id-1' }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles - Fuel'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles › Fuel'])
 	})
 
 	it('should omit the date part when neither date is set', () => {

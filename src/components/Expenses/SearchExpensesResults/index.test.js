@@ -84,7 +84,7 @@ describe('SearchExpensesResults', () => {
 		const items = within(summary).getAllByRole('listitem')
 
 		expect(items).toHaveLength(2)
-		expect(items[0]).toHaveTextContent(/^Private vehicles - Fuel18 spends612\.4 €$/)
+		expect(items[0]).toHaveTextContent(/^Private vehicles › Fuel18 spends612\.4 €$/)
 		expect(items[1]).toHaveTextContent(/^Groceries, personal care products19 spends672\.2 €$/)
 	})
 

@@ -48,7 +48,7 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 								const nameOfCategory = getNameOfCategoryOrSubcategory(expense.category, categories)
 								const nameOfSubcategory = getNameOfCategoryOrSubcategory(expense.subcategory, categories)
 								const date = parseUnixTimestamp(expense.date).substring(0, 10)
-								const fullNameOfCategory = `${nameOfCategory}${(nameOfSubcategory) ? ` - ${nameOfSubcategory}` : ''}`
+								const fullNameOfCategory = `${nameOfCategory}${(nameOfSubcategory) ? ` › ${nameOfSubcategory}` : ''}`
 								const details = [date, fullNameOfCategory, formatAmount(expense.quantity, expense.currencyISO)]
 								return (
 									<tr key={expense.uuid}>

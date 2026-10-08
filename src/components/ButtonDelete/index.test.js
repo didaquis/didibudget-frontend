@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 
 import { ButtonDelete } from './index'
 
-const DETAILS = ['2026-08-02', 'Home - Electricity bill', '27.34 EUR']
+const DETAILS = ['2026-08-02', 'Home › Electricity bill', '27.34 EUR']
 const DESCRIPTION = DETAILS.join(', ')
 
 const renderButtonDelete = ({ deleteMutation = vi.fn().mockResolvedValue({}), onDelete = vi.fn() } = {}) => {

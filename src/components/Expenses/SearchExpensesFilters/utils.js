@@ -165,7 +165,7 @@ const getFiltersSummaryParts = (filters, categories) => {
 	if (isFilled(filters.subcategory)) {
 		const categoryName = getNameOfCategoryOrSubcategory(filters.category, categories)
 		const subcategoryName = getNameOfCategoryOrSubcategory(filters.subcategory, categories)
-		parts.push(`${categoryName} - ${subcategoryName}`)
+		parts.push(`${categoryName} › ${subcategoryName}`)
 	} else if (isFilled(filters.category)) {
 		parts.push(getNameOfCategoryOrSubcategory(filters.category, categories))
 	}
