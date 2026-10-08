@@ -102,16 +102,18 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 		'aria-describedby': isInvalid ? AMOUNT_ERROR_ID : undefined
 	})
 
-	// Each part stays on one line, so a date never wraps at its hyphens
 	const renderSummary = (summaryParts) => {
 		if (!summaryParts.length) {
 			return 'All spending'
 		}
 
+		// A part moves to the next line whole, and only wraps inside when longer than the line
+		const lastIndex = summaryParts.length - 1
+
 		return summaryParts.map((part, index) => (
 			<Fragment key={part}>
-				{index > 0 && ' · '}
-				<span className="text-nowrap">{part}</span>
+				{index > 0 && ' '}
+				<span className="d-inline-block mw-100">{part}{index < lastIndex && '\u00a0·'}</span>
 			</Fragment>
 		))
 	}
