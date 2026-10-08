@@ -147,7 +147,11 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 			}
 
 			{
-				isFiltering
+				isFiltering && filteredLeaves.length === 0 && <p className="text-white-50" role="status">No categories found</p>
+			}
+
+			{
+				isFiltering && filteredLeaves.length > 0
 					? (
 						<ul className="list-group list-group-flush">
 							{
@@ -162,7 +166,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 							}
 						</ul>
 					)
-					: (!hasFrequentLeaves || isTreeShown) && (
+					: !isFiltering && (!hasFrequentLeaves || isTreeShown) && (
 						<ul className="list-group list-group-flush">
 							{
 								categories.map((category, index) => {

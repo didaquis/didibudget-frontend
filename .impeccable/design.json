@@ -124,7 +124,7 @@
       "**Do** keep form controls default Bootstrap white; don't theme them dark.",
       "**Do** use `fw-light` for page and section titles.",
       "**Do** wrap tables in `table-responsive` and mark amounts and dates `text-nowrap`.",
-      "**Do** use `EmptyState` for empty lists, `ErrorAlert` for failures and `SuccessToast` for confirmed writes.",
+      "**Do** use `EmptyState` for empty screens, inline muted \"No … found\" text for a live filter with no matches, `ErrorAlert` for failures and `SuccessToast` for confirmed writes.",
       "**Do** honour `prefers-reduced-motion` on every animation."
     ],
     "donts": [

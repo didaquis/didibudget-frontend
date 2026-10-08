@@ -210,6 +210,24 @@ describe('CategoryPicker', () => {
 		expect(screen.queryByRole('button', { name: /Taxes/ })).not.toBeInTheDocument()
 	})
 
+	it('says no categories were found when the filter matches nothing', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.type(screen.getByLabelText('Filter categories'), 'zzzzz')
+
+		expect(screen.getByRole('status')).toHaveTextContent('No categories found')
+	})
+
+	it('does not say no categories were found while the filter has matches', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+
+		expect(screen.queryByText('No categories found')).not.toBeInTheDocument()
+	})
+
 	it('hides the clear button while the filter is empty', () => {
 		renderPicker({ frequentCategories: [] })
 

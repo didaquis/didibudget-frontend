@@ -200,7 +200,8 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 
 ### Feedback
 - **ErrorAlert:** `alert-danger`, centred, `role="alert"`. Failures only.
-- **EmptyState:** `alert-info`, centred, `role="status"`. For "nothing yet" and "no results".
+- **EmptyState:** `alert-info`, centred, `role="status"`. When a screen's main content is empty: "nothing yet", or a search that returned nothing.
+- **Filter with no matches:** inline muted text (`text-white-50`, `role="status"`, "No … found") where the list would be. Used when a live filter empties a list already on screen (users, category picker); an `EmptyState` box there would shove the form around for a passing state.
 - **SuccessToast:** solid white toast placed below the navbar (top 64px). It fades and slides in over 150ms, then auto-hides. Each save passes `{ id, message }` with a fresh id. Motion is disabled under `prefers-reduced-motion`.
 - **InformativeBadge:** `badge bg-info text-dark`, inline beside section titles (for example, "Net change").
 - **Spinner:** three bouncing dots (muted mauve `#AC9FAA`), centred 100px below the top.
@@ -219,7 +220,7 @@ The coral SVG wordmark over a soft coral radial glow that fades in over 700ms (s
 - **Do** keep form controls default Bootstrap white; don't theme them dark.
 - **Do** use `fw-light` for page and section titles.
 - **Do** wrap tables in `table-responsive` and mark amounts and dates `text-nowrap`.
-- **Do** use `EmptyState` for empty lists, `ErrorAlert` for failures and `SuccessToast` for confirmed writes.
+- **Do** use `EmptyState` for empty screens, inline muted "No … found" text for a live filter with no matches, `ErrorAlert` for failures and `SuccessToast` for confirmed writes.
 - **Do** honour `prefers-reduced-motion` on every animation.
 
 ### Don't:
