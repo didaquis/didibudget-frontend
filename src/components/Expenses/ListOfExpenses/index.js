@@ -69,7 +69,7 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 			</section>
 		)
 	} else {
-		const message = 'No spending recorded yet. Add your first spend to see the list'
+		const message = 'No spending recorded yet. Add your first spend to see the list.'
 		return <EmptyState message={message} />
 	}
 }

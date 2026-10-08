@@ -69,7 +69,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 			</Fragment>
 		)
 	} else {
-		const message = 'Not enough data yet to show spending statistics'
+		const message = 'Not enough data yet to show spending statistics.'
 		return <EmptyState message={message} />
 	}
 }

@@ -186,11 +186,11 @@ describe('SearchExpensesFilters', () => {
 		await user.click(screen.getByRole('button', { name: 'Search' }))
 		await user.click(screen.getByRole('button', { name: 'Filters All spending' }))
 
-		expect(screen.queryByText('The results below are still from the previous search')).not.toBeInTheDocument()
+		expect(screen.queryByText('The results below are still from the previous search.')).not.toBeInTheDocument()
 
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-2')
 
-		expect(screen.getByRole('status')).toHaveTextContent('The results below are still from the previous search')
+		expect(screen.getByRole('status')).toHaveTextContent('The results below are still from the previous search.')
 	})
 
 	it('should not mention a previous search before the first one', async () => {
@@ -200,7 +200,7 @@ describe('SearchExpensesFilters', () => {
 
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-2')
 
-		expect(screen.queryByText('The results below are still from the previous search')).not.toBeInTheDocument()
+		expect(screen.queryByText('The results below are still from the previous search.')).not.toBeInTheDocument()
 	})
 
 	it('should give the date fields an accessible name reaching the real input', () => {
@@ -251,7 +251,7 @@ describe('SearchExpensesFilters', () => {
 		await user.type(screen.getByLabelText('Min amount'), 'abc')
 
 		expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
-		expect(screen.getByText('Amount must be a number using a decimal point or comma')).toBeVisible()
+		expect(screen.getByText('Amount must be a number using a decimal point or comma.')).toBeVisible()
 	})
 
 	it('should mark only the amount that is not a number as invalid, described by the message', async () => {
@@ -262,7 +262,7 @@ describe('SearchExpensesFilters', () => {
 		await user.type(screen.getByLabelText('Min amount'), 'abc')
 
 		expect(screen.getByLabelText('Min amount')).toBeInvalid()
-		expect(screen.getByLabelText('Min amount')).toHaveAccessibleDescription('Amount must be a number using a decimal point or comma')
+		expect(screen.getByLabelText('Min amount')).toHaveAccessibleDescription('Amount must be a number using a decimal point or comma.')
 		expect(screen.getByLabelText('Max amount')).toBeValid()
 	})
 
@@ -275,8 +275,8 @@ describe('SearchExpensesFilters', () => {
 		await user.type(screen.getByLabelText('Max amount'), '100')
 
 		expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
-		expect(screen.getByLabelText('Min amount')).toHaveAccessibleDescription('Min amount can\'t be more than max amount')
-		expect(screen.getByLabelText('Max amount')).toHaveAccessibleDescription('Min amount can\'t be more than max amount')
+		expect(screen.getByLabelText('Min amount')).toHaveAccessibleDescription('Min amount can\'t be more than max amount.')
+		expect(screen.getByLabelText('Max amount')).toHaveAccessibleDescription('Min amount can\'t be more than max amount.')
 	})
 
 	it('should allow searching once the maximum is raised to the minimum', async () => {
@@ -290,7 +290,7 @@ describe('SearchExpensesFilters', () => {
 		await user.type(screen.getByLabelText('Max amount'), '200')
 
 		expect(screen.getByRole('button', { name: 'Search' })).not.toBeDisabled()
-		expect(screen.queryByText('Min amount can\'t be more than max amount')).not.toBeInTheDocument()
+		expect(screen.queryByText('Min amount can\'t be more than max amount.')).not.toBeInTheDocument()
 	})
 
 	it('should give each calendar button its own name', () => {
@@ -370,13 +370,13 @@ describe('SearchExpensesFilters', () => {
 		await user.type(screen.getByLabelText('Min amount'), '23,15')
 
 		expect(screen.getByRole('button', { name: 'Search' })).not.toBeDisabled()
-		expect(screen.queryByText('Amount must be a number using a decimal point or comma')).not.toBeInTheDocument()
+		expect(screen.queryByText('Amount must be a number using a decimal point or comma.')).not.toBeInTheDocument()
 	})
 
 	it('should keep the Search button enabled when the amount is left empty', () => {
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
 		expect(screen.getByRole('button', { name: 'Search' })).not.toBeDisabled()
-		expect(screen.queryByText('Amount must be a number using a decimal point or comma')).not.toBeInTheDocument()
+		expect(screen.queryByText('Amount must be a number using a decimal point or comma.')).not.toBeInTheDocument()
 	})
 })

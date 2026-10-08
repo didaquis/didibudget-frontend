@@ -93,8 +93,8 @@ const isValidAmountInput = (value) => {
 	return Number.isFinite(parsed) && parsed >= 0
 }
 
-const AMOUNT_FORMAT_ERROR = 'Amount must be a number using a decimal point or comma'
-const AMOUNT_RANGE_ERROR = 'Min amount can\'t be more than max amount'
+const AMOUNT_FORMAT_ERROR = 'Amount must be a number using a decimal point or comma.'
+const AMOUNT_RANGE_ERROR = 'Min amount can\'t be more than max amount.'
 
 /**
  * Get the problem with the amounts written by the user, if any.

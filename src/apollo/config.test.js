@@ -97,7 +97,7 @@ describe('apollo links', () => {
 		it('hides the details of a server error behind a generic message', async () => {
 			const { results } = await runThrough(errorLink, graphQLErrorWith('INTERNAL_SERVER_ERROR'))
 
-			expect(results[0].errors[0].message).toBe('An error has occurred')
+			expect(results[0].errors[0].message).toBe('An error has occurred.')
 		})
 
 		it('keeps the user signed in when the server fails', async () => {

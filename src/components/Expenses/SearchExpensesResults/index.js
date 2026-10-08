@@ -41,7 +41,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 	const [isBreakdownExpanded, setIsBreakdownExpanded] = useState(false)
 
 	if (!expenses.length) {
-		return <EmptyState message='No spending matches this search. Try adjusting the filters' />
+		return <EmptyState message='No spending matches this search. Try adjusting the filters.' />
 	}
 
 	// The backend sorts the breakdown by amount, so the first rows are the ones with the most spending

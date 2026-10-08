@@ -17,6 +17,6 @@ describe('ListOfExpenses', () => {
 			</MockedProvider>
 		)
 
-		expect(screen.getByRole('status')).toHaveTextContent('No spending recorded yet. Add your first spend to see the list')
+		expect(screen.getByRole('status')).toHaveTextContent('No spending recorded yet. Add your first spend to see the list.')
 	})
 })
