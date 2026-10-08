@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { parseUnixTimestamp } from '../../../utils/utils'
@@ -6,8 +7,11 @@ import { getNameOfCategoryOrSubcategory } from '../utils'
 import { EmptyState } from '../../EmptyState'
 import { PaginateNavbar } from '../../PaginateNavbar'
 import { formatAmount } from '../../../utils/currency'
+import './styles.css'
 
 const DATE_LENGTH = 10
+const TOP_BREAKDOWN_ROWS = 5
+const BREAKDOWN_LIST_ID = 'searchExpensesBreakdown'
 
 /**
  * Get the displayable name of a category and its subcategory
@@ -34,10 +38,15 @@ const getSpendsLabel = (count) => `${count} ${(count === 1) ? 'spend' : 'spends'
 
 export const SearchExpensesResults = ({ searchResult, categories, onChangePage }) => {
 	const { expenses, pagination, totalSum, currencyISO, breakdown } = searchResult
+	const [isBreakdownExpanded, setIsBreakdownExpanded] = useState(false)
 
 	if (!expenses.length) {
 		return <EmptyState message='No spending matches this search. Try adjusting the filters' />
 	}
+
+	// The backend sorts the breakdown by amount, so the first rows are the ones with the most spending
+	const isBreakdownLong = breakdown.length > TOP_BREAKDOWN_ROWS
+	const visibleBreakdown = (isBreakdownExpanded) ? breakdown : breakdown.slice(0, TOP_BREAKDOWN_ROWS)
 
 	return (
 		<section>
@@ -47,9 +56,9 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 					<p className="h3 text-info">{formatAmount(totalSum, currencyISO)}</p>
 					<p className="text-white-50">{getSpendsLabel(pagination.totalCount)}</p>
 
-					<ul className="list-unstyled mb-0">
+					<ul id={BREAKDOWN_LIST_ID} className="list-unstyled mb-0">
 						{
-							breakdown.map(entry => (
+							visibleBreakdown.map(entry => (
 								<li key={`${entry.category}-${entry.subcategory}`} className="text-light border-top border-secondary py-2">
 									<p className="mb-1">{getFullName(entry.category, entry.subcategory, categories)}</p>
 									<div className="d-flex justify-content-between small">
@@ -60,6 +69,20 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 							))
 						}
 					</ul>
+
+					{
+						isBreakdownLong && (
+							<button
+								type="button"
+								className="btn btn-link text-info w-100 border-0 border-top border-secondary rounded-0 search-breakdown-toggle"
+								aria-expanded={isBreakdownExpanded}
+								aria-controls={BREAKDOWN_LIST_ID}
+								onClick={() => setIsBreakdownExpanded(!isBreakdownExpanded)}
+							>
+								{isBreakdownExpanded ? 'Show less' : 'Show more'}
+							</button>
+						)
+					}
 				</div>
 			</section>
 
