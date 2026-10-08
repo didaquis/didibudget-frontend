@@ -6,7 +6,7 @@ import { parseUnixTimestamp } from '../../../utils/utils'
 import { getSumPerMonth, getLastNValuesFromArrayIfTheyExist } from '../utils'
 
 import { EmptyState } from '../../EmptyState'
-import { PageSubTitle } from '../../PageSubTitle'
+import { SectionTitle } from '../../SectionTitle'
 import { AveragePerMonth } from '../AveragePerMonth'
 
 
@@ -27,7 +27,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 	if (dataGroupedPerMonth.length) {
 		return (
 			<Fragment>
-				<PageSubTitle text="Total spending per month:" />
+				<SectionTitle text="Total spending per month:" />
 				<ResponsiveContainer width="100%" height={460}>
 					<BarChart
 						data={dataGroupedPerMonth}
@@ -44,7 +44,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 				{
 					dataGroupedPerMonthSubset.length > 0 &&
 					<Fragment>
-						<PageSubTitle text={`Total spending for the last ${numberOfMonthsToDisplay} months:`} />
+						<SectionTitle text={`Total spending for the last ${numberOfMonthsToDisplay} months:`} />
 						<ResponsiveContainer width="100%" height={460}>
 							<BarChart
 								data={dataGroupedPerMonthSubset}
@@ -60,12 +60,10 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 					</Fragment>
 				}
 
-				<div className="container">
-					<div className="row">
-						<AveragePerMonth averageData={averageData} title="Average spending:" />
+				<div className="row">
+					<AveragePerMonth averageData={averageData} title="Average spending:" />
 
-						<AveragePerMonth averageData={averageDataExcludingSavings} title="Average spending (excluding savings):" />
-					</div>
+					<AveragePerMonth averageData={averageDataExcludingSavings} title="Average spending (excluding savings):" />
 				</div>
 
 			</Fragment>

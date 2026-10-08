@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 import { EmptyState } from '../../EmptyState'
-import { PageSubTitle } from '../../PageSubTitle'
+import { SectionTitle } from '../../SectionTitle'
 import { InformativeBadge } from '../../InformativeBadge'
 
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
@@ -31,7 +31,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 	if (allDataParsed.length) {
 		return (
 			<div>
-				<PageSubTitle text="All available data:" />
+				<SectionTitle text="All available data:" />
 				<ResponsiveContainer width="100%" height={460}>
 					<LineChart
 						data={allDataParsed}
@@ -47,12 +47,12 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastYearDataParsed.length > 0 &&
 					<Fragment>
-						<PageSubTitle text={'Data from the last 12 entries is shown:'}>
+						<SectionTitle text={'Data from the last 12 entries is shown:'}>
 							{
 								lastYearDifferential !== null &&
 								<InformativeBadge className="ms-2">Net change: {formatDifferential(lastYearDifferential)}</InformativeBadge>
 							}
-						</PageSubTitle>
+						</SectionTitle>
 
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
@@ -71,11 +71,11 @@ export const GraphMonthlyBalance = ({ data }) => {
 				{
 					lastTwoYearsDataParsed.length > 0 &&
 					<Fragment>
-						<PageSubTitle text={'Data from the last 24 entries is shown:'}>
+						<SectionTitle text={'Data from the last 24 entries is shown:'}>
 							{
 								lastTwoYearsDifferential !== null && <InformativeBadge className="ms-2">Net change: {formatDifferential(lastTwoYearsDifferential)}</InformativeBadge>
 							}
-						</PageSubTitle>
+						</SectionTitle>
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastTwoYearsDataParsed}
