@@ -74,6 +74,85 @@ describe('CategoryPicker', () => {
 		expect(screen.queryByText('Most used')).not.toBeInTheDocument()
 	})
 
+	it('hides the full category list behind a collapsed toggle when there are frequent categories', () => {
+		renderPicker()
+
+		expect(screen.getByRole('button', { name: 'All categories' })).toHaveAttribute('aria-expanded', 'false')
+		expect(screen.queryByRole('button', { name: /Taxes/ })).not.toBeInTheDocument()
+	})
+
+	it('reveals the full category list when its toggle is pressed', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.click(screen.getByRole('button', { name: 'All categories' }))
+
+		expect(screen.getByRole('button', { name: 'All categories' })).toHaveAttribute('aria-expanded', 'true')
+		expect(screen.getByRole('button', { name: /Taxes/ })).toBeVisible()
+	})
+
+	it('hides the full category list again when its toggle is pressed twice', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.click(screen.getByRole('button', { name: 'All categories' }))
+		await user.click(screen.getByRole('button', { name: 'All categories' }))
+
+		expect(screen.queryByRole('button', { name: /Taxes/ })).not.toBeInTheDocument()
+	})
+
+	it('shows the full category list without a toggle when there are no frequent categories', () => {
+		renderPicker({ frequentCategories: [] })
+
+		expect(screen.getByText('All categories')).toBeVisible()
+		expect(screen.queryByRole('button', { name: 'All categories' })).not.toBeInTheDocument()
+	})
+
+	it('drops the all categories label while filtering', async () => {
+		const user = userEvent.setup()
+		renderPicker({ frequentCategories: [] })
+
+		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+
+		expect(screen.queryByText('All categories')).not.toBeInTheDocument()
+	})
+
+	it('drops the all categories toggle while filtering', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.type(screen.getByLabelText('Filter categories'), 'tax')
+
+		expect(screen.queryByRole('button', { name: 'All categories' })).not.toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Taxes' })).toBeVisible()
+	})
+
+	it('folds the full category list again after reopening the picker', async () => {
+		const user = userEvent.setup()
+		const { rerender } = render(
+			<CategoryPicker
+				categories={categories}
+				frequentCategories={frequentCategories}
+				selected={null}
+				onSelect={vi.fn()}
+			/>
+		)
+		await user.click(screen.getByRole('button', { name: 'All categories' }))
+		await user.click(screen.getByRole('button', { name: 'Taxes' }))
+
+		rerender(
+			<CategoryPicker
+				categories={categories}
+				frequentCategories={frequentCategories}
+				selected={{ categoryID: 'category-id-2', subcategoryID: null }}
+				onSelect={vi.fn()}
+			/>
+		)
+		await user.click(screen.getByRole('button', { name: 'Change' }))
+
+		expect(screen.getByRole('button', { name: 'All categories' })).toHaveAttribute('aria-expanded', 'false')
+	})
+
 	it('lists the categories as an accordion while the filter is empty', () => {
 		renderPicker({ frequentCategories: [] })
 

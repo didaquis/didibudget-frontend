@@ -30,6 +30,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 	const [filterText, setFilterText] = useState('')
 	const [expandedItems, setExpandedItems] = useState({})
 	const [isChanging, setIsChanging] = useState(false)
+	const [isTreeShown, setIsTreeShown] = useState(false)
 	const filterInput = useRef(null)
 
 	const leaves = useMemo(() => flattenCategories(categories), [categories])
@@ -37,6 +38,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 	const isFiltering = filterText.trim().length > 0
 	const isOpen = !selected || isChanging
+	const hasFrequentLeaves = frequentLeaves.length > 0
 
 	const toggleItem = (uuid) => {
 		setExpandedItems((previous) => ({ ...previous, [uuid]: !previous[uuid] }))
@@ -49,6 +51,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 
 	const chooseLeaf = (leaf) => {
 		setIsChanging(false)
+		setIsTreeShown(false)
 		setFilterText('')
 		onSelect(leaf)
 	}
@@ -100,7 +103,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 			</div>
 
 			{
-				!isFiltering && frequentLeaves.length > 0 && (
+				!isFiltering && hasFrequentLeaves && (
 					<div className="mb-3">
 						<p className="text-light small mb-1">Most used</p>
 						<div className="d-flex flex-wrap gap-2">
@@ -121,7 +124,27 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 				)
 			}
 
-			<p className="text-light small mb-0">All categories</p>
+			{
+				!isFiltering && !hasFrequentLeaves && <p className="text-light small mb-0">All categories</p>
+			}
+
+			{
+				!isFiltering && hasFrequentLeaves && (
+					<button
+						type="button"
+						className="btn btn-link text-start text-info p-0 mb-2 d-inline-flex align-items-center"
+						onClick={() => setIsTreeShown(previous => !previous)}
+						aria-expanded={isTreeShown}
+					>
+						{
+							isTreeShown
+								? <BsFillCaretUpFill size={'16px'} color={'white'} className={'me-2'} />
+								: <BsFillCaretDownFill size={'16px'} color={'white'} className={'me-2'} />
+						}
+						All categories
+					</button>
+				)
+			}
 
 			{
 				isFiltering
@@ -139,7 +162,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 							}
 						</ul>
 					)
-					: (
+					: (!hasFrequentLeaves || isTreeShown) && (
 						<ul className="list-group list-group-flush">
 							{
 								categories.map((category, index) => {
