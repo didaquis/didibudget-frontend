@@ -30,34 +30,54 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 	}
 
 	if (monthlyBalances.length) {
+		const rows = monthlyBalances.map(monthlyBalance => {
+			const monthLabel = formatMonth(monthlyBalance)
+			const balance = formatAmount(monthlyBalance.balance, monthlyBalance.currencyISO)
+			return { uuid: monthlyBalance.uuid, monthLabel, balance, details: [monthLabel, balance] }
+		})
+
 		return (
-			<section className="table-responsive">
-				<table className="table table-dark table-hover">
-					<thead>
-						<tr className="table-info text-dark">
-							<th scope="col">Month</th>
-							<th scope="col">Balance</th>
-							<th scope="col">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{
-							monthlyBalances.map(monthlyBalance => {
-								const monthLabel = formatMonth(monthlyBalance)
-								const details = [monthLabel, formatAmount(monthlyBalance.balance, monthlyBalance.currencyISO)]
-								return (
-									<tr key={monthlyBalance.uuid}>
-										<td>{monthLabel}</td>
-										<td>{formatAmount(monthlyBalance.balance, monthlyBalance.currencyISO)}</td>
+			<section>
+				<div className="d-none d-md-block table-responsive">
+					<table className="table table-dark table-hover">
+						<thead>
+							<tr className="table-info text-dark">
+								<th scope="col">Month</th>
+								<th scope="col">Balance</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								rows.map(row => (
+									<tr key={row.uuid}>
+										<td className="text-nowrap">{row.monthLabel}</td>
+										<td className="text-nowrap">{row.balance}</td>
 										<td>
-											<ButtonDelete uuid={monthlyBalance.uuid} details={details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
+											<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
 										</td>
 									</tr>
-								)
-							})
-						}
-					</tbody>
-				</table>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<ul className="d-md-none list-group list-group-flush">
+					{
+						rows.map(row => (
+							<li className="list-group-item bg-dark text-light border-secondary px-0 py-3" key={row.uuid}>
+								<div className="d-flex align-items-center gap-3">
+									<div className="flex-grow-1">
+										<p className="mb-0">{row.monthLabel}</p>
+										<p className="mb-0 small text-nowrap">{row.balance}</p>
+									</div>
+									<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
+								</div>
+							</li>
+						))
+					}
+				</ul>
 
 				<PaginateNavbar currentPage={paginationData.currentPage} totalPages={paginationData.totalPages} onChangePage={onChangePage} />
 			</section>
