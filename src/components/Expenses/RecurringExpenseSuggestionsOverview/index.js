@@ -4,26 +4,21 @@ import { SectionTitle } from '../../SectionTitle'
 import { RecurringExpenseSuggestion } from '../RecurringExpenseSuggestion'
 
 export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {
-	const hasSuggestions = !!suggestions.length
+	if (!suggestions.length) { return null }
 
 	return (
 		<section className="mt-5">
 			<SectionTitle text='Suggestions' level={2} />
-			{!hasSuggestions ? (
-				<p className="text-light" role="status">No suggestions available right now.</p>
-			) : (
-				<ul className="list-group list-group-flush">
-					{
-						suggestions.map(suggestion => (
-							<RecurringExpenseSuggestion key={suggestion.uuid} suggestion={suggestion} />
-						))
-					}
-				</ul>
-			)}
+			<ul className="list-group list-group-flush">
+				{
+					suggestions.map(suggestion => (
+						<RecurringExpenseSuggestion key={suggestion.uuid} suggestion={suggestion} />
+					))
+				}
+			</ul>
 		</section>
 	)
 }
-
 
 RecurringExpenseSuggestionsOverview.propTypes = {
 	suggestions: PropTypes.arrayOf(

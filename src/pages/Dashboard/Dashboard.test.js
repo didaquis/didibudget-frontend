@@ -14,7 +14,26 @@ const monthMock = {
 const suggestionsMock = {
 	request: { query: GET_ALL_RECURRING_EXPENSE_SUGGESTIONS },
 	variableMatcher: () => true,
-	result: { data: { getRecurringExpenseSuggestionsByDay: [] } }
+	result: {
+		data: {
+			getRecurringExpenseSuggestionsByDay: [
+				{
+					__typename: 'RecurringExpenseSuggestion',
+					uuid: 'suggestion-uuid',
+					suggestedExpense: {
+						__typename: 'SuggestedExpense',
+						category: 'home-id',
+						categoryName: 'Home',
+						categoryEmojis: ['🏠'],
+						subcategory: null,
+						subcategoryName: null,
+						subcategoryEmojis: [],
+						quantity: 40
+					}
+				}
+			]
+		}
+	}
 }
 
 const renderDashboard = () => render(
