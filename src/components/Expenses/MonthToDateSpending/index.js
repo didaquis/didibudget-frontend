@@ -6,7 +6,7 @@ const MonthFigures = ({ monthName, spent, savingsAndInvestments, children, class
 	<div className={`text-light ${className}`}>
 		<p className="mb-0 small text-white-50">Spent in {monthName}</p>
 		<p className="mb-0 display-5 fw-light text-nowrap">{spent}</p>
-		<p className="mb-0 small text-white-50">Savings & investments in {monthName}: {savingsAndInvestments}</p>
+		<p className="mb-0 small text-white-50">Savings & investments: {savingsAndInvestments}</p>
 		{children}
 	</div>
 )
