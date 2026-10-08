@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { monthsBetweenDates } from '../utils'
 import { AuthContext } from '../../../AuthContext'
 import { SectionTitle } from '../../SectionTitle'
+import { formatAmount } from '../../../utils/currency'
 
 export const AveragePerMonth = ({ averageData, title }) => {
 
@@ -29,31 +30,31 @@ export const AveragePerMonth = ({ averageData, title }) => {
 					<thead>
 						<tr className="table-info text-dark">
 							<th scope="col">Period</th>
-							<th scope="col">Per month</th>
+							<th scope="col" className="text-end">Per month</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>Last 3 months</td>
-							<td className="text-nowrap">{averageData.lastThreeMonthsAverage.average} €</td>
+							<td className="text-nowrap text-end">{formatAmount(averageData.lastThreeMonthsAverage.average, averageData.lastThreeMonthsAverage.currencyISO)}</td>
 						</tr>
 						{
 							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplaySix) && <tr>
 								<td>Last 6 months</td>
-								<td className="text-nowrap">{averageData.lastSixMonthsAverage.average} €</td>
+								<td className="text-nowrap text-end">{formatAmount(averageData.lastSixMonthsAverage.average, averageData.lastSixMonthsAverage.currencyISO)}</td>
 							</tr>
 						}
 						{
 							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwelve) && <tr>
 								<td>Last 12 months</td>
-								<td className="text-nowrap">{averageData.lastTwelveMonthsAverage.average} €</td>
+								<td className="text-nowrap text-end">{formatAmount(averageData.lastTwelveMonthsAverage.average, averageData.lastTwelveMonthsAverage.currencyISO)}</td>
 							</tr>
 						}
 
 						{
 							!!(monthsSinceUserJoined > minimunMonthsRequiredForAverageDisplayTwentyFour) && <tr>
 								<td>Last 24 months</td>
-								<td className="text-nowrap">{averageData.lastTwentyFourMonthsAverage.average} €</td>
+								<td className="text-nowrap text-end">{formatAmount(averageData.lastTwentyFourMonthsAverage.average, averageData.lastTwentyFourMonthsAverage.currencyISO)}</td>
 							</tr>
 						}
 					</tbody>
