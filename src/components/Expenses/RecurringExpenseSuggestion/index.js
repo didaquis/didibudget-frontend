@@ -7,6 +7,7 @@ import { SubmitButton } from '../../SubmitButton'
 import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryOrSubcategory'
 
 import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
+import { formatAmount } from '../../../utils/currency'
 
 export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	const navigate = useNavigate()
@@ -44,8 +45,8 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 			<div className="card bg-dark border-info text-light mb-3">
 				<div className="card-body">
 					<h5 className="fw-light card-title">{suggestion.suggestedExpense.categoryName} {(suggestion.suggestedExpense.subcategoryName) ? ` - ${suggestion.suggestedExpense.subcategoryName}` : ''} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></h5>
-					<p className="card-text"><span className="text-nowrap">{suggestion.suggestedExpense.quantity} EUR</span></p>
-					<SubmitButton disabled={isDisabled} onClick={onSubmit}>Save expense</SubmitButton>
+					<p className="card-text"><span className="text-nowrap">{formatAmount(suggestion.suggestedExpense.quantity)}</span></p>
+					<SubmitButton disabled={isDisabled} onClick={onSubmit}>Save spending</SubmitButton>
 					{
 						error && <p className="alert alert-danger py-3 text-center m-3" role="alert">{error}</p>
 					}

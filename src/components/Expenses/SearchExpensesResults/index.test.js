@@ -53,7 +53,7 @@ describe('SearchExpensesResults', () => {
 	it('should display the total amount and the number of expenses', () => {
 		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
 
-		expect(screen.getByText('1284.6 EUR')).toBeVisible()
+		expect(screen.getByText('1284.6 €')).toBeVisible()
 		expect(screen.getByText('37 expenses')).toBeVisible()
 	})
 
@@ -64,8 +64,8 @@ describe('SearchExpensesResults', () => {
 		const items = within(summary).getAllByRole('listitem')
 
 		expect(items).toHaveLength(2)
-		expect(items[0]).toHaveTextContent(/^Private vehicles - Fuel18 expenses612\.4 EUR$/)
-		expect(items[1]).toHaveTextContent(/^Groceries, personal care products19 expenses672\.2 EUR$/)
+		expect(items[0]).toHaveTextContent(/^Private vehicles - Fuel18 expenses612\.4 €$/)
+		expect(items[1]).toHaveTextContent(/^Groceries, personal care products19 expenses672\.2 €$/)
 	})
 
 	it('should label a single expense in the singular', () => {
@@ -87,8 +87,8 @@ describe('SearchExpensesResults', () => {
 		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
 
 		expect(screen.getAllByText('2026-02-01')).toHaveLength(2)
-		expect(screen.getByText('64.2 EUR')).toBeVisible()
-		expect(screen.getByText('23.15 EUR')).toBeVisible()
+		expect(screen.getByText('64.2 €')).toBeVisible()
+		expect(screen.getByText('23.15 €')).toBeVisible()
 	})
 
 	it('should render nothing instead of the literal "null" when a category cannot be resolved', () => {

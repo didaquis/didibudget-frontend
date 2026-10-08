@@ -9,6 +9,7 @@ import { ButtonDelete } from '../../ButtonDelete'
 import { PaginateNavbar } from '../../PaginateNavbar'
 
 import { DELETE_EXPENSE } from '../../../gql/mutations/expenses'
+import { formatAmount } from '../../../utils/currency'
 
 export const ListOfExpenses = ( { expenses, paginationData, categories, refetch, onChangePage } ) => {
 
@@ -48,12 +49,12 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 								const nameOfSubcategory = getNameOfCategoryOrSubcategory(expense.subcategory, categories)
 								const date = parseUnixTimestamp(expense.date).substring(0, 10)
 								const fullNameOfCategory = `${nameOfCategory}${(nameOfSubcategory) ? ` - ${nameOfSubcategory}` : ''}`
-								const details = [date, fullNameOfCategory, `${expense.quantity} ${expense.currencyISO}`]
+								const details = [date, fullNameOfCategory, formatAmount(expense.quantity, expense.currencyISO)]
 								return (
 									<tr key={expense.uuid}>
 										<td>{date}</td>
 										<td>{fullNameOfCategory}</td>
-										<td>{expense.quantity} {expense.currencyISO}</td>
+										<td>{formatAmount(expense.quantity, expense.currencyISO)}</td>
 										<td>
 											<ButtonDelete uuid={expense.uuid} details={details} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
 										</td>

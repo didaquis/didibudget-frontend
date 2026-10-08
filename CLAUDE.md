@@ -26,8 +26,10 @@ majority to weigh against a desktop minority — it is where the app is used.
 The page is dark but form controls are **not**: the app uses default Bootstrap `form-control` /
 `form-select` with no colour overrides. Match that in new forms.
 
-`ErrorAlert` (red, `role="alert"`) is only for failures: network, GraphQL, form validation. For "no data
-yet" or "no results" use `EmptyState` (`role="status"`). Never use `ErrorAlert` for an empty list.
+`ErrorAlert` (red, `role="alert"`) is only for failures: network, GraphQL, form validation. When a screen's
+main content is empty ("no data yet", a search that returned nothing) use `EmptyState` (`role="status"`).
+When a live filter empties a list already on screen, use inline muted text instead:
+`<p className="text-white-50" role="status">No … found</p>`. Never use `ErrorAlert` for an empty list.
 For a confirmation after a successful write use `SuccessToast` (`role="status"`, auto-hides): pass it a
 `{ id, message }` object with a fresh `id` per save, never a bare string.
 

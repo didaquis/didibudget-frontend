@@ -6,6 +6,7 @@ import { Collapse } from 'reactstrap'
 import 'react-widgets/styles.css'
 import './styles.css'
 import { buildFiltersSummary, isValidAmountInput } from './utils'
+import { SubmitButton } from '../../SubmitButton'
 
 const INITIAL_FILTERS = {
 	category: '',
@@ -159,11 +160,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 						</div>
 					</div>
 
-					<div className="row">
-						<div className="col-12 col-sm-6 col-md-4">
-							<button type="submit" className="btn btn-outline-info w-100" disabled={isAmountInvalid}>Search</button>
-						</div>
-					</div>
+					<SubmitButton disabled={isAmountInvalid}>Search</SubmitButton>
 				</form>
 			</Collapse>
 		</section>

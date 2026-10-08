@@ -17,7 +17,7 @@ describe('ViewGetSavingsAndInvestments', () => {
 
 	test('displays total in tfoot row', () => {
 		render(<ViewGetSavingsAndInvestments data={mockData} />)
-		const totalCell = screen.getByText('8000 EUR')
+		const totalCell = screen.getByText('8000 €')
 		expect(totalCell).toBeVisible()
 	})
 
@@ -33,7 +33,7 @@ describe('ViewGetSavingsAndInvestments', () => {
 
 	test('displays total only once in table footer', () => {
 		render(<ViewGetSavingsAndInvestments data={mockData} />)
-		const totalElements = screen.getAllByText('8000 EUR')
+		const totalElements = screen.getAllByText('8000 €')
 		expect(totalElements.length).toBe(1)
 	})
 
@@ -45,8 +45,8 @@ describe('ViewGetSavingsAndInvestments', () => {
 
 	test('displays individual item amounts with currency', () => {
 		render(<ViewGetSavingsAndInvestments data={mockData} />)
-		expect(screen.getByText('5000 EUR')).toBeVisible()
-		expect(screen.getByText('3000 EUR')).toBeVisible()
+		expect(screen.getByText('5000 €')).toBeVisible()
+		expect(screen.getByText('3000 €')).toBeVisible()
 	})
 
 	test('renders total label in footer', () => {

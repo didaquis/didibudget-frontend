@@ -85,7 +85,7 @@ describe('RegisterMonthlyBalanceForm', () => {
 		await user.type(screen.getByLabelText(/Balance/), '1234.99')
 		await user.click(screen.getByRole('button', { name: 'Save monthly balance' }))
 
-		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(new RegExp(`^✓ 1234\\.99 EUR · ${currentMonthName} ${currentYear}$`)))
+		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(new RegExp(`^✓ 1234\\.99 € · ${currentMonthName} ${currentYear}$`)))
 	})
 
 	it('reports the chosen month and year, not the current one, after a successful submission', async () => {
@@ -97,7 +97,7 @@ describe('RegisterMonthlyBalanceForm', () => {
 		await user.type(screen.getByLabelText(/Balance/), '1234.99')
 		await user.click(screen.getByRole('button', { name: 'Save monthly balance' }))
 
-		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(new RegExp(`^✓ 1234\\.99 EUR · ${chosenMonth} ${chosenYear}$`)))
+		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(new RegExp(`^✓ 1234\\.99 € · ${chosenMonth} ${chosenYear}$`)))
 	})
 
 	it('clears the balance but keeps year and month after saving', async () => {
@@ -107,7 +107,7 @@ describe('RegisterMonthlyBalanceForm', () => {
 		await user.type(screen.getByLabelText(/Balance/), '1234.99')
 		await user.click(screen.getByRole('button', { name: 'Save monthly balance' }))
 
-		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('1234.99 EUR'))
+		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('1234.99 €'))
 
 		expect(screen.getByLabelText(/Balance/)).toHaveValue(null)
 		expect(screen.getByLabelText(/Year/)).toHaveDisplayValue(String(currentYear))
@@ -123,7 +123,7 @@ describe('RegisterMonthlyBalanceForm', () => {
 		await user.type(screen.getByLabelText(/Balance/), '1234.99')
 		await user.click(screen.getByRole('button', { name: 'Save monthly balance' }))
 
-		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('1234.99 EUR'))
+		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('1234.99 €'))
 
 		expect(screen.getByLabelText(/Balance/)).toHaveFocus()
 	})

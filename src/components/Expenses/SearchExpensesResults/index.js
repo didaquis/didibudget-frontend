@@ -5,6 +5,7 @@ import { getNameOfCategoryOrSubcategory } from '../utils'
 
 import { EmptyState } from '../../EmptyState'
 import { PaginateNavbar } from '../../PaginateNavbar'
+import { formatAmount } from '../../../utils/currency'
 
 const DATE_LENGTH = 10
 
@@ -43,7 +44,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 			<section className="card bg-dark border-info mb-4" aria-label="Search summary">
 				<div className="card-body">
 					<p className="text-light mb-1">Total spent</p>
-					<p className="h3 text-info">{totalSum} {currencyISO}</p>
+					<p className="h3 text-info">{formatAmount(totalSum, currencyISO)}</p>
 					<p className="text-white-50">{getExpensesLabel(pagination.totalCount)}</p>
 
 					<ul className="list-unstyled mb-0">
@@ -53,7 +54,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 									<p className="mb-1">{getFullName(entry.category, entry.subcategory, categories)}</p>
 									<div className="d-flex justify-content-between small">
 										<span className="text-white-50">{getExpensesLabel(entry.count)}</span>
-										<span>{entry.sum} {currencyISO}</span>
+										<span>{formatAmount(entry.sum, currencyISO)}</span>
 									</div>
 								</li>
 							))
@@ -77,7 +78,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 								<tr key={expense.uuid}>
 									<td className="text-nowrap">{parseUnixTimestamp(expense.date).substring(0, DATE_LENGTH)}</td>
 									<td>{getFullName(expense.category, expense.subcategory, categories)}</td>
-									<td className="text-nowrap">{expense.quantity} {expense.currencyISO}</td>
+									<td className="text-nowrap">{formatAmount(expense.quantity, expense.currencyISO)}</td>
 								</tr>
 							))
 						}

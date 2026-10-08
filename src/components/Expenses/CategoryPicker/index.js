@@ -6,6 +6,10 @@ import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryO
 
 import { flattenCategories, filterLeaves, isSameLeaf, buildLeaf } from './utils'
 
+import './styles.css'
+
+const LEAF_ROW_CLASS_NAME = 'btn btn-link text-start text-info text-decoration-none w-100 px-0'
+
 const buildFrequentLeaf = (frequent) => {
 	if (!frequent.subcategory) {
 		return {
@@ -29,14 +33,14 @@ const buildFrequentLeaf = (frequent) => {
 export const CategoryPicker = ({ categories, frequentCategories, selected, onSelect }) => {
 	const [filterText, setFilterText] = useState('')
 	const [expandedItems, setExpandedItems] = useState({})
-	const [isChanging, setIsChanging] = useState(false)
+	const [isTreeShown, setIsTreeShown] = useState(false)
 	const filterInput = useRef(null)
 
 	const leaves = useMemo(() => flattenCategories(categories), [categories])
 	const frequentLeaves = useMemo(() => frequentCategories.map(buildFrequentLeaf), [frequentCategories])
 
 	const isFiltering = filterText.trim().length > 0
-	const isOpen = !selected || isChanging
+	const hasFrequentLeaves = frequentLeaves.length > 0
 
 	const toggleItem = (uuid) => {
 		setExpandedItems((previous) => ({ ...previous, [uuid]: !previous[uuid] }))
@@ -48,12 +52,12 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 	}
 
 	const chooseLeaf = (leaf) => {
-		setIsChanging(false)
+		setIsTreeShown(false)
 		setFilterText('')
 		onSelect(leaf)
 	}
 
-	if (!isOpen) {
+	if (selected) {
 		const selectedLeaf = leaves.find(leaf => isSameLeaf(leaf, selected))
 		const label = selected.label ?? selectedLeaf?.label ?? 'Unknown category'
 		const emojis = selected.emojis ?? selectedLeaf?.emojis ?? []
@@ -63,7 +67,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 				<span className="text-light">
 					{label} <EmojiListFromCategoryOrSubcategory emojis={emojis} />
 				</span>
-				<button type="button" className="btn btn-sm btn-outline-info" onClick={() => setIsChanging(true)}>Change</button>
+				<button type="button" className="btn btn-sm btn-outline-info" onClick={() => onSelect(null)}>Change</button>
 			</div>
 		)
 	}
@@ -71,7 +75,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 	const filteredLeaves = filterLeaves(leaves, filterText)
 
 	return (
-		<div>
+		<div className="category-picker">
 			<div className="input-group mb-3">
 				<input
 					id="categoryPickerFilter"
@@ -100,7 +104,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 			</div>
 
 			{
-				!isFiltering && frequentLeaves.length > 0 && (
+				!isFiltering && hasFrequentLeaves && (
 					<div className="mb-3">
 						<p className="text-light small mb-1">Most used</p>
 						<div className="d-flex flex-wrap gap-2">
@@ -121,31 +125,55 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 				)
 			}
 
-			<p className="text-light small mb-0">All categories</p>
+			{
+				!isFiltering && !hasFrequentLeaves && <p className="text-light small mb-0">All categories</p>
+			}
 
 			{
-				isFiltering
+				!isFiltering && hasFrequentLeaves && (
+					<button
+						type="button"
+						className="btn btn-link text-start text-light text-decoration-none w-100 px-0 mb-1 d-flex align-items-center"
+						onClick={() => setIsTreeShown(previous => !previous)}
+						aria-expanded={isTreeShown}
+					>
+						{
+							isTreeShown
+								? <BsFillCaretUpFill size={'16px'} color={'white'} className={'me-2'} />
+								: <BsFillCaretDownFill size={'16px'} color={'white'} className={'me-2'} />
+						}
+						All categories
+					</button>
+				)
+			}
+
+			{
+				isFiltering && filteredLeaves.length === 0 && <p className="text-white-50" role="status">No categories found</p>
+			}
+
+			{
+				isFiltering && filteredLeaves.length > 0
 					? (
 						<ul className="list-group list-group-flush">
 							{
 								filteredLeaves.map((leaf, index) => (
-									<li className={`list-group-item bg-dark border-info px-0 ${index === 0 ? 'pt-0' : ''}`} key={leaf.key}>
-										<button type="button" className="btn btn-link text-start text-info p-0" onClick={() => chooseLeaf(leaf)}>
-											{leaf.label}
+									<li className={`list-group-item bg-dark border-info px-0 py-1 ${index === 0 ? 'pt-0' : ''}`} key={leaf.key}>
+										<button type="button" className={LEAF_ROW_CLASS_NAME} onClick={() => chooseLeaf(leaf)}>
+											<span className="text-decoration-underline">{leaf.label}</span>
+											<EmojiListFromCategoryOrSubcategory emojis={leaf.emojis} />
 										</button>
-										<EmojiListFromCategoryOrSubcategory emojis={leaf.emojis} />
 									</li>
 								))
 							}
 						</ul>
 					)
-					: (
+					: !isFiltering && (!hasFrequentLeaves || isTreeShown) && (
 						<ul className="list-group list-group-flush">
 							{
 								categories.map((category, index) => {
 									const hasSubcategories = Boolean(category.subcategories?.length)
 									const isExpanded = Boolean(expandedItems[category.uuid])
-									const itemClassName = `list-group-item bg-dark border-info px-0 ${index === 0 ? 'pt-0' : ''}`
+									const itemClassName = `list-group-item bg-dark border-info px-0 py-1 ${index === 0 ? 'pt-0' : ''}`
 
 									if (!hasSubcategories) {
 										const leaf = buildLeaf(category, null)
@@ -154,12 +182,12 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 											<li className={itemClassName} key={category.uuid}>
 												<button
 													type="button"
-													className="btn btn-link text-start text-info p-0"
+													className={LEAF_ROW_CLASS_NAME}
 													onClick={() => chooseLeaf(leaf)}
 												>
-													{category.name}
+													<span className="text-decoration-underline">{category.name}</span>
+													<EmojiListFromCategoryOrSubcategory emojis={leaf.emojis} />
 												</button>
-												<EmojiListFromCategoryOrSubcategory emojis={leaf.emojis} />
 											</li>
 										)
 									}
@@ -170,18 +198,20 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 										<li className={itemClassName} key={category.uuid}>
 											<button
 												type="button"
-												className="btn btn-link text-start text-info p-0 d-inline-flex align-items-center"
+												className="btn btn-link text-start text-light text-decoration-none w-100 px-0 d-flex align-items-center"
 												onClick={() => toggleItem(category.uuid)}
 												aria-expanded={isExpanded}
 											>
 												{
 													isExpanded
-														? <BsFillCaretUpFill size={'16px'} color={'white'} className={'me-2'} />
-														: <BsFillCaretDownFill size={'16px'} color={'white'} className={'me-2'} />
+														? <BsFillCaretUpFill size={'16px'} color={'white'} className={'me-2 flex-shrink-0'} />
+														: <BsFillCaretDownFill size={'16px'} color={'white'} className={'me-2 flex-shrink-0'} />
 												}
-												{category.name}
+												<span>
+													{category.name}
+													<EmojiListFromCategoryOrSubcategory emojis={categoryLeaf.emojis} />
+												</span>
 											</button>
-											<EmojiListFromCategoryOrSubcategory emojis={categoryLeaf.emojis} />
 
 											{
 												isExpanded && (
@@ -191,16 +221,16 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 																const subcategoryLeaf = buildLeaf(category, subcategory)
 
 																return (
-																	<li className="list-group-item bg-dark border-info px-0" key={subcategory.uuid}>
+																	<li className="list-group-item bg-dark border-info px-0 py-1" key={subcategory.uuid}>
 																		<button
 																			type="button"
-																			className="btn btn-link text-start text-info p-0"
+																			className={LEAF_ROW_CLASS_NAME}
 																			onClick={() => chooseLeaf(subcategoryLeaf)}
 																		>
-																			{subcategory.name}
+																			<span className="text-decoration-underline">{subcategory.name}</span>
+																			{/* Own emojis only: subcategoryLeaf merges them with the parent category ones */}
+																			<EmojiListFromCategoryOrSubcategory emojis={subcategory.emojis ?? []} />
 																		</button>
-																		{/* Own emojis only: subcategoryLeaf merges them with the parent category ones */}
-																		<EmojiListFromCategoryOrSubcategory emojis={subcategory.emojis ?? []} />
 																	</li>
 																)
 															})

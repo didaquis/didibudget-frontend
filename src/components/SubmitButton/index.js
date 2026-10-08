@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types'
 
 export const SubmitButton = ( { children, disabled, onClick } ) => {
-	return <button disabled={disabled} className="btn btn-outline-info" onClick={onClick}>{children}</button>
+	return (
+		<div className="d-grid d-md-block">
+			<button disabled={disabled} className="btn btn-lg btn-outline-info" onClick={onClick}>{children}</button>
+		</div>
+	)
 }
 
 SubmitButton.propTypes = {

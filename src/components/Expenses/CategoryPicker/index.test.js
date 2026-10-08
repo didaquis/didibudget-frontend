@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -74,6 +75,79 @@ describe('CategoryPicker', () => {
 		expect(screen.queryByText('Most used')).not.toBeInTheDocument()
 	})
 
+	it('hides the full category list behind a collapsed toggle when there are frequent categories', () => {
+		renderPicker()
+
+		expect(screen.getByRole('button', { name: 'All categories' })).toHaveAttribute('aria-expanded', 'false')
+		expect(screen.queryByRole('button', { name: /Taxes/ })).not.toBeInTheDocument()
+	})
+
+	it('reveals the full category list when its toggle is pressed', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.click(screen.getByRole('button', { name: 'All categories' }))
+
+		expect(screen.getByRole('button', { name: 'All categories' })).toHaveAttribute('aria-expanded', 'true')
+		expect(screen.getByRole('button', { name: /Taxes/ })).toBeVisible()
+	})
+
+	it('hides the full category list again when its toggle is pressed twice', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.click(screen.getByRole('button', { name: 'All categories' }))
+		await user.click(screen.getByRole('button', { name: 'All categories' }))
+
+		expect(screen.queryByRole('button', { name: /Taxes/ })).not.toBeInTheDocument()
+	})
+
+	it('shows the full category list without a toggle when there are no frequent categories', () => {
+		renderPicker({ frequentCategories: [] })
+
+		expect(screen.getByText('All categories')).toBeVisible()
+		expect(screen.queryByRole('button', { name: 'All categories' })).not.toBeInTheDocument()
+	})
+
+	it('drops the all categories label while filtering', async () => {
+		const user = userEvent.setup()
+		renderPicker({ frequentCategories: [] })
+
+		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+
+		expect(screen.queryByText('All categories')).not.toBeInTheDocument()
+	})
+
+	it('drops the all categories toggle while filtering', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.type(screen.getByLabelText('Filter categories'), 'tax')
+
+		expect(screen.queryByRole('button', { name: 'All categories' })).not.toBeInTheDocument()
+		expect(screen.getByRole('button', { name: 'Taxes' })).toBeVisible()
+	})
+
+	it('folds the full category list again after reopening the picker', async () => {
+		const user = userEvent.setup()
+		const renderWith = (selected) => (
+			<CategoryPicker
+				categories={categories}
+				frequentCategories={frequentCategories}
+				selected={selected}
+				onSelect={vi.fn()}
+			/>
+		)
+		const { rerender } = render(renderWith(null))
+		await user.click(screen.getByRole('button', { name: 'All categories' }))
+		await user.click(screen.getByRole('button', { name: 'Taxes' }))
+
+		rerender(renderWith({ categoryID: 'category-id-2', subcategoryID: null }))
+		rerender(renderWith(null))
+
+		expect(screen.getByRole('button', { name: 'All categories' })).toHaveAttribute('aria-expanded', 'false')
+	})
+
 	it('lists the categories as an accordion while the filter is empty', () => {
 		renderPicker({ frequentCategories: [] })
 
@@ -131,6 +205,24 @@ describe('CategoryPicker', () => {
 		expect(screen.queryByRole('button', { name: /Taxes/ })).not.toBeInTheDocument()
 	})
 
+	it('says no categories were found when the filter matches nothing', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.type(screen.getByLabelText('Filter categories'), 'zzzzz')
+
+		expect(screen.getByRole('status')).toHaveTextContent('No categories found')
+	})
+
+	it('does not say no categories were found while the filter has matches', async () => {
+		const user = userEvent.setup()
+		renderPicker()
+
+		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+
+		expect(screen.queryByText('No categories found')).not.toBeInTheDocument()
+	})
+
 	it('hides the clear button while the filter is empty', () => {
 		renderPicker({ frequentCategories: [] })
 
@@ -172,14 +264,28 @@ describe('CategoryPicker', () => {
 		expect(screen.getByText('Deleted category')).toBeVisible()
 	})
 
-	it('reopens the list when change is pressed, without losing the current selection', async () => {
+	it('clears the selected category when change is pressed', async () => {
 		const user = userEvent.setup()
-		renderPicker({ selected: { categoryID: 'category-id-1', subcategoryID: 'subcategory-id-1' } })
+		const { onSelect } = renderPicker({ selected: { categoryID: 'category-id-1', subcategoryID: 'subcategory-id-1' } })
 
 		await user.click(screen.getByRole('button', { name: 'Change' }))
 
-		expect(screen.getByLabelText('Filter categories')).toBeVisible()
-		expect(screen.getByRole('button', { name: /Private vehicles › Fuel/ })).toHaveClass('btn-info')
+		expect(onSelect).toHaveBeenCalledWith(null)
+	})
+
+	it('marks no frequent chip after change is pressed', async () => {
+		const user = userEvent.setup()
+		const StatefulPicker = () => {
+			const [selected, setSelected] = useState(null)
+
+			return <CategoryPicker categories={categories} frequentCategories={frequentCategories} selected={selected} onSelect={setSelected} />
+		}
+		render(<StatefulPicker />)
+		await user.click(screen.getByRole('button', { name: /Private vehicles › Fuel/ }))
+
+		await user.click(screen.getByRole('button', { name: 'Change' }))
+
+		expect(screen.getByRole('button', { name: /Private vehicles › Fuel/ })).not.toHaveClass('btn-info')
 	})
 
 	it('reports the leaf when a subcategory is chosen from the accordion', async () => {
@@ -188,6 +294,19 @@ describe('CategoryPicker', () => {
 
 		await user.click(screen.getByRole('button', { name: /Private vehicles/ }))
 		await user.click(screen.getByRole('button', { name: 'Fuel' }))
+
+		expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({
+			categoryID: 'category-id-1',
+			subcategoryID: 'subcategory-id-1'
+		}))
+	})
+
+	it('reports the leaf when its emoji is pressed instead of its name', async () => {
+		const user = userEvent.setup()
+		const { onSelect } = renderPicker({ frequentCategories: [] })
+
+		await user.click(screen.getByRole('button', { name: /Private vehicles/ }))
+		await user.click(within(screen.getByRole('list', { name: 'Subcategories of Private vehicles' })).getByText('⛽️'))
 
 		expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({
 			categoryID: 'category-id-1',
