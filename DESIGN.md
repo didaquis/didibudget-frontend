@@ -48,8 +48,9 @@ components:
   button-outline-info:
     backgroundColor: "transparent"
     textColor: "{colors.info}"
-    rounded: "{rounded.md}"
-    padding: "0.375rem 0.75rem"
+    rounded: "{rounded.lg}"
+    padding: "0.5rem 1rem"
+    height: "48px"
   button-outline-info-hover:
     backgroundColor: "{colors.info}"
     textColor: "{colors.ink-dark}"
@@ -171,7 +172,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 
 ### Buttons
 - **Shape:** gently rounded (0.25rem; 0.2rem for `btn-sm`).
-- **Primary action:** `btn-outline-info` (`SubmitButton`): cyan text and border on the dark page. On hover it fills cyan with dark text.
+- **Primary action:** `SubmitButton`, a large `btn-lg btn-outline-info` (48px tall): cyan text and border on the dark page. On hover it fills cyan with dark text. Below 768px it spans the full width of its form (`d-grid d-md-block`); from 768px it keeps its natural width, left-aligned. Every form's main action uses this component, never a hand-rolled button.
 - **Selected / filled:** `btn-info` marks the chosen option in a set, such as the selected category chip in "Most used".
 - **Link style:** `btn-link text-info p-0 text-start` for rows in long pick-lists like the category tree.
 - **Light:** `btn-light` only when attached to a white input (input-group addon).
@@ -214,7 +215,7 @@ The coral SVG wordmark over a soft coral radial glow that fades in over 700ms (s
 
 ### Do:
 - **Do** design and check every screen at 390px first.
-- **Do** use `btn-outline-info` for the main action and `btn-info` for the selected state.
+- **Do** use `SubmitButton` for every form's main action (full width and 48px tall on phones) and `btn-info` for the selected state.
 - **Do** keep form controls default Bootstrap white; don't theme them dark.
 - **Do** use `fw-light` for page and section titles.
 - **Do** wrap tables in `table-responsive` and mark amounts and dates `text-nowrap`.
