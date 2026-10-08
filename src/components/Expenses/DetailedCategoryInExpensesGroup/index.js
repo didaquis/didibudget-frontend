@@ -18,7 +18,7 @@ export const DetailedCategoryInExpensesGroup = ({ displaySubcategories, category
 					categoryInGroup.perSubcategory.map(subcategory => {
 						const nameOfSubcategory = getNameOfCategoryOrSubcategory(subcategory.idSubcategory, categories)
 						return (
-							<div className="ms-4 py-2 ps-2 d-flex border border-info border-top-0 border-bottom-0 border-right-0" key={subcategory.idSubcategory} >
+							<div className="ms-4 py-2 ps-2 d-flex border border-info border-top-0 border-bottom-0 border-end-0" key={subcategory.idSubcategory} >
 								<div className="me-auto px-2">{nameOfSubcategory}</div>
 								<div className="px-2 text-nowrap text-end">{formatAmount(subcategory.totalInSubcategory)}</div>
 							</div>
