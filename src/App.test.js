@@ -29,9 +29,9 @@ const LAZY_ROUTE_PATHS = [
 	'/spending/add',
 	'/spending/overview',
 	'/spending/list',
-	'/spending/monthly-breakdown',
-	'/spending/monthly',
-	'/spending/yearly',
+	'/spending/month-by-month',
+	'/spending/this-month',
+	'/spending/last-12-months',
 	'/spending/search',
 	'/users'
 ]

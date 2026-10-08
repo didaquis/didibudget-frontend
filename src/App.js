@@ -113,21 +113,21 @@ export const App = () => {
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/spending/monthly-breakdown' element={
+								<Route path='/spending/month-by-month' element={
 									<RequireAuth>
 										<LazyRoute>
 											<ExpenseAnalysis />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/spending/monthly' element={
+								<Route path='/spending/this-month' element={
 									<RequireAuth>
 										<LazyRoute>
 											<MonthlyExpenseOverview />
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/spending/yearly' element={
+								<Route path='/spending/last-12-months' element={
 									<RequireAuth>
 										<LazyRoute>
 											<YearlyExpenseOverview />

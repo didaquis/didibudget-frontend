@@ -28,18 +28,18 @@ export const ExpensesDropdown = () => {
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/spending/monthly'>
-						<BsCalendar3 size='24px' aria-hidden='true' /><span className="ms-3">Monthly spending overview</span>
+					<Link className="dropdown-item py-3" to='/spending/this-month'>
+						<BsCalendar3 size='24px' aria-hidden='true' /><span className="ms-3">This month</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/spending/yearly'>
-						<BsCalendar3 size='24px' aria-hidden='true' /><span className="ms-3">Yearly spending overview</span>
+					<Link className="dropdown-item py-3" to='/spending/last-12-months'>
+						<BsCalendar3 size='24px' aria-hidden='true' /><span className="ms-3">Last 12 months</span>
 					</Link>
 				</li>
 				<li>
-					<Link className="dropdown-item py-3" to='/spending/monthly-breakdown'>
-						<BsCalendarCheck size='24px' aria-hidden='true' /><span className="ms-3">Monthly spending breakdown</span>
+					<Link className="dropdown-item py-3" to='/spending/month-by-month'>
+						<BsCalendarCheck size='24px' aria-hidden='true' /><span className="ms-3">Month by month</span>
 					</Link>
 				</li>
 				<li>
