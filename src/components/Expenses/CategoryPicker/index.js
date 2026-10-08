@@ -29,7 +29,6 @@ const buildFrequentLeaf = (frequent) => {
 export const CategoryPicker = ({ categories, frequentCategories, selected, onSelect }) => {
 	const [filterText, setFilterText] = useState('')
 	const [expandedItems, setExpandedItems] = useState({})
-	const [isChanging, setIsChanging] = useState(false)
 	const [isTreeShown, setIsTreeShown] = useState(false)
 	const filterInput = useRef(null)
 
@@ -37,7 +36,6 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 	const frequentLeaves = useMemo(() => frequentCategories.map(buildFrequentLeaf), [frequentCategories])
 
 	const isFiltering = filterText.trim().length > 0
-	const isOpen = !selected || isChanging
 	const hasFrequentLeaves = frequentLeaves.length > 0
 
 	const toggleItem = (uuid) => {
@@ -50,13 +48,12 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 	}
 
 	const chooseLeaf = (leaf) => {
-		setIsChanging(false)
 		setIsTreeShown(false)
 		setFilterText('')
 		onSelect(leaf)
 	}
 
-	if (!isOpen) {
+	if (selected) {
 		const selectedLeaf = leaves.find(leaf => isSameLeaf(leaf, selected))
 		const label = selected.label ?? selectedLeaf?.label ?? 'Unknown category'
 		const emojis = selected.emojis ?? selectedLeaf?.emojis ?? []
@@ -66,7 +63,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 				<span className="text-light">
 					{label} <EmojiListFromCategoryOrSubcategory emojis={emojis} />
 				</span>
-				<button type="button" className="btn btn-sm btn-outline-info" onClick={() => setIsChanging(true)}>Change</button>
+				<button type="button" className="btn btn-sm btn-outline-info" onClick={() => onSelect(null)}>Change</button>
 			</div>
 		)
 	}
