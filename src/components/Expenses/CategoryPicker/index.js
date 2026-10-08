@@ -107,7 +107,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 				!isFiltering && hasFrequentLeaves && (
 					<div className="mb-3">
 						<p className="text-light small mb-1">Most used</p>
-						<div className="d-flex flex-wrap gap-2">
+						<div className="most-used-chips d-flex flex-wrap gap-2">
 							{
 								frequentLeaves.map(leaf => (
 									<button
