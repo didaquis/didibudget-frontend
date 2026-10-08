@@ -125,7 +125,7 @@ Near-black page, one cool accent for interaction, and one warm brand colour used
 - **Info Tint** (`info-tint`): the background of `EmptyState` (`alert-info`) and `table-info` rows.
 
 ### Charts
-Charts still use Recharts' default colours (`#8884d8` for monthly-balance lines, `#3182BD` for spending bars, `#666` for axis ticks). These are leftovers, not tokens; replace them with `info` when the charts are next touched.
+Axis tick labels use `AXIS_TICK_FILL` (`src/utils/charts.js`, the `text-white-50` value). The series still use Recharts' default colours (`#8884d8` for monthly-balance lines, `#3182BD` for spending bars). These are leftovers, not tokens; replace them with `info` when the charts are next touched.
 
 ### Named Rules
 **The One Ink Rule.** Cyan is the only interaction colour. A new clickable thing is cyan (outline at rest, filled when selected); it is never coral, green or a new hue.

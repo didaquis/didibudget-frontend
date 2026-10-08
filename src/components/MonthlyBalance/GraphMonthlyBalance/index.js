@@ -6,6 +6,8 @@ import { EmptyState } from '../../EmptyState'
 import { SectionTitle } from '../../SectionTitle'
 import { InformativeBadge } from '../../InformativeBadge'
 
+import { AXIS_TICK_FILL } from '../../../utils/charts'
+
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
 
@@ -15,7 +17,7 @@ class CustomizedAxisTick extends PureComponent {
 
 		return (
 			<g transform={`translate(${x},${y})`}>
-				<text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-45)">{payload.value}</text>
+				<text x={0} y={0} dy={16} textAnchor="end" fill={AXIS_TICK_FILL} transform="rotate(-45)">{payload.value}</text>
 			</g>
 		)
 	}
@@ -51,7 +53,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 							>
 								<CartesianGrid strokeDasharray="3 3" />
 								<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
-								<YAxis />
+								<YAxis tick={{ fill: AXIS_TICK_FILL }} />
 								<Tooltip />
 								<Line dataKey="balance" fill="#8884d8" />
 							</LineChart>
@@ -77,7 +79,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 							>
 								<CartesianGrid strokeDasharray="3 3" />
 								<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
-								<YAxis />
+								<YAxis tick={{ fill: AXIS_TICK_FILL }} />
 								<Tooltip />
 								<Line dataKey="balance" fill="#8884d8" />
 							</LineChart>
@@ -92,7 +94,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 					>
 						<CartesianGrid strokeDasharray="3 3" />
 						<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
-						<YAxis />
+						<YAxis tick={{ fill: AXIS_TICK_FILL }} />
 						<Tooltip />
 						<Line dataKey="balance" fill="#8884d8" />
 					</LineChart>
