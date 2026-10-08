@@ -27,7 +27,7 @@ const categoriesMock = {
 }
 
 const frequentMock = {
-	request: { query: GET_MOST_USED_EXPENSE_CATEGORIES, variables: { days: 90, limit: 6 } },
+	request: { query: GET_MOST_USED_EXPENSE_CATEGORIES, variables: { days: 90, limit: 5 } },
 	result: {
 		data: {
 			getMostUsedExpenseCategories: [
@@ -45,7 +45,7 @@ const frequentMock = {
 }
 
 const failingFrequentMock = {
-	request: { query: GET_MOST_USED_EXPENSE_CATEGORIES, variables: { days: 90, limit: 6 } },
+	request: { query: GET_MOST_USED_EXPENSE_CATEGORIES, variables: { days: 90, limit: 5 } },
 	error: new Error('No frequent categories available')
 }
 

@@ -7,7 +7,7 @@ import { AddExpenseForm } from './AddExpenseForm'
 import { LIST_EXPENSE_CATEGORIES, GET_MOST_USED_EXPENSE_CATEGORIES } from '../../gql/queries/expenseCategories'
 
 const DAYS_OF_HISTORY = 90
-const NUMBER_OF_FREQUENT_CATEGORIES = 6
+const NUMBER_OF_FREQUENT_CATEGORIES = 5
 
 export const GetAddExpenseData = () => {
 	const categories = useQuery(LIST_EXPENSE_CATEGORIES, { fetchPolicy: 'no-cache' })
