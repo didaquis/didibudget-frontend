@@ -15,3 +15,6 @@ export const shortMonthLabel = (label) => label.replace(/^(\p{L}{3})\p{L}*/u, '$
 
 // Neutral, so cyan stays for what you can tap
 export const SERIES_COLOR = 'rgba(255, 255, 255, 0.7)'
+
+// Recharts colours tooltip items with the series colour, which is near-white on the tooltip's white box
+export const TOOLTIP_ITEM_STYLE = { color: '#212529' }

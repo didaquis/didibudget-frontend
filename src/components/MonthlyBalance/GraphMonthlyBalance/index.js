@@ -6,7 +6,7 @@ import { EmptyState } from '../../EmptyState'
 import { SectionTitle } from '../../SectionTitle'
 import { InformativeBadge } from '../../InformativeBadge'
 
-import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, shortMonthLabel } from '../../../utils/charts'
+import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, TOOLTIP_ITEM_STYLE, shortMonthLabel } from '../../../utils/charts'
 
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
@@ -45,7 +45,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-								<Tooltip />
+								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} />
 								<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 							</LineChart>
 						</ResponsiveContainer>
@@ -74,7 +74,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-								<Tooltip />
+								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} />
 								<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 							</LineChart>
 						</ResponsiveContainer>
@@ -92,7 +92,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 						<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-						<Tooltip />
+						<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} />
 						<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 					</LineChart>
 				</ResponsiveContainer>

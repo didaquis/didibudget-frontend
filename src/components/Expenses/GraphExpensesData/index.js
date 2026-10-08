@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts'
 
 import { parseUnixTimestamp } from '../../../utils/utils'
-import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, shortMonthLabel } from '../../../utils/charts'
+import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, TOOLTIP_ITEM_STYLE, shortMonthLabel } from '../../../utils/charts'
 import { getSumPerMonth, getLastNValuesFromArrayIfTheyExist } from '../utils'
 
 import { EmptyState } from '../../EmptyState'
@@ -42,7 +42,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 						<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-						<Tooltip separator=': ' formatter={value => formatAmount(value, currencyISO)} />
+						<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
 						<Bar dataKey="sum" fill={SERIES_COLOR} />
 					</BarChart>
 				</ResponsiveContainer>
@@ -62,7 +62,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
 								<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-								<Tooltip separator=': ' formatter={value => formatAmount(value, currencyISO)} />
+								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
 								<Bar dataKey="sum" fill={SERIES_COLOR} />
 							</BarChart>
 						</ResponsiveContainer>
