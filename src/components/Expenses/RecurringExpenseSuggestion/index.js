@@ -41,18 +41,16 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	const emojis = [...new Set([...suggestion.suggestedExpense.categoryEmojis, ...suggestion.suggestedExpense.subcategoryEmojis])]
 
 	return (
-		<div className="col-sm-6 col-md-4">
-			<div className="card bg-dark border-info text-light mb-3">
-				<div className="card-body">
-					<h5 className="fw-light card-title">{suggestion.suggestedExpense.categoryName} {(suggestion.suggestedExpense.subcategoryName) ? ` - ${suggestion.suggestedExpense.subcategoryName}` : ''} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></h5>
-					<p className="card-text"><span className="text-nowrap">{formatAmount(suggestion.suggestedExpense.quantity)}</span></p>
-					<SubmitButton disabled={isDisabled} onClick={onSubmit}>Save spending</SubmitButton>
-					{
-						error && <p className="alert alert-danger py-3 text-center m-3" role="alert">{error}</p>
-					}
-				</div>
+		<li className="list-group-item bg-dark text-light border-info px-0 py-3">
+			<div className="d-flex justify-content-between align-items-baseline gap-3 mb-3">
+				<p className="mb-0">{suggestion.suggestedExpense.categoryName} {(suggestion.suggestedExpense.subcategoryName) ? ` - ${suggestion.suggestedExpense.subcategoryName}` : ''} <EmojiListFromCategoryOrSubcategory emojis={emojis} /></p>
+				<p className="mb-0 fs-5 text-nowrap">{formatAmount(suggestion.suggestedExpense.quantity)}</p>
 			</div>
-		</div>
+			<SubmitButton disabled={isDisabled} onClick={onSubmit}>Save spending</SubmitButton>
+			{
+				error && <p className="alert alert-danger py-3 text-center mt-3 mb-0" role="alert">{error}</p>
+			}
+		</li>
 	)
 }
 
