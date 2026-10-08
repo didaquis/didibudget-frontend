@@ -66,11 +66,11 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 				<ul className="d-md-none list-group list-group-flush">
 					{
 						rows.map(row => (
-							<li className="list-group-item bg-dark text-light border-secondary px-0 py-3" key={row.uuid}>
+							<li className="list-group-item bg-dark text-light border-secondary px-0 py-2" key={row.uuid}>
 								<div className="d-flex align-items-center gap-3">
 									<div className="flex-grow-1">
 										<p className="mb-0">{row.monthLabel}</p>
-										<p className="mb-0 small text-nowrap">{row.balance}</p>
+										<p className="mb-0 small text-white-50 text-nowrap">{row.balance}</p>
 									</div>
 									<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
 								</div>
