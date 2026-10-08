@@ -9,8 +9,8 @@ import { LIST_ALL_EXPENSES, GET_EXPENSES_AVERAGES } from '../../gql/queries/expe
 
 export const GetDataExpenses = () => {
 	const listAllExpensesQuery = useQuery(LIST_ALL_EXPENSES, { fetchPolicy: 'no-cache' })
-	const expensesAverageQuery = useQuery(GET_EXPENSES_AVERAGES, { variables: { excludedCategoryTypes: [] } }, { fetchPolicy: 'no-cache' })
-	const expensesAverageExcludingSavingsQuery = useQuery(GET_EXPENSES_AVERAGES, { variables: { excludedCategoryTypes: [CategoryType.INVESTMENT, CategoryType.PENSION_PLAN] } }, { fetchPolicy: 'no-cache' })
+	const expensesAverageQuery = useQuery(GET_EXPENSES_AVERAGES, { variables: { excludedCategoryTypes: [] }, fetchPolicy: 'no-cache' })
+	const expensesAverageExcludingSavingsQuery = useQuery(GET_EXPENSES_AVERAGES, { variables: { excludedCategoryTypes: [CategoryType.INVESTMENT, CategoryType.PENSION_PLAN] }, fetchPolicy: 'no-cache' })
 
 
 	if (listAllExpensesQuery.loading || expensesAverageQuery.loading || expensesAverageExcludingSavingsQuery.loading) { return <Spinner /> }
