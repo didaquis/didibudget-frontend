@@ -14,7 +14,7 @@ export const NavBar = () => {
 	const { isAuth, userData } = useContext(AuthContext)
 
 	return (
-		<nav className="nav navbar-dark justify-content-between flex-nowrap border-bottom border-info mt-2 mb-5">
+		<nav className="nav navbar-dark justify-content-between flex-nowrap border-bottom border-info mt-2 mb-4">
 			<div className="nav-item">
 				<Link className="nav-link text-light" to='/' aria-label='Home'>
 					<BsHouse size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />
