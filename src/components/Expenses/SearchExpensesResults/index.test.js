@@ -50,11 +50,11 @@ const searchResult = {
 }
 
 describe('SearchExpensesResults', () => {
-	it('should display the total amount and the number of expenses', () => {
+	it('should display the total amount and the number of spends', () => {
 		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
 
 		expect(screen.getByText('1284.6 €')).toBeVisible()
-		expect(screen.getByText('37 expenses')).toBeVisible()
+		expect(screen.getByText('37 spends')).toBeVisible()
 	})
 
 	it('should display the breakdown rows in the order returned by the backend, with resolved names', () => {
@@ -64,11 +64,11 @@ describe('SearchExpensesResults', () => {
 		const items = within(summary).getAllByRole('listitem')
 
 		expect(items).toHaveLength(2)
-		expect(items[0]).toHaveTextContent(/^Private vehicles - Fuel18 expenses612\.4 €$/)
-		expect(items[1]).toHaveTextContent(/^Groceries, personal care products19 expenses672\.2 €$/)
+		expect(items[0]).toHaveTextContent(/^Private vehicles - Fuel18 spends612\.4 €$/)
+		expect(items[1]).toHaveTextContent(/^Groceries, personal care products19 spends672\.2 €$/)
 	})
 
-	it('should label a single expense in the singular', () => {
+	it('should label a single spend in the singular', () => {
 		const singleExpenseResult = {
 			...searchResult,
 			pagination: { currentPage: 1, totalPages: 1, totalCount: 1 },
@@ -79,8 +79,8 @@ describe('SearchExpensesResults', () => {
 
 		render(<SearchExpensesResults searchResult={singleExpenseResult} categories={categories} onChangePage={vi.fn()} />)
 
-		expect(screen.getAllByText('1 expense')).toHaveLength(2)
-		expect(screen.queryByText('1 expenses')).not.toBeInTheDocument()
+		expect(screen.getAllByText('1 spend')).toHaveLength(2)
+		expect(screen.queryByText('1 spends')).not.toBeInTheDocument()
 	})
 
 	it('should display one table row per expense, with the date and the resolved names', () => {
@@ -118,7 +118,7 @@ describe('SearchExpensesResults', () => {
 		expect(screen.queryByText('Delete')).not.toBeInTheDocument()
 	})
 
-	it('should tell the user nothing matched when the search returns no expenses', () => {
+	it('should tell the user nothing matched when the search returns nothing', () => {
 		const emptyResult = {
 			...searchResult,
 			expenses: [],
@@ -129,6 +129,6 @@ describe('SearchExpensesResults', () => {
 
 		render(<SearchExpensesResults searchResult={emptyResult} categories={categories} onChangePage={vi.fn()} />)
 
-		expect(screen.getByRole('status')).toHaveTextContent('No expenses match this search')
+		expect(screen.getByRole('status')).toHaveTextContent('No spending matches this search')
 	})
 })

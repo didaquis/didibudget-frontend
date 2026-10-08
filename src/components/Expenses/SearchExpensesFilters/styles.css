@@ -2,3 +2,51 @@
 .search-expenses-filters .rw-input[readonly] {
 	cursor: pointer;
 }
+
+/* Bootstrap's invalid red is under 4.5:1 on the dark card */
+.search-expenses-filters .invalid-feedback {
+	color: #ea868f;
+}
+
+/* The clear button is a third segment of the date picker, matching its calendar button */
+.search-expenses-filters .date-field-clearable .rw-widget-picker {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.search-expenses-filters .date-field-clear {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	width: 44px;
+	height: 38px;
+	padding: 0;
+	color: #212529;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-left: 0;
+	border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.search-expenses-filters .date-field-clear:hover {
+	background-color: #e9ecef;
+}
+
+.search-expenses-filters .date-field-clear:active {
+	background-color: #dee2e6;
+}
+
+/* A 44px tap target that doesn't make the label row taller */
+.search-expenses-filters .filters-clear-all {
+	min-height: 44px;
+	margin: -12px 0 -8px;
+	padding: 0 0 0 1rem;
+	color: #0dcaf0;
+}
+
+.search-expenses-filters .filters-clear-all:disabled {
+	color: rgba(255, 255, 255, 0.5);
+	text-decoration: none;
+	opacity: 1;
+}

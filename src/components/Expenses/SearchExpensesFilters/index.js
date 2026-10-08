@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import DatePicker from 'react-widgets/DatePicker'
 import { Collapse } from 'reactstrap'
+import { BsChevronDown, BsChevronUp, BsX } from 'react-icons/bs'
 import 'react-widgets/styles.css'
 import './styles.css'
-import { buildFiltersSummary, isValidAmountInput } from './utils'
+import { areSameFilters, getAmountError, getFiltersSummaryParts } from './utils'
 import { SubmitButton } from '../../SubmitButton'
 
 const INITIAL_FILTERS = {
@@ -22,10 +23,12 @@ const INITIAL_FILTERS = {
 const SELECT_CLASS_NAME = 'form-select'
 const INPUT_CLASS_NAME = 'form-control'
 const FILTERS_PANEL_ID = 'searchExpensesFiltersPanel'
+const AMOUNT_ERROR_ID = 'searchExpensesAmountError'
 const DATE_FORMAT = 'YYYY-MM-DD'
 
 export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	const [filters, setFilters] = useState(INITIAL_FILTERS)
+	const [appliedFilters, setAppliedFilters] = useState(null)
 	const [isOpen, setIsOpen] = useState(true)
 	const [openPicker, setOpenPicker] = useState(null)
 
@@ -50,13 +53,28 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 
 	const getDatePickerProps = (field, label) => ({
 		id: field,
+		className: 'flex-grow-1',
 		valueFormat: DATE_FORMAT,
 		value: filters[field],
 		onChange: onChangeDate(field),
 		open: openPicker === field,
 		onToggle: onTogglePicker(field),
-		inputProps: { 'aria-label': label, readOnly: true, onClick: () => setOpenPicker(field) }
+		messages: { dateButton: `Choose ${label} date` },
+		inputProps: { readOnly: true, onClick: () => setOpenPicker(field) }
 	})
+
+	const renderDateField = (field, label, limits) => (
+		<div className={`d-flex${filters[field] ? ' date-field-clearable' : ''}`}>
+			<DatePicker {...getDatePickerProps(field, label)} {...limits} />
+			{
+				filters[field] && (
+					<button type="button" className="btn date-field-clear" aria-label={`Clear ${label} date`} onClick={() => onChangeDate(field)(null)}>
+						<BsX size={'20px'} aria-hidden="true" />
+					</button>
+				)
+			}
+		</div>
+	)
 
 	const getSubcategoryPlaceholder = () => {
 		if (filters.category === '') {
@@ -69,29 +87,68 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	const onSubmit = (event) => {
 		event.preventDefault()
 		setIsOpen(false)
+		setAppliedFilters(filters)
 		onSearch(filters)
 	}
 
-	const isMinQuantityValid = isValidAmountInput(filters.minQuantity)
-	const isMaxQuantityValid = isValidAmountInput(filters.maxQuantity)
-	const isAmountInvalid = !isMinQuantityValid || !isMaxQuantityValid
+	const getAmountInputProps = (field, isInvalid) => ({
+		id: field,
+		type: 'text',
+		inputMode: 'decimal',
+		className: `${INPUT_CLASS_NAME}${isInvalid ? ' is-invalid' : ''}`,
+		value: filters[field],
+		onChange: onChangeField(field),
+		'aria-invalid': isInvalid,
+		'aria-describedby': isInvalid ? AMOUNT_ERROR_ID : undefined
+	})
+
+	const renderSummary = (summaryParts) => {
+		if (!summaryParts.length) {
+			return 'All spending'
+		}
+
+		// A part moves to the next line whole, and only wraps inside when longer than the line
+		const lastIndex = summaryParts.length - 1
+
+		return summaryParts.map((part, index) => (
+			<Fragment key={part}>
+				{index > 0 && ' '}
+				<span className="d-inline-block mw-100">{part}{index < lastIndex && '\u00a0·'}</span>
+			</Fragment>
+		))
+	}
+
+	const appliedParts = appliedFilters ? getFiltersSummaryParts(appliedFilters, categories) : []
+
+	const amountError = getAmountError(filters.minQuantity, filters.maxQuantity)
+	const hasPendingChanges = appliedFilters !== null && !areSameFilters(filters, appliedFilters)
+	const canClear = !areSameFilters(filters, INITIAL_FILTERS)
+	const ToggleIcon = isOpen ? BsChevronUp : BsChevronDown
 
 	return (
 		<section className="mb-4">
 			<button
 				type="button"
-				className="btn btn-outline-info w-100 mb-2"
+				className="btn btn-outline-info w-100 mb-2 d-flex align-items-center justify-content-between gap-2 text-start"
 				onClick={() => setIsOpen(!isOpen)}
 				aria-expanded={isOpen}
 				aria-controls={FILTERS_PANEL_ID}
 			>
-				{buildFiltersSummary(filters, categories)}
+				<span>
+					<span className="d-block">Filters{appliedParts.length > 0 && ` · ${appliedParts.length}`}</span>
+					{' '}
+					{appliedFilters && <span className="d-block small">{renderSummary(appliedParts)}</span>}
+				</span>
+				<ToggleIcon size={'16px'} className="flex-shrink-0" aria-hidden="true" />
 			</button>
 
 			<Collapse id={FILTERS_PANEL_ID} isOpen={isOpen}>
 				<form onSubmit={onSubmit} className="card bg-dark border-secondary p-3 search-expenses-filters">
 					<div className="mb-3">
-						<label className="form-label text-light" htmlFor="category">Category</label>
+						<div className="d-flex justify-content-between align-items-center mb-2">
+							<label className="text-light" htmlFor="category">Category</label>
+							<button type="button" className="btn btn-link filters-clear-all" disabled={!canClear} onClick={() => setFilters(INITIAL_FILTERS)}>Clear all</button>
+						</div>
 						<select id="category" className={SELECT_CLASS_NAME} value={filters.category} onChange={onChangeCategory}>
 							<option value="">All categories</option>
 							{
@@ -116,28 +173,28 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 
 					<div className="row">
 						<div className="col-12 col-sm-6 mb-3">
-							<label className="form-label text-light" htmlFor="startDate">From</label>
-							<DatePicker {...getDatePickerProps('startDate', 'From')} />
+							<label className="form-label text-light" htmlFor="startDate_input">From</label>
+							{renderDateField('startDate', 'From', { max: filters.endDate || undefined })}
 						</div>
 						<div className="col-12 col-sm-6 mb-3">
-							<label className="form-label text-light" htmlFor="endDate">To</label>
-							<DatePicker {...getDatePickerProps('endDate', 'To')} />
+							<label className="form-label text-light" htmlFor="endDate_input">To</label>
+							{renderDateField('endDate', 'To', { min: filters.startDate || undefined })}
 						</div>
 					</div>
 
 					<div className="row">
 						<div className="col-6 mb-3">
 							<label className="form-label text-light" htmlFor="minQuantity">Min amount</label>
-							<input id="minQuantity" type="text" inputMode="decimal" className={INPUT_CLASS_NAME} value={filters.minQuantity} onChange={onChangeField('minQuantity')} />
+							<input {...getAmountInputProps('minQuantity', Boolean(amountError?.isMinInvalid))} />
 						</div>
 						<div className="col-6 mb-3">
 							<label className="form-label text-light" htmlFor="maxQuantity">Max amount</label>
-							<input id="maxQuantity" type="text" inputMode="decimal" className={INPUT_CLASS_NAME} value={filters.maxQuantity} onChange={onChangeField('maxQuantity')} />
+							<input {...getAmountInputProps('maxQuantity', Boolean(amountError?.isMaxInvalid))} />
 						</div>
 						{
-							isAmountInvalid && (
+							amountError && (
 								<div className="col-12">
-									<small className="d-block text-white-50 mb-3">Amount must be a number using a decimal point or comma</small>
+									<p id={AMOUNT_ERROR_ID} className="invalid-feedback d-block mt-0 mb-3">{amountError.message}</p>
 								</div>
 							)
 						}
@@ -160,7 +217,12 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 						</div>
 					</div>
 
-					<SubmitButton disabled={isAmountInvalid}>Search</SubmitButton>
+					{
+						hasPendingChanges && (
+							<p className="form-text text-white-50 mt-0 mb-2" role="status">The results below are still from the previous search</p>
+						)
+					}
+					<SubmitButton disabled={Boolean(amountError)}>Search</SubmitButton>
 				</form>
 			</Collapse>
 		</section>

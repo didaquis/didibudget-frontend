@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { SearchExpensesFilters } from './'
@@ -129,38 +129,78 @@ describe('SearchExpensesFilters', () => {
 
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		const toggle = screen.getByRole('button', { name: 'All categories' })
+		const toggle = screen.getByRole('button', { name: 'Filters' })
 		expect(toggle).toHaveAttribute('aria-expanded', 'true')
 
 		await user.click(screen.getByRole('button', { name: 'Search' }))
-		expect(toggle).toHaveAttribute('aria-expanded', 'false')
+		expect(screen.getByRole('button', { name: 'Filters All spending' })).toHaveAttribute('aria-expanded', 'false')
 
-		await user.click(toggle)
-		expect(toggle).toHaveAttribute('aria-expanded', 'true')
+		await user.click(screen.getByRole('button', { name: 'Filters All spending' }))
+		expect(screen.getByRole('button', { name: 'Filters All spending' })).toHaveAttribute('aria-expanded', 'true')
 	})
 
 	it('should point the toggle button at the collapsed region via aria-controls', () => {
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
-		const toggle = screen.getByRole('button', { name: 'All categories' })
+		const toggle = screen.getByRole('button', { name: 'Filters' })
 		const panelId = toggle.getAttribute('aria-controls')
 
 		expect(panelId).toBeTruthy()
 		expect(document.getElementById(panelId)).toBeVisible()
 	})
 
-	it('should summarize the active filters as the toggle button label', async () => {
+	it('should summarize the searched filters as the toggle button label', async () => {
 		const user = userEvent.setup()
 
 		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
 
 		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
+		await user.type(screen.getByLabelText('Min amount'), '10')
 
-		expect(screen.getByRole('button', { name: 'Private vehicles' })).toBeVisible()
+		expect(screen.getByRole('button', { name: 'Filters' })).toBeVisible()
 
 		await user.click(screen.getByRole('button', { name: 'Search' }))
 
-		expect(screen.getByRole('button', { name: 'Private vehicles' })).toHaveAttribute('aria-expanded', 'false')
+		expect(screen.getByRole('button', { name: 'Filters · 2 Private vehicles\u00a0· from 10\u00a0€' })).toHaveAttribute('aria-expanded', 'false')
+	})
+
+	it('should keep summarizing the last search while its filters are being changed', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
+		await user.click(screen.getByRole('button', { name: 'Search' }))
+		await user.click(screen.getByRole('button', { name: 'Filters · 1 Private vehicles' }))
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-2')
+
+		expect(screen.getByRole('button', { name: 'Filters · 1 Private vehicles' })).toBeVisible()
+		expect(screen.queryByRole('button', { name: 'Filters · 1 Home' })).not.toBeInTheDocument()
+	})
+
+	it('should say the results are from the previous search while the filters have unsearched changes', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.click(screen.getByRole('button', { name: 'Search' }))
+		await user.click(screen.getByRole('button', { name: 'Filters All spending' }))
+
+		expect(screen.queryByText('The results below are still from the previous search')).not.toBeInTheDocument()
+
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-2')
+
+		expect(screen.getByRole('status')).toHaveTextContent('The results below are still from the previous search')
+	})
+
+	it('should not mention a previous search before the first one', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-2')
+
+		expect(screen.queryByText('The results below are still from the previous search')).not.toBeInTheDocument()
 	})
 
 	it('should give the date fields an accessible name reaching the real input', () => {
@@ -212,6 +252,114 @@ describe('SearchExpensesFilters', () => {
 
 		expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
 		expect(screen.getByText('Amount must be a number using a decimal point or comma')).toBeVisible()
+	})
+
+	it('should mark only the amount that is not a number as invalid, described by the message', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.type(screen.getByLabelText('Min amount'), 'abc')
+
+		expect(screen.getByLabelText('Min amount')).toBeInvalid()
+		expect(screen.getByLabelText('Min amount')).toHaveAccessibleDescription('Amount must be a number using a decimal point or comma')
+		expect(screen.getByLabelText('Max amount')).toBeValid()
+	})
+
+	it('should disable the Search button and mark both amounts when the minimum is more than the maximum', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.type(screen.getByLabelText('Min amount'), '200')
+		await user.type(screen.getByLabelText('Max amount'), '100')
+
+		expect(screen.getByRole('button', { name: 'Search' })).toBeDisabled()
+		expect(screen.getByLabelText('Min amount')).toHaveAccessibleDescription('Min amount can\'t be more than max amount')
+		expect(screen.getByLabelText('Max amount')).toHaveAccessibleDescription('Min amount can\'t be more than max amount')
+	})
+
+	it('should allow searching once the maximum is raised to the minimum', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.type(screen.getByLabelText('Min amount'), '200')
+		await user.type(screen.getByLabelText('Max amount'), '100')
+		await user.clear(screen.getByLabelText('Max amount'))
+		await user.type(screen.getByLabelText('Max amount'), '200')
+
+		expect(screen.getByRole('button', { name: 'Search' })).not.toBeDisabled()
+		expect(screen.queryByText('Min amount can\'t be more than max amount')).not.toBeInTheDocument()
+	})
+
+	it('should give each calendar button its own name', () => {
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		expect(screen.getByRole('button', { name: 'Choose From date' })).toBeVisible()
+		expect(screen.getByRole('button', { name: 'Choose To date' })).toBeVisible()
+	})
+
+	it('should not let the To date be earlier than the From date', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.click(screen.getByLabelText('From'))
+		await user.click(screen.getAllByRole('gridcell')[15])
+		await user.click(screen.getByLabelText('To'))
+
+		// The From calendar stays mounted, so the days are looked up in the calendar the To field owns
+		const toCalendar = document.getElementById(screen.getByLabelText('To').getAttribute('aria-owns'))
+		await user.click(within(toCalendar).getAllByRole('gridcell')[0])
+
+		expect(screen.getByLabelText('To')).toHaveValue('')
+	})
+
+	it('should offer to clear a date only once it is set, and clear it', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		expect(screen.queryByRole('button', { name: 'Clear From date' })).not.toBeInTheDocument()
+
+		await user.click(screen.getByLabelText('From'))
+		await user.click(screen.getAllByRole('gridcell')[15])
+
+		expect(screen.getByLabelText('From')).not.toHaveValue('')
+
+		await user.click(screen.getByRole('button', { name: 'Clear From date' }))
+
+		expect(screen.getByLabelText('From')).toHaveValue('')
+		expect(screen.queryByRole('button', { name: 'Clear From date' })).not.toBeInTheDocument()
+	})
+
+	it('should keep clearing the filters disabled until one has changed', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		expect(screen.getByRole('button', { name: 'Clear all' })).toBeDisabled()
+
+		await user.selectOptions(screen.getByLabelText('Sort by'), 'quantity')
+
+		expect(screen.getByRole('button', { name: 'Clear all' })).toBeEnabled()
+	})
+
+	it('should put every filter back to its initial value when cleared', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.selectOptions(screen.getByLabelText('Category'), 'category-id-1')
+		await user.type(screen.getByLabelText('Max amount'), '50')
+		await user.selectOptions(screen.getByLabelText('Order'), 'asc')
+		await user.click(screen.getByRole('button', { name: 'Clear all' }))
+
+		expect(screen.getByLabelText('Category')).toHaveValue('')
+		expect(screen.getByLabelText('Max amount')).toHaveValue('')
+		expect(screen.getByLabelText('Order')).toHaveValue('desc')
+		expect(screen.getByRole('button', { name: 'Clear all' })).toBeDisabled()
 	})
 
 	it('should keep the Search button enabled when the amount is a valid number', async () => {
