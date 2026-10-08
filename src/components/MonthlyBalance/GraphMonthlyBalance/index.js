@@ -1,4 +1,4 @@
-import { PureComponent, Fragment } from 'react'
+import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
@@ -10,18 +10,6 @@ import { AXIS_TICK, CHART_LINE_STROKE } from '../../../utils/charts'
 
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
-
-class CustomizedAxisTick extends PureComponent {
-	render() {
-		const { x, y, payload } = this.props
-
-		return (
-			<g transform={`translate(${x},${y})`}>
-				<text x={0} y={0} dy={16} textAnchor="end" fill={AXIS_TICK.fill} fontSize={AXIS_TICK.fontSize} transform="rotate(-45)">{payload.value}</text>
-			</g>
-		)
-	}
-}
 
 export const GraphMonthlyBalance = ({ data }) => {
 	const allDataParsed = parseDataForGraph(data)
@@ -49,10 +37,10 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastYearDataParsed}
-								margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
+								margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
-								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={<CustomizedAxisTick />} />
+								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<Tooltip />
 								<Line dataKey="balance" fill="#8884d8" />
@@ -75,10 +63,10 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastTwoYearsDataParsed}
-								margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
+								margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
-								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={<CustomizedAxisTick />} />
+								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 								<Tooltip />
 								<Line dataKey="balance" fill="#8884d8" />
@@ -90,10 +78,10 @@ export const GraphMonthlyBalance = ({ data }) => {
 				<ResponsiveContainer width="100%" height={460}>
 					<LineChart
 						data={allDataParsed}
-						margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
+						margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 					>
 						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
-						<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={<CustomizedAxisTick />} />
+						<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
 						<Tooltip />
 						<Line dataKey="balance" fill="#8884d8" />
