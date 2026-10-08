@@ -92,6 +92,51 @@ const isValidAmountInput = (value) => {
 	return Number.isFinite(parsed) && parsed >= 0
 }
 
+const AMOUNT_FORMAT_ERROR = 'Amount must be a number using a decimal point or comma'
+const AMOUNT_RANGE_ERROR = 'Min amount can\'t be more than max amount'
+
+/**
+ * Get the problem with the amounts written by the user, if any.
+ * @param {string} minQuantity
+ * @param {string} maxQuantity
+ * @returns {{ message: string, isMinInvalid: boolean, isMaxInvalid: boolean }|null} null when both amounts are valid
+ */
+const getAmountError = (minQuantity, maxQuantity) => {
+	const isMinInvalid = !isValidAmountInput(minQuantity)
+	const isMaxInvalid = !isValidAmountInput(maxQuantity)
+
+	if (isMinInvalid || isMaxInvalid) {
+		return { message: AMOUNT_FORMAT_ERROR, isMinInvalid, isMaxInvalid }
+	}
+
+	const min = parseAmount(minQuantity)
+	const max = parseAmount(maxQuantity)
+
+	if (min !== undefined && max !== undefined && min > max) {
+		return { message: AMOUNT_RANGE_ERROR, isMinInvalid: true, isMaxInvalid: true }
+	}
+
+	return null
+}
+
+const getTime = (date) => (isFilled(date) ? date.getTime() : null)
+
+/**
+ * Check if two sets of filters would run the same search.
+ * @param {Object} filters
+ * @param {Object} otherFilters
+ * @returns {boolean}
+ */
+const areSameFilters = (filters, otherFilters) => {
+	return Object.keys(filters).every(field => {
+		if (field === 'startDate' || field === 'endDate') {
+			return getTime(filters[field]) === getTime(otherFilters[field])
+		}
+
+		return filters[field] === otherFilters[field]
+	})
+}
+
 /**
  * Format a date as YYYY-MM-DD using local time, matching how the results table
  * renders dates.
@@ -107,13 +152,13 @@ const formatDateAsLocalISO = (date) => {
 }
 
 /**
- * Build a human readable summary of the active filters, meant to be shown as the
- * label of the collapsed filters header.
+ * Build the parts of a human readable summary of the filters, meant to be shown as the
+ * label of the collapsed filters header: category, dates and amounts, each one only when it applies.
  * @param {Object} filters
  * @param {Array} categories
- * @returns {string}
+ * @returns {string[]}
  */
-const buildFiltersSummary = (filters, categories) => {
+const getFiltersSummaryParts = (filters, categories) => {
 	const parts = []
 
 	if (isFilled(filters.subcategory)) {
@@ -142,12 +187,14 @@ const buildFiltersSummary = (filters, categories) => {
 		parts.push(`up to ${filters.maxQuantity}`)
 	}
 
-	return parts.join(' · ')
+	return parts
 }
 
 export {
 	parseAmount,
 	buildSearchVariables,
 	isValidAmountInput,
-	buildFiltersSummary
+	getAmountError,
+	areSameFilters,
+	getFiltersSummaryParts
 }

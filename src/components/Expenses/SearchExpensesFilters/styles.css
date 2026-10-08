@@ -2,3 +2,8 @@
 .search-expenses-filters .rw-input[readonly] {
 	cursor: pointer;
 }
+
+/* Bootstrap's invalid red is under 4.5:1 on the dark card */
+.search-expenses-filters .invalid-feedback {
+	color: #ea868f;
+}

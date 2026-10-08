@@ -1,4 +1,4 @@
-import { parseAmount, buildSearchVariables, isValidAmountInput, buildFiltersSummary } from './utils'
+import { parseAmount, buildSearchVariables, isValidAmountInput, getAmountError, areSameFilters, getFiltersSummaryParts } from './utils'
 
 const categories = [
 	{
@@ -153,68 +153,119 @@ describe('isValidAmountInput', () => {
 	})
 })
 
-describe('buildFiltersSummary', () => {
+describe('getAmountError', () => {
+	it('should find no problem when both amounts are empty', () => {
+		expect(getAmountError('', '')).toBeNull()
+	})
+
+	it('should find no problem when the minimum equals the maximum', () => {
+		expect(getAmountError('20', '20,00')).toBeNull()
+	})
+
+	it('should flag only the amount that is not a number', () => {
+		expect(getAmountError('abc', '20')).toEqual({
+			message: 'Amount must be a number using a decimal point or comma',
+			isMinInvalid: true,
+			isMaxInvalid: false
+		})
+	})
+
+	it('should flag both amounts when the minimum is more than the maximum', () => {
+		expect(getAmountError('200', '100')).toEqual({
+			message: 'Min amount can\'t be more than max amount',
+			isMinInvalid: true,
+			isMaxInvalid: true
+		})
+	})
+
+	it('should compare amounts written with a decimal comma as numbers', () => {
+		expect(getAmountError('9,5', '10')).toBeNull()
+	})
+})
+
+describe('areSameFilters', () => {
+	it('should treat two equal sets of filters as the same search', () => {
+		expect(areSameFilters({ ...emptyFilters, minQuantity: '10' }, { ...emptyFilters, minQuantity: '10' })).toBe(true)
+	})
+
+	it('should compare dates by their value, not by identity', () => {
+		const filters = { ...emptyFilters, startDate: new Date(2026, 0, 1) }
+		const otherFilters = { ...emptyFilters, startDate: new Date(2026, 0, 1) }
+
+		expect(areSameFilters(filters, otherFilters)).toBe(true)
+	})
+
+	it('should tell apart filters that differ in a single field', () => {
+		expect(areSameFilters(emptyFilters, { ...emptyFilters, sortDirection: 'asc' })).toBe(false)
+	})
+
+	it('should tell apart a set date from an empty one', () => {
+		expect(areSameFilters(emptyFilters, { ...emptyFilters, endDate: new Date(2026, 5, 30) })).toBe(false)
+	})
+})
+
+describe('getFiltersSummaryParts', () => {
 	it('should say "All categories" when no category is selected', () => {
-		expect(buildFiltersSummary(emptyFilters, categories)).toBe('All categories')
+		expect(getFiltersSummaryParts(emptyFilters, categories)).toEqual(['All categories'])
 	})
 
 	it('should include the category name when a category is selected', () => {
 		const filters = { ...emptyFilters, category: 'category-id-1' }
 
-		expect(buildFiltersSummary(filters, categories)).toBe('Private vehicles')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles'])
 	})
 
 	it('should include the category and subcategory names when a subcategory is selected', () => {
 		const filters = { ...emptyFilters, category: 'category-id-1', subcategory: 'subcategory-id-1' }
 
-		expect(buildFiltersSummary(filters, categories)).toBe('Private vehicles - Fuel')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles - Fuel'])
 	})
 
 	it('should omit the date part when neither date is set', () => {
-		expect(buildFiltersSummary(emptyFilters, categories)).not.toContain('to')
+		expect(getFiltersSummaryParts(emptyFilters, categories)).toEqual(['All categories'])
 	})
 
 	it('should describe a date range when both dates are set', () => {
 		const filters = { ...emptyFilters, startDate: new Date(2026, 0, 1), endDate: new Date(2026, 5, 30) }
 
-		expect(buildFiltersSummary(filters, categories)).toBe('All categories · 2026-01-01 to 2026-06-30')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', '2026-01-01 to 2026-06-30'])
 	})
 
 	it('should describe an open-ended start date', () => {
 		const filters = { ...emptyFilters, startDate: new Date(2026, 0, 1) }
 
-		expect(buildFiltersSummary(filters, categories)).toBe('All categories · from 2026-01-01')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'from 2026-01-01'])
 	})
 
 	it('should describe an open-ended end date', () => {
 		const filters = { ...emptyFilters, endDate: new Date(2026, 5, 30) }
 
-		expect(buildFiltersSummary(filters, categories)).toBe('All categories · until 2026-06-30')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'until 2026-06-30'])
 	})
 
 	it('should omit the amount part when neither amount is set', () => {
-		expect(buildFiltersSummary(emptyFilters, categories)).toBe('All categories')
+		expect(getFiltersSummaryParts(emptyFilters, categories)).toEqual(['All categories'])
 	})
 
 	it('should describe an amount range when both amounts are set, using the raw strings typed', () => {
 		const filters = { ...emptyFilters, minQuantity: '10', maxQuantity: '20,50' }
 
-		expect(buildFiltersSummary(filters, categories)).toBe('All categories · 10 to 20,50')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', '10 to 20,50'])
 	})
 
 	it('should describe an open-ended minimum amount', () => {
 		const filters = { ...emptyFilters, minQuantity: '10' }
 
-		expect(buildFiltersSummary(filters, categories)).toBe('All categories · from 10')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'from 10'])
 	})
 
 	it('should describe an open-ended maximum amount', () => {
 		const filters = { ...emptyFilters, maxQuantity: '20,50' }
 
-		expect(buildFiltersSummary(filters, categories)).toBe('All categories · up to 20,50')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['All categories', 'up to 20,50'])
 	})
 
-	it('should join category, date and amount parts together', () => {
+	it('should list the category, date and amount parts in that order', () => {
 		const filters = {
 			...emptyFilters,
 			category: 'category-id-1',
@@ -224,6 +275,6 @@ describe('buildFiltersSummary', () => {
 			maxQuantity: '20,50'
 		}
 
-		expect(buildFiltersSummary(filters, categories)).toBe('Private vehicles · 2026-01-01 to 2026-06-30 · 10 to 20,50')
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles', '2026-01-01 to 2026-06-30', '10 to 20,50'])
 	})
 })
