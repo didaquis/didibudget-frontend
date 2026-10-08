@@ -70,15 +70,15 @@ describe('AddExpenseForm', () => {
 		const user = userEvent.setup()
 		renderForm()
 
-		expect(screen.getByRole('button', { name: 'Save expense' })).toBeDisabled()
+		expect(screen.getByRole('button', { name: 'Save spending' })).toBeDisabled()
 
 		await user.type(screen.getByLabelText(/Amount/), '12.40')
 
-		expect(screen.getByRole('button', { name: 'Save expense' })).toBeDisabled()
+		expect(screen.getByRole('button', { name: 'Save spending' })).toBeDisabled()
 
 		await user.click(screen.getAllByRole('button', { name: /Taxes/ })[0])
 
-		expect(screen.getByRole('button', { name: 'Save expense' })).toBeEnabled()
+		expect(screen.getByRole('button', { name: 'Save spending' })).toBeEnabled()
 	})
 
 	it('reports what was saved after a successful submission', async () => {
@@ -87,7 +87,7 @@ describe('AddExpenseForm', () => {
 
 		await user.type(screen.getByLabelText(/Amount/), '12.40')
 		await user.click(screen.getAllByRole('button', { name: /Taxes/ })[0])
-		await user.click(screen.getByRole('button', { name: 'Save expense' }))
+		await user.click(screen.getByRole('button', { name: 'Save spending' }))
 
 		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent(/^✓ 12\.40 EUR · Taxes$/))
 	})
@@ -98,13 +98,13 @@ describe('AddExpenseForm', () => {
 
 		await user.type(screen.getByLabelText(/Amount/), '12.40')
 		await user.click(screen.getAllByRole('button', { name: /Taxes/ })[0])
-		await user.click(screen.getByRole('button', { name: 'Save expense' }))
+		await user.click(screen.getByRole('button', { name: 'Save spending' }))
 
 		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('12.40 EUR · Taxes'))
 
 		expect(screen.getByLabelText(/Amount/)).toHaveValue(null)
 		expect(screen.getByLabelText('Filter categories')).toBeVisible()
-		expect(screen.getByRole('button', { name: 'Save expense' })).toBeDisabled()
+		expect(screen.getByRole('button', { name: 'Save spending' })).toBeDisabled()
 		expect(screen.getByLabelText(/Amount/)).toHaveFocus()
 	})
 
@@ -114,12 +114,12 @@ describe('AddExpenseForm', () => {
 
 		await user.type(screen.getByLabelText(/Amount/), '12.40')
 		await user.click(screen.getAllByRole('button', { name: /Taxes/ })[0])
-		await user.click(screen.getByRole('button', { name: 'Save expense' }))
+		await user.click(screen.getByRole('button', { name: 'Save spending' }))
 
 		expect(await screen.findByRole('alert')).toBeVisible()
 		expect(screen.getByLabelText(/Amount/)).toHaveValue(12.4)
 		expect(screen.getByRole('button', { name: 'Change' })).toBeVisible()
-		expect(screen.getByRole('button', { name: 'Save expense' })).toBeEnabled()
+		expect(screen.getByRole('button', { name: 'Save spending' })).toBeEnabled()
 	})
 
 	it('resets the date to today after saving', async () => {
@@ -154,7 +154,7 @@ describe('AddExpenseForm', () => {
 		await user.click(screen.getByRole('button', { name: 'Yesterday' }))
 		await user.type(screen.getByLabelText(/Amount/), '12.40')
 		await user.click(screen.getAllByRole('button', { name: /Taxes/ })[0])
-		await user.click(screen.getByRole('button', { name: 'Save expense' }))
+		await user.click(screen.getByRole('button', { name: 'Save spending' }))
 
 		await waitFor(() => expect(screen.getByRole('status')).toHaveTextContent('12.40 EUR · Taxes'))
 

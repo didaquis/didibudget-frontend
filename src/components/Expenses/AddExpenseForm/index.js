@@ -91,7 +91,7 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 							inputMode="decimal"
 							className="form-control"
 							id="inputAmountAddExpenseForm"
-							placeholder="1234.99"
+							placeholder="12.50"
 							type="number"
 							step="0.01"
 							value={amount}
@@ -118,7 +118,7 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 					</div>
 
 					<div>
-						<SubmitButton disabled={isDisabled || !isValid}>Save expense</SubmitButton>
+						<SubmitButton disabled={isDisabled || !isValid}>Save spending</SubmitButton>
 						<SubmitButtonHelper mustShowHelper={!isValid} />
 					</div>
 				</form>
