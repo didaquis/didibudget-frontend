@@ -1,0 +1,8 @@
+/* On a touchscreen :hover sticks to whatever lands under the last tap, so a layout shift leaves an
+   outline button filled as if it were picked */
+@media (hover: none) {
+	.btn-outline-info:hover:not(:active):not(.active) {
+		color: var(--bs-info);
+		background-color: transparent;
+	}
+}
