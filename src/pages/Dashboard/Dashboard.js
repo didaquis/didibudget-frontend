@@ -13,7 +13,7 @@ const Dashboard = () => {
 		<Fragment>
 			<PageTitle text='Dashboard' />
 			<GetMonthToDateSpending />
-			<div className="d-grid d-md-block my-4">
+			<div className="d-grid d-md-block mt-3">
 				<Link className="btn btn-lg btn-outline-info" to='/spending/add'>Add spending</Link>
 			</div>
 			<GetRecurringExpenseSuggestions />

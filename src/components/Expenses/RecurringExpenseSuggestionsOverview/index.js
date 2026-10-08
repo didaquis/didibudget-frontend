@@ -7,7 +7,7 @@ export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {
 	const hasSuggestions = !!suggestions.length
 
 	return (
-		<section>
+		<section className="mt-5">
 			<SectionTitle text='Suggestions' level={2} />
 			{!hasSuggestions ? (
 				<p className="text-light" role="status">No suggestions available right now.</p>

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { SectionTitle } from '../SectionTitle'
 
 export const UserCard = ({ userData }) => (
-	<section className="text-light">
+	<section className="mt-5 text-light">
 		<SectionTitle text='Your user data' level={2} />
 		<p>You are logged as: <span className="ps-1 font-monospace text-white-50">{userData.email}</span></p>
 		{
