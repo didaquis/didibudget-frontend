@@ -164,7 +164,7 @@ describe('getAmountError', () => {
 
 	it('should flag only the amount that is not a number', () => {
 		expect(getAmountError('abc', '20')).toEqual({
-			message: 'Amount must be a number using a decimal point or comma',
+			message: 'Amount must be a number using a decimal point or comma.',
 			isMinInvalid: true,
 			isMaxInvalid: false
 		})
@@ -172,7 +172,7 @@ describe('getAmountError', () => {
 
 	it('should flag both amounts when the minimum is more than the maximum', () => {
 		expect(getAmountError('200', '100')).toEqual({
-			message: 'Min amount can\'t be more than max amount',
+			message: 'Min amount can\'t be more than max amount.',
 			isMinInvalid: true,
 			isMaxInvalid: true
 		})
@@ -218,7 +218,7 @@ describe('getFiltersSummaryParts', () => {
 	it('should include the category and subcategory names when a subcategory is selected', () => {
 		const filters = { ...emptyFilters, category: 'category-id-1', subcategory: 'subcategory-id-1' }
 
-		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles - Fuel'])
+		expect(getFiltersSummaryParts(filters, categories)).toEqual(['Private vehicles › Fuel'])
 	})
 
 	it('should omit the date part when neither date is set', () => {

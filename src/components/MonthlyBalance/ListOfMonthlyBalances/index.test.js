@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { MockedProvider } from '@apollo/client/testing'
 
 import { ListOfMonthlyBalances } from './index'
@@ -36,6 +36,18 @@ describe('ListOfMonthlyBalances', () => {
 	it('names the delete button after the month and the amount', () => {
 		renderList()
 
-		expect(screen.getByRole('button', { name: 'Delete January 2026, 1234.5\u00a0€' })).toBeVisible()
+		expect(within(screen.getByRole('table')).getByRole('button', { name: 'Delete January 2026, 1234.5\u00a0€' })).toBeVisible()
+	})
+
+	// The desktop table and the phone list are both rendered, and Bootstrap
+	// hides one of them; jsdom loads no CSS, so both are in the tree here
+	it('shows each balance in the phone list with its month and a delete button', () => {
+		renderList()
+
+		const item = within(screen.getByRole('listitem'))
+
+		expect(item.getByText('January 2026')).toBeVisible()
+		expect(item.getByText('1234.5 €')).toBeVisible()
+		expect(item.getByRole('button', { name: 'Delete January 2026, 1234.5\u00a0€' })).toBeVisible()
 	})
 })

@@ -15,10 +15,9 @@ export const Login = () => {
 			<LoginForm activateAuth={activateAuth} />
 			<div className="row justify-content-center">
 				<div className="col-md-8">
-					<Link className="text-info fw-light me-2 small" to='/register'>
-						Don't have an account?
+					<Link className="text-info fw-light small" to='/register'>
+						Create an account
 					</Link>
-					<span aria-hidden="true">😉</span>
 				</div>
 			</div>
 		</Fragment>

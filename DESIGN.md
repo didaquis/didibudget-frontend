@@ -155,6 +155,7 @@ Charts still use Recharts' default colours (`#8884d8` for monthly-balance lines,
 - **Forms:** a single column at full width on phones (`col-md-8` centred from 768px). Fields are separated by 1.5rem (`mb-4`).
 - **Grids:** cards stack in one column on phones (`col-sm-6 col-md-4`).
 - **Tables:** always inside `table-responsive`; amounts and dates use `text-nowrap` so a value never wraps mid-number.
+- **Lists with a button per row** (spending list, monthly balances list): below 768px each row stacks instead of using a table, with the content on the left and the button on the right; the table returns from 768px (`d-md-none` / `d-none d-md-block`).
 - **Spacing rhythm:** Bootstrap's spacer scale (0.25 / 0.5 / 1 / 1.5 / 3rem). 1rem and 1.5rem do most of the work.
 
 ## Elevation & Depth
@@ -197,6 +198,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 ### Lists & Tables
 - **List groups:** `list-group-flush`, items `bg-dark border-info px-0 py-1`, horizontal padding removed so rows align with the page edge. When every row carries its own button, rows use `border-secondary` and `py-3` instead.
 - **Tables:** `table-dark table-hover`, with a `table-info` header row. Always wrapped in `table-responsive`.
+- **Stacked rows on phones:** a list whose rows each carry a button is a `list-group-flush` below 768px, not a table. Each item is `bg-dark text-light border-secondary px-0 py-3` holding a `d-flex align-items-center gap-3` row: the text grows on the left (main line, then a `small` line such as `date · amount`), the button sits on the right, flush with the page edge.
 
 ### Feedback
 - **ErrorAlert:** `alert-danger`, centred, `role="alert"`. Failures only.
@@ -220,6 +222,7 @@ The coral SVG wordmark over a soft coral radial glow that fades in over 700ms (s
 - **Do** keep form controls default Bootstrap white; don't theme them dark.
 - **Do** use `fw-light` for page and section titles.
 - **Do** wrap tables in `table-responsive` and mark amounts and dates `text-nowrap`.
+- **Do** stack a list with a button per row below 768px instead of squeezing it into a table.
 - **Do** use `EmptyState` for empty screens, inline muted "No … found" text for a live filter with no matches, `ErrorAlert` for failures and `SuccessToast` for confirmed writes.
 - **Do** honour `prefers-reduced-motion` on every animation.
 

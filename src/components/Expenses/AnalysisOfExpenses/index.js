@@ -22,7 +22,7 @@ export const AnalysisOfExpenses = ( { expenses, categories } ) => {
 			</section>
 		)
 	} else {
-		const message = 'No spending recorded in this period'
+		const message = 'No spending recorded in this period.'
 		return <EmptyState message={message} />
 	}
 }

@@ -7,9 +7,9 @@ const MENU_ITEMS = [
 	['Add spending', '/spending/add'],
 	['Spending overview', '/spending/overview'],
 	['Spending list', '/spending/list'],
-	['Monthly spending overview', '/spending/monthly'],
-	['Yearly spending overview', '/spending/yearly'],
-	['Monthly spending breakdown', '/spending/monthly-breakdown'],
+	['This month', '/spending/this-month'],
+	['Last 12 months', '/spending/last-12-months'],
+	['Month by month', '/spending/month-by-month'],
 	['Spending search', '/spending/search']
 ]
 

@@ -29,7 +29,7 @@ const YearlyExpenseOverview = () => {
 
 	return (
 		<Fragment>
-			<PageTitle text='Yearly spending overview' />
+			<PageTitle text='Last 12 months' />
 			<GetYearlyExpenseOverview startDate={startDate} endDate={endDate} />
 		</Fragment>
 	)

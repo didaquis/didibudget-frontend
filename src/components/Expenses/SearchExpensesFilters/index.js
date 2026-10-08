@@ -219,7 +219,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 
 					{
 						hasPendingChanges && (
-							<p className="form-text text-white-50 mt-0 mb-2" role="status">The results below are still from the previous search</p>
+							<p className="form-text text-white-50 mt-0 mb-2" role="status">The results below are still from the previous search.</p>
 						)
 					}
 					<SubmitButton disabled={Boolean(amountError)}>Search</SubmitButton>

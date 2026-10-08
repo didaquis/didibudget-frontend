@@ -20,7 +20,7 @@ describe('LazyRoute', () => {
 
 		render(<LazyRoute><LazyScreen /></LazyRoute>)
 
-		expect(screen.getByText('Loading...')).toBeVisible()
+		expect(screen.getByText('Loading…')).toBeVisible()
 	})
 
 	it('shows the screen once it has loaded', async () => {
@@ -39,6 +39,6 @@ describe('LazyRoute', () => {
 		load()
 		await screen.findByText('Loaded screen')
 
-		expect(screen.queryByText('Loading...')).not.toBeInTheDocument()
+		expect(screen.queryByText('Loading…')).not.toBeInTheDocument()
 	})
 })

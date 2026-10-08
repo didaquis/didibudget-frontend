@@ -61,7 +61,7 @@ export const LoginForm = ({ activateAuth }) => {
 									:
 									<Fragment>
 										<span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-										<span>Loading</span>
+										<span>Logging in…</span>
 									</Fragment>
 							}
 						</SubmitButton>

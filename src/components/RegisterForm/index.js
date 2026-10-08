@@ -58,7 +58,6 @@ export const RegisterForm = ({ activateAuth }) => {
 							required
 							autoFocus
 						/>
-						<small id="emailHelp" className="form-text text-white-50 d-block">Make sure it's a valid email address</small>
 					</div>
 					<div className="col mb-4">
 						<label htmlFor="inputPasswordRegisterForm" className="form-label text-light">Password <span className="text-danger">*</span></label>
@@ -98,7 +97,7 @@ export const RegisterForm = ({ activateAuth }) => {
 								:
 								<Fragment>
 									<span className="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-									<span>Loading</span>
+									<span>Creating account…</span>
 								</Fragment>
 						}
 					</SubmitButton>

@@ -113,7 +113,7 @@ describe('CategoryPicker', () => {
 		const user = userEvent.setup()
 		renderPicker({ frequentCategories: [] })
 
-		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+		await user.type(screen.getByLabelText('Search categories'), 'fue')
 
 		expect(screen.queryByText('All categories')).not.toBeInTheDocument()
 	})
@@ -122,7 +122,7 @@ describe('CategoryPicker', () => {
 		const user = userEvent.setup()
 		renderPicker()
 
-		await user.type(screen.getByLabelText('Filter categories'), 'tax')
+		await user.type(screen.getByLabelText('Search categories'), 'tax')
 
 		expect(screen.queryByRole('button', { name: 'All categories' })).not.toBeInTheDocument()
 		expect(screen.getByRole('button', { name: 'Taxes' })).toBeVisible()
@@ -199,7 +199,7 @@ describe('CategoryPicker', () => {
 		const user = userEvent.setup()
 		renderPicker({ frequentCategories: [] })
 
-		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+		await user.type(screen.getByLabelText('Search categories'), 'fue')
 
 		expect(screen.getByRole('button', { name: /Private vehicles › Fuel/ })).toBeVisible()
 		expect(screen.queryByRole('button', { name: /Taxes/ })).not.toBeInTheDocument()
@@ -209,7 +209,7 @@ describe('CategoryPicker', () => {
 		const user = userEvent.setup()
 		renderPicker()
 
-		await user.type(screen.getByLabelText('Filter categories'), 'zzzzz')
+		await user.type(screen.getByLabelText('Search categories'), 'zzzzz')
 
 		expect(screen.getByRole('status')).toHaveTextContent('No categories found')
 	})
@@ -218,7 +218,7 @@ describe('CategoryPicker', () => {
 		const user = userEvent.setup()
 		renderPicker()
 
-		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+		await user.type(screen.getByLabelText('Search categories'), 'fue')
 
 		expect(screen.queryByText('No categories found')).not.toBeInTheDocument()
 	})
@@ -226,17 +226,17 @@ describe('CategoryPicker', () => {
 	it('hides the clear button while the filter is empty', () => {
 		renderPicker({ frequentCategories: [] })
 
-		expect(screen.queryByRole('button', { name: 'Clear filter' })).not.toBeInTheDocument()
+		expect(screen.queryByRole('button', { name: 'Clear search' })).not.toBeInTheDocument()
 	})
 
 	it('restores the accordion when the filter is cleared', async () => {
 		const user = userEvent.setup()
 		renderPicker({ frequentCategories: [] })
-		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+		await user.type(screen.getByLabelText('Search categories'), 'fue')
 
-		await user.click(screen.getByRole('button', { name: 'Clear filter' }))
+		await user.click(screen.getByRole('button', { name: 'Clear search' }))
 
-		expect(screen.getByLabelText('Filter categories')).toHaveValue('')
+		expect(screen.getByLabelText('Search categories')).toHaveValue('')
 		expect(screen.queryByRole('button', { name: 'Private vehicles › Fuel' })).not.toBeInTheDocument()
 		expect(screen.getByRole('button', { name: /Taxes/ })).toBeVisible()
 	})
@@ -244,18 +244,18 @@ describe('CategoryPicker', () => {
 	it('returns the focus to the filter input after clearing', async () => {
 		const user = userEvent.setup()
 		renderPicker({ frequentCategories: [] })
-		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+		await user.type(screen.getByLabelText('Search categories'), 'fue')
 
-		await user.click(screen.getByRole('button', { name: 'Clear filter' }))
+		await user.click(screen.getByRole('button', { name: 'Clear search' }))
 
-		expect(screen.getByLabelText('Filter categories')).toHaveFocus()
+		expect(screen.getByLabelText('Search categories')).toHaveFocus()
 	})
 
 	it('collapses the list once a category is selected', () => {
 		renderPicker({ selected: { categoryID: 'category-id-2', subcategoryID: null } })
 
 		expect(screen.getByText('Taxes')).toBeVisible()
-		expect(screen.queryByLabelText('Filter categories')).not.toBeInTheDocument()
+		expect(screen.queryByLabelText('Search categories')).not.toBeInTheDocument()
 	})
 
 	it('shows a readable name when the selected pair is not in the catalogue', () => {
@@ -318,7 +318,7 @@ describe('CategoryPicker', () => {
 		const user = userEvent.setup()
 		const { onSelect } = renderPicker({ frequentCategories: [] })
 
-		await user.type(screen.getByLabelText('Filter categories'), 'fue')
+		await user.type(screen.getByLabelText('Search categories'), 'fue')
 		await user.click(screen.getByRole('button', { name: /Private vehicles › Fuel/ }))
 
 		expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({
@@ -337,7 +337,7 @@ describe('CategoryPicker', () => {
 			/>
 		)
 
-		expect(screen.queryByLabelText('Filter categories')).not.toBeInTheDocument()
+		expect(screen.queryByLabelText('Search categories')).not.toBeInTheDocument()
 
 		rerender(
 			<CategoryPicker
@@ -348,7 +348,7 @@ describe('CategoryPicker', () => {
 			/>
 		)
 
-		expect(screen.getByLabelText('Filter categories')).toBeVisible()
+		expect(screen.getByLabelText('Search categories')).toBeVisible()
 	})
 
 	it('renders without crashing when a category has no emojis field', async () => {

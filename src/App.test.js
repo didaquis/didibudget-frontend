@@ -29,9 +29,9 @@ const LAZY_ROUTE_PATHS = [
 	'/spending/add',
 	'/spending/overview',
 	'/spending/list',
-	'/spending/monthly-breakdown',
-	'/spending/monthly',
-	'/spending/yearly',
+	'/spending/month-by-month',
+	'/spending/this-month',
+	'/spending/last-12-months',
 	'/spending/search',
 	'/users'
 ]
@@ -50,6 +50,12 @@ describe('App routing', () => {
 		expect(screen.getByRole('button', { name: 'Log in' })).toBeVisible()
 	})
 
+	it('offers to create an account from the login screen', () => {
+		renderAppAt('/login')
+
+		expect(screen.getByRole('link', { name: 'Create an account' })).toHaveAttribute('href', '/register')
+	})
+
 	it('sends a visitor without a session away from a protected screen', () => {
 		renderAppAt('/spending/add')
 
@@ -64,13 +70,13 @@ describe('App routing', () => {
 
 		await user.click(screen.getByRole('link', { name: 'Home' }))
 
-		expect(await screen.findByText('Loading...')).toBeVisible()
+		expect(await screen.findByText('Loading…')).toBeVisible()
 	})
 
 	it('shows the spinner while a lazy screen is loading', async () => {
 		renderAppAt('/')
 
-		expect(screen.getByText('Loading...')).toBeVisible()
+		expect(screen.getByText('Loading…')).toBeVisible()
 
 		expect(await screen.findByRole('heading', { name: 'didibudget' })).toBeVisible()
 	})
@@ -97,7 +103,7 @@ describe('App routing', () => {
 		it('shows the spinner while the screen is loading', () => {
 			renderAppAt(path, { isAuth: true, userData: { isAdmin: true } })
 
-			expect(screen.getByText('Loading...')).toBeVisible()
+			expect(screen.getByText('Loading…')).toBeVisible()
 		})
 	})
 })

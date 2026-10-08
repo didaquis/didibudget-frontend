@@ -86,7 +86,7 @@ describe('GetSearchExpenses', () => {
 			</MockedProvider>
 		)
 
-		expect(screen.getByText('Loading...')).toBeVisible()
+		expect(screen.getByText('Loading…')).toBeVisible()
 	})
 
 	it('should display the filters form once the categories are loaded', async () => {

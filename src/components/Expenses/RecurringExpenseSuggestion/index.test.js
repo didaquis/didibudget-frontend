@@ -31,13 +31,13 @@ describe('RecurringExpenseSuggestion', () => {
 	it('shows what is suggested and how much it costs', () => {
 		renderSuggestion()
 
-		expect(screen.getByRole('listitem')).toHaveTextContent('Home - Mortgage')
+		expect(screen.getByRole('listitem')).toHaveTextContent('Home › Mortgage')
 		expect(screen.getByRole('listitem')).toHaveTextContent('40 €')
 	})
 
 	it('names the spending its save button would log', () => {
 		renderSuggestion()
 
-		expect(screen.getByRole('button', { name: 'Save Home - Mortgage, 40\u00a0€' })).toBeVisible()
+		expect(screen.getByRole('button', { name: 'Save Home › Mortgage, 40\u00a0€' })).toBeVisible()
 	})
 })

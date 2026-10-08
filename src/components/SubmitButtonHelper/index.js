@@ -6,7 +6,7 @@ export const SubmitButtonHelper = ({ mustShowHelper }) => {
 			id="submitHelp"
 			className={`d-block text-white-50 mt-1 ${mustShowHelper ? '' : 'invisible'}`}
 		>
-			Form submission is only enabled with valid data
+			Form submission is only enabled with valid data.
 		</small>
 	)
 }

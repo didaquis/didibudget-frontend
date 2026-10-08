@@ -51,7 +51,7 @@ export const PaginateNavbar = ( { currentPage, totalPages, onChangePage } ) => {
 	const paginationItemsToDisplay = excludeUnusedItems(paginationItems)
 
 	return (
-		<nav className="paginate-navbar" aria-label="Paginate the results">
+		<nav className="paginate-navbar" aria-label="Pages">
 			<ul className="pagination justify-content-center my-4">
 				{ paginationItemsToDisplay }
 			</ul>

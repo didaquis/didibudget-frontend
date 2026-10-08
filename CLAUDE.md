@@ -33,6 +33,9 @@ When a live filter empties a list already on screen, use inline muted text inste
 For a confirmation after a successful write use `SuccessToast` (`role="status"`, auto-hides): pass it a
 `{ id, message }` object with a fresh `id` per save, never a bare string.
 
+Copy: join category and subcategory with ` › `. Full sentences end with a period; labels, headings and
+`No … found` lines don't. Write `…`, never `...`.
+
 ## Commands
 
 Requires Node 24.14 (see `.nvmrc`). Copy `_env` to `.env` and set `VITE_PROTOCOL`, `VITE_HOST`, `VITE_PORT`, `VITE_GRAPHQL` before running.
@@ -59,6 +62,8 @@ Requires Node 24.14 (see `.nvmrc`). Copy `_env` to `.env` and set `VITE_PROTOCOL
   `@testing-library/jest-dom/extend-expect` in a test file — it is already loaded.
 - Query through `screen`, never through the object destructured from `render()`. Only `rerender` comes
   from that object.
+- Lists that stack on phones render both the table and the list; jsdom loads no CSS, so both are in the
+  tree. Scope queries with `within()`.
 
 ## Files to change with care
 

@@ -100,7 +100,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 			</div>
 		)
 	} else {
-		const message = 'Not enough data yet to show the balance chart'
+		const message = 'Not enough data yet to show the balance chart.'
 		return <EmptyState message={message} />
 	}
 }

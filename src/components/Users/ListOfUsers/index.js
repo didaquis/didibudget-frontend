@@ -40,7 +40,7 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 							inputMode="search"
 							enterKeyHint="search"
 							className="form-control"
-							placeholder="Search by email..."
+							placeholder="Search by email…"
 							aria-label="Search by email"
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}

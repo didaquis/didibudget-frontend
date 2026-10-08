@@ -36,7 +36,7 @@ export const errorLink = onError(({ operation, graphQLErrors, networkError, resp
 			}
 
 			if (err.extensions?.code === 'INTERNAL_SERVER_ERROR') {
-				err.message = 'An error has occurred'
+				err.message = 'An error has occurred.'
 			}
 		})
 	}

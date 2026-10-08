@@ -93,8 +93,8 @@ const isValidAmountInput = (value) => {
 	return Number.isFinite(parsed) && parsed >= 0
 }
 
-const AMOUNT_FORMAT_ERROR = 'Amount must be a number using a decimal point or comma'
-const AMOUNT_RANGE_ERROR = 'Min amount can\'t be more than max amount'
+const AMOUNT_FORMAT_ERROR = 'Amount must be a number using a decimal point or comma.'
+const AMOUNT_RANGE_ERROR = 'Min amount can\'t be more than max amount.'
 
 /**
  * Get the problem with the amounts written by the user, if any.
@@ -165,7 +165,7 @@ const getFiltersSummaryParts = (filters, categories) => {
 	if (isFilled(filters.subcategory)) {
 		const categoryName = getNameOfCategoryOrSubcategory(filters.category, categories)
 		const subcategoryName = getNameOfCategoryOrSubcategory(filters.subcategory, categories)
-		parts.push(`${categoryName} - ${subcategoryName}`)
+		parts.push(`${categoryName} › ${subcategoryName}`)
 	} else if (isFilled(filters.category)) {
 		parts.push(getNameOfCategoryOrSubcategory(filters.category, categories))
 	}

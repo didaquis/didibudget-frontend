@@ -276,7 +276,7 @@ export const expensesRawDataForGetDetailedExpensesGroupedFromRange = [
 ]
 
 export const expectedDataForGetDetailedExpensesGroupedFromRange = {
-	groupTitle: 'From January 2021 to January 2022',
+	groupTitle: 'Jan 2021 – Jan 2022',
 	groupTotal: 245,
 	perCategory: [
 		{

@@ -83,8 +83,8 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 					inputMode="search"
 					enterKeyHint="search"
 					className="form-control"
-					placeholder="Search…"
-					aria-label="Filter categories"
+					placeholder="Search categories…"
+					aria-label="Search categories"
 					value={filterText}
 					onChange={(event) => setFilterText(event.target.value)}
 					ref={filterInput}
@@ -94,7 +94,7 @@ export const CategoryPicker = ({ categories, frequentCategories, selected, onSel
 						<button
 							type="button"
 							className="btn btn-light"
-							aria-label="Clear filter"
+							aria-label="Clear search"
 							onClick={clearFilter}
 						>
 							<BsX size={'24px'} />

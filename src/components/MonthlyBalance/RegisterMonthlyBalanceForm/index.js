@@ -90,7 +90,7 @@ export const RegisterMonthlyBalanceForm = () => {
 							autoFocus
 						/>
 						<small id="balanceHelp" className="form-text text-white-50 d-block">
-							Enter the balance on the 1st of each month before the first spend was made. Use decimal point as decimal separator
+							Your balance on the 1st, before any spending that month. Use a dot for decimals.
 						</small>
 					</div>
 

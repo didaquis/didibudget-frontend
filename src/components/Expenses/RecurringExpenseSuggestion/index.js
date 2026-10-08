@@ -39,7 +39,7 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 
 	const emojis = [...new Set([...suggestion.suggestedExpense.categoryEmojis, ...suggestion.suggestedExpense.subcategoryEmojis])]
 	const { categoryName, subcategoryName, quantity } = suggestion.suggestedExpense
-	const name = subcategoryName ? `${categoryName} - ${subcategoryName}` : categoryName
+	const name = subcategoryName ? `${categoryName} › ${subcategoryName}` : categoryName
 	const amount = formatAmount(quantity)
 
 	return (
