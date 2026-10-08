@@ -39,3 +39,21 @@
     transform: scale(1.0);
   }
 }
+
+/* The dots stay put and fade instead, so the screen still shows it is loading */
+@media (prefers-reduced-motion: reduce) {
+  .spinner > div {
+    -webkit-animation-name: sk-fade;
+    animation-name: sk-fade;
+  }
+}
+
+@-webkit-keyframes sk-fade {
+  0%, 80%, 100% { opacity: 0.25 }
+  40% { opacity: 1 }
+}
+
+@keyframes sk-fade {
+  0%, 80%, 100% { opacity: 0.25 }
+  40% { opacity: 1 }
+}

@@ -125,7 +125,7 @@ Near-black page, one cool accent for interaction, and one warm brand colour used
 - **Info Tint** (`info-tint`): the background of `EmptyState` (`alert-info`) and `table-info` rows.
 
 ### Charts
-Charts still use Recharts' default colours (`#8884d8` for monthly-balance lines, `#3182BD` for spending bars, `#666` for axis ticks). These are leftovers, not tokens; replace them with `info` when the charts are next touched.
+Axes and grid come from `src/utils/charts.js`: tick labels use `AXIS_TICK` (the `text-white-50` value at 14px), and grid and axis lines use `CHART_LINE_STROKE` (white at 15%), so they stay fainter than the labels. X-axis dates go through `shortMonthLabel` ("Sep 2026"); tooltips keep the full month. Every chart is `role="img"` with `accessibilityLayer={false}` and a `title` naming what it plots ("Bar chart of spending per month since …"). Bars, lines and dots use `SERIES_COLOR` (white at 70%). Series stay neutral on purpose: a chart is not something you tap, so it never takes the cyan ink.
 
 ### Named Rules
 **The One Ink Rule.** Cyan is the only interaction colour. A new clickable thing is cyan (outline at rest, filled when selected); it is never coral, green or a new hue.
@@ -140,7 +140,7 @@ Charts still use Recharts' default colours (`#8884d8` for monthly-balance lines,
 
 ### Hierarchy
 - **Page Title** (300, `.h2` fluid size, about 1.55rem at 390px, 1.2): `PageTitle`, one per screen, `text-light`, followed by 1rem space. Also sets the document title.
-- **Section Title** (300, 1.25rem, 1.2): `SectionTitle`. Rendered as `h3` with `.h5` sizing.
+- **Section Title** (300, 1.25rem, 1.2): `SectionTitle`. Always an `h2` (every section hangs straight off the page title) with `.h5` sizing.
 - **Body** (400, 1rem, 1.5): list rows, card text, field values.
 - **Label** (400, 0.875rem): `small` labels like "Most used" and "All categories", and help text under fields (`form-text`, muted).
 - **Hero tagline** (300 italic, `fs-2`): only on the logged-out home.
@@ -167,7 +167,7 @@ Flat. Surfaces share the page colour and are separated by 1px cyan or secondary 
 
 ## Shapes
 
-Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is Bootstrap's default. Pills appear only in the React Toggle track. List groups are flush, with no outer corners. No custom silhouettes.
+Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is Bootstrap's default. Pills appear only in the switch track (`ToggleButton`). List groups are flush, with no outer corners. No custom silhouettes.
 
 ## Components
 
@@ -181,7 +181,11 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Large:** `btn-lg` in a `d-grid` column for the single home-screen call to action.
 
 ### Chips
-- **Style:** `btn-sm` in a `d-flex flex-wrap gap-2` row. Outline cyan at rest, filled cyan when selected.
+- **Style:** `btn-sm` in a `d-flex flex-wrap` row, 12px apart horizontally. Outline cyan at rest, filled cyan when selected. Wider and the Date row (Today, Yesterday, Pick another date) wraps on a 375px phone.
+- **Most used:** the labels are long enough that each chip takes its own row, so rows are 1rem apart (`most-used-chips`) to keep a thumb off the neighbouring chip.
+
+### Switches
+- **Style:** `ToggleButton`, Bootstrap's `form-switch` with `role="switch"`. White track when off, filled `info` when on. The label fills a 44px row, so tapping the text flips it.
 
 ### Cards / Containers
 - **Corner Style:** 0.25rem.
@@ -207,7 +211,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Filter with no matches:** inline muted text (`text-white-50`, `role="status"`, "No … found") where the list would be. Used when a live filter empties a list already on screen (users, category picker); an `EmptyState` box there would shove the form around for a passing state.
 - **SuccessToast:** solid white toast placed below the navbar (top 64px). It fades and slides in over 150ms, then auto-hides. Each save passes `{ id, message }` with a fresh id. Motion is disabled under `prefers-reduced-motion`.
 - **InformativeBadge:** `badge bg-info text-dark`, inline beside section titles (for example, "Net change").
-- **Spinner:** three bouncing dots (muted mauve `#AC9FAA`), centred 100px below the top.
+- **Spinner:** three bouncing dots (muted mauve `#AC9FAA`), centred 100px below the top, with a visually hidden "Loading…" in `role="status"`. Under `prefers-reduced-motion` the dots fade in place instead of scaling.
 
 ### Navigation
 - **NavBar:** a single row of 32px Bootstrap Icons in `text-light`, spread across the width (`justify-content-between`) with a 1px `border-info` underline. Spending and savings sections open as dropdowns. Icon-only links carry `aria-label`.

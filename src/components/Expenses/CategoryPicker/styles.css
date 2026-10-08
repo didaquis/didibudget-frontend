@@ -3,3 +3,9 @@
 .category-picker .btn:focus:not(:focus-visible) {
 	box-shadow: none;
 }
+
+/* Long labels put each chip on its own row; 8px between rows makes a thumb land on the neighbour */
+.category-picker .most-used-chips {
+	row-gap: 1rem !important;
+	column-gap: 0.75rem !important;
+}

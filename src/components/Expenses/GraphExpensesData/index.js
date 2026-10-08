@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts'
 
 import { parseUnixTimestamp } from '../../../utils/utils'
+import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, TOOLTIP_ITEM_STYLE, shortMonthLabel } from '../../../utils/charts'
 import { getSumPerMonth, getLastNValuesFromArrayIfTheyExist } from '../utils'
 
 import { EmptyState } from '../../EmptyState'
 import { SectionTitle } from '../../SectionTitle'
+import { formatAmount } from '../../../utils/currency'
 import { AveragePerMonth } from '../AveragePerMonth'
 
 
@@ -20,6 +22,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 	})
 
 	const dataGroupedPerMonth = getSumPerMonth(dataParsed)
+	const currencyISO = graphData[0]?.currencyISO
 
 	const numberOfMonthsToDisplay = 24
 	const dataGroupedPerMonthSubset = getLastNValuesFromArrayIfTheyExist(dataGroupedPerMonth, numberOfMonthsToDisplay)
@@ -31,13 +34,16 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 				<ResponsiveContainer width="100%" height={460}>
 					<BarChart
 						data={dataGroupedPerMonth}
+						accessibilityLayer={false}
+						role="img"
+						title={`Bar chart of spending per month since ${dataGroupedPerMonth[0].label}`}
 						margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
 					>
-						<CartesianGrid strokeDasharray="3 3" />
-						<XAxis dataKey="label" />
-						<YAxis />
-						<Tooltip />
-						<Bar dataKey="sum" fill="#3182BD" />
+						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
+						<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
+						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+						<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
+						<Bar dataKey="sum" fill={SERIES_COLOR} />
 					</BarChart>
 				</ResponsiveContainer>
 
@@ -48,13 +54,16 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 						<ResponsiveContainer width="100%" height={460}>
 							<BarChart
 								data={dataGroupedPerMonthSubset}
+								accessibilityLayer={false}
+								role="img"
+								title={`Bar chart of spending per month over the last ${numberOfMonthsToDisplay} months`}
 								margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
 							>
-								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis dataKey="label" />
-								<YAxis />
-								<Tooltip />
-								<Bar dataKey="sum" fill="#3182BD" />
+								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
+								<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
+								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
+								<Bar dataKey="sum" fill={SERIES_COLOR} />
 							</BarChart>
 						</ResponsiveContainer>
 					</Fragment>

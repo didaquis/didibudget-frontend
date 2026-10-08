@@ -1,26 +1,28 @@
-import { Fragment } from 'react'
+import { useId } from 'react'
 import PropTypes from 'prop-types'
 
-import Toggle from 'react-toggle'
 import './styles.css'
 
 export const ToggleButton = ({ text, onToggle, isOnByDefault = false, isDisabled = false }) => {
+	const id = useId()
 
 	const onChange = e => {
 		onToggle(e.target.checked)
 	}
 
 	return (
-		<Fragment>
-			<label className="m-0">
-				<Toggle
-					defaultChecked={isOnByDefault}
-					disabled={isDisabled}
-					onChange={onChange}
-				/>
-				<span className={`mx-2 text-white align-top fw-light ${isDisabled ? 'text-white-50' : ''}`}>{text}</span>
-			</label>
-		</Fragment>
+		<div className="toggle-button form-check form-switch mb-0">
+			<input
+				className="form-check-input"
+				type="checkbox"
+				role="switch"
+				id={id}
+				defaultChecked={isOnByDefault}
+				disabled={isDisabled}
+				onChange={onChange}
+			/>
+			<label className="form-check-label text-white fw-light ms-2" htmlFor={id}>{text}</label>
+		</div>
 	)
 }
 

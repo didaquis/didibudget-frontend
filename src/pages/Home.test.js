@@ -40,10 +40,7 @@ describe('Home', () => {
 
 	it('shows the dashboard to a user with a session', async () => {
 		renderHome(true)
-		await waitForElementToBeRemoved(() => [
-			screen.queryByRole('status'),
-			screen.queryByText('Loading…')
-		].filter(Boolean))
+		await waitForElementToBeRemoved(() => screen.queryAllByRole('status'))
 
 		expect(screen.getByRole('heading', { name: 'Dashboard' })).toBeVisible()
 		expect(screen.queryByRole('heading', { name: 'didibudget' })).not.toBeInTheDocument()

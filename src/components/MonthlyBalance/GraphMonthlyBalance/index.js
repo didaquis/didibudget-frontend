@@ -1,25 +1,16 @@
-import { PureComponent, Fragment } from 'react'
+import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
 import { EmptyState } from '../../EmptyState'
 import { SectionTitle } from '../../SectionTitle'
 import { InformativeBadge } from '../../InformativeBadge'
+import { formatAmount } from '../../../utils/currency'
+
+import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, TOOLTIP_ITEM_STYLE, shortMonthLabel } from '../../../utils/charts'
 
 import { parseDataForGraph, getLastMonthsData, computeDifferential, formatDifferential } from '../utils'
 
-
-class CustomizedAxisTick extends PureComponent {
-	render() {
-		const { x, y, payload } = this.props
-
-		return (
-			<g transform={`translate(${x},${y})`}>
-				<text x={0} y={0} dy={16} textAnchor="end" fill="#666" transform="rotate(-45)">{payload.value}</text>
-			</g>
-		)
-	}
-}
 
 export const GraphMonthlyBalance = ({ data }) => {
 	const allDataParsed = parseDataForGraph(data)
@@ -27,6 +18,7 @@ export const GraphMonthlyBalance = ({ data }) => {
 	const lastTwoYearsDataParsed = getLastMonthsData(allDataParsed, 24)
 	const lastYearDifferential = computeDifferential(lastYearDataParsed)
 	const lastTwoYearsDifferential = computeDifferential(lastTwoYearsDataParsed)
+	const currencyISO = data[0]?.currencyISO
 
 	if (allDataParsed.length) {
 		return (
@@ -47,13 +39,16 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastYearDataParsed}
-								margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
+								accessibilityLayer={false}
+								role="img"
+								title="Line chart of the monthly balance over the last 12 months"
+								margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 							>
-								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
-								<YAxis />
-								<Tooltip />
-								<Line dataKey="balance" fill="#8884d8" />
+								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
+								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
+								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
+								<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 							</LineChart>
 						</ResponsiveContainer>
 					</Fragment>
@@ -73,13 +68,16 @@ export const GraphMonthlyBalance = ({ data }) => {
 						<ResponsiveContainer width="100%" height={460}>
 							<LineChart
 								data={lastTwoYearsDataParsed}
-								margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
+								accessibilityLayer={false}
+								role="img"
+								title="Line chart of the monthly balance over the last 24 months"
+								margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 							>
-								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
-								<YAxis />
-								<Tooltip />
-								<Line dataKey="balance" fill="#8884d8" />
+								<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
+								<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
+								<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+								<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
+								<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 							</LineChart>
 						</ResponsiveContainer>
 					</Fragment>
@@ -88,13 +86,16 @@ export const GraphMonthlyBalance = ({ data }) => {
 				<ResponsiveContainer width="100%" height={460}>
 					<LineChart
 						data={allDataParsed}
-						margin={{ top: 5, right: 20, left: 30, bottom: 100 }}
+						accessibilityLayer={false}
+						role="img"
+						title={`Line chart of the monthly balance since ${allDataParsed[0].label}`}
+						margin={{ top: 5, right: 20, left: 30, bottom: 20 }}
 					>
-						<CartesianGrid strokeDasharray="3 3" />
-						<XAxis dataKey="label" interval="preserveStartEnd" tick={<CustomizedAxisTick />} />
-						<YAxis />
-						<Tooltip />
-						<Line dataKey="balance" fill="#8884d8" />
+						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
+						<XAxis dataKey="label" interval="preserveStartEnd" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
+						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+						<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
+						<Line dataKey="balance" stroke={SERIES_COLOR} fill={SERIES_COLOR} />
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
