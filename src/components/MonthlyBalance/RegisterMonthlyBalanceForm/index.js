@@ -97,7 +97,7 @@ export const RegisterMonthlyBalanceForm = () => {
 					<div className="row mb-4">
 						<div className="col">
 							<label htmlFor="selectYear" className="text-light">Year <span className="text-danger">*</span></label>
-							<select className="form-control" id="selectYear" {...year}>
+							<select className="form-select" id="selectYear" {...year}>
 								{
 									availableYears.map((year) => {
 										return <option key={year}>{year}</option>
@@ -107,7 +107,7 @@ export const RegisterMonthlyBalanceForm = () => {
 						</div>
 						<div className="col">
 							<label htmlFor="selectMonth" className="text-light">Month <span className="text-danger">*</span></label>
-							<select className="form-control" id="selectMonth" {...month}>
+							<select className="form-select" id="selectMonth" {...month}>
 								{
 									MONTHS.map(({ value, label }) => {
 										return <option key={value} value={value}>{label}</option>
