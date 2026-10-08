@@ -30,22 +30,11 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 	if (dataGroupedPerMonth.length) {
 		return (
 			<Fragment>
-				<SectionTitle text={`Since ${dataGroupedPerMonth[0].label}`} />
-				<ResponsiveContainer width="100%" height={460}>
-					<BarChart
-						data={dataGroupedPerMonth}
-						accessibilityLayer={false}
-						role="img"
-						title={`Bar chart of spending per month since ${dataGroupedPerMonth[0].label}`}
-						margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
-					>
-						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
-						<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
-						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
-						<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
-						<Bar dataKey="sum" fill={SERIES_COLOR} />
-					</BarChart>
-				</ResponsiveContainer>
+				<div className="row">
+					<AveragePerMonth averageData={averageData} title="Average spending" />
+
+					<AveragePerMonth averageData={averageDataExcludingSavings} title="Average spending, excluding savings & investments" />
+				</div>
 
 				{
 					dataGroupedPerMonthSubset.length > 0 &&
@@ -69,11 +58,22 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 					</Fragment>
 				}
 
-				<div className="row">
-					<AveragePerMonth averageData={averageData} title="Average spending" />
-
-					<AveragePerMonth averageData={averageDataExcludingSavings} title="Average spending, excluding savings & investments" />
-				</div>
+				<SectionTitle text={`Since ${dataGroupedPerMonth[0].label}`} />
+				<ResponsiveContainer width="100%" height={460}>
+					<BarChart
+						data={dataGroupedPerMonth}
+						accessibilityLayer={false}
+						role="img"
+						title={`Bar chart of spending per month since ${dataGroupedPerMonth[0].label}`}
+						margin={{ top: 5, right: 20, left: 20, bottom: 20 }}
+					>
+						<CartesianGrid strokeDasharray="3 3" stroke={CHART_LINE_STROKE} />
+						<XAxis dataKey="label" stroke={CHART_LINE_STROKE} tick={AXIS_TICK} tickFormatter={shortMonthLabel} />
+						<YAxis stroke={CHART_LINE_STROKE} tick={AXIS_TICK} />
+						<Tooltip itemStyle={TOOLTIP_ITEM_STYLE} separator=': ' formatter={value => formatAmount(value, currencyISO)} />
+						<Bar dataKey="sum" fill={SERIES_COLOR} />
+					</BarChart>
+				</ResponsiveContainer>
 
 			</Fragment>
 		)

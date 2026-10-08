@@ -6,6 +6,8 @@
 }
 
 .toggle-button .form-check-input {
+	width: 2.5em;
+	height: 1.25em;
 	margin-top: 0;
 }
 
