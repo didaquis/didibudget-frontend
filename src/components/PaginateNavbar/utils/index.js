@@ -7,7 +7,7 @@
 const createActivePaginationItem = (pageNumber, handleClick) => {
 	return (
 		<li className="page-item active" key={pageNumber}>
-			<button className="page-link bg-info text-light border-info" aria-label={`Page ${pageNumber}`} value={pageNumber} onClick={e => handleClick(e)}>{pageNumber}</button>
+			<button className="page-link bg-info text-dark border-info" aria-label={`Page ${pageNumber}`} aria-current="page" value={pageNumber} onClick={e => handleClick(e)}>{pageNumber}</button>
 		</li>
 	)
 }

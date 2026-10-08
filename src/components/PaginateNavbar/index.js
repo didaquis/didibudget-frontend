@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import './styles.css'
 import { createActivePaginationItem, createPaginationItem, createEllipsisPaginationItem, excludeUnusedItems } from './utils'
 
 export const PaginateNavbar = ( { currentPage, totalPages, onChangePage } ) => {
@@ -50,8 +51,8 @@ export const PaginateNavbar = ( { currentPage, totalPages, onChangePage } ) => {
 	const paginationItemsToDisplay = excludeUnusedItems(paginationItems)
 
 	return (
-		<nav aria-label="Paginate the results">
-			<ul className="pagination justify-content-center m-4">
+		<nav className="paginate-navbar" aria-label="Paginate the results">
+			<ul className="pagination justify-content-center my-4">
 				{ paginationItemsToDisplay }
 			</ul>
 		</nav>

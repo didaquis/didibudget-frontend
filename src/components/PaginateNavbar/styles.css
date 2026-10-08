@@ -1,0 +1,8 @@
+/* 44px tap targets for one-handed use */
+.paginate-navbar .page-link {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 44px;
+	min-height: 44px;
+}
