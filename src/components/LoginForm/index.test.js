@@ -110,7 +110,7 @@ describe('LoginForm', () => {
 		await user.type(passwordInput, 'ABCabc*1234*4321')
 		await user.click(submitButton)
 
-		const submitButtonLoadingState = screen.getByRole('button', { name: 'Loading' })
+		const submitButtonLoadingState = screen.getByRole('button', { name: 'Logging in…' })
 
 		expect(submitButtonLoadingState).toBeVisible()
 		expect(submitButtonLoadingState).toBeDisabled()
