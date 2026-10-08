@@ -2,8 +2,6 @@ import PropTypes from 'prop-types'
 
 import { formatAmount } from '../../../utils/currency'
 
-import './styles.css'
-
 const MonthFigures = ({ monthName, spent, savingsAndInvestments, children, className = '' }) => (
 	<div className={`text-light ${className}`}>
 		<p className="mb-0 small text-white-50">Spent in {monthName}</p>
@@ -39,7 +37,7 @@ MonthToDateSpending.propTypes = {
 // Same lines as the loaded figures, so nothing below moves when the data arrives
 export const MonthToDateSpendingLoading = ({ monthName }) => (
 	<MonthFigures
-		className="month-figures-loading placeholder-glow"
+		className="placeholder-glow"
 		monthName={monthName}
 		spent={<span className="placeholder col-4" aria-hidden="true" />}
 		savingsAndInvestments={<span className="placeholder col-2" aria-hidden="true" />}
