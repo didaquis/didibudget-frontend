@@ -6,3 +6,10 @@
 		background-color: transparent;
 	}
 }
+
+/* react-widgets paints the picked day in its own blue; match the app's info chips */
+.rw-calendar .rw-cell.rw-state-selected {
+	color: #000;
+	background-color: var(--bs-info);
+	border-color: var(--bs-info);
+}
