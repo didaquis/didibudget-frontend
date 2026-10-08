@@ -167,7 +167,7 @@ Flat. Surfaces share the page colour and are separated by 1px cyan or secondary 
 
 ## Shapes
 
-Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is Bootstrap's default. Pills appear only in the React Toggle track. List groups are flush, with no outer corners. No custom silhouettes.
+Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is Bootstrap's default. Pills appear only in the switch track (`ToggleButton`). List groups are flush, with no outer corners. No custom silhouettes.
 
 ## Components
 
@@ -182,6 +182,9 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 
 ### Chips
 - **Style:** `btn-sm` in a `d-flex flex-wrap gap-2` row. Outline cyan at rest, filled cyan when selected.
+
+### Switches
+- **Style:** `ToggleButton`, Bootstrap's `form-switch` with `role="switch"`. White track when off, filled `info` when on. The label fills a 44px row, so tapping the text flips it.
 
 ### Cards / Containers
 - **Corner Style:** 0.25rem.
