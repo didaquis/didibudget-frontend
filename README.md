@@ -45,9 +45,9 @@ Don't worry, here you have a guide:
 ### Screenshots
 
 <p>
-	<img src="./docs-and-assets/screenshot-spending-add.png" alt="Add spending" width="160">
-	<img src="./docs-and-assets/screenshot-spending-overview.png" alt="Spending overview" width="160">
-	<img src="./docs-and-assets/screenshot-spending-this-month.png" alt="This month" width="160">
-	<img src="./docs-and-assets/screenshot-spending-search.png" alt="Spending search" width="160">
-	<img src="./docs-and-assets/screenshot-monthly-balance-overview.png" alt="Monthly balance overview" width="160">
+	<img src="./docs-and-assets/screenshot-spending-add.png" alt="Add spending" width="400">
+	<img src="./docs-and-assets/screenshot-spending-overview.png" alt="Spending overview" width="400">
+	<img src="./docs-and-assets/screenshot-spending-this-month.png" alt="This month" width="400">
+	<img src="./docs-and-assets/screenshot-spending-search.png" alt="Spending search" width="400">
+	<img src="./docs-and-assets/screenshot-monthly-balance-overview.png" alt="Monthly balance overview" width="400">
 </p>
