@@ -154,12 +154,12 @@ const getUnitAndValueDate = (secondsElapsed) => {
 
 /**
  * Get a human-readable relative time string (e.g., "2 hours ago") from a timestamp.
- * @param {number} timestamp - The timestamp in milliseconds (e.g., from Date.now()).
- * @param {string} [locale='en-UK'] - The locale for formatting the relative time (e.g., 'en-US', 'es-ES').
+ * @param {number|string} timestamp - The timestamp in milliseconds (e.g., from Date.now()); the backend sends it as a string.
+ * @param {string} [locale='en-GB'] - The locale for formatting the relative time (e.g., 'en-US', 'es-ES').
  * @returns {string} A localized relative time string.
  * @throws {RangeError} If the timestamp is missing or cannot be formatted.
  */
-const getTimeAgo = (timestamp, locale = 'en-UK') => {
+const getTimeAgo = (timestamp, locale = 'en-GB') => {
 	if (timestamp === null || timestamp === undefined) {
 		throw new RangeError('Invalid value at getTimeAgo function')
 	}

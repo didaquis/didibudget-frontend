@@ -8,24 +8,24 @@ const mockUsers = [
 		email: 'alice@example.com',
 		isAdmin: true,
 		isActive: true,
-		registrationDate: 1715776800000,
-		lastLogin: '1700000000'
+		registrationDate: '1715776800000',
+		lastLogin: '1791288000000'
 	},
 	{
 		uuid: '2',
 		email: 'bob@example.com',
 		isAdmin: false,
 		isActive: true,
-		registrationDate: 1704976800000,
-		lastLogin: '1735689600'
+		registrationDate: '1704976800000',
+		lastLogin: '1777636800000'
 	},
 	{
 		uuid: '3',
 		email: 'carol@example.com',
 		isAdmin: true,
 		isActive: false,
-		registrationDate: 1718877600000,
-		lastLogin: '1700100000'
+		registrationDate: '1718877600000',
+		lastLogin: '1791543600000'
 	}
 ]
 
@@ -53,13 +53,17 @@ describe('ListOfUsers', () => {
 		vi.clearAllMocks()
 	})
 
+	afterEach(() => {
+		vi.useRealTimers()
+	})
+
 	it('renders table headers', () => {
 		renderList()
 		const table = getTable()
 		expect(table.getByText('Email')).toBeVisible()
 		expect(table.getByText('Role')).toBeVisible()
 		expect(table.getByText('Status')).toBeVisible()
-		expect(table.getByText('Registration')).toBeVisible()
+		expect(table.getByText('Joined')).toBeVisible()
 		expect(table.getByText('Last login')).toBeVisible()
 	})
 
@@ -101,9 +105,14 @@ describe('ListOfUsers', () => {
 		expect(getTable().getByText('Inactive')).toBeVisible()
 	})
 
-	it('renders relative time for registration and last login', () => {
+	it('shows when each user joined and last logged in', () => {
+		vi.useFakeTimers({ toFake: ['Date'] })
+		vi.setSystemTime(new Date('2026-10-09T12:00:00Z'))
 		renderList()
-		expect(getTable().getAllByText(/ago/)).toHaveLength(6)
+
+		const aliceRow = getTable().getByRole('row', { name: /alice@example.com/ })
+		expect(aliceRow).toHaveTextContent('2 years ago')
+		expect(aliceRow).toHaveTextContent('3 days ago')
 	})
 
 	it('filters users by email search', async () => {
