@@ -143,6 +143,8 @@ npm run lint -- src/pages/Login.js  # Lint specific file
 
 ## UI Patterns
 
+Read `DESIGN.md` first: it is the source of truth for colours, components and layout.
+
 Before creating any new UI element, find an existing similar element in the codebase and match its styling approach — same Bootstrap classes, same custom CSS patterns, same markup structure. Don't invent new custom styles when the project already has a convention.
 
 ## Accessibility & Dark Theme Colors

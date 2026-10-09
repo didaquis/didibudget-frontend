@@ -23,6 +23,9 @@ majority to weigh against a desktop minority — it is where the app is used.
 
 ## UI
 
+Visual rules (colour, type, components, layout) live in `DESIGN.md`; product context in `PRODUCT.md`.
+Read DESIGN.md before any UI change.
+
 The page is dark but form controls are **not**: the app uses default Bootstrap `form-control` /
 `form-select` with no colour overrides. Match that in new forms.
 

@@ -203,6 +203,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 ### Lists & Tables
 - **List groups:** `list-group-flush`, items `bg-dark border-info px-0 py-1`, horizontal padding removed so rows align with the page edge. When every row carries its own button, rows use `border-secondary` and `py-3` instead.
 - **Tables:** `table-dark table-hover`, with a `table-info` header row. Always wrapped in `table-responsive`.
+- **Titled tables:** when a table is one of many stacked groups (Month by month), the title and its total are not column headers: they go above the table in an `h2` (`h5 fw-light`, total on the right, `border-bottom border-info`, `px-2` to align with the cells) that names the table through `aria-labelledby`. No `table-info` row. Nested rows that can't be tapped use `text-white-50` and a `border-secondary` left line, never cyan.
 - **Stacked rows on phones:** a list whose rows each carry a button is a `list-group-flush` below 768px, not a table. Each item is `bg-dark text-light border-secondary px-0 py-3` holding a `d-flex align-items-center gap-3` row: the text grows on the left (main line, then a `small` line such as `date · amount`), the button sits on the right, flush with the page edge.
 
 ### Feedback
