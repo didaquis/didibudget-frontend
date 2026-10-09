@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react'
+import { useState, useId, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { getNameOfCategoryOrSubcategory } from '../utils'
@@ -10,6 +10,7 @@ import { formatAmount } from '../../../utils/currency'
 export const DetailedExpensesGroup = ({ expensesGroupData, categories }) => {
 
 	const [toggleShowDetailedInformation, setToggleShowDetailedInformation] = useState(false)
+	const titleId = useId()
 
 	const onToggleDetailedInformation = (value) => {
 		setToggleShowDetailedInformation(value)
@@ -19,13 +20,11 @@ export const DetailedExpensesGroup = ({ expensesGroupData, categories }) => {
 
 	return (
 		<section className="table-responsive mb-5">
-			<table className="table table-dark">
-				<thead>
-					<tr className="table-info text-dark">
-						<th scope="col" className="text-nowrap">{expensesGroupData.groupTitle}</th>
-						<th scope="col" className="text-nowrap text-end">{formatAmount(expensesGroupData.groupTotal)}</th>
-					</tr>
-				</thead>
+			<h2 className="h5 fw-light text-light d-flex justify-content-between gap-3 border-bottom border-info px-2 pb-2 mb-0">
+				<span id={titleId} className="text-nowrap">{expensesGroupData.groupTitle}</span>
+				<span className="text-nowrap">{formatAmount(expensesGroupData.groupTotal)}</span>
+			</h2>
+			<table className="table table-dark" aria-labelledby={titleId}>
 				<tbody>
 					{
 						expensesGroupData.perCategory.map(category => {
