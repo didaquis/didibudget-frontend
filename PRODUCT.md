@@ -41,7 +41,7 @@ Manual on purpose. Every spend is typed in by hand, because entering it is what 
 
 ## Evidence on Hand
 
-- Screenshots: `docs-and-assets/preview_01.png` to `preview_04.png`.
+- Screenshots: `docs-and-assets/screenshot-*.png`, captured at 390px.
 - No other users, testimonials or usage metrics exist, and none should be invented.
 
 ## Product Principles
