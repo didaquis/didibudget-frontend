@@ -54,7 +54,6 @@ export const DetailedExpensesGroup = ({ expensesGroupData, categories }) => {
 						screenReaderText={`for ${expensesGroupData.groupTitle}`}
 						isOnByDefault={toggleShowDetailedInformation}
 						onToggle={onToggleDetailedInformation}
-						isDisabled={!hasSubcategories}
 					/>
 				</div>
 			}
