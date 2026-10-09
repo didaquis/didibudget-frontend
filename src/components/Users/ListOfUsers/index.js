@@ -76,7 +76,7 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 											<th scope="col">Email</th>
 											<th scope="col">Role</th>
 											<th scope="col">Status</th>
-											<th scope="col">Registration</th>
+											<th scope="col">Joined</th>
 											<th scope="col">Last login</th>
 										</tr>
 									</thead>
