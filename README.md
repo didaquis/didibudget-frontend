@@ -44,10 +44,10 @@ Don't worry, here you have a guide:
 
 ### Screenshots
 
-![preview_01](./docs-and-assets/preview_01.png)  
-
-![preview_02](./docs-and-assets/preview_02.png)  
-
-![preview_03](./docs-and-assets/preview_03.png)  
-
-![preview_04](./docs-and-assets/preview_04.png)  
+<p>
+	<img src="./docs-and-assets/screenshot-spending-add.png" alt="Add spending" width="160">
+	<img src="./docs-and-assets/screenshot-spending-overview.png" alt="Spending overview" width="160">
+	<img src="./docs-and-assets/screenshot-spending-this-month.png" alt="This month" width="160">
+	<img src="./docs-and-assets/screenshot-spending-search.png" alt="Spending search" width="160">
+	<img src="./docs-and-assets/screenshot-monthly-balance-overview.png" alt="Monthly balance overview" width="160">
+</p>
