@@ -22,27 +22,38 @@ describe('UserListItemCard', () => {
 		expect(screen.getByText('alice@example.com')).toBeVisible()
 	})
 
-	it('renders Admin badge for admin', () => {
+	it('renders Admin role for admin', () => {
 		renderCard()
 		expect(screen.getByText('Admin')).toBeVisible()
 		expect(screen.queryByText('User')).not.toBeInTheDocument()
 	})
 
-	it('renders User badge for non-admin', () => {
+	it('renders User role for non-admin', () => {
 		renderCard({ ...mockUser, isAdmin: false })
 		expect(screen.getByText('User')).toBeVisible()
 		expect(screen.queryByText('Admin')).not.toBeInTheDocument()
 	})
 
-	it('renders Active badge for active user', () => {
+	it('marks admins with a shield hidden from screen readers', () => {
+		renderCard()
+		expect(screen.getByTitle('Admin')).toHaveAttribute('aria-hidden', 'true')
+	})
+
+	it('does not render the shield for non-admins', () => {
+		renderCard({ ...mockUser, isAdmin: false })
+		expect(screen.queryByTitle('Admin')).not.toBeInTheDocument()
+	})
+
+	it('renders Active as plain text for active user', () => {
 		renderCard()
 		expect(screen.getByText('Active')).toBeVisible()
+		expect(screen.getByText('Active')).not.toHaveClass('badge')
 		expect(screen.queryByText('Inactive')).not.toBeInTheDocument()
 	})
 
-	it('renders Inactive badge for inactive user', () => {
+	it('renders Inactive as a badge for inactive user', () => {
 		renderCard({ ...mockUser, isActive: false })
-		expect(screen.getByText('Inactive')).toBeVisible()
+		expect(screen.getByText('Inactive')).toHaveClass('badge')
 		expect(screen.queryByText('Active')).not.toBeInTheDocument()
 	})
 

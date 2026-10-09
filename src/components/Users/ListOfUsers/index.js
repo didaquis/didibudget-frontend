@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import { BsX } from 'react-icons/bs'
 
-import { roleBadge, statusBadge } from './badges'
+import { AdminShield, roleLabel, statusLabel } from './labels'
 import { formatTimeAgo } from './formatters'
 import { UserListItemCard } from './UserListItemCard'
 
@@ -88,8 +88,13 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 										{filteredUsers.map(user => (
 											<tr key={user.uuid}>
 												<td>{user.email}</td>
-												<td>{roleBadge(user.isAdmin)}</td>
-												<td>{statusBadge(user.isActive)}</td>
+												<td>
+													<span className="d-inline-flex align-items-center gap-2">
+														{roleLabel(user.isAdmin)}
+														{user.isAdmin && <AdminShield />}
+													</span>
+												</td>
+												<td>{statusLabel(user.isActive)}</td>
 												<td>{formatTimeAgo(user.registrationDate, 'Unknown')}</td>
 												<td>{formatTimeAgo(user.lastLogin, 'Never')}</td>
 											</tr>
