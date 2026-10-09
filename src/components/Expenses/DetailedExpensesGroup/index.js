@@ -51,6 +51,7 @@ export const DetailedExpensesGroup = ({ expensesGroupData, categories }) => {
 				hasSubcategories && <div className="ms-2">
 					<ToggleButton
 						text='Show subcategories'
+						screenReaderText={`for ${expensesGroupData.groupTitle}`}
 						isOnByDefault={toggleShowDetailedInformation}
 						onToggle={onToggleDetailedInformation}
 						isDisabled={!hasSubcategories}

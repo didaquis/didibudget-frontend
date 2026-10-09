@@ -29,7 +29,7 @@ describe('DetailedExpensesGroup', () => {
 
 		expect(screen.queryByText('Fuel')).not.toBeInTheDocument()
 
-		await user.click(screen.getByRole('switch', { name: 'Show subcategories' }))
+		await user.click(screen.getByRole('switch', { name: 'Show subcategories for October 2026' }))
 
 		expect(screen.getByText('Fuel')).toBeVisible()
 	})

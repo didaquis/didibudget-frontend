@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import './styles.css'
 
-export const ToggleButton = ({ text, onToggle, isOnByDefault = false, isDisabled = false }) => {
+export const ToggleButton = ({ text, screenReaderText, onToggle, isOnByDefault = false, isDisabled = false }) => {
 	const id = useId()
 
 	const onChange = e => {
@@ -21,13 +21,17 @@ export const ToggleButton = ({ text, onToggle, isOnByDefault = false, isDisabled
 				disabled={isDisabled}
 				onChange={onChange}
 			/>
-			<label className="form-check-label text-white fw-light ms-2" htmlFor={id}>{text}</label>
+			<label className="form-check-label text-white fw-light ms-2" htmlFor={id}>
+				{text}
+				{screenReaderText && <span className="visually-hidden"> {screenReaderText}</span>}
+			</label>
 		</div>
 	)
 }
 
 ToggleButton.propTypes = {
 	text: PropTypes.string.isRequired,
+	screenReaderText: PropTypes.string,
 	onToggle: PropTypes.func.isRequired,
 	isOnByDefault: PropTypes.bool,
 	isDisabled: PropTypes.bool
