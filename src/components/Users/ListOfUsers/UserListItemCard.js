@@ -1,31 +1,32 @@
 import PropTypes from 'prop-types'
 
-import { roleBadge, statusBadge } from './badges'
+import { AdminShield, roleLabel, statusLabel } from './labels'
 import { formatTimeAgo } from './formatters'
 
 export const UserListItemCard = ({ user }) => (
-	<div className="card bg-dark border-info mb-3">
-		<div className="card-header">
-			<span className="text-light text-break">{user.email}</span>
+	<div className="card bg-dark border-secondary mb-3">
+		<div className="card-header border-secondary d-flex justify-content-between align-items-start gap-2">
+			<span className="text-light text-break" style={{ minWidth: 0, overflowWrap: 'anywhere' }}>{user.email}</span>
+			{user.isAdmin && <AdminShield />}
 		</div>
-		<div className="card-body text-light py-2 d-flex flex-column gap-2">
-			<div className="d-flex justify-content-between align-items-center">
-				<span className="text-white-50">Role</span>
-				{roleBadge(user.isAdmin)}
+		<dl className="card-body text-light py-2 mb-0 row row-cols-2 gx-3 gy-2">
+			<div className="col">
+				<dt className="small fw-normal lh-sm text-white-50">Role</dt>
+				<dd className="mb-0 lh-sm">{roleLabel(user.isAdmin)}</dd>
 			</div>
-			<div className="d-flex justify-content-between align-items-center">
-				<span className="text-white-50">Status</span>
-				{statusBadge(user.isActive)}
+			<div className="col">
+				<dt className="small fw-normal lh-sm text-white-50">Status</dt>
+				<dd className="mb-0 lh-sm">{statusLabel(user.isActive)}</dd>
 			</div>
-			<div className="d-flex justify-content-between align-items-center">
-				<span className="text-white-50">Joined</span>
-				<span>{formatTimeAgo(user.registrationDate, 'Unknown')}</span>
+			<div className="col">
+				<dt className="small fw-normal lh-sm text-white-50">Joined</dt>
+				<dd className="mb-0 lh-sm">{formatTimeAgo(user.registrationDate, 'Unknown')}</dd>
 			</div>
-			<div className="d-flex justify-content-between align-items-center">
-				<span className="text-white-50">Last login</span>
-				<span>{formatTimeAgo(user.lastLogin, 'Never')}</span>
+			<div className="col">
+				<dt className="small fw-normal lh-sm text-white-50">Last login</dt>
+				<dd className="mb-0 lh-sm">{formatTimeAgo(user.lastLogin, 'Never')}</dd>
 			</div>
-		</div>
+		</dl>
 	</div>
 )
 

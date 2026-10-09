@@ -85,24 +85,33 @@ describe('ListOfUsers', () => {
 		expect(screen.getAllByText('carol@example.com')).toHaveLength(2)
 	})
 
-	it('shows Admin badge in table for admin users', () => {
+	it('shows Admin role in table for admin users', () => {
 		renderList()
 		expect(getTable().getAllByText('Admin')).toHaveLength(2)
 	})
 
-	it('shows User badge in table for non-admin users', () => {
+	it('shows a shield hidden from screen readers next to each admin in the table', () => {
+		renderList()
+		const shields = getTable().getAllByTitle('Admin')
+		expect(shields).toHaveLength(2)
+		shields.forEach(shield => expect(shield).toHaveAttribute('aria-hidden', 'true'))
+	})
+
+	it('shows User role in table for non-admin users', () => {
 		renderList()
 		expect(getTable().getByText('User')).toBeVisible()
 	})
 
-	it('shows Active badge in table for active users', () => {
+	it('shows Active as plain text in table for active users', () => {
 		renderList()
-		expect(getTable().getAllByText('Active')).toHaveLength(2)
+		const active = getTable().getAllByText('Active')
+		expect(active).toHaveLength(2)
+		active.forEach(cell => expect(cell).not.toHaveClass('badge'))
 	})
 
-	it('shows Inactive badge in table for inactive users', () => {
+	it('shows Inactive as a badge in table for inactive users', () => {
 		renderList()
-		expect(getTable().getByText('Inactive')).toBeVisible()
+		expect(getTable().getByText('Inactive')).toHaveClass('badge')
 	})
 
 	it('shows when each user joined and last logged in', () => {
