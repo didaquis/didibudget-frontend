@@ -70,7 +70,7 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 					<Fragment>
 						<div className="d-none d-md-block">
 							<div className="table-responsive">
-								<table className="table table-dark table-hover">
+								<table className="table table-dark">
 									<thead>
 										<tr className="table-info text-dark text-nowrap">
 											<th scope="col">Email</th>
