@@ -29,6 +29,11 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 		user.email.toLowerCase().includes(search.toLowerCase())
 	)
 
+	const hasMatches = filteredUsers.length > 0
+	const searchStatus = !hasMatches
+		? 'No users found'
+		: (search !== '' ? `${filteredUsers.length} of ${users.length} users` : '')
+
 	return (
 		<section>
 			<div className="row mb-4">
@@ -62,11 +67,10 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 				</div>
 			</div>
 
+			<p className={hasMatches ? 'visually-hidden' : 'text-white-50'} role="status">{searchStatus}</p>
+
 			{
-				(filteredUsers.length === 0)
-					?
-					<p className="text-white-50" role="status">No users found</p>
-					:
+				hasMatches && (
 					<Fragment>
 						<div className="d-none d-md-block">
 							<div className="table-responsive">
@@ -101,6 +105,7 @@ export const ListOfUsers = ({ users, startPolling, stopPolling }) => {
 							))}
 						</div>
 					</Fragment>
+				)
 			}
 		</section>
 	)

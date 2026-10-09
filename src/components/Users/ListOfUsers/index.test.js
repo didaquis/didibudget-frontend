@@ -172,6 +172,22 @@ describe('ListOfUsers', () => {
 		expect(getSearchInput()).toHaveFocus()
 	})
 
+	it('announces how many users match the search without showing it', async () => {
+		const user = userEvent.setup()
+		renderList()
+
+		await user.type(getSearchInput(), 'bob')
+
+		expect(screen.getByRole('status')).toHaveTextContent('1 of 3 users')
+		expect(screen.getByRole('status')).toHaveClass('visually-hidden')
+	})
+
+	it('announces nothing while the search is empty', () => {
+		renderList()
+
+		expect(screen.getByRole('status')).toBeEmptyDOMElement()
+	})
+
 	it('shows a no results message when search matches nothing', async () => {
 		const user = userEvent.setup()
 		renderList()
