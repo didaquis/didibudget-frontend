@@ -5,7 +5,7 @@ import { formatTimeAgo } from './formatters'
 
 export const UserListItemCard = ({ user }) => (
 	<div className="card bg-dark border-secondary mb-3">
-		<div className="card-header d-flex justify-content-between align-items-start gap-2">
+		<div className="card-header border-secondary d-flex justify-content-between align-items-start gap-2">
 			<span className="text-light text-break" style={{ minWidth: 0, overflowWrap: 'anywhere' }}>{user.email}</span>
 			{user.isAdmin && <AdminShield />}
 		</div>
