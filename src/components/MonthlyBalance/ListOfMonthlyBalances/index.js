@@ -33,7 +33,7 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 		const rows = monthlyBalances.map(monthlyBalance => {
 			const monthLabel = formatMonth(monthlyBalance)
 			const balance = formatAmount(monthlyBalance.balance, monthlyBalance.currencyISO)
-			return { uuid: monthlyBalance.uuid, monthLabel, balance, details: [monthLabel, balance] }
+			return { uuid: monthlyBalance.uuid, monthLabel, balance, record: { name: monthLabel, amount: balance } }
 		})
 
 		return (
@@ -54,7 +54,7 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 										<td className="text-nowrap">{row.monthLabel}</td>
 										<td className="text-nowrap">{row.balance}</td>
 										<td>
-											<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
+											<ButtonDelete uuid={row.uuid} title="Delete this monthly balance?" record={row.record} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
 										</td>
 									</tr>
 								))
@@ -72,7 +72,7 @@ export const ListOfMonthlyBalances = ({ monthlyBalances, paginationData, refetch
 										<p className="mb-0">{row.monthLabel}</p>
 										<p className="mb-0 small text-white-50 text-nowrap">{row.balance}</p>
 									</div>
-									<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
+									<ButtonDelete uuid={row.uuid} title="Delete this monthly balance?" record={row.record} deleteMutation={deleteMonthlyBalance} onDelete={onDeleteMonthlyBalance} />
 								</div>
 							</li>
 						))

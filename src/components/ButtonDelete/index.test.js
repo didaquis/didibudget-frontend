@@ -3,13 +3,14 @@ import userEvent from '@testing-library/user-event'
 
 import { ButtonDelete } from './index'
 
-const DETAILS = ['2026-08-02', 'Home › Electricity bill', '27.34 EUR']
-const DESCRIPTION = DETAILS.join(', ')
+const TITLE = 'Delete this spending?'
+const RECORD = { name: 'Home › Electricity bill', date: '2026-08-02', amount: '27.34 EUR' }
+const DESCRIPTION = '2026-08-02, Home › Electricity bill, 27.34 EUR'
 
-const renderButtonDelete = ({ deleteMutation = vi.fn().mockResolvedValue({}), onDelete = vi.fn() } = {}) => {
+const renderButtonDelete = ({ record = RECORD, deleteMutation = vi.fn().mockResolvedValue({}), onDelete = vi.fn() } = {}) => {
 	const user = userEvent.setup()
 
-	render(<ButtonDelete uuid='abc-123' details={DETAILS} deleteMutation={deleteMutation} onDelete={onDelete} />)
+	render(<ButtonDelete uuid='abc-123' title={TITLE} record={record} deleteMutation={deleteMutation} onDelete={onDelete} />)
 
 	return { user, deleteMutation, onDelete }
 }
@@ -26,7 +27,7 @@ describe('ButtonDelete', () => {
 
 		const dialog = await openTheConfirmation(user)
 
-		expect(within(dialog).getByText('Delete this record?')).toBeVisible()
+		expect(within(dialog).getByText(TITLE)).toBeVisible()
 		expect(deleteMutation).not.toHaveBeenCalled()
 	})
 
@@ -35,15 +36,24 @@ describe('ButtonDelete', () => {
 
 		await openTheConfirmation(user)
 
-		expect(screen.getByRole('dialog', { name: 'Delete this record?' })).toBeVisible()
+		expect(screen.getByRole('dialog', { name: TITLE })).toBeVisible()
 	})
 
-	it.each(DETAILS)('shows %s so the user can recognise the record', async (detail) => {
+	it.each(Object.values(RECORD))('shows %s so the user can recognise the record', async (detail) => {
 		const { user } = renderButtonDelete()
 
 		const dialog = await openTheConfirmation(user)
 
 		expect(within(dialog).getByText(detail)).toBeVisible()
+	})
+
+	it('shows a record that has no date', async () => {
+		const { user } = renderButtonDelete({ record: { name: 'January 2026', amount: '1234.50 EUR' } })
+
+		await user.click(screen.getByRole('button', { name: 'Delete January 2026, 1234.50 EUR' }))
+		const dialog = await screen.findByRole('dialog')
+
+		expect(within(dialog).getByText('1234.50 EUR')).toBeVisible()
 	})
 
 	it('names the record on the button so rows are told apart', () => {

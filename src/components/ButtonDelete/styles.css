@@ -1,10 +1,12 @@
-/* 44px tap target for one-handed use; the icon sits flush with the row's right edge */
+/* 44px tap target for one-handed use, icon centred. The target spills 12px into the page gutter
+   so the icon still sits flush with the row's right edge */
 .button-delete {
 	display: inline-flex;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: center;
 	min-width: 44px;
 	min-height: 44px;
+	margin-right: -12px;
 	/* 0.35 is the dimmest that keeps 3:1 contrast on the dark page */
 	color: rgba(255, 255, 255, 0.35);
 }
@@ -12,4 +14,15 @@
 .button-delete:hover,
 .button-delete:focus-visible {
 	color: var(--bs-danger) !important;
+}
+
+/* Bootstrap's footer packs to the right; the stacked buttons span the dialog */
+.delete-confirmation .modal-footer {
+	justify-content: stretch;
+}
+
+/* 44px tap target; the icon itself stays 1em */
+.delete-confirmation .btn-close {
+	padding: calc((44px - 1em) / 2);
+	margin: -0.875rem -0.875rem -0.875rem auto;
 }

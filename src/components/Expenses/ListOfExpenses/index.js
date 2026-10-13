@@ -37,7 +37,7 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 			const date = parseUnixTimestamp(expense.date).substring(0, 10)
 			const fullNameOfCategory = `${nameOfCategory}${(nameOfSubcategory) ? ` › ${nameOfSubcategory}` : ''}`
 			const amount = formatAmount(expense.quantity, expense.currencyISO)
-			return { uuid: expense.uuid, date, fullNameOfCategory, amount, details: [date, fullNameOfCategory, amount] }
+			return { uuid: expense.uuid, date, fullNameOfCategory, amount, record: { name: fullNameOfCategory, date, amount } }
 		})
 
 		return (
@@ -60,7 +60,7 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 										<td>{row.fullNameOfCategory}</td>
 										<td className="text-nowrap">{row.amount}</td>
 										<td>
-											<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
+											<ButtonDelete uuid={row.uuid} title="Delete this spending?" record={row.record} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
 										</td>
 									</tr>
 								))
@@ -83,7 +83,7 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 											<span className="text-nowrap">{row.date}</span> · <span className="text-nowrap text-light">{row.amount}</span>
 										</p>
 									</div>
-									<ButtonDelete uuid={row.uuid} details={row.details} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
+									<ButtonDelete uuid={row.uuid} title="Delete this spending?" record={row.record} deleteMutation={deleteExpense} onDelete={onDeleteExpense} />
 								</div>
 							</li>
 						))
