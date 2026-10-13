@@ -120,13 +120,11 @@ export const RegisterMonthlyBalanceForm = () => {
 					<div className="mt-2">
 						<SubmitButton disabled={isDisabled || !isValid}>Save monthly balance</SubmitButton>
 						<SubmitButtonHelper mustShowHelper={!isValid}></SubmitButtonHelper>
+						{
+							error && <ErrorAlert errorMessage={error} variant="form" />
+						}
 					</div>
 				</form>
-				<div className="col-md-8">
-					{
-						error && <ErrorAlert errorMessage={error} />
-					}
-				</div>
 			</div>
 		</Fragment>
 	)
