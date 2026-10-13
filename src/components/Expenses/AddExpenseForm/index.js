@@ -80,7 +80,7 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 					// so anything below it gets pushed off a 390px screen.
 				}
 				{
-					error && <ErrorAlert errorMessage={error} />
+					error && <ErrorAlert errorMessage={error} variant="form" />
 				}
 
 				<div className="mb-4">

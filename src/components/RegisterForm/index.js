@@ -102,13 +102,10 @@ export const RegisterForm = ({ activateAuth }) => {
 						}
 					</SubmitButton>
 					<SubmitButtonHelper mustShowHelper={!validateRegisterForm(email.value, password.value, repeatPassword.value)}></SubmitButtonHelper>
-
-				</form>
-				<div className="col-md-8">
 					{
-						error && <ErrorAlert errorMessage={error} />
+						error && <ErrorAlert errorMessage={error} variant="form" />
 					}
-				</div>
+				</form>
 			</div>
 		</Fragment>
 	)

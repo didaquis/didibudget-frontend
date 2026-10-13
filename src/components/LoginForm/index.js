@@ -66,13 +66,11 @@ export const LoginForm = ({ activateAuth }) => {
 							}
 						</SubmitButton>
 						<SubmitButtonHelper mustShowHelper={!validateLoginForm(email.value, password.value)}></SubmitButtonHelper>
+						{
+							error && <ErrorAlert errorMessage={error} variant="form" />
+						}
 					</div>
 				</form>
-				<div className="col-md-8">
-					{
-						error && <ErrorAlert errorMessage={error} />
-					}
-				</div>
 			</div>
 		</Fragment>
 	)

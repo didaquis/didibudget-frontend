@@ -206,7 +206,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Stacked rows on phones:** a list whose rows each carry a button is a `list-group-flush` below 768px, not a table. Each item is `bg-dark text-light border-secondary px-0 py-3` holding a `d-flex align-items-center gap-3` row: the text grows on the left (main line, then a `small` line such as `date · amount`), the button sits on the right, flush with the page edge.
 
 ### Feedback
-- **ErrorAlert:** `alert-danger`, centred, `role="alert"`. Failures only.
+- **ErrorAlert:** `alert-danger`, centred, `role="alert"`. Failures only. A page-level error (a query that failed) keeps `my-5`. A form submission error uses `variant="form"` (`mt-0 mb-4`) and sits inside the form, right after the submit button's helper line. Add spending is the exception: its error goes above the fields.
 - **EmptyState:** `alert-info`, centred, `role="status"`. When a screen's main content is empty: "nothing yet", or a search that returned nothing.
 - **Filter with no matches:** inline muted text (`text-white-50`, `role="status"`, "No … found") where the list would be. Used when a live filter empties a list already on screen (users, category picker); an `EmptyState` box there would shove the form around for a passing state.
 - **SuccessToast:** solid white toast placed below the navbar (top 64px). It fades and slides in over 150ms, then auto-hides. Each save passes `{ id, message }` with a fresh id. Motion is disabled under `prefers-reduced-motion`.
