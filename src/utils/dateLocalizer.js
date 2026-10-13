@@ -1,10 +1,14 @@
-import moment from 'moment'
-import MomentLocalizer from 'react-widgets-moment'
+import { DateLocalizer } from 'react-widgets/IntlLocalizer'
 
-moment.updateLocale('en', {
-	week: {
-		dow: 1 // Monday is the first day of the week.
-	}
-})
+const CULTURE = 'en-US'
 
-export const dateLocalizer = new MomentLocalizer(moment)
+const formatWeekday = new Intl.DateTimeFormat(CULTURE, { weekday: 'short' }).format
+const formatDate = new Intl.DateTimeFormat(CULTURE, { year: 'numeric', month: '2-digit', day: '2-digit' }).format
+
+export const dateLocalizer = new DateLocalizer({ culture: CULTURE, firstOfWeek: 1 })
+
+// Intl's defaults are one-letter weekdays (M T W T F S S) and two-digit years
+const intlWeekday = dateLocalizer.weekday
+const intlDate = dateLocalizer.date
+dateLocalizer.weekday = (date, format) => format ? intlWeekday(date, format) : formatWeekday(date).slice(0, 2)
+dateLocalizer.date = (date, format) => format ? intlDate(date, format) : formatDate(date)

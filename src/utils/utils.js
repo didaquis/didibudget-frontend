@@ -102,6 +102,19 @@ const endOfDay = (date) => {
 }
 
 /**
+ * Format a date as YYYY-MM-DD using its local calendar day.
+ *
+ * @param {Date} date
+ * @returns {string}
+ */
+const formatIsoDate = (date) => {
+	const year = date.getFullYear()
+	const month = String(date.getMonth() + 1).padStart(2, '0')
+	const day = String(date.getDate()).padStart(2, '0')
+	return `${year}-${month}-${day}`
+}
+
+/**
  * Return the local day-of-month (1-31) as an integer according to the user's current time zone.
  *
  * @example
@@ -188,5 +201,6 @@ export {
 	startOfDay,
 	endOfDay,
 	getLocalDay,
+	formatIsoDate,
 	getTimeAgo
 }

@@ -1,4 +1,4 @@
-import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, startOfDay, endOfDay, getLocalDay, getTimeAgo } from './utils'
+import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, startOfDay, endOfDay, getLocalDay, getTimeAgo, formatIsoDate } from './utils'
 
 describe('startOfDay and endOfDay', () => {
 	test('should move a date to the very beginning of its day', () => {
@@ -214,5 +214,14 @@ describe('getTimeAgo', () => {
 		vi.setSystemTime(Date.now())
 
 		expect(() => getTimeAgo(undefined)).toThrow(RangeError)
+	})
+})
+describe('formatIsoDate', () => {
+	it('formats a local date as year-month-day with zero padding', () => {
+		expect(formatIsoDate(new Date(2026, 0, 5))).toBe('2026-01-05')
+	})
+
+	it('uses the local calendar day, not the UTC one', () => {
+		expect(formatIsoDate(new Date(2026, 9, 13, 0, 30))).toBe('2026-10-13')
 	})
 })
