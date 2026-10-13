@@ -104,7 +104,7 @@ export const NavBar = () => {
 				labelledBy={MENU_TITLE_ID}
 				modalClassName="menu-index"
 				contentClassName="bg-dark text-light"
-				modalTransition={{ timeout: 150 }}
+				fade={false}
 			>
 				<div className="container-fluid">
 					<div className="container mt-2 pb-5">

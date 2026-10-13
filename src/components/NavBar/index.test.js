@@ -1,4 +1,4 @@
-import { render, screen, within, waitForElementToBeRemoved, fireEvent } from '@testing-library/react'
+import { render, screen, within, fireEvent, waitForElementToBeRemoved } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router'
 
@@ -96,7 +96,7 @@ describe('NavBar', () => {
 
 		await user.click(screen.getByRole('link', { name: 'Spending list' }))
 
-		await waitForElementToBeRemoved(() => screen.queryByRole('dialog'))
+		expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 	})
 
 	it('closes the menu from its close button', async () => {
@@ -105,7 +105,7 @@ describe('NavBar', () => {
 
 		await user.click(screen.getByRole('button', { name: 'Close' }))
 
-		await waitForElementToBeRemoved(() => screen.queryByRole('dialog'))
+		expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 	})
 
 	it('returns focus to the menu button when closed with Escape', async () => {
@@ -115,7 +115,7 @@ describe('NavBar', () => {
 		// reactstrap's Modal reads keyCode, which user-event never sets
 		fireEvent.keyUp(dialog, { key: 'Escape', keyCode: 27 })
 
-		await waitForElementToBeRemoved(() => screen.queryByRole('dialog'))
+		await waitForElementToBeRemoved(dialog)
 		expect(screen.getByRole('button', { name: 'Menu' })).toHaveFocus()
 	})
 })

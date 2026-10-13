@@ -44,23 +44,20 @@
 	overflow-y: auto;
 }
 
-/* Bootstrap slides the dialog 50px over 300ms; the menu is chrome, so keep it short */
-.menu-index.fade .modal-dialog {
-	transform: translateY(-8px);
-	transition: transform 150ms ease-out;
+/* Reactstrap's fade only adds .show once its timeout ends, which leaves the screen blank for a beat
+   after the tap. The index fades in on its own instead, without moving: its bar sits exactly on the
+   page's bar. Closing is instant. */
+.menu-index {
+	animation: menu-index-in 150ms ease-out;
 }
 
-.menu-index.show .modal-dialog {
-	transform: none;
-}
-
-.menu-index.fade {
-	transition: opacity 150ms ease-out;
+@keyframes menu-index-in {
+	from { opacity: 0; }
+	to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.menu-index.fade,
-	.menu-index.fade .modal-dialog {
-		transition: none;
+	.menu-index {
+		animation: none;
 	}
 }
