@@ -13,6 +13,10 @@ const SIZE_OF_PRIMARY_ICONS = '32px'
 export const NavBar = () => {
 	const { isAuth, userData } = useContext(AuthContext)
 
+	if (!isAuth) {
+		return null
+	}
+
 	return (
 		<nav className="nav navbar-dark justify-content-between flex-nowrap border-bottom border-info mt-2 mb-4">
 			<div className="nav-item">
@@ -21,15 +25,11 @@ export const NavBar = () => {
 				</Link>
 			</div>
 
-			{isAuth && (
-				<SavingsAndInvestmentsBalanceDropdown />
-			)}
+			<SavingsAndInvestmentsBalanceDropdown />
 
-			{isAuth && (
-				<ExpensesDropdown />
-			)}
+			<ExpensesDropdown />
 
-			{isAuth && userData.isAdmin && (
+			{userData.isAdmin && (
 				<div className="nav-item">
 					<Link className="nav-link text-light" to='/users' aria-label='User administration'>
 						<BsPeople size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />
@@ -37,13 +37,11 @@ export const NavBar = () => {
 				</div>
 			)}
 
-			{isAuth && (
-				<div className="nav-item">
-					<Link className="nav-link text-light" to='/logout' aria-label='Log out'>
-						<BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />
-					</Link>
-				</div>
-			)}
+			<div className="nav-item">
+				<Link className="nav-link text-light" to='/logout' aria-label='Log out'>
+					<BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />
+				</Link>
+			</div>
 		</nav>
 	)
 }

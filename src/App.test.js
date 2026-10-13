@@ -50,7 +50,7 @@ describe('App routing', () => {
 		const user = userEvent.setup()
 		renderAppAt('/register')
 
-		await user.click(screen.getByRole('link', { name: 'Home' }))
+		await user.click(screen.getByRole('link', { name: 'Log in' }))
 
 		expect(await screen.findByText('Loading…')).toBeVisible()
 	})
@@ -98,7 +98,7 @@ describe('App routing', () => {
 			const user = userEvent.setup()
 			renderAppAt('/register')
 
-			await user.click(screen.getByRole('link', { name: 'Home' }))
+			await user.click(screen.getByRole('link', { name: 'Log in' }))
 			await screen.findByRole('heading', { name: 'didibudget' })
 
 			expect(document.title).toBe('didibudget')
