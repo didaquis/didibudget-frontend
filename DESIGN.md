@@ -177,7 +177,7 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Selected / filled:** `btn-info` marks the chosen option in a set, such as the selected category chip in "Most used".
 - **Link style:** `btn-link` rows in long pick-lists like the category tree. The whole row is the button (`w-100 text-start px-0`, about 47px tall with its list item), emoji included. Rows that **choose** are cyan with the label underlined; rows that only **expand** are `text-light`, not underlined, with a white caret. Tapping a row must not leave Bootstrap's focus ring around it: hide it on `:focus:not(:focus-visible)` and keep it for keyboard focus.
 - **Light:** `btn-light` only when attached to a white input (input-group addon).
-- **Row delete:** `ButtonDelete`, a `btn-link` trash icon (`BsTrash3`, 20px) in `text-white-50`, 44px tap target with the icon flush right. It turns danger red on hover and keyboard focus. The confirmation modal's Delete is the only red button.
+- **Row delete:** `ButtonDelete`, a `btn-link` trash icon (`BsTrash3`, 20px) in `text-white-50`, 44px tap target with the icon flush right. It turns danger red on hover and keyboard focus. The confirmation modal's Delete is the only red button (filled), next to an outline-cyan Cancel. The modal is dark like the page (`bg-dark`, `border-secondary` hairlines, white close icon), and a failed delete shows `ErrorAlert` inside its body.
 
 ### Chips
 - **Style:** `btn-sm` in a `d-flex flex-wrap` row, 12px apart horizontally. Outline cyan at rest, filled cyan when selected. Wider and the Date row (Today, Yesterday, Pick another date) wraps on a 375px phone.

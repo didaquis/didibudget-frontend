@@ -1,13 +1,16 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import { BsTrash3 } from 'react-icons/bs'
 
+import { ErrorAlert } from '../ErrorAlert'
+
 import './styles.css'
 
 export const ButtonDelete = ({ uuid, details, deleteMutation, onDelete }) => {
 	const description = details.join(', ')
+	const titleId = useId()
 
 	const [modal, setModal] = useState(false)
 	const toggle = () => setModal(!modal)
@@ -35,21 +38,26 @@ export const ButtonDelete = ({ uuid, details, deleteMutation, onDelete }) => {
 			<Button color="link" disabled={isDisabled} onClick={toggle} className="button-delete p-0" aria-label={`Delete ${description}`}>
 				<BsTrash3 size={20} aria-hidden="true" />
 			</Button>
-			<Modal isOpen={modal} toggle={toggle}>
-				<ModalHeader toggle={toggle}>Delete this record?</ModalHeader>
+			<Modal isOpen={modal} toggle={toggle} labelledBy={titleId} contentClassName="bg-dark text-light border-secondary">
+				<ModalHeader
+					className="border-secondary"
+					close={<button type="button" className="btn-close btn-close-white" aria-label="Close" onClick={toggle} />}
+				>
+					<span id={titleId}>Delete this record?</span>
+				</ModalHeader>
 				<ModalBody>
-					<ul className="list-unstyled bg-light rounded p-3 mb-3">
+					{
+						error && <ErrorAlert errorMessage={error} variant="form" />
+					}
+					<ul className="list-unstyled mb-3">
 						{details.map((detail, index) => <li key={index}>{detail}</li>)}
 					</ul>
-					This cannot be undone.
+					<p className="text-white-50 mb-0">This cannot be undone.</p>
 				</ModalBody>
-				<ModalFooter>
-					<Button outline={true} onClick={toggle}>Cancel</Button>
-					<Button color="danger" outline={true} onClick={handleClick} disabled={isDisabled}>Delete</Button>
+				<ModalFooter className="border-secondary">
+					<Button color="info" outline={true} onClick={toggle}>Cancel</Button>
+					<Button color="danger" onClick={handleClick} disabled={isDisabled}>Delete</Button>
 				</ModalFooter>
-				{
-					error && <p className="alert alert-danger py-3 text-center m-3" role="alert">{error}</p>
-				}
 			</Modal>
 		</div>
 	)
