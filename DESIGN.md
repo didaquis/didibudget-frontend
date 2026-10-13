@@ -160,7 +160,7 @@ Axes and grid come from `src/utils/charts.js`: tick labels use `AXIS_TICK` (the 
 
 ## Elevation & Depth
 
-Flat. Surfaces share the page colour and are separated by 1px cyan or secondary borders. The only exceptions are temporary overlays: the success toast (solid white, Bootstrap toast shadow) and dropdown menus. The wordmark has its own SVG extrude and drop shadow, which belong to the logo, not the UI.
+Flat. Surfaces share the page colour and are separated by 1px cyan or secondary borders. The only exceptions are temporary overlays: the success toast (solid white, Bootstrap toast shadow) and the menu index, which covers the whole screen in the page colour. The wordmark has its own SVG extrude and drop shadow, which belong to the logo, not the UI.
 
 ### Named Rules
 **The Hairline Rule.** Group content with a 1px line, not with a shadow or a lighter panel: `border-info` around a block, `border-secondary` between the rows of a list that has its own buttons, so cyan stays on what you can tap.
@@ -214,7 +214,8 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Spinner:** three bouncing dots (muted mauve `#AC9FAA`), centred 100px below the top, with a visually hidden "Loading…" in `role="status"`. Under `prefers-reduced-motion` the dots fade in place instead of scaling.
 
 ### Navigation
-- **NavBar:** shown only with a session. A single row of 32px Bootstrap Icons in `text-light`, spread across the width (`justify-content-between`) with a 1px `border-info` underline. Spending and savings sections open as dropdowns. Icon-only links carry `aria-label`.
+- **NavBar:** shown only with a session. One bar with a 1px `border-info` underline: the coral wordmark on the left (the link to home, named "Home") and a cyan `btn-link` **Menu** on the right (list icon plus text, 48px tall). The bar is 56px, so it ends at 64px from the top, where `SuccessToast` starts.
+- **Menu index:** **Menu** opens a full-screen `Modal` (no backdrop, focus trapped, Esc closes and returns focus to Menu). It fades in over 150ms without moving, so its bar sits exactly on the page's bar, and closes instantly. It repeats the bar with **Close** in exactly Menu's place, then lists every destination in three groups (Spending, Cash, savings & investments, Account), each under a small uppercase `text-white-50` `h2`. Rows are full-width links, 48px tall, `text-light` with a muted 20px icon, split by `border-secondary` hairlines. The current page is the only cyan row (`aria-current="page"`). Choosing a row navigates and closes the index; the index scrolls inside its own dark background. Log out is the last row of Account, not a red action.
 
 ### Home Hero (signature)
 The coral SVG wordmark over a soft coral radial glow that fades in over 700ms (static under reduced motion). Below it: a light italic tagline, then the login form directly (no separate login page) and a small "Create an account" link. The hero sits `mb-5` above the form so it reads as a header, not as part of the fields. This is the only screen where coral leads, and the only one without the NavBar.

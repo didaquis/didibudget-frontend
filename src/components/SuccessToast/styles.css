@@ -9,7 +9,7 @@
 	background-color: #fff;
 }
 
-/* Clears the navbar so the toast never covers it. Bootstrap 5.1.3 gives
+/* Clears the menu bar (NavBar min-height) so the toast never covers it. Bootstrap 5.1.3 gives
    .toast-container no z-index of its own */
 .success-toast-container {
 	top: 64px;
