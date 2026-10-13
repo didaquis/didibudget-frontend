@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { Link } from 'react-router'
-import { BsHouse, BsPeople, BsBoxArrowInRight, BsBoxArrowRight } from 'react-icons/bs'
+import { BsHouse, BsPeople, BsBoxArrowRight } from 'react-icons/bs'
 
 import { AuthContext } from '../../AuthContext'
 
@@ -37,12 +37,13 @@ export const NavBar = () => {
 				</div>
 			)}
 
-			<div className="nav-item">
-				<Link className="nav-link text-light" to={isAuth ? '/logout' : '/'} aria-label={isAuth ? 'Log out' : 'Log in'}>
-					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />}
-					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />}
-				</Link>
-			</div>
+			{isAuth && (
+				<div className="nav-item">
+					<Link className="nav-link text-light" to='/logout' aria-label='Log out'>
+						<BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />
+					</Link>
+				</div>
+			)}
 		</nav>
 	)
 }

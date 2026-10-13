@@ -75,6 +75,12 @@ describe('App routing', () => {
 		expect(await screen.findByRole('button', { name: 'Log in' })).toBeVisible()
 	})
 
+	it('offers to log in from the registration screen', () => {
+		renderAppAt('/register')
+
+		expect(screen.getByRole('link', { name: 'Log in' })).toHaveAttribute('href', '/')
+	})
+
 	it('no longer has a separate login screen', () => {
 		renderAppAt('/login')
 

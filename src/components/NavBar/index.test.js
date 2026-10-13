@@ -20,10 +20,11 @@ describe('NavBar', () => {
 		expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/')
 	})
 
-	it('names the log in link when logged out', () => {
+	it('offers no log in or log out link when logged out', () => {
 		renderNavBar()
 
-		expect(screen.getByRole('link', { name: 'Log in' })).toHaveAttribute('href', '/')
+		expect(screen.queryByRole('link', { name: 'Log in' })).not.toBeInTheDocument()
+		expect(screen.queryByRole('link', { name: 'Log out' })).not.toBeInTheDocument()
 	})
 
 	it('names the log out link when logged in', () => {
