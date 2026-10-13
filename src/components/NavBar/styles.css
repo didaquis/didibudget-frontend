@@ -7,8 +7,11 @@
 	display: block;
 	height: 44px;
 	width: auto;
-	/* The logo's viewBox carries wide empty margins; pull the glyphs flush with the page edge */
-	margin-left: -16px;
+	/* The logo's viewBox carries empty margins, more above the letters than below. These offsets,
+	   measured at 44px tall, put the letters on the page edge and level with Menu */
+	margin-left: -8.5px;
+	position: relative;
+	top: -4px;
 }
 
 .menu-bar__toggle {
