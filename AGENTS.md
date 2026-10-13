@@ -116,7 +116,7 @@ npm run test -- utils        # Tests matching pattern
 ```bash
 npm run lint                        # Check all files in src/
 npm run lint -- --fix               # Auto-fix violations
-npm run lint -- src/pages/Login.js  # Lint specific file
+npm run lint -- src/pages/Home.js  # Lint specific file
 ```
 
 ## Build & Deployment

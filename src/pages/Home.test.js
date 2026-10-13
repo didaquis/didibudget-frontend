@@ -38,6 +38,20 @@ describe('Home', () => {
 		expect(screen.queryByRole('heading', { name: 'Dashboard' })).not.toBeInTheDocument()
 	})
 
+	it('lets a visitor without a session log in right away', () => {
+		renderHome(false)
+
+		expect(screen.getByLabelText(/Email/)).toBeVisible()
+		expect(screen.getByLabelText(/Password/)).toBeVisible()
+		expect(screen.getByRole('button', { name: 'Log in' })).toBeVisible()
+	})
+
+	it('offers a visitor without a session to create an account', () => {
+		renderHome(false)
+
+		expect(screen.getByRole('link', { name: 'Create an account' })).toHaveAttribute('href', '/register')
+	})
+
 	it('shows the dashboard to a user with a session', async () => {
 		renderHome(true)
 		await waitForElementToBeRemoved(() => screen.queryAllByRole('status'))

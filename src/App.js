@@ -3,7 +3,6 @@ import { StrictMode, lazy } from 'react'
 import { Routes, Route } from 'react-router'
 import Localization from 'react-widgets/Localization'
 
-import { Login } from './pages/Login'
 import { Registration } from './pages/Registration'
 import { Logout } from './pages/Logout'
 import { Page404 } from './pages/Page404'
@@ -50,11 +49,6 @@ export const App = () => {
 								{
 									// Restricted routes for non-authenticated users
 								}
-								<Route path='/login' element={
-									<RequireUnauthenticated>
-										<Login />
-									</RequireUnauthenticated>
-								} />
 								<Route path='/register' element={
 									<RequireUnauthenticated>
 										<Registration />

@@ -1,14 +1,8 @@
 import { render, screen } from '@testing-library/react'
-import { MemoryRouter, Routes, Route, useLocation } from 'react-router'
+import { MemoryRouter, Routes, Route } from 'react-router'
 
 import { RequireAuth } from './index'
 import { AuthContext } from '../../AuthContext'
-
-const LoginProbe = () => {
-	const location = useLocation()
-
-	return <p>{`Login screen, coming from ${location.state?.from?.pathname ?? 'nowhere'}`}</p>
-}
 
 const renderGuardedRoute = (isAuth) => {
 	return render(
@@ -20,7 +14,7 @@ const renderGuardedRoute = (isAuth) => {
 							<p>Protected screen</p>
 						</RequireAuth>
 					} />
-					<Route path='/login' element={<LoginProbe />} />
+					<Route path='/' element={<p>Home screen</p>} />
 				</Routes>
 			</MemoryRouter>
 		</AuthContext.Provider>
@@ -40,9 +34,9 @@ describe('RequireAuth', () => {
 		expect(screen.queryByText('Protected screen')).not.toBeInTheDocument()
 	})
 
-	it('sends the user to the login screen keeping the attempted location', () => {
+	it('sends the user to the home screen, where they can log in', () => {
 		renderGuardedRoute(false)
 
-		expect(screen.getByText('Login screen, coming from /spending/add')).toBeVisible()
+		expect(screen.getByText('Home screen')).toBeVisible()
 	})
 })

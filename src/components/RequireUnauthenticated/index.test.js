@@ -7,11 +7,11 @@ import { AuthContext } from '../../AuthContext'
 const renderGuardedRoute = (isAuth) => {
 	return render(
 		<AuthContext.Provider value={{ isAuth }}>
-			<MemoryRouter initialEntries={['/login']}>
+			<MemoryRouter initialEntries={['/register']}>
 				<Routes>
-					<Route path='/login' element={
+					<Route path='/register' element={
 						<RequireUnauthenticated>
-							<p>Login screen</p>
+							<p>Registration screen</p>
 						</RequireUnauthenticated>
 					} />
 					<Route path='/' element={<p>Home screen</p>} />
@@ -25,7 +25,7 @@ describe('RequireUnauthenticated', () => {
 	it('renders the guarded screen when there is no session', () => {
 		renderGuardedRoute(false)
 
-		expect(screen.getByText('Login screen')).toBeVisible()
+		expect(screen.getByText('Registration screen')).toBeVisible()
 	})
 
 	it('redirects to the home screen when there is already a session', () => {

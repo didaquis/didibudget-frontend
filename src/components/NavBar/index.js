@@ -38,7 +38,7 @@ export const NavBar = () => {
 			)}
 
 			<div className="nav-item">
-				<Link className="nav-link text-light" to={isAuth ? '/logout' : '/login'} aria-label={isAuth ? 'Log out' : 'Log in'}>
+				<Link className="nav-link text-light" to={isAuth ? '/logout' : '/'} aria-label={isAuth ? 'Log out' : 'Log in'}>
 					{!isAuth && <BsBoxArrowInRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />}
 					{isAuth && <BsBoxArrowRight size={SIZE_OF_PRIMARY_ICONS} aria-hidden='true' />}
 				</Link>

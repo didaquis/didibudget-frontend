@@ -19,7 +19,7 @@ const renderAppAt = (path, authValue = { isAuth: false, userData: {}, activateAu
 	)
 }
 
-// '/' is deliberately absent: the two tests above already pin it, and by the time this table runs
+// '/' is deliberately absent: the tests below already pin it, and by the time this table runs
 // Home is resolved, so the row would pass on Home's own data-loading Spinner instead of the boundary.
 const LAZY_ROUTE_PATHS = [
 	'/monthly-balance/add',
@@ -44,29 +44,11 @@ describe('App routing', () => {
 		expect(screen.getByRole('link', { name: 'Go to the home page' })).toBeVisible()
 	})
 
-	it('shows the login screen to a visitor without a session', () => {
-		renderAppAt('/login')
-
-		expect(screen.getByRole('button', { name: 'Log in' })).toBeVisible()
-	})
-
-	it('offers to create an account from the login screen', () => {
-		renderAppAt('/login')
-
-		expect(screen.getByRole('link', { name: 'Create an account' })).toHaveAttribute('href', '/register')
-	})
-
-	it('sends a visitor without a session away from a protected screen', () => {
-		renderAppAt('/spending/add')
-
-		expect(screen.getByRole('button', { name: 'Log in' })).toBeVisible()
-	})
-
 	// Must run before any other test renders '/': React.lazy resolves its import once and never
 	// suspends again, so a later run of this test would find Home already loaded.
 	it('shows the spinner while navigating from a screen without a lazy boundary to one with one', async () => {
 		const user = userEvent.setup()
-		renderAppAt('/login')
+		renderAppAt('/register')
 
 		await user.click(screen.getByRole('link', { name: 'Home' }))
 
@@ -79,6 +61,24 @@ describe('App routing', () => {
 		expect(screen.getByText('Loading…')).toBeVisible()
 
 		expect(await screen.findByRole('heading', { name: 'didibudget' })).toBeVisible()
+	})
+
+	it('shows the login form on the home screen to a visitor without a session', async () => {
+		renderAppAt('/')
+
+		expect(await screen.findByRole('button', { name: 'Log in' })).toBeVisible()
+	})
+
+	it('sends a visitor without a session from a protected screen to the login form', async () => {
+		renderAppAt('/spending/add')
+
+		expect(await screen.findByRole('button', { name: 'Log in' })).toBeVisible()
+	})
+
+	it('no longer has a separate login screen', () => {
+		renderAppAt('/login')
+
+		expect(screen.getByRole('heading', { name: 'Page not found' })).toBeVisible()
 	})
 
 	describe('browser tab title', () => {
