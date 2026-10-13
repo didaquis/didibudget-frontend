@@ -13,3 +13,14 @@
 .button-delete:focus-visible {
 	color: var(--bs-danger) !important;
 }
+
+/* Bootstrap's footer packs to the right; the stacked buttons span the dialog */
+.delete-confirmation .modal-footer {
+	justify-content: stretch;
+}
+
+/* 44px tap target; the icon itself stays 1em */
+.delete-confirmation .btn-close {
+	padding: calc((44px - 1em) / 2);
+	margin: -0.875rem -0.875rem -0.875rem auto;
+}
