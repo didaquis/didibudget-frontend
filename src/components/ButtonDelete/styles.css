@@ -1,10 +1,12 @@
-/* 44px tap target for one-handed use; the icon sits flush with the row's right edge */
+/* 44px tap target for one-handed use, icon centred. The target spills 12px into the page gutter
+   so the icon still sits flush with the row's right edge */
 .button-delete {
 	display: inline-flex;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: center;
 	min-width: 44px;
 	min-height: 44px;
+	margin-right: -12px;
 	/* 0.35 is the dimmest that keeps 3:1 contrast on the dark page */
 	color: rgba(255, 255, 255, 0.35);
 }
