@@ -243,6 +243,17 @@ describe('SearchExpensesFilters', () => {
 		expect(onSearch.mock.calls[0][0].startDate).toBeInstanceOf(Date)
 	})
 
+	it('should show a picked date as year-month-day', async () => {
+		const user = userEvent.setup()
+
+		render(<SearchExpensesFilters categories={categories} onSearch={vi.fn()} />)
+
+		await user.click(screen.getByLabelText('From'))
+		await user.click(screen.getAllByRole('gridcell')[15])
+
+		expect(screen.getByLabelText('From')).toHaveDisplayValue(/^\d{4}-\d{2}-\d{2}$/)
+	})
+
 	it('should disable the Search button and show a message when an amount is not a valid number', async () => {
 		const user = userEvent.setup()
 

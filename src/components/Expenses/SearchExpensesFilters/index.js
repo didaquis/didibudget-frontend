@@ -8,6 +8,7 @@ import 'react-widgets/styles.css'
 import './styles.css'
 import { areSameFilters, getAmountError, getFiltersSummaryParts } from './utils'
 import { SubmitButton } from '../../SubmitButton'
+import { formatIsoDate } from '../../../utils/utils'
 
 const INITIAL_FILTERS = {
 	category: '',
@@ -24,7 +25,6 @@ const SELECT_CLASS_NAME = 'form-select'
 const INPUT_CLASS_NAME = 'form-control'
 const FILTERS_PANEL_ID = 'searchExpensesFiltersPanel'
 const AMOUNT_ERROR_ID = 'searchExpensesAmountError'
-const DATE_FORMAT = 'YYYY-MM-DD'
 
 export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	const [filters, setFilters] = useState(INITIAL_FILTERS)
@@ -54,7 +54,7 @@ export const SearchExpensesFilters = ({ categories, onSearch }) => {
 	const getDatePickerProps = (field, label) => ({
 		id: field,
 		className: 'flex-grow-1',
-		valueFormat: DATE_FORMAT,
+		valueFormat: formatIsoDate,
 		value: filters[field],
 		onChange: onChangeDate(field),
 		open: openPicker === field,
