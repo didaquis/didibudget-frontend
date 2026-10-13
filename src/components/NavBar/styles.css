@@ -1,0 +1,63 @@
+/* SuccessToast sits at top: 64px to clear this bar. Change one, change the other. */
+.menu-bar {
+	min-height: 56px;
+}
+
+.menu-bar__home svg {
+	display: block;
+	height: 44px;
+	width: auto;
+	/* The logo's viewBox carries wide empty margins; pull the glyphs flush with the page edge */
+	margin-left: -16px;
+}
+
+.menu-bar__toggle {
+	min-height: 48px;
+	/* Text flush with the page edge while the focus ring keeps room around it */
+	margin-right: -0.5rem;
+	padding-right: 0.5rem;
+	display: inline-flex;
+	align-items: center;
+}
+
+.menu-bar__toggle:focus:not(:focus-visible),
+.menu-index__link:focus:not(:focus-visible) {
+	box-shadow: none;
+	outline: none;
+}
+
+.menu-index__title {
+	letter-spacing: 0.04em;
+	margin: 1.5rem 0 0.25rem;
+}
+
+.menu-index__link {
+	min-height: 48px;
+}
+
+/* The index is taller than a phone screen; without this it spills past its dark background
+   and the page shows through */
+.menu-index .modal-content {
+	overflow-y: auto;
+}
+
+/* Bootstrap slides the dialog 50px over 300ms; the menu is chrome, so keep it short */
+.menu-index.fade .modal-dialog {
+	transform: translateY(-8px);
+	transition: transform 150ms ease-out;
+}
+
+.menu-index.show .modal-dialog {
+	transform: none;
+}
+
+.menu-index.fade {
+	transition: opacity 150ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.menu-index.fade,
+	.menu-index.fade .modal-dialog {
+		transition: none;
+	}
+}
