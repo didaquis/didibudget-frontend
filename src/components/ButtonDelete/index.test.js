@@ -30,6 +30,14 @@ describe('ButtonDelete', () => {
 		expect(deleteMutation).not.toHaveBeenCalled()
 	})
 
+	it('names the confirmation after its question', async () => {
+		const { user } = renderButtonDelete()
+
+		await openTheConfirmation(user)
+
+		expect(screen.getByRole('dialog', { name: 'Delete this record?' })).toBeVisible()
+	})
+
 	it.each(DETAILS)('shows %s so the user can recognise the record', async (detail) => {
 		const { user } = renderButtonDelete()
 
