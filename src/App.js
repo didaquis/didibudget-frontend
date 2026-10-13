@@ -1,9 +1,8 @@
-import { StrictMode, lazy } from 'react'
+import { StrictMode, lazy, useContext } from 'react'
 
 import { Routes, Route } from 'react-router'
 import Localization from 'react-widgets/Localization'
 
-import { Login } from './pages/Login'
 import { Registration } from './pages/Registration'
 import { Logout } from './pages/Logout'
 import { Page404 } from './pages/Page404'
@@ -15,6 +14,7 @@ import { RequireAuth } from './components/RequireAuth'
 import { RequireUnauthenticated } from './components/RequireUnauthenticated'
 import { RequireAdminRole } from './components/RequireAdminRole'
 import { dateLocalizer } from './utils/dateLocalizer'
+import { AuthContext } from './AuthContext'
 
 const Home = lazy(() => import('./pages/Home'))
 const UserAdministration = lazy(() => import('./pages/Users/UserAdministration'))
@@ -32,13 +32,15 @@ const SearchExpenses = lazy(() => import('./pages/Expenses/SearchExpenses'))
 
 
 export const App = () => {
+	const { isAuth } = useContext(AuthContext)
+
 	return (
 		<Localization date={dateLocalizer}>
 		<StrictMode>
 			<div className="container-fluid bg-dark">
 				<div className="container d-flex flex-column min-vh-100">
 					<NavBar />
-						<main className="flex-grow-1 pb-5">
+						<main className={isAuth ? 'flex-grow-1 pb-5' : 'flex-grow-1 pt-4 pb-5'}>
 							<Routes>
 								<Route path='/' element={
 									<LazyRoute>
@@ -50,11 +52,6 @@ export const App = () => {
 								{
 									// Restricted routes for non-authenticated users
 								}
-								<Route path='/login' element={
-									<RequireUnauthenticated>
-										<Login />
-									</RequireUnauthenticated>
-								} />
 								<Route path='/register' element={
 									<RequireUnauthenticated>
 										<Registration />

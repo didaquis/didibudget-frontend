@@ -178,7 +178,6 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Link style:** `btn-link` rows in long pick-lists like the category tree. The whole row is the button (`w-100 text-start px-0`, about 47px tall with its list item), emoji included. Rows that **choose** are cyan with the label underlined; rows that only **expand** are `text-light`, not underlined, with a white caret. Tapping a row must not leave Bootstrap's focus ring around it: hide it on `:focus:not(:focus-visible)` and keep it for keyboard focus.
 - **Light:** `btn-light` only when attached to a white input (input-group addon).
 - **Row delete:** `ButtonDelete`, a `btn-link` trash icon (`BsTrash3`, 20px) in `text-white-50`, 44px tap target with the icon flush right. It turns danger red on hover and keyboard focus. The confirmation modal's Delete is the only red button.
-- **Large:** `btn-lg` in a `d-grid` column for the single home-screen call to action.
 
 ### Chips
 - **Style:** `btn-sm` in a `d-flex flex-wrap` row, 12px apart horizontally. Outline cyan at rest, filled cyan when selected. Wider and the Date row (Today, Yesterday, Pick another date) wraps on a 375px phone.
@@ -215,10 +214,10 @@ Gently rounded corners (0.25rem) on buttons, inputs, cards and badges, which is 
 - **Spinner:** three bouncing dots (muted mauve `#AC9FAA`), centred 100px below the top, with a visually hidden "Loading…" in `role="status"`. Under `prefers-reduced-motion` the dots fade in place instead of scaling.
 
 ### Navigation
-- **NavBar:** a single row of 32px Bootstrap Icons in `text-light`, spread across the width (`justify-content-between`) with a 1px `border-info` underline. Spending and savings sections open as dropdowns. Icon-only links carry `aria-label`.
+- **NavBar:** shown only with a session. A single row of 32px Bootstrap Icons in `text-light`, spread across the width (`justify-content-between`) with a 1px `border-info` underline. Spending and savings sections open as dropdowns. Icon-only links carry `aria-label`.
 
 ### Home Hero (signature)
-The coral SVG wordmark over a soft coral radial glow that fades in over 700ms (static under reduced motion). Below it: a light italic tagline, a muted lead line, a large outline-cyan "Log in" button and a small "Create an account" link. This is the only screen where coral leads.
+The coral SVG wordmark over a soft coral radial glow that fades in over 700ms (static under reduced motion). Below it: a light italic tagline, then the login form directly (no separate login page) and a small "Create an account" link. The hero sits `mb-5` above the form so it reads as a header, not as part of the fields. This is the only screen where coral leads, and the only one without the NavBar.
 
 ## Do's and Don'ts
 

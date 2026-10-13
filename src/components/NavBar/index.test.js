@@ -15,15 +15,15 @@ const renderNavBar = ({ isAuth = false, isAdmin = false } = {}) => {
 
 describe('NavBar', () => {
 	it('names the home link', () => {
-		renderNavBar()
+		renderNavBar({ isAuth: true })
 
 		expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/')
 	})
 
-	it('names the log in link when logged out', () => {
+	it('renders nothing when logged out', () => {
 		renderNavBar()
 
-		expect(screen.getByRole('link', { name: 'Log in' })).toHaveAttribute('href', '/login')
+		expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
 	})
 
 	it('names the log out link when logged in', () => {
