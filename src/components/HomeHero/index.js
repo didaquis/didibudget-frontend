@@ -3,7 +3,7 @@ import { DidibudgetLogo } from '../DidibudgetLogo'
 import './styles.css'
 
 export const HomeHero = () => (
-	<section className="row justify-content-center text-center mb-4">
+	<section className="row justify-content-center text-center mb-5">
 		<div className="col-12 col-sm-10 col-md-8 col-lg-6">
 			<div className="position-relative px-1">
 				<div className="home-hero__glow" aria-hidden="true"></div>
