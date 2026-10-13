@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import './styles.css'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router'
 
 import apolloClient from './apollo/config'
 
@@ -12,6 +11,7 @@ import * as serviceWorker from './serviceWorker'
 
 import AuthContext from './AuthContext'
 
+import { AppRouter } from './components/AppRouter'
 import { App } from './App'
 
 
@@ -20,9 +20,9 @@ const root = createRoot(container)
 root.render(
 	<AuthContext.Provider>
 		<ApolloProvider client={apolloClient}>
-			<BrowserRouter>
+			<AppRouter>
 				<App />
-			</BrowserRouter>
+			</AppRouter>
 		</ApolloProvider>
 	</AuthContext.Provider>)
 
