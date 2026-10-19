@@ -123,14 +123,12 @@ npm run lint -- src/pages/Home.js  # Lint specific file
 
 - **Development Build**: `npm run dev` uses Vite dev server
 - **Production Build**: `npm run build` creates optimized bundle in `./dist/`
-- Node polyfills for browser compatibility are handled via `vite-plugin-node-polyfills` in `vite.config.js`
 - Deployed to Netlify (see README for deployment badge/link)
 
 ## Important Notes
 
 - Backend must be running for the app to function (API dependency)
 - Node.js 24.14 required
-- Some dependencies polyfill Node.js modules for browser compatibility (stream-browserify, crypto-browserify, etc.) due to `crypto` and `vm` usage in the codebase
 - Route-level components use lazy loading with Suspense for better performance
 - Session-based authentication reuses token across page reloads via sessionStorage
 
@@ -152,14 +150,10 @@ Before creating any new UI element, find an existing similar element in the code
 This app uses a dark theme (`bg-dark`, `#212529`). Text on dark backgrounds must meet WCAG AA contrast (≥4.5:1). Conventions for text utility classes:
 - **`text-light`** — Primary labels, section headers, and any text that guides user navigation
 - **`text-white-50`** — Secondary text: helper/validation messages, counts, footer, disabled labels
-- **`text-muted`** — **Do not use on dark backgrounds.** Bootstrap's `#6c757d` has insufficient contrast (~4.6:1) for comfortable reading.
+- **`text-muted`** — **Do not use on dark backgrounds.** Bootstrap's `#6c757d` on `#212529` is about 3.3:1, below AA.
 - Text in other contexts (light cards, alerts) follows Bootstrap defaults.
 
 ## Code quality guidelines
 
-- No hacks or quick fixes. We do not accept sloppy, fragile, or shortcut-based solutions. Code must be robust, intentional, and maintainable.
-- Readability over cleverness. Prefer clear, explicit, and easy-to-understand code over compact, overly clever, or cryptic implementations.
-- Maintainability first. Write code that is easy to reason about, modify, and debug by other developers in the future.
 - Tests are expected. Most non-trivial code must be accompanied by appropriate unit tests. Tests should be meaningful, readable, and cover the main execution paths and edge cases.
-- Consistency matters. Follow existing project conventions, naming standards, and architectural patterns.
 - Fail explicitly. Handle errors clearly and predictably; avoid silent failures or ambiguous behavior.
