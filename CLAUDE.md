@@ -55,12 +55,13 @@ Requires Node 24.14 (see `.nvmrc`). Copy `_env` to `.env` and set `VITE_PROTOCOL
 - **Apollo** (`src/apollo/config.js`): a link chain — `authMiddleware` (attaches `Bearer <token>` from session) → `errorLink` (on `UNAUTHENTICATED`/`FORBIDDEN` graphQL errors or `invalid_token` network errors, clears session and hard-redirects to `/`; rewrites `INTERNAL_SERVER_ERROR` messages) → `httpLink`. Changing this affects every API call.
 - **Routing** (`src/App.js`): React Router 7. There is no outer `<Suspense>` — every lazily-loaded screen must be wrapped in `<LazyRoute>` (`src/components/LazyRoute/index.js`), inside its guard. Routes are guarded by wrapper components `RequireAuth`, `RequireUnauthenticated`, and `RequireAdminRole` (admin routes nest `RequireAdminRole` inside `RequireAuth`). Paths are `/<resource-singular>/<action-or-view>` and must reuse the wording of the page title and NavBar label — the UI says *spending*, so URLs say `spending`, never `expense`.
 - **GraphQL** (`src/gql/`): `queries/` and `mutations/` split by entity (expenses, users, monthlyBalances, expenseCategories, auth). Operations are named exports (e.g. `LIST_ALL_EXPENSES`).
+- **Spending dates** are stored at 12:00 UTC of their calendar day. Read them in UTC (`formatStoredDay`, `getUTC*`, `timeZone: 'UTC'`), never with local getters. Send days as `YYYY-MM-DD` and months as `YYYY-MM` from the device calendar (`formatIsoDate`, `formatIsoMonth`).
 - **Data-fetching components**: under `src/components/<Entity>/`, files named `Get*.js` (e.g. `GetListOfExpensesWithPagination.js`) wrap a `useQuery`/`useMutation` and handle loading/error, keeping fetching separate from presentation. Standard pattern: `if (loading) return <Spinner />; if (error) return <ErrorAlert errorMessage={error.message} />`.
 - **pages/** are route-level screens; **components/** are reusable UI (each usually an `index.js`, often with a colocated `index.test.js`).
 
 ## Testing notes
 
-- Test files are colocated with the `.test.js` suffix; environment is `jsdom` with globals enabled and `TZ=Europe/Madrid` (set in `vite.config.js`) — relevant for date-sensitive tests.
+- Test files are colocated with the `.test.js` suffix; environment is `jsdom` with globals enabled and `TZ=Europe/Madrid` (set in `vite.config.js`) — relevant for date-sensitive tests. Madrid reads a 12:00 UTC date as the same day with local or UTC getters; to prove UTC reading, switch zone in the test with `vi.stubEnv('TZ', 'Pacific/Kiritimati')`.
 - Setup file `vitest.setup.js` pulls in `@testing-library/jest-dom` matchers. Never import
   `@testing-library/jest-dom/extend-expect` in a test file — it is already loaded.
 - Query through `screen`, never through the object destructured from `render()`. Only `rerender` comes
