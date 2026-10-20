@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 import { PageTitle } from '../../components/PageTitle'
 import { GetYearlyExpenseOverview } from '../../components/Expenses/GetYearlyExpenseOverview'
@@ -6,7 +6,8 @@ import { getLastTwelveFullMonthsRange } from '../../utils/utils'
 
 
 const YearlyExpenseOverview = () => {
-	const { startDate, endDate } = getLastTwelveFullMonthsRange(new Date())
+	// Read the clock once, so a render in another month does not ask for another range
+	const [{ startDate, endDate }] = useState(() => getLastTwelveFullMonthsRange(new Date()))
 
 	return (
 		<Fragment>

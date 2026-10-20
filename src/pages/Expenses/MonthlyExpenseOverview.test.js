@@ -30,4 +30,28 @@ describe('MonthlyExpenseOverview', () => {
 
 		expect(await screen.findByText('No spending recorded in this date range.')).toBeVisible()
 	})
+
+	it('keeps the same range when it renders again after midnight', async () => {
+		vi.setSystemTime(new Date(2026, 0, 5, 23, 59))
+		const result = vi.fn(() => {
+			return { data: { getExpensesBetweenDates: [], getExpenseCategory: [] } }
+		})
+		const mock = { ...emptyRangeMock('2026-01-01', '2026-01-05'), result, maxUsageCount: Number.POSITIVE_INFINITY }
+		const { rerender } = render(
+			<MockedProvider mocks={[mock]}>
+				<MonthlyExpenseOverview />
+			</MockedProvider>
+		)
+		await screen.findByText('No spending recorded in this date range.')
+
+		vi.setSystemTime(new Date(2026, 0, 6, 0, 1))
+		rerender(
+			<MockedProvider mocks={[mock]}>
+				<MonthlyExpenseOverview />
+			</MockedProvider>
+		)
+
+		expect(screen.getByText('No spending recorded in this date range.')).toBeVisible()
+		expect(result).toHaveBeenCalledTimes(1)
+	})
 })
