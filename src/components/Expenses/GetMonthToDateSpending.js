@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/client'
 import { ErrorAlert } from '../ErrorAlert'
 import { MonthToDateSpending, MonthToDateSpendingLoading } from './MonthToDateSpending'
 import { CategoryType } from '../SavingsAndInvestments/utils'
-import { trimDecimalPoints } from '../../utils/utils'
+import { getMonthToDateRange, trimDecimalPoints } from '../../utils/utils'
 
 import { GET_MONTH_TO_DATE_SPENDING } from '../../gql/queries/expenses'
 
@@ -20,14 +20,14 @@ const sumBySpendingOrSavings = (expenses, categories) => {
 
 const getMonthToDate = () => {
 	const now = new Date()
-	return { now, startDate: new Date(now.getFullYear(), now.getMonth(), 1) }
+	return { now, ...getMonthToDateRange(now) }
 }
 
 export const GetMonthToDateSpending = () => {
-	// Dates built on every render would be new variables each time and refetch forever
-	const [{ now, startDate }] = useState(getMonthToDate)
+	// Read the clock once, so a render after midnight does not ask for another range
+	const [{ now, startDate, endDate }] = useState(getMonthToDate)
 
-	const { loading, error, data } = useQuery(GET_MONTH_TO_DATE_SPENDING, { variables: { startDate, endDate: now }, fetchPolicy: 'no-cache' })
+	const { loading, error, data } = useQuery(GET_MONTH_TO_DATE_SPENDING, { variables: { startDate, endDate }, fetchPolicy: 'no-cache' })
 
 	const monthName = now.toLocaleString('en', { month: 'long' })
 

@@ -4,7 +4,7 @@ import { MockedProvider } from '@apollo/client/testing'
 
 import { AddExpenseForm } from './index'
 import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
-import { startOfDay } from '../../../utils/utils'
+import { formatIsoDate, startOfDay } from '../../../utils/utils'
 
 const categories = [
 	{
@@ -36,7 +36,7 @@ const successfulMutation = {
 			category: 'category-id-2',
 			subcategory: null,
 			quantity: 12.4,
-			date: startOfToday()
+			date: formatIsoDate(new Date())
 		}
 	},
 	result: {
@@ -66,6 +66,10 @@ const renderForm = (mocks = [successfulMutation]) => {
 }
 
 describe('AddExpenseForm', () => {
+	afterEach(() => {
+		vi.useRealTimers()
+	})
+
 	it('keeps saving disabled until an amount and a category are given', async () => {
 		const user = userEvent.setup()
 		renderForm()
@@ -122,10 +126,11 @@ describe('AddExpenseForm', () => {
 		expect(screen.getByRole('button', { name: 'Save spending' })).toBeEnabled()
 	})
 
-	it('resets the date to today after saving', async () => {
+	it('sends the picked day and resets the date to today after saving', async () => {
+		vi.useFakeTimers({ toFake: ['Date'] })
+		vi.setSystemTime(new Date(2026, 2, 2, 10, 0))
 		const user = userEvent.setup()
-		const yesterday = startOfDay(new Date())
-		yesterday.setDate(yesterday.getDate() - 1)
+		const yesterday = new Date(2026, 2, 1)
 
 		const yesterdayMutation = {
 			request: {
@@ -134,7 +139,7 @@ describe('AddExpenseForm', () => {
 					category: 'category-id-2',
 					subcategory: null,
 					quantity: 12.4,
-					date: yesterday
+					date: '2026-03-01'
 				}
 			},
 			result: {

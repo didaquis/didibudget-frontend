@@ -81,13 +81,22 @@ describe('buildSearchVariables', () => {
 		expect(variables.subcategory).toBe('subcategory-id-1')
 	})
 
-	it('should send the start date at the beginning of the day and the end date at the end of the day', () => {
+	it('should send the picked days as they are', () => {
 		const filters = { ...emptyFilters, startDate: new Date(2026, 1, 1), endDate: new Date(2026, 3, 30) }
 
 		const variables = buildSearchVariables(filters, 1, 25)
 
-		expect(variables.startDate).toBe('2026-01-31T23:00:00.000Z')
-		expect(variables.endDate).toBe('2026-04-30T21:59:59.999Z')
+		expect(variables.startDate).toBe('2026-02-01')
+		expect(variables.endDate).toBe('2026-04-30')
+	})
+
+	it('should send a range of a single day', () => {
+		const filters = { ...emptyFilters, startDate: new Date(2026, 2, 15), endDate: new Date(2026, 2, 15) }
+
+		const variables = buildSearchVariables(filters, 1, 25)
+
+		expect(variables.startDate).toBe('2026-03-15')
+		expect(variables.endDate).toBe('2026-03-15')
 	})
 
 	it('should send an amount of zero instead of dropping it', () => {

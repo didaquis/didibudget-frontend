@@ -77,17 +77,6 @@ const startOfDay = (date) => {
 }
 
 /**
- * Get a copy of a date placed at the very end of its day
- * @param {Date} date
- * @returns {Date}
- */
-const endOfDay = (date) => {
-	const result = new Date(date)
-	result.setHours(23, 59, 59, 999)
-	return result
-}
-
-/**
  * Format a date as YYYY-MM-DD using its local calendar day.
  *
  * @param {Date} date
@@ -216,7 +205,6 @@ export {
 	firstDayOfTheMonth,
 	trimDecimalPoints,
 	startOfDay,
-	endOfDay,
 	getLocalDay,
 	formatIsoDate,
 	formatIsoMonth,

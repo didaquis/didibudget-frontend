@@ -10,7 +10,7 @@ import { DateQuickSelector } from '../../DateQuickSelector'
 import { CategoryPicker } from '../CategoryPicker'
 
 import { validateAddExpenseForm } from '../../../utils/validations'
-import { startOfDay } from '../../../utils/utils'
+import { formatIsoDate, startOfDay } from '../../../utils/utils'
 
 import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
 import { formatAmount } from '../../../utils/currency'
@@ -53,7 +53,7 @@ export const AddExpenseForm = ({ categories, frequentCategories }) => {
 			category: selected.categoryID,
 			subcategory: selected.subcategoryID,
 			quantity: quantity,
-			date: date
+			date: formatIsoDate(date)
 		}
 
 		registerExpense({ variables }).then(() => {

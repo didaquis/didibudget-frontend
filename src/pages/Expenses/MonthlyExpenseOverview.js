@@ -2,17 +2,11 @@ import { Fragment } from 'react'
 
 import { PageTitle } from '../../components/PageTitle'
 import { GetYearlyExpenseOverview } from '../../components/Expenses/GetYearlyExpenseOverview'
-
-
-const getFirstDayOfCurrentMonth = () => {
-    const now = new Date()
-    return new Date(now.getFullYear(), now.getMonth(), 1)
-}
+import { getMonthToDateRange } from '../../utils/utils'
 
 
 const MonthlyExpenseOverview = () => {
-    const startDate = getFirstDayOfCurrentMonth()
-    const endDate = new Date()
+    const { startDate, endDate } = getMonthToDateRange(new Date())
 
     return (
         <Fragment>

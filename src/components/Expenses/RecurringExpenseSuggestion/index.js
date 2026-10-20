@@ -7,6 +7,7 @@ import { EmojiListFromCategoryOrSubcategory } from '../../EmojiListFromCategoryO
 
 import { REGISTER_EXPENSE } from '../../../gql/mutations/expenses'
 import { formatAmount } from '../../../utils/currency'
+import { formatIsoDate } from '../../../utils/utils'
 
 export const RecurringExpenseSuggestion = ({ suggestion }) => {
 	const navigate = useNavigate()
@@ -24,7 +25,7 @@ export const RecurringExpenseSuggestion = ({ suggestion }) => {
 				category: suggestion.suggestedExpense.category,
 				subcategory: suggestion.suggestedExpense.subcategory,
 				quantity: suggestion.suggestedExpense.quantity,
-				date: new Date()
+				date: formatIsoDate(new Date())
 			}
 
 			await registerExpense({ variables })
