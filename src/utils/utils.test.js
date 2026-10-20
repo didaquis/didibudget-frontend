@@ -1,4 +1,4 @@
-import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, startOfDay, endOfDay, getLocalDay, getTimeAgo, formatIsoDate } from './utils'
+import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, startOfDay, endOfDay, getLocalDay, getTimeAgo, formatIsoDate, formatStoredDay, formatIsoMonth, getMonthToDateRange, getLastTwelveFullMonthsRange } from './utils'
 
 describe('startOfDay and endOfDay', () => {
 	test('should move a date to the very beginning of its day', () => {
@@ -223,5 +223,56 @@ describe('formatIsoDate', () => {
 
 	it('uses the local calendar day, not the UTC one', () => {
 		expect(formatIsoDate(new Date(2026, 9, 13, 0, 30))).toBe('2026-10-13')
+	})
+})
+
+describe('formatStoredDay', () => {
+	test('should return the day of a date stored at noon UTC', () => {
+		expect(formatStoredDay(String(Date.parse('2026-03-01T12:00:00.000Z')))).toBe('2026-03-01')
+	})
+
+	describe('with the device far east of UTC', () => {
+		beforeEach(() => {
+			vi.stubEnv('TZ', 'Pacific/Kiritimati')
+		})
+
+		afterEach(() => {
+			vi.unstubAllEnvs()
+		})
+
+		test('should not move the day', () => {
+			expect(formatStoredDay(Date.parse('2026-03-31T12:00:00.000Z'))).toBe('2026-03-31')
+		})
+	})
+})
+
+describe('formatIsoMonth', () => {
+	test('should use the month of the device calendar', () => {
+		// 00:30 on 1 April in Madrid
+		expect(formatIsoMonth(new Date('2026-03-31T22:30:00.000Z'))).toBe('2026-04')
+	})
+})
+
+describe('getMonthToDateRange', () => {
+	test('should go from the 1st of the month to today on the device calendar', () => {
+		expect(getMonthToDateRange(new Date(2026, 9, 20, 18, 0))).toEqual({ startDate: '2026-10-01', endDate: '2026-10-20' })
+	})
+
+	test('should be a single day on the 1st just after midnight in Madrid', () => {
+		expect(getMonthToDateRange(new Date('2026-02-28T23:30:00.000Z'))).toEqual({ startDate: '2026-03-01', endDate: '2026-03-01' })
+	})
+})
+
+describe('getLastTwelveFullMonthsRange', () => {
+	test('should go from the 1st of the month a year ago to the last day of the previous month', () => {
+		expect(getLastTwelveFullMonthsRange(new Date(2026, 9, 20))).toEqual({ startDate: '2025-10-01', endDate: '2026-09-30' })
+	})
+
+	test('should cover the previous calendar year in January', () => {
+		expect(getLastTwelveFullMonthsRange(new Date(2026, 0, 5))).toEqual({ startDate: '2025-01-01', endDate: '2025-12-31' })
+	})
+
+	test('should end on a leap day', () => {
+		expect(getLastTwelveFullMonthsRange(new Date(2024, 2, 10))).toEqual({ startDate: '2023-03-01', endDate: '2024-02-29' })
 	})
 })

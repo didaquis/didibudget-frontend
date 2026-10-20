@@ -25,6 +25,18 @@ const parseUnixTimestamp = (timestamp) => {
 }
 
 /**
+ * Get the calendar day of a stored spending date. Stored dates point at 12:00 UTC of their day, so they
+ * are always read in UTC.
+ * @example
+ *   formatStoredDay('1772366400000') // '2026-03-01'
+ * @param {string|number} timestamp Milliseconds since the epoch
+ * @returns {string} YYYY-MM-DD
+ */
+const formatStoredDay = (timestamp) => {
+	return new Date(Number(timestamp)).toISOString().substring(0, 10)
+}
+
+/**
 * Calculate the first day of next month
 * @example
 *   firstDayOfNextMonth('2019-12-03') // 2020-01-01
@@ -115,6 +127,37 @@ const formatIsoDate = (date) => {
 }
 
 /**
+ * Format a date as YYYY-MM using its local calendar month.
+ *
+ * @param {Date} date
+ * @returns {string}
+ */
+const formatIsoMonth = (date) => formatIsoDate(date).substring(0, 7)
+
+/**
+ * Get the days from the 1st of the current month to today, both inclusive, on the device calendar.
+ *
+ * @param {Date} now
+ * @returns {{ startDate: string, endDate: string }} Days as YYYY-MM-DD
+ */
+const getMonthToDateRange = (now) => {
+	return { startDate: `${formatIsoMonth(now)}-01`, endDate: formatIsoDate(now) }
+}
+
+/**
+ * Get the days of the 12 full months before the current one, both inclusive, on the device calendar.
+ *
+ * @param {Date} now
+ * @returns {{ startDate: string, endDate: string }} Days as YYYY-MM-DD
+ */
+const getLastTwelveFullMonthsRange = (now) => {
+	const monthsInAYear = 12
+	const firstDay = new Date(now.getFullYear(), now.getMonth() - monthsInAYear, 1)
+	const lastDayOfPreviousMonth = new Date(now.getFullYear(), now.getMonth(), 0)
+	return { startDate: formatIsoDate(firstDay), endDate: formatIsoDate(lastDayOfPreviousMonth) }
+}
+
+/**
  * Return the local day-of-month (1-31) as an integer according to the user's current time zone.
  *
  * @example
@@ -195,6 +238,7 @@ const getTimeAgo = (timestamp, locale = 'en-GB') => {
 
 export {
 	parseUnixTimestamp,
+	formatStoredDay,
 	firstDayOfNextMonth,
 	firstDayOfTheMonth,
 	trimDecimalPoints,
@@ -202,5 +246,8 @@ export {
 	endOfDay,
 	getLocalDay,
 	formatIsoDate,
+	formatIsoMonth,
+	getMonthToDateRange,
+	getLastTwelveFullMonthsRange,
 	getTimeAgo
 }
