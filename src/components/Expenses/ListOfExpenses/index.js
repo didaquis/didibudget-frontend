@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client'
 import PropTypes from 'prop-types'
 
-import { parseUnixTimestamp } from '../../../utils/utils'
+import { formatStoredDay } from '../../../utils/utils'
 import { getNameOfCategoryOrSubcategory } from '../utils'
 
 import { EmptyState } from '../../EmptyState'
@@ -34,7 +34,7 @@ export const ListOfExpenses = ( { expenses, paginationData, categories, refetch,
 		const rows = expenses.map(expense => {
 			const nameOfCategory = getNameOfCategoryOrSubcategory(expense.category, categories)
 			const nameOfSubcategory = getNameOfCategoryOrSubcategory(expense.subcategory, categories)
-			const date = parseUnixTimestamp(expense.date).substring(0, 10)
+			const date = formatStoredDay(expense.date)
 			const fullNameOfCategory = `${nameOfCategory}${(nameOfSubcategory) ? ` › ${nameOfSubcategory}` : ''}`
 			const amount = formatAmount(expense.quantity, expense.currencyISO)
 			return { uuid: expense.uuid, date, fullNameOfCategory, amount, record: { name: fullNameOfCategory, date, amount } }

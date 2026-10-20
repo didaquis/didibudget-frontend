@@ -1,27 +1,13 @@
 /**
- * Convert an Unix timestamp to human readable datetime (local time zone)
- * @param {string|number} timestamp
- * @returns {string}
+ * Get the calendar day of a stored spending date. Stored dates point at 12:00 UTC of their day, so they
+ * are always read in UTC.
+ * @example
+ *   formatStoredDay('1772366400000') // '2026-03-01'
+ * @param {string|number} timestamp Milliseconds since the epoch
+ * @returns {string} YYYY-MM-DD
  */
-const parseUnixTimestamp = (timestamp) => {
-	timestamp = parseInt(timestamp)
-	const d = new Date(timestamp)
-
-	let month = `${(d.getMonth() + 1)}`
-	let day = `${d.getDate()}`
-	const year = d.getFullYear()
-	let hour = `${d.getHours()}`
-	let minute = `${d.getMinutes()}`
-
-	if (month.length < 2) { month = `0${month}` }
-	if (day.length < 2) { day = `0${day}` }
-	if (hour.length < 2) { hour = `0${hour}` }
-	if (minute.length < 2) { minute = `0${minute}` }
-
-	const date = [year, month, day].join('-')
-	const time = [hour, minute].join(':')
-
-	return `${date} ${time}`
+const formatStoredDay = (timestamp) => {
+	return new Date(Number(timestamp)).toISOString().substring(0, 10)
 }
 
 /**
@@ -91,17 +77,6 @@ const startOfDay = (date) => {
 }
 
 /**
- * Get a copy of a date placed at the very end of its day
- * @param {Date} date
- * @returns {Date}
- */
-const endOfDay = (date) => {
-	const result = new Date(date)
-	result.setHours(23, 59, 59, 999)
-	return result
-}
-
-/**
  * Format a date as YYYY-MM-DD using its local calendar day.
  *
  * @param {Date} date
@@ -112,6 +87,39 @@ const formatIsoDate = (date) => {
 	const month = String(date.getMonth() + 1).padStart(2, '0')
 	const day = String(date.getDate()).padStart(2, '0')
 	return `${year}-${month}-${day}`
+}
+
+/**
+ * Format a date as YYYY-MM using its local calendar month.
+ *
+ * @param {Date} date
+ * @returns {string}
+ */
+const formatIsoMonth = (date) => {
+	return formatIsoDate(date).substring(0, 7)
+}
+
+/**
+ * Get the days from the 1st of the current month to today, both inclusive, on the device calendar.
+ *
+ * @param {Date} now
+ * @returns {{ startDate: string, endDate: string }} Days as YYYY-MM-DD
+ */
+const getMonthToDateRange = (now) => {
+	return { startDate: `${formatIsoMonth(now)}-01`, endDate: formatIsoDate(now) }
+}
+
+/**
+ * Get the days of the 12 full months before the current one, both inclusive, on the device calendar.
+ *
+ * @param {Date} now
+ * @returns {{ startDate: string, endDate: string }} Days as YYYY-MM-DD
+ */
+const getLastTwelveFullMonthsRange = (now) => {
+	const monthsInAYear = 12
+	const firstDay = new Date(now.getFullYear(), now.getMonth() - monthsInAYear, 1)
+	const lastDayOfPreviousMonth = new Date(now.getFullYear(), now.getMonth(), 0)
+	return { startDate: formatIsoDate(firstDay), endDate: formatIsoDate(lastDayOfPreviousMonth) }
 }
 
 /**
@@ -194,13 +202,15 @@ const getTimeAgo = (timestamp, locale = 'en-GB') => {
 }
 
 export {
-	parseUnixTimestamp,
+	formatStoredDay,
 	firstDayOfNextMonth,
 	firstDayOfTheMonth,
 	trimDecimalPoints,
 	startOfDay,
-	endOfDay,
 	getLocalDay,
 	formatIsoDate,
+	formatIsoMonth,
+	getMonthToDateRange,
+	getLastTwelveFullMonthsRange,
 	getTimeAgo
 }

@@ -1,5 +1,5 @@
 import { getNameOfCategoryOrSubcategory } from '../utils'
-import { startOfDay, endOfDay } from '../../../utils/utils'
+import { formatIsoDate } from '../../../utils/utils'
 import { formatAmount } from '../../../utils/currency'
 
 /**
@@ -54,11 +54,11 @@ const buildSearchVariables = (filters, page, pageSize) => {
 	}
 
 	if (isFilled(filters.startDate)) {
-		variables.startDate = startOfDay(filters.startDate).toISOString()
+		variables.startDate = formatIsoDate(filters.startDate)
 	}
 
 	if (isFilled(filters.endDate)) {
-		variables.endDate = endOfDay(filters.endDate).toISOString()
+		variables.endDate = formatIsoDate(filters.endDate)
 	}
 
 	const minQuantity = parseAmount(filters.minQuantity)
@@ -139,20 +139,6 @@ const areSameFilters = (filters, otherFilters) => {
 }
 
 /**
- * Format a date as YYYY-MM-DD using local time, matching how the results table
- * renders dates.
- * @param {Date} date
- * @returns {string}
- */
-const formatDateAsLocalISO = (date) => {
-	const year = date.getFullYear()
-	const month = String(date.getMonth() + 1).padStart(2, '0')
-	const day = String(date.getDate()).padStart(2, '0')
-
-	return `${year}-${month}-${day}`
-}
-
-/**
  * Build one human readable part per active filter (category, dates, amounts), meant to be
  * shown in the collapsed filters header. Sorting is not a filter, so it never has a part.
  * @param {Object} filters
@@ -171,11 +157,11 @@ const getFiltersSummaryParts = (filters, categories) => {
 	}
 
 	if (isFilled(filters.startDate) && isFilled(filters.endDate)) {
-		parts.push(`${formatDateAsLocalISO(filters.startDate)} to ${formatDateAsLocalISO(filters.endDate)}`)
+		parts.push(`${formatIsoDate(filters.startDate)} to ${formatIsoDate(filters.endDate)}`)
 	} else if (isFilled(filters.startDate)) {
-		parts.push(`from ${formatDateAsLocalISO(filters.startDate)}`)
+		parts.push(`from ${formatIsoDate(filters.startDate)}`)
 	} else if (isFilled(filters.endDate)) {
-		parts.push(`until ${formatDateAsLocalISO(filters.endDate)}`)
+		parts.push(`until ${formatIsoDate(filters.endDate)}`)
 	}
 
 	if (isFilled(filters.minQuantity) && isFilled(filters.maxQuantity)) {

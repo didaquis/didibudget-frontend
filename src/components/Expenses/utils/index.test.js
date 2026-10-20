@@ -188,20 +188,64 @@ describe('getDetailedExpensesGroupedFromRange', () => {
 	})
 
 	test('should return an empty array if receive an empty array', () => {
-		const result = getDetailedExpensesGroupedFromRange([], new Date(2021, 0, 1), new Date(2021, 6, 31))
+		const result = getDetailedExpensesGroupedFromRange([], '2021-01-01', '2021-07-31')
 
 		expect(result).toBeNull()
 	})
 
 	test('should return a formatted results', () => {
-		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, new Date(2021, 0, 1), new Date(2022, 0, 1))
+		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, '2021-01-01', '2022-01-01')
 
 		expect(result).toEqual(expectedDataForGetDetailedExpensesGroupedFromRange)
 	})
 
 	test('should return a formatted results with a simplified group title if initial date and end date is the same', () => {
-		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, new Date(2021, 0, 1), new Date(2021, 0, 1))
+		const result = getDetailedExpensesGroupedFromRange(expensesRawDataForGetDetailedExpensesGroupedFromRange, '2021-01-01', '2021-01-01')
 
 		expect(result).toEqual(expectedDataForGetDetailedExpensesGroupedFromRangeOnCurrentMonth)
+	})
+})
+
+describe('reading spending dates as calendar days', () => {
+	const storedAtNoonUTC = (day) => {
+		return String(Date.parse(`${day}T12:00:00.000Z`))
+	}
+
+	const spendings = [
+		{ category: 'category-id-1', subcategory: null, quantity: 10, date: storedAtNoonUTC('2026-02-28'), currencyISO: 'EUR', uuid: 'uuid-1' },
+		{ category: 'category-id-1', subcategory: null, quantity: 5, date: storedAtNoonUTC('2026-03-01'), currencyISO: 'EUR', uuid: 'uuid-2' }
+	]
+
+	const groupTotals = (groups) => {
+		return groups.map(({ groupTitle, groupTotal }) => ({ groupTitle, groupTotal }))
+	}
+
+	describe.each(['Europe/Madrid', 'America/New_York', 'Pacific/Kiritimati'])('with the device in %s', (timeZone) => {
+		beforeEach(() => {
+			vi.stubEnv('TZ', timeZone)
+		})
+
+		afterEach(() => {
+			vi.unstubAllEnvs()
+		})
+
+		test('should group a spending on the 1st in its own month', () => {
+			expect(groupTotals(getDetailedExpensesPerMonth(spendings))).toEqual([
+				{ groupTitle: 'February 2026', groupTotal: 10 },
+				{ groupTitle: 'March 2026', groupTotal: 5 }
+			])
+		})
+
+		test('should label the month of a day on the 1st', () => {
+			expect(getSumPerMonth([{ date: '2026-03-01', quantity: 5 }])).toEqual([{ label: 'March 2026', sum: 5 }])
+		})
+
+		test('should title a range of one month with that month', () => {
+			expect(getDetailedExpensesGroupedFromRange(spendings, '2026-03-01', '2026-03-31').groupTitle).toBe('March 2026')
+		})
+
+		test('should title a range of twelve months with its first and last months', () => {
+			expect(getDetailedExpensesGroupedFromRange(spendings, '2025-10-01', '2026-09-30').groupTitle).toBe('Oct 2025 – Sep 2026')
+		})
 	})
 })

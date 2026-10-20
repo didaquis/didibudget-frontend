@@ -52,6 +52,15 @@ describe('GetMonthToDateSpending', () => {
 		vi.useRealTimers()
 	})
 
+	it('asks for the days from the 1st to today on the device calendar', async () => {
+		// 00:30 on 1 March in Madrid, still 28 February in UTC
+		vi.setSystemTime(new Date('2026-02-28T23:30:00.000Z'))
+		const { variableMatcher, ...mockWithoutMatcher } = monthMock
+		renderWithMocks([{ ...mockWithoutMatcher, request: { ...monthMock.request, variables: { startDate: '2026-03-01', endDate: '2026-03-01' } } }])
+
+		expect(await screen.findByText('42.3 €')).toBeVisible()
+	})
+
 	it('keeps savings and investments out of the spending of the month', async () => {
 		renderWithMocks([monthMock])
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import { parseUnixTimestamp } from '../../../utils/utils'
+import { formatStoredDay } from '../../../utils/utils'
 import { getNameOfCategoryOrSubcategory } from '../utils'
 
 import { EmptyState } from '../../EmptyState'
@@ -9,7 +9,6 @@ import { PaginateNavbar } from '../../PaginateNavbar'
 import { formatAmount } from '../../../utils/currency'
 import './styles.css'
 
-const DATE_LENGTH = 10
 const TOP_BREAKDOWN_ROWS = 5
 const BREAKDOWN_LIST_ID = 'searchExpensesBreakdown'
 
@@ -99,7 +98,7 @@ export const SearchExpensesResults = ({ searchResult, categories, onChangePage }
 						{
 							expenses.map(expense => (
 								<tr key={expense.uuid}>
-									<td className="text-nowrap">{parseUnixTimestamp(expense.date).substring(0, DATE_LENGTH)}</td>
+									<td className="text-nowrap">{formatStoredDay(expense.date)}</td>
 									<td>{getFullName(expense.category, expense.subcategory, categories)}</td>
 									<td className="text-nowrap">{formatAmount(expense.quantity, expense.currencyISO)}</td>
 								</tr>

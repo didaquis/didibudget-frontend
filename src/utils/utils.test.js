@@ -1,6 +1,6 @@
-import { parseUnixTimestamp, firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, startOfDay, endOfDay, getLocalDay, getTimeAgo, formatIsoDate } from './utils'
+import { firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints, startOfDay, getLocalDay, getTimeAgo, formatIsoDate, formatStoredDay, formatIsoMonth, getMonthToDateRange, getLastTwelveFullMonthsRange } from './utils'
 
-describe('startOfDay and endOfDay', () => {
+describe('startOfDay', () => {
 	test('should move a date to the very beginning of its day', () => {
 		const result = startOfDay(new Date(2026, 1, 1, 17, 42, 13, 500))
 
@@ -13,40 +13,12 @@ describe('startOfDay and endOfDay', () => {
 		expect(result.getMilliseconds()).toBe(0)
 	})
 
-	test('should move a date to the very end of its day', () => {
-		const result = endOfDay(new Date(2026, 3, 30, 8, 5, 0, 0))
-
-		expect(result.getDate()).toBe(30)
-		expect(result.getHours()).toBe(23)
-		expect(result.getMinutes()).toBe(59)
-		expect(result.getSeconds()).toBe(59)
-		expect(result.getMilliseconds()).toBe(999)
-	})
-
 	test('should not mutate the date received', () => {
 		const original = new Date(2026, 1, 1, 17, 42, 13, 500)
 
 		startOfDay(original)
 
 		expect(original.getHours()).toBe(17)
-	})
-})
-
-describe('parseUnixTimestamp', () => {
-	test('should return a valid date in a human readable format', () => {
-		const timestamp = 1588197712263
-
-		const result = parseUnixTimestamp(timestamp)
-
-		expect(result).toBe('2020-04-30 00:01')
-	})
-
-	test('should return another valid date in a human readable format', () => {
-		const timestamp = 1479798793044
-
-		const result = parseUnixTimestamp(timestamp)
-
-		expect(result).toBe('2016-11-22 08:13')
 	})
 })
 
@@ -223,5 +195,56 @@ describe('formatIsoDate', () => {
 
 	it('uses the local calendar day, not the UTC one', () => {
 		expect(formatIsoDate(new Date(2026, 9, 13, 0, 30))).toBe('2026-10-13')
+	})
+})
+
+describe('formatStoredDay', () => {
+	test('should return the day of a date stored at noon UTC', () => {
+		expect(formatStoredDay(String(Date.parse('2026-03-01T12:00:00.000Z')))).toBe('2026-03-01')
+	})
+
+	describe('with the device far east of UTC', () => {
+		beforeEach(() => {
+			vi.stubEnv('TZ', 'Pacific/Kiritimati')
+		})
+
+		afterEach(() => {
+			vi.unstubAllEnvs()
+		})
+
+		test('should not move the day', () => {
+			expect(formatStoredDay(Date.parse('2026-03-31T12:00:00.000Z'))).toBe('2026-03-31')
+		})
+	})
+})
+
+describe('formatIsoMonth', () => {
+	test('should use the month of the device calendar', () => {
+		// 00:30 on 1 April in Madrid
+		expect(formatIsoMonth(new Date('2026-03-31T22:30:00.000Z'))).toBe('2026-04')
+	})
+})
+
+describe('getMonthToDateRange', () => {
+	test('should go from the 1st of the month to today on the device calendar', () => {
+		expect(getMonthToDateRange(new Date(2026, 9, 20, 18, 0))).toEqual({ startDate: '2026-10-01', endDate: '2026-10-20' })
+	})
+
+	test('should be a single day on the 1st just after midnight in Madrid', () => {
+		expect(getMonthToDateRange(new Date('2026-02-28T23:30:00.000Z'))).toEqual({ startDate: '2026-03-01', endDate: '2026-03-01' })
+	})
+})
+
+describe('getLastTwelveFullMonthsRange', () => {
+	test('should go from the 1st of the month a year ago to the last day of the previous month', () => {
+		expect(getLastTwelveFullMonthsRange(new Date(2026, 9, 20))).toEqual({ startDate: '2025-10-01', endDate: '2026-09-30' })
+	})
+
+	test('should cover the previous calendar year in January', () => {
+		expect(getLastTwelveFullMonthsRange(new Date(2026, 0, 5))).toEqual({ startDate: '2025-01-01', endDate: '2025-12-31' })
+	})
+
+	test('should end on a leap day', () => {
+		expect(getLastTwelveFullMonthsRange(new Date(2024, 2, 10))).toEqual({ startDate: '2023-03-01', endDate: '2024-02-29' })
 	})
 })

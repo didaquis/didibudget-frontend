@@ -127,28 +127,32 @@ query GetAllRecurringExpenseSuggestionsAndCategories ($day: Int!) {
 `
 
 export const GET_EXPENSES_AVERAGES = gql`
-query GetExpensesMonthlyAverage($excludedCategoryTypes: [CategoryType!]) {
+query GetExpensesMonthlyAverage($excludedCategoryTypes: [CategoryType!], $currentMonth: String!) {
 	lastThreeMonthsAverage: getExpensesMonthlyAverage(
 		lastNMonths: 3
 		excludedCategoryTypes: $excludedCategoryTypes
+		currentMonth: $currentMonth
 	) {
 		...ExpensesMonthlyAverageFields
 	}
 	lastSixMonthsAverage: getExpensesMonthlyAverage(
 		lastNMonths: 6
 		excludedCategoryTypes: $excludedCategoryTypes
+		currentMonth: $currentMonth
 	) {
 		...ExpensesMonthlyAverageFields
 	}
 	lastTwelveMonthsAverage: getExpensesMonthlyAverage(
 		lastNMonths: 12
 		excludedCategoryTypes: $excludedCategoryTypes
+		currentMonth: $currentMonth
 	) {
 		...ExpensesMonthlyAverageFields
 	}
 	lastTwentyFourMonthsAverage: getExpensesMonthlyAverage(
 		lastNMonths: 24
 		excludedCategoryTypes: $excludedCategoryTypes
+		currentMonth: $currentMonth
 	) {
 		...ExpensesMonthlyAverageFields
 	}
