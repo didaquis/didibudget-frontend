@@ -8,7 +8,7 @@ import { firstDayOfNextMonth, firstDayOfTheMonth, trimDecimalPoints } from '../.
  * @returns {string}
  */
 const getLocaleDateString = (date) => {
-	return new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long' })
+	return new Date(date).toLocaleDateString('en-GB', { year: 'numeric', month: 'long', timeZone: 'UTC' })
 }
 
 /**
@@ -19,7 +19,7 @@ const getLocaleDateString = (date) => {
  * @returns {string}
  */
 const getShortLocaleDateString = (date) => {
-	return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+	return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', timeZone: 'UTC' })
 }
 
 /**
@@ -297,8 +297,8 @@ const getMinAndMaxDateFromExpenses = (expenses = []) => {
 
 
 /**
- * Returns an array of Date objects representing the first day of each month
- * between two dates (inclusive).
+ * Returns an array of Date objects at 00:00 UTC of the first day of each month
+ * between two dates (inclusive), with months read in UTC.
  *
  * @param {Date} startDate - The start date.
  * @param {Date} endDate - The end date.
@@ -306,17 +306,17 @@ const getMinAndMaxDateFromExpenses = (expenses = []) => {
  */
 const listMonthsInRange = (startDate, endDate) => {
 	const months = []
-	let current = new Date(startDate.getFullYear(), startDate.getMonth(), 1)
-	const end = new Date(endDate.getFullYear(), endDate.getMonth(), 1)
+	let current = new Date(Date.UTC(startDate.getUTCFullYear(), startDate.getUTCMonth(), 1))
+	const end = new Date(Date.UTC(endDate.getUTCFullYear(), endDate.getUTCMonth(), 1))
 	while (current <= end) {
 		months.push(new Date(current))
-		current.setMonth(current.getMonth() + 1)
+		current.setUTCMonth(current.getUTCMonth() + 1)
 	}
 	return months
 }
 
 /**
- * Groups an array of expenses by month (YYYY-MM).
+ * Groups an array of expenses by month (YYYY-MM), read in UTC.
  * Each expense must have a 'date' property, which can be a timestamp string or a date string.
  *
  * @param {Array.<Object>} expenses - Array of expense objects with a 'date' property.
@@ -326,7 +326,7 @@ const groupExpensesByMonth = (expenses = []) => {
 	const expensesByMonth = {}
 	expenses.forEach(expense => {
 		const dateObj = new Date(Number.isNaN(+expense.date) ? expense.date : parseInt(expense.date, 10))
-		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
+		const key = `${dateObj.getUTCFullYear()}-${String(dateObj.getUTCMonth() + 1).padStart(2, '0')}`
 		if (!expensesByMonth[key]) {
 			expensesByMonth[key] = []
 		}
@@ -363,7 +363,7 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
 	const expensesByMonth = groupExpensesByMonth(rawData)
 
 	return months.map(dateObj => {
-		const key = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}`
+		const key = `${dateObj.getUTCFullYear()}-${String(dateObj.getUTCMonth() + 1).padStart(2, '0')}`
 		const expenses = expensesByMonth[key] || []
 
 		const categoryMap = {}
@@ -411,8 +411,8 @@ const getDetailedExpensesPerMonth = (rawData = []) => {
  * @param {string} expensesInThisGroup.date - A valid date with this format: '1514447205699'
  * @param {string} expensesInThisGroup.currencyISO - A currency. Example: 'EUR'
  * @param {string} expensesInThisGroup.uuid - An UUID value
- * @param {string} startDate - The initial date of the range
- * @param {string} endDate - The end date of the range
+ * @param {string} startDate - The first day of the range, YYYY-MM-DD
+ * @param {string} endDate - The last day of the range, YYYY-MM-DD
  * @returns {Object | null}
  */
 const getDetailedExpensesGroupedFromRange = (expensesInThisGroup = [], startDate = null, endDate = null) => {

@@ -1,30 +1,4 @@
 /**
- * Convert an Unix timestamp to human readable datetime (local time zone)
- * @param {string|number} timestamp
- * @returns {string}
- */
-const parseUnixTimestamp = (timestamp) => {
-	timestamp = parseInt(timestamp)
-	const d = new Date(timestamp)
-
-	let month = `${(d.getMonth() + 1)}`
-	let day = `${d.getDate()}`
-	const year = d.getFullYear()
-	let hour = `${d.getHours()}`
-	let minute = `${d.getMinutes()}`
-
-	if (month.length < 2) { month = `0${month}` }
-	if (day.length < 2) { day = `0${day}` }
-	if (hour.length < 2) { hour = `0${hour}` }
-	if (minute.length < 2) { minute = `0${minute}` }
-
-	const date = [year, month, day].join('-')
-	const time = [hour, minute].join(':')
-
-	return `${date} ${time}`
-}
-
-/**
  * Get the calendar day of a stored spending date. Stored dates point at 12:00 UTC of their day, so they
  * are always read in UTC.
  * @example
@@ -237,7 +211,6 @@ const getTimeAgo = (timestamp, locale = 'en-GB') => {
 }
 
 export {
-	parseUnixTimestamp,
 	formatStoredDay,
 	firstDayOfNextMonth,
 	firstDayOfTheMonth,

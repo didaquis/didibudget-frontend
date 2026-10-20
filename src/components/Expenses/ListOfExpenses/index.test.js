@@ -4,6 +4,10 @@ import { MockedProvider } from '@apollo/client/testing'
 import { ListOfExpenses } from './'
 
 describe('ListOfExpenses', () => {
+	afterEach(() => {
+		vi.unstubAllEnvs()
+	})
+
 	it('should say no spending is recorded yet when there is none', () => {
 		render(
 			<MockedProvider mocks={[]}>
@@ -41,5 +45,26 @@ describe('ListOfExpenses', () => {
 		expect(item.getByText('Home › Electricity bill')).toBeVisible()
 		expect(listItem).toHaveTextContent('2026-08-02 · 27.34 €')
 		expect(item.getByRole('button', { name: 'Delete 2026-08-02, Home › Electricity bill, 27.34 €' })).toBeVisible()
+	})
+
+	it('should keep the day of a spending stored on the 1st when the device is far east of UTC', () => {
+		vi.stubEnv('TZ', 'Pacific/Kiritimati')
+
+		render(
+			<MockedProvider mocks={[]}>
+				<ListOfExpenses
+					expenses={[{ uuid: 'spend-1', date: String(Date.parse('2026-03-01T12:00:00.000Z')), category: 'home-id', subcategory: null, quantity: 5, currencyISO: 'EUR' }]}
+					paginationData={{ currentPage: 1, totalPages: 1 }}
+					categories={[{ _id: 'home-id', uuid: 'home-uuid', name: 'Home', subcategories: [] }]}
+					refetch={vi.fn()}
+					onChangePage={vi.fn()}
+				/>
+			</MockedProvider>
+		)
+
+		const item = within(screen.getByRole('listitem'))
+
+		expect(screen.getByRole('listitem')).toHaveTextContent('2026-03-01 · 5 €')
+		expect(item.getByRole('button', { name: 'Delete 2026-03-01, Home, 5 €' })).toBeVisible()
 	})
 })

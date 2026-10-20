@@ -20,7 +20,7 @@ const categories = [
 	}
 ]
 
-const firstOfFebruary = String(new Date(2026, 1, 1).getTime())
+const firstOfFebruary = String(Date.parse('2026-02-01T12:00:00.000Z'))
 
 const searchResult = {
 	expenses: [
@@ -70,6 +70,10 @@ const getResultWithBreakdownOf = (numberOfRows) => ({
 const getBreakdownRows = () => within(screen.getByRole('region', { name: 'Search summary' })).getAllByRole('listitem')
 
 describe('SearchExpensesResults', () => {
+	afterEach(() => {
+		vi.unstubAllEnvs()
+	})
+
 	it('should display the total amount and the number of spends', () => {
 		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
 
@@ -109,6 +113,14 @@ describe('SearchExpensesResults', () => {
 		expect(screen.getAllByText('2026-02-01')).toHaveLength(2)
 		expect(screen.getByText('64.2 €')).toBeVisible()
 		expect(screen.getByText('23.15 €')).toBeVisible()
+	})
+
+	it('should keep the day of a spending when the device is far east of UTC', () => {
+		vi.stubEnv('TZ', 'Pacific/Kiritimati')
+
+		render(<SearchExpensesResults searchResult={searchResult} categories={categories} onChangePage={vi.fn()} />)
+
+		expect(screen.getAllByText('2026-02-01')).toHaveLength(2)
 	})
 
 	it('should render nothing instead of the literal "null" when a category cannot be resolved', () => {

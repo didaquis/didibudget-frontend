@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { ResponsiveContainer, BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar } from 'recharts'
 
-import { parseUnixTimestamp } from '../../../utils/utils'
+import { formatStoredDay } from '../../../utils/utils'
 import { AXIS_TICK, CHART_LINE_STROKE, SERIES_COLOR, TOOLTIP_ITEM_STYLE, shortMonthLabel } from '../../../utils/charts'
 import { getSumPerMonth, getLastNValuesFromArrayIfTheyExist } from '../utils'
 
@@ -17,7 +17,7 @@ export const GraphExpensesData = ({ graphData, averageData, averageDataExcluding
 	const dataParsed = graphData.map((expense) => {
 		return {
 			...expense,
-			date: parseUnixTimestamp(expense.date).substring(0, 10)
+			date: formatStoredDay(expense.date)
 		}
 	})
 

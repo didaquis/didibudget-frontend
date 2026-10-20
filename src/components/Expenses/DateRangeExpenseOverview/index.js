@@ -22,8 +22,8 @@ export const DateRangeExpenseOverview = ({ startDate, endDate, expenses, categor
 
 
 DateRangeExpenseOverview.propTypes = {
-	startDate: PropTypes.object.isRequired,
-	endDate: PropTypes.object.isRequired,
+	startDate: PropTypes.string.isRequired,
+	endDate: PropTypes.string.isRequired,
 	expenses: PropTypes.arrayOf(
 		PropTypes.shape({
 			date: PropTypes.string.isRequired,
