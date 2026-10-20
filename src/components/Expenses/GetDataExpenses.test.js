@@ -67,10 +67,12 @@ describe('GetDataExpenses', () => {
 		vi.useFakeTimers({ toFake: ['Date'] })
 		// 00:30 on 1 April in Madrid, still March in UTC
 		vi.setSystemTime(new Date('2026-03-31T22:30:00.000Z'))
-		const averagesForMonth = (excludedCategoryTypes) => ({
-			request: { query: GET_EXPENSES_AVERAGES, variables: { excludedCategoryTypes, currentMonth: '2026-04' } },
-			result: { data: averagesData(100) }
-		})
+		const averagesForMonth = (excludedCategoryTypes) => {
+			return {
+				request: { query: GET_EXPENSES_AVERAGES, variables: { excludedCategoryTypes, currentMonth: '2026-04' } },
+				result: { data: averagesData(100) }
+			}
+		}
 
 		render(
 			<MockedProvider mocks={[expensesMock, averagesForMonth([]), averagesForMonth([CategoryType.INVESTMENT, CategoryType.PENSION_PLAN])]}>

@@ -95,7 +95,9 @@ const formatIsoDate = (date) => {
  * @param {Date} date
  * @returns {string}
  */
-const formatIsoMonth = (date) => formatIsoDate(date).substring(0, 7)
+const formatIsoMonth = (date) => {
+	return formatIsoDate(date).substring(0, 7)
+}
 
 /**
  * Get the days from the 1st of the current month to today, both inclusive, on the device calendar.

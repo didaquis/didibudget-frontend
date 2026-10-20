@@ -207,14 +207,18 @@ describe('getDetailedExpensesGroupedFromRange', () => {
 })
 
 describe('reading spending dates as calendar days', () => {
-	const storedAtNoonUTC = (day) => String(Date.parse(`${day}T12:00:00.000Z`))
+	const storedAtNoonUTC = (day) => {
+		return String(Date.parse(`${day}T12:00:00.000Z`))
+	}
 
 	const spendings = [
 		{ category: 'category-id-1', subcategory: null, quantity: 10, date: storedAtNoonUTC('2026-02-28'), currencyISO: 'EUR', uuid: 'uuid-1' },
 		{ category: 'category-id-1', subcategory: null, quantity: 5, date: storedAtNoonUTC('2026-03-01'), currencyISO: 'EUR', uuid: 'uuid-2' }
 	]
 
-	const groupTotals = (groups) => groups.map(({ groupTitle, groupTotal }) => ({ groupTitle, groupTotal }))
+	const groupTotals = (groups) => {
+		return groups.map(({ groupTitle, groupTotal }) => ({ groupTitle, groupTotal }))
+	}
 
 	describe.each(['Europe/Madrid', 'America/New_York', 'Pacific/Kiritimati'])('with the device in %s', (timeZone) => {
 		beforeEach(() => {

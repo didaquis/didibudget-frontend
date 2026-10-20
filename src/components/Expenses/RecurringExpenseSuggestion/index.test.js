@@ -19,15 +19,17 @@ const suggestion = {
 	}
 }
 
-const renderSuggestion = (mocks = []) => render(
-	<MockedProvider mocks={mocks}>
-		<MemoryRouter>
-			<ul>
-				<RecurringExpenseSuggestion suggestion={suggestion} />
-			</ul>
-		</MemoryRouter>
-	</MockedProvider>
-)
+const renderSuggestion = (mocks = []) => {
+	return render(
+		<MockedProvider mocks={mocks}>
+			<MemoryRouter>
+				<ul>
+					<RecurringExpenseSuggestion suggestion={suggestion} />
+				</ul>
+			</MemoryRouter>
+		</MockedProvider>
+	)
+}
 
 describe('RecurringExpenseSuggestion', () => {
 	afterEach(() => {

@@ -4,10 +4,12 @@ import { MockedProvider } from '@apollo/client/testing'
 import YearlyExpenseOverview from './YearlyExpenseOverview'
 import { LIST_EXPENSES_BETWEEN_DATES_AND_CATEGORIES } from '../../gql/queries/expenses'
 
-const emptyRangeMock = (startDate, endDate) => ({
-	request: { query: LIST_EXPENSES_BETWEEN_DATES_AND_CATEGORIES, variables: { startDate, endDate } },
-	result: { data: { getExpensesBetweenDates: [], getExpenseCategory: [] } }
-})
+const emptyRangeMock = (startDate, endDate) => {
+	return {
+		request: { query: LIST_EXPENSES_BETWEEN_DATES_AND_CATEGORIES, variables: { startDate, endDate } },
+		result: { data: { getExpensesBetweenDates: [], getExpenseCategory: [] } }
+	}
+}
 
 describe('YearlyExpenseOverview', () => {
 	beforeEach(() => {
