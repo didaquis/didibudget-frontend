@@ -8,7 +8,7 @@ import { GET_ALL_RECURRING_EXPENSE_SUGGESTIONS, GET_MONTH_TO_DATE_SPENDING } fro
 const monthMock = {
 	request: { query: GET_MONTH_TO_DATE_SPENDING },
 	variableMatcher: () => true,
-	result: { data: { getExpensesBetweenDates: [], getExpenseCategory: [] } }
+	result: { data: { getExpensesBetweenDates: [] } }
 }
 
 const suggestionsMock = {
@@ -54,6 +54,6 @@ describe('Dashboard', () => {
 	it('places the suggestions one level below the page title', async () => {
 		renderDashboard()
 
-		expect(await screen.findByRole('heading', { name: 'Suggestions', level: 2 })).toBeVisible()
+		expect(await screen.findByRole('heading', { name: 'Recurring spending', level: 2 })).toBeVisible()
 	})
 })

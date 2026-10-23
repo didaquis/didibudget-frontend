@@ -5,7 +5,7 @@ import { MockedProvider } from '@apollo/client/testing'
 import { GetMonthToDateSpending } from './GetMonthToDateSpending'
 import { GET_MONTH_TO_DATE_SPENDING } from '../../gql/queries/expenses'
 
-const expense = (uuid, category, quantity) => ({ __typename: 'Expense', uuid, category, quantity, currencyISO: 'EUR' })
+const expense = (uuid, quantity) => ({ __typename: 'Expense', uuid, quantity, currencyISO: 'EUR' })
 
 const monthMock = {
 	request: { query: GET_MONTH_TO_DATE_SPENDING },
@@ -13,16 +13,10 @@ const monthMock = {
 	result: {
 		data: {
 			getExpensesBetweenDates: [
-				expense('expense-1', 'food-id', 12.1),
-				expense('expense-2', 'fuel-id', 30.2),
-				expense('expense-3', 'fund-id', 200),
-				expense('expense-4', 'pension-id', 100)
-			],
-			getExpenseCategory: [
-				{ __typename: 'ExpenseCategory', _id: 'food-id', categoryType: 'expense' },
-				{ __typename: 'ExpenseCategory', _id: 'fuel-id', categoryType: 'expense' },
-				{ __typename: 'ExpenseCategory', _id: 'fund-id', categoryType: 'investment' },
-				{ __typename: 'ExpenseCategory', _id: 'pension-id', categoryType: 'pension_plan' }
+				expense('expense-1', 12.1),
+				expense('expense-2', 30.2),
+				expense('expense-3', 200),
+				expense('expense-4', 100)
 			]
 		}
 	}
@@ -58,14 +52,14 @@ describe('GetMonthToDateSpending', () => {
 		const { variableMatcher, ...mockWithoutMatcher } = monthMock
 		renderWithMocks([{ ...mockWithoutMatcher, request: { ...monthMock.request, variables: { startDate: '2026-03-01', endDate: '2026-03-01' } } }])
 
-		expect(await screen.findByText('42.3 €')).toBeVisible()
+		expect(await screen.findByText('342.3 €')).toBeVisible()
 	})
 
-	it('keeps savings and investments out of the spending of the month', async () => {
+	it('adds up everything recorded this month, savings and investments included', async () => {
 		renderWithMocks([monthMock])
 
-		expect(await screen.findByText('42.3 €')).toBeVisible()
-		expect(screen.getByText('Put aside: 300 €')).toBeVisible()
+		expect(await screen.findByText('342.3 €')).toBeVisible()
+		expect(screen.queryByText(/Put aside/)).not.toBeInTheDocument()
 	})
 
 	it('asks for the spending of the month only once', async () => {
@@ -73,7 +67,7 @@ describe('GetMonthToDateSpending', () => {
 		const result = vi.fn(() => monthMock.result)
 		renderWithMocks([{ ...monthMock, result, maxUsageCount: Number.POSITIVE_INFINITY }])
 
-		await screen.findByText('42.3 €')
+		await screen.findByText('342.3 €')
 		await new Promise(resolve => setTimeout(resolve, 50))
 
 		expect(result).toHaveBeenCalledTimes(1)

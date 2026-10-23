@@ -11,7 +11,7 @@ const dashboardMocks = [
 	{
 		request: { query: GET_MONTH_TO_DATE_SPENDING },
 		variableMatcher: () => true,
-		result: { data: { getExpensesBetweenDates: [], getExpenseCategory: [] } }
+		result: { data: { getExpensesBetweenDates: [] } }
 	},
 	{
 		request: { query: GET_ALL_RECURRING_EXPENSE_SUGGESTIONS },
