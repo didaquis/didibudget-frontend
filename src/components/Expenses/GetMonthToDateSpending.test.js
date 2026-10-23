@@ -65,7 +65,7 @@ describe('GetMonthToDateSpending', () => {
 		renderWithMocks([monthMock])
 
 		expect(await screen.findByText('42.3 €')).toBeVisible()
-		expect(screen.getByText('Savings & investments: 300 €')).toBeVisible()
+		expect(screen.getByText('Put aside: 300 €')).toBeVisible()
 	})
 
 	it('asks for the spending of the month only once', async () => {
