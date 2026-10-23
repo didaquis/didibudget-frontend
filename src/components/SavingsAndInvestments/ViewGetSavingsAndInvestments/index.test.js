@@ -39,8 +39,13 @@ describe('ViewGetSavingsAndInvestments', () => {
 
 	test('renders table header with correct columns', () => {
 		render(<ViewGetSavingsAndInvestments data={mockData} />)
-		expect(screen.getByText('Product')).toBeVisible()
-		expect(screen.getByText('Total invested')).toBeVisible()
+		expect(screen.getByRole('columnheader', { name: 'Product' })).toBeVisible()
+		expect(screen.getByRole('columnheader', { name: 'Put aside' })).toBeVisible()
+	})
+
+	test('says the amounts are what was put aside, not what it is worth today', () => {
+		render(<ViewGetSavingsAndInvestments data={mockData} />)
+		expect(screen.getByText('What you have put aside over the years. Check your bank for what it is worth today.')).toBeVisible()
 	})
 
 	test('displays individual item amounts with currency', () => {

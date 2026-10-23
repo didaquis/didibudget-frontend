@@ -82,7 +82,7 @@ export const App = () => {
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/savings-and-investments' element={
+								<Route path='/spending/put-aside' element={
 									<RequireAuth>
 										<LazyRoute>
 											<SavingsAndInvestments />

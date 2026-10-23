@@ -25,7 +25,7 @@ const LAZY_ROUTE_PATHS = [
 	'/monthly-balance/add',
 	'/monthly-balance/overview',
 	'/monthly-balance/list',
-	'/savings-and-investments',
+	'/spending/put-aside',
 	'/spending/add',
 	'/spending/overview',
 	'/spending/list',
