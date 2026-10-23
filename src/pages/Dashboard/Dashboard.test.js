@@ -8,7 +8,7 @@ import { GET_ALL_RECURRING_EXPENSE_SUGGESTIONS, GET_MONTH_TO_DATE_SPENDING } fro
 const monthMock = {
 	request: { query: GET_MONTH_TO_DATE_SPENDING },
 	variableMatcher: () => true,
-	result: { data: { getExpensesBetweenDates: [], getExpenseCategory: [] } }
+	result: { data: { getExpensesBetweenDates: [] } }
 }
 
 const suggestionsMock = {

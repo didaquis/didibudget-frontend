@@ -7,22 +7,15 @@ const renderMonthToDateSpending = (props) => render(
 )
 
 describe('MonthToDateSpending', () => {
-	it('shows what was spent and what went to savings and investments this month', () => {
-		renderMonthToDateSpending({ spent: 412.3, savingsAndInvestments: 300 })
+	it('shows what was spent this month', () => {
+		renderMonthToDateSpending({ spent: 412.3 })
 
 		expect(screen.getByText('Spent in October')).toBeVisible()
 		expect(screen.getByText('412.3 €')).toBeVisible()
-		expect(screen.getByText('Put aside: 300 €')).toBeVisible()
-	})
-
-	it('still shows savings and investments when nothing went there this month', () => {
-		renderMonthToDateSpending({ spent: 0, savingsAndInvestments: 0 })
-
-		expect(screen.getByText('Put aside: 0 €')).toBeVisible()
 	})
 
 	it('only shows the figures, without leading anywhere', () => {
-		renderMonthToDateSpending({ spent: 412.3, savingsAndInvestments: 300 })
+		renderMonthToDateSpending({ spent: 412.3 })
 
 		expect(screen.queryByRole('link')).not.toBeInTheDocument()
 	})
