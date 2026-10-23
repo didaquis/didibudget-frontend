@@ -23,11 +23,12 @@ export const ViewGetSavingsAndInvestments = ({ data }) => {
 
 	return (
 		<section className="table-responsive">
+			<p className="text-white-50">What you have put aside over the years. Check your bank for what it is worth today.</p>
 			<table className="table table-dark table-hover">
 				<thead>
 					<tr className="table-info text-dark">
 						<th scope="col">Product</th>
-						<th scope="col" className="text-end">Total invested</th>
+						<th scope="col" className="text-end">Put aside</th>
 					</tr>
 				</thead>
 			<tbody>
