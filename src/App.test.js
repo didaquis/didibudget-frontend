@@ -25,7 +25,7 @@ const LAZY_ROUTE_PATHS = [
 	'/monthly-balance/add',
 	'/monthly-balance/overview',
 	'/monthly-balance/list',
-	'/savings-and-investments',
+	'/spending/put-aside',
 	'/spending/add',
 	'/spending/overview',
 	'/spending/list',
@@ -85,6 +85,12 @@ describe('App routing', () => {
 		renderAppAt('/login')
 
 		expect(screen.getByRole('heading', { name: 'Page not found' })).toBeVisible()
+	})
+
+	it('sends the old savings url to the put aside screen', async () => {
+		renderAppAt('/savings-and-investments', { isAuth: true, userData: {} })
+
+		expect(await screen.findByRole('heading', { name: 'Put aside' })).toBeVisible()
 	})
 
 	describe('browser tab title', () => {

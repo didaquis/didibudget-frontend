@@ -1,6 +1,6 @@
 import { StrictMode, lazy, useContext } from 'react'
 
-import { Routes, Route } from 'react-router'
+import { Routes, Route, Navigate } from 'react-router'
 import Localization from 'react-widgets/Localization'
 
 import { Registration } from './pages/Registration'
@@ -82,7 +82,8 @@ export const App = () => {
 										</LazyRoute>
 									</RequireAuth>
 								} />
-								<Route path='/savings-and-investments' element={
+								<Route path='/savings-and-investments' element={<Navigate to='/spending/put-aside' replace />} />
+								<Route path='/spending/put-aside' element={
 									<RequireAuth>
 										<LazyRoute>
 											<SavingsAndInvestments />

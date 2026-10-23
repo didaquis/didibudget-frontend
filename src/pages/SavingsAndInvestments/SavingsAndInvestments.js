@@ -7,7 +7,7 @@ import { GetSavingsAndInvestments } from '../../components/SavingsAndInvestments
 const SavingsAndInvestments = () => {
 	return (
 		<Fragment>
-			<PageTitle text='Savings & investments' />
+			<PageTitle text='Put aside' />
 			<GetSavingsAndInvestments />
 		</Fragment>
 	)

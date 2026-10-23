@@ -50,11 +50,11 @@ describe('NavBar', () => {
 		['Spending', 'This month', '/spending/this-month'],
 		['Spending', 'Last 12 months', '/spending/last-12-months'],
 		['Spending', 'Month by month', '/spending/month-by-month'],
+		['Spending', 'Put aside', '/spending/put-aside'],
 		['Spending', 'Spending search', '/spending/search'],
-		['Cash, savings & investments', 'Add monthly balance', '/monthly-balance/add'],
-		['Cash, savings & investments', 'Monthly balance overview', '/monthly-balance/overview'],
-		['Cash, savings & investments', 'Monthly balances list', '/monthly-balance/list'],
-		['Cash, savings & investments', 'Savings & investments', '/savings-and-investments'],
+		['Monthly balance', 'Add monthly balance', '/monthly-balance/add'],
+		['Monthly balance', 'Monthly balance overview', '/monthly-balance/overview'],
+		['Monthly balance', 'Monthly balances list', '/monthly-balance/list'],
 		['Account', 'Dashboard', '/'],
 		['Account', 'Log out', '/logout']
 	])('lists %s › %s in the menu', async (group, name, href) => {

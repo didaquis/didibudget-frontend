@@ -24,14 +24,14 @@ const SPENDING = [
 	{ to: '/spending/this-month', label: 'This month', Icon: BsCalendarEvent },
 	{ to: '/spending/last-12-months', label: 'Last 12 months', Icon: BsCalendarRange },
 	{ to: '/spending/month-by-month', label: 'Month by month', Icon: BsCalendar3 },
+	{ to: '/spending/put-aside', label: 'Put aside', Icon: BsPiggyBank },
 	{ to: '/spending/search', label: 'Spending search', Icon: BsSearch }
 ]
 
-const CASH_SAVINGS_AND_INVESTMENTS = [
+const MONTHLY_BALANCE = [
 	{ to: '/monthly-balance/add', label: 'Add monthly balance', Icon: BsCashCoin },
 	{ to: '/monthly-balance/overview', label: 'Monthly balance overview', Icon: BsGraphUp },
-	{ to: '/monthly-balance/list', label: 'Monthly balances list', Icon: BsListUl },
-	{ to: '/savings-and-investments', label: 'Savings & investments', Icon: BsPiggyBank }
+	{ to: '/monthly-balance/list', label: 'Monthly balances list', Icon: BsListUl }
 ]
 
 const accountLinks = (isAdmin) => [
@@ -116,7 +116,7 @@ export const NavBar = () => {
 						</MenuBar>
 						<nav aria-label="Main">
 							<MenuGroup id="menu-spending" title="Spending" links={SPENDING} pathname={pathname} onChoose={close} />
-							<MenuGroup id="menu-balance" title="Cash, savings & investments" links={CASH_SAVINGS_AND_INVESTMENTS} pathname={pathname} onChoose={close} />
+							<MenuGroup id="menu-balance" title="Monthly balance" links={MONTHLY_BALANCE} pathname={pathname} onChoose={close} />
 							<MenuGroup id="menu-account" title="Account" links={accountLinks(userData.isAdmin)} pathname={pathname} onChoose={close} />
 						</nav>
 					</div>
