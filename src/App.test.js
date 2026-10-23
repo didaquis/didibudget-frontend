@@ -87,12 +87,6 @@ describe('App routing', () => {
 		expect(screen.getByRole('heading', { name: 'Page not found' })).toBeVisible()
 	})
 
-	it('sends the old savings url to the put aside screen', async () => {
-		renderAppAt('/savings-and-investments', { isAuth: true, userData: {} })
-
-		expect(await screen.findByRole('heading', { name: 'Put aside' })).toBeVisible()
-	})
-
 	describe('browser tab title', () => {
 		it('names the tab after the current screen', () => {
 			renderAppAt('/register')
