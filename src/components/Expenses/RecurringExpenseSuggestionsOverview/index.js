@@ -8,7 +8,7 @@ export const RecurringExpenseSuggestionsOverview = ({ suggestions }) => {
 
 	return (
 		<section className="mt-5">
-			<SectionTitle text='Due around this date' />
+			<SectionTitle text='Recurring spending' />
 			<ul className="list-group list-group-flush">
 				{
 					suggestions.map(suggestion => (

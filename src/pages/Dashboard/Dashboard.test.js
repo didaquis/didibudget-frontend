@@ -54,6 +54,6 @@ describe('Dashboard', () => {
 	it('places the suggestions one level below the page title', async () => {
 		renderDashboard()
 
-		expect(await screen.findByRole('heading', { name: 'Due around this date', level: 2 })).toBeVisible()
+		expect(await screen.findByRole('heading', { name: 'Recurring spending', level: 2 })).toBeVisible()
 	})
 })
